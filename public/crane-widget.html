@@ -58,7 +58,7 @@
     }
 
     /* =========================================================================
-       TRANSPARENT TINTED BLACK GLASS BUTTONS (NOT OPAQUE)
+       100% PURE CRYSTAL TRANSPARENT BUTTONS (ZERO BLACK FILL)
        ========================================================================= */
     .radial-btn {
       position: absolute;
@@ -68,15 +68,15 @@
       align-items: center;
       justify-content: center;
       outline: none;
-      background: rgba(0, 0, 0, 0.45); /* Transparent tinted black - not opaque */
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: transparent !important; /* Pure transparent - no black */
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .radial-btn:hover {
       transform: scale(1.12);
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(255, 255, 255, 0.14) !important;
     }
 
     .radial-btn:active {
@@ -85,7 +85,7 @@
 
     .radial-btn svg {
       transition: all 0.16s ease;
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.95));
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.95));
     }
 
     /* -------------------------------------------------------------------------
@@ -94,13 +94,13 @@
     .btn-center-stop {
       width: 54px;
       height: 54px;
-      background: rgba(220, 38, 38, 0.28);
+      background: transparent !important;
       border: 2.5px solid #ef4444;
       color: #ffffff;
       z-index: 10;
       box-shadow: 
         0 0 20px rgba(239, 68, 68, 0.7),
-        inset 0 0 12px rgba(239, 68, 68, 0.45);
+        inset 0 0 12px rgba(239, 68, 68, 0.35);
     }
     .btn-center-stop svg {
       width: 22px;
@@ -109,11 +109,11 @@
       filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.95));
     }
     .btn-center-stop:hover {
-      background: rgba(220, 38, 38, 0.55);
+      background: rgba(239, 68, 68, 0.25) !important;
       border-color: #f87171;
       box-shadow: 
         0 0 28px rgba(239, 68, 68, 0.95),
-        inset 0 0 16px rgba(239, 68, 68, 0.6);
+        inset 0 0 16px rgba(239, 68, 68, 0.5);
     }
     .btn-center-stop.active-state {
       background: #ef4444 !important;
@@ -130,23 +130,23 @@
       left: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(0, 0, 0, 0.45);
+      background: transparent !important;
       border: 2.5px solid #fbbf24;
       color: #fbbf24;
       box-shadow: 
         0 0 18px rgba(251, 191, 36, 0.6),
-        inset 0 0 12px rgba(251, 191, 36, 0.3);
+        inset 0 0 12px rgba(251, 191, 36, 0.25);
     }
     .btn-left-ccw svg {
       width: 24px;
       height: 24px;
     }
     .btn-left-ccw:hover {
-      background: rgba(251, 191, 36, 0.25);
+      background: rgba(251, 191, 36, 0.2) !important;
       border-color: #fde047;
       box-shadow: 
         0 0 26px rgba(253, 224, 71, 0.85),
-        inset 0 0 14px rgba(251, 191, 36, 0.5);
+        inset 0 0 14px rgba(251, 191, 36, 0.4);
     }
     .btn-left-ccw.active-state {
       background: #fbbf24 !important;
@@ -172,23 +172,23 @@
       right: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(0, 0, 0, 0.45);
+      background: transparent !important;
       border: 2.5px solid #fbbf24;
       color: #fbbf24;
       box-shadow: 
         0 0 18px rgba(251, 191, 36, 0.6),
-        inset 0 0 12px rgba(251, 191, 36, 0.3);
+        inset 0 0 12px rgba(251, 191, 36, 0.25);
     }
     .btn-right-cw svg {
       width: 24px;
       height: 24px;
     }
     .btn-right-cw:hover {
-      background: rgba(251, 191, 36, 0.25);
+      background: rgba(251, 191, 36, 0.2) !important;
       border-color: #fde047;
       box-shadow: 
         0 0 26px rgba(253, 224, 71, 0.85),
-        inset 0 0 14px rgba(251, 191, 36, 0.5);
+        inset 0 0 14px rgba(251, 191, 36, 0.4);
     }
     .btn-right-cw.active-state {
       background: #fbbf24 !important;
@@ -214,23 +214,23 @@
       top: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(0, 0, 0, 0.45);
+      background: transparent !important;
       border: 2.5px solid #10b981;
       color: #10b981;
       box-shadow: 
         0 0 20px rgba(16, 185, 129, 0.6),
-        inset 0 0 12px rgba(16, 185, 129, 0.3);
+        inset 0 0 12px rgba(16, 185, 129, 0.25);
     }
     .btn-top-mag-on svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
     }
     .btn-top-mag-on:hover {
-      background: rgba(16, 185, 129, 0.25);
+      background: rgba(16, 185, 129, 0.2) !important;
       border-color: #34d399;
       box-shadow: 
         0 0 28px rgba(52, 211, 153, 0.85),
-        inset 0 0 14px rgba(16, 185, 129, 0.5);
+        inset 0 0 14px rgba(16, 185, 129, 0.4);
     }
     .btn-top-mag-on.active-state {
       background: #10b981 !important;
@@ -248,23 +248,23 @@
       bottom: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(0, 0, 0, 0.45);
+      background: transparent !important;
       border: 2.5px solid #f97316;
       color: #f97316;
       box-shadow: 
         0 0 18px rgba(249, 115, 22, 0.6),
-        inset 0 0 12px rgba(249, 115, 22, 0.3);
+        inset 0 0 12px rgba(249, 115, 22, 0.25);
     }
     .btn-bottom-mag-off svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
     }
     .btn-bottom-mag-off:hover {
-      background: rgba(249, 115, 22, 0.25);
+      background: rgba(249, 115, 22, 0.2) !important;
       border-color: #fb923c;
       box-shadow: 
         0 0 26px rgba(251, 146, 60, 0.85),
-        inset 0 0 14px rgba(249, 115, 22, 0.5);
+        inset 0 0 14px rgba(249, 115, 22, 0.4);
     }
     .btn-bottom-mag-off.active-state {
       background: #f97316 !important;
@@ -282,11 +282,10 @@
   <div class="circular-controller" id="controller">
     <div class="orbit-ring"></div>
 
-    <!-- 12 O'CLOCK: MAGNET ON (EMERALD GREEN) -->
+    <!-- 12 O'CLOCK: MAGNET ON (PROPER MATERIAL DESIGN HORSESHOE MAGNET) -->
     <button class="radial-btn btn-top-mag-on" id="btnMagOn" aria-label="Magnet On">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 4v7a8 8 0 0 0 16 0V4"/>
-        <path d="M4 8h4M16 8h4"/>
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="#ffffff">
+        <path d="M5 2c-1.1 0-2 .9-2 2v8c0 4.97 4.03 9 9 9s9-4.03 9-9V4c0-1.1-.9-2-2-2h-3c-1.1 0-2 .9-2 2v8c0 1.1-.9 2-2 2s-2-.9-2-2V4c0-1.1-.9-2-2-2H5zm0 2h3v3H5V4zm11 0h3v3h-3V4z"/>
       </svg>
     </button>
 
@@ -313,12 +312,11 @@
       </svg>
     </button>
 
-    <!-- 6 O'CLOCK: MAGNET OFF (CORAL ORANGE) -->
+    <!-- 6 O'CLOCK: MAGNET OFF (PROPER HORSESHOE MAGNET WITH STRIKE) -->
     <button class="radial-btn btn-bottom-mag-off" id="btnMagOff" aria-label="Magnet Off">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 4v7a8 8 0 0 0 16 0V4" opacity="0.6"/>
-        <path d="M4 8h4M16 8h4" opacity="0.6"/>
-        <line x1="3" y1="3" x2="21" y2="21" stroke="#ffffff" stroke-width="2.6"/>
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <path d="M5 2c-1.1 0-2 .9-2 2v8c0 4.97 4.03 9 9 9s9-4.03 9-9V4c0-1.1-.9-2-2-2h-3c-1.1 0-2 .9-2 2v8c0 1.1-.9 2-2 2s-2-.9-2-2V4c0-1.1-.9-2-2-2H5zm0 2h3v3H5V4zm11 0h3v3h-3V4z" fill="#ffffff" opacity="0.45"/>
+        <line x1="2" y1="2" x2="22" y2="22" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/>
       </svg>
     </button>
 
