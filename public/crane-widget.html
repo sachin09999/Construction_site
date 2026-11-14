@@ -27,16 +27,20 @@
     /* =========================================================================
        PURE TRANSPARENT CIRCULAR GUIDE (ZERO TRANSLUCENT FOG)
        ========================================================================= */
+    /* =========================================================================
+       INDUSTRIAL PRECISION HUD DIAL (CONSTRUCTION-MATCHED PALETTE)
+       ========================================================================= */
     .circular-controller {
       position: relative;
       width: 190px;
       height: 190px;
       border-radius: 50%;
-      background: transparent !important; /* Pure transparency, no milky fill */
-      border: 1px dashed rgba(255, 255, 255, 0.2);
+      background: transparent !important;
+      border: 1.5px dashed rgba(251, 191, 36, 0.45); /* Construction Amber ring */
       display: flex;
       align-items: center;
       justify-content: center;
+      filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.85));
     }
 
     /* Subtle Rotating Outer Dash Accent */
@@ -44,7 +48,7 @@
       position: absolute;
       inset: -6px;
       border-radius: 50%;
-      border: 1px dotted rgba(56, 189, 248, 0.35);
+      border: 1px dotted rgba(251, 191, 36, 0.28);
       pointer-events: none;
       animation: slowSpin 40s linear infinite;
     }
@@ -54,7 +58,8 @@
     }
 
     /* =========================================================================
-       PURE TRANSPARENT CRYSTAL BUTTONS WITH VIBRANT NEON GLOWS
+       HIGH-CONTRAST OPTICAL LENS BUTTONS
+       Blocks messy background noise so icons pop with 100% crisp clarity
        ========================================================================= */
     .radial-btn {
       position: absolute;
@@ -64,6 +69,9 @@
       align-items: center;
       justify-content: center;
       outline: none;
+      background: rgba(11, 17, 33, 0.88); /* Deep slate lens blocks background clutter */
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
       transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -76,80 +84,84 @@
     }
 
     .radial-btn svg {
-      fill: currentColor;
+      fill: #ffffff !important;
       transition: all 0.16s ease;
-      filter: drop-shadow(0 0 6px currentColor);
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.9));
     }
 
     /* -------------------------------------------------------------------------
-       1. CENTER: PUNCHABLE EMERGENCY STOP (VIBRANT CRIMSON RED)
+       1. CENTER: STOP ROTATION (INDUSTRIAL SAFETY CRIMSON RED)
        ------------------------------------------------------------------------- */
     .btn-center-stop {
       width: 54px;
       height: 54px;
-      background: rgba(239, 68, 68, 0.22);
+      background: rgba(220, 38, 38, 0.35);
       border: 2.5px solid #ef4444;
-      color: #ef4444;
+      color: #ffffff;
       z-index: 10;
       box-shadow: 
-        0 0 20px rgba(239, 68, 68, 0.5),
-        inset 0 0 14px rgba(239, 68, 68, 0.35);
+        0 0 20px rgba(239, 68, 68, 0.7),
+        inset 0 0 12px rgba(239, 68, 68, 0.45);
     }
     .btn-center-stop svg {
       width: 22px;
       height: 22px;
-      fill: #ffffff;
-      filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8));
+      fill: #ffffff !important;
+      filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.95));
     }
     .btn-center-stop:hover {
-      background: rgba(239, 68, 68, 0.38);
-      border-color: #ff4d6d;
+      background: rgba(220, 38, 38, 0.58);
+      border-color: #f87171;
       box-shadow: 
-        0 0 28px rgba(239, 68, 68, 0.85),
-        inset 0 0 18px rgba(239, 68, 68, 0.5);
+        0 0 28px rgba(239, 68, 68, 0.95),
+        inset 0 0 16px rgba(239, 68, 68, 0.6);
     }
     .btn-center-stop.active-state {
-      background: rgba(239, 68, 68, 0.55) !important;
+      background: #ef4444 !important;
       border-color: #ffffff !important;
       box-shadow: 
-        0 0 32px #ef4444,
-        inset 0 0 20px #ef4444 !important;
+        0 0 34px #ef4444,
+        inset 0 0 20px #ffffff !important;
     }
 
     /* -------------------------------------------------------------------------
-       2. LEFT (9 O'CLOCK): ROTATE CCW (ELECTRIC CYAN)
+       2. LEFT (9 O'CLOCK): ROTATE CCW (CONSTRUCTION CRANE AMBER GOLD)
+       Matches the physical yellow tower crane
        ------------------------------------------------------------------------- */
     .btn-left-ccw {
       left: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(6, 182, 212, 0.15);
-      border: 2px solid #06b6d4;
-      color: #06b6d4;
+      background: rgba(11, 17, 33, 0.88);
+      border: 2.5px solid #fbbf24;
+      color: #fbbf24;
       box-shadow: 
-        0 0 18px rgba(6, 182, 212, 0.4),
-        inset 0 0 12px rgba(6, 182, 212, 0.25);
+        0 0 18px rgba(251, 191, 36, 0.6),
+        inset 0 0 12px rgba(251, 191, 36, 0.3);
     }
     .btn-left-ccw svg {
       width: 24px;
       height: 24px;
+      fill: #ffffff !important;
     }
     .btn-left-ccw:hover {
-      background: rgba(6, 182, 212, 0.3);
-      border-color: #22d3ee;
-      color: #22d3ee;
+      background: rgba(251, 191, 36, 0.28);
+      border-color: #fde047;
       box-shadow: 
-        0 0 26px rgba(34, 211, 238, 0.75),
-        inset 0 0 16px rgba(34, 211, 238, 0.4);
+        0 0 26px rgba(253, 224, 71, 0.85),
+        inset 0 0 14px rgba(251, 191, 36, 0.5);
     }
     .btn-left-ccw.active-state {
-      background: rgba(6, 182, 212, 0.5) !important;
-      border-color: #a5f3fc !important;
-      color: #ffffff !important;
+      background: #fbbf24 !important;
+      border-color: #ffffff !important;
+      color: #0f172a !important;
       box-shadow: 
-        0 0 32px #06b6d4,
-        inset 0 0 20px #06b6d4 !important;
+        0 0 32px #fbbf24,
+        inset 0 0 18px #ffffff !important;
       animation: spinCCW 2.4s linear infinite;
+    }
+    .btn-left-ccw.active-state svg {
+      fill: #0f172a !important;
     }
     @keyframes spinCCW {
       0% { transform: rotate(0deg); }
@@ -157,39 +169,43 @@
     }
 
     /* -------------------------------------------------------------------------
-       3. RIGHT (3 O'CLOCK): ROTATE CW (VIBRANT ROYAL / SKY BLUE)
+       3. RIGHT (3 O'CLOCK): ROTATE CW (CONSTRUCTION CRANE AMBER GOLD)
+       Matches the physical yellow tower crane
        ------------------------------------------------------------------------- */
     .btn-right-cw {
       right: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(59, 130, 246, 0.15);
-      border: 2px solid #3b82f6;
-      color: #3b82f6;
+      background: rgba(11, 17, 33, 0.88);
+      border: 2.5px solid #fbbf24;
+      color: #fbbf24;
       box-shadow: 
-        0 0 18px rgba(59, 130, 246, 0.4),
-        inset 0 0 12px rgba(59, 130, 246, 0.25);
+        0 0 18px rgba(251, 191, 36, 0.6),
+        inset 0 0 12px rgba(251, 191, 36, 0.3);
     }
     .btn-right-cw svg {
       width: 24px;
       height: 24px;
+      fill: #ffffff !important;
     }
     .btn-right-cw:hover {
-      background: rgba(59, 130, 246, 0.3);
-      border-color: #60a5fa;
-      color: #60a5fa;
+      background: rgba(251, 191, 36, 0.28);
+      border-color: #fde047;
       box-shadow: 
-        0 0 26px rgba(96, 165, 250, 0.75),
-        inset 0 0 16px rgba(96, 165, 250, 0.4);
+        0 0 26px rgba(253, 224, 71, 0.85),
+        inset 0 0 14px rgba(251, 191, 36, 0.5);
     }
     .btn-right-cw.active-state {
-      background: rgba(59, 130, 246, 0.5) !important;
-      border-color: #bfdbfe !important;
-      color: #ffffff !important;
+      background: #fbbf24 !important;
+      border-color: #ffffff !important;
+      color: #0f172a !important;
       box-shadow: 
-        0 0 32px #3b82f6,
-        inset 0 0 20px #3b82f6 !important;
+        0 0 32px #fbbf24,
+        inset 0 0 18px #ffffff !important;
       animation: spinCW 2.4s linear infinite;
+    }
+    .btn-right-cw.active-state svg {
+      fill: #0f172a !important;
     }
     @keyframes spinCW {
       0% { transform: rotate(0deg); }
@@ -197,73 +213,79 @@
     }
 
     /* -------------------------------------------------------------------------
-       4. TOP (12 O'CLOCK): MAGNET ON (VIBRANT EMERALD / LIME GREEN)
+       4. TOP (12 O'CLOCK): MAGNET ON (VIVID ELECTRIC EMERALD)
+       High-voltage coil active
        ------------------------------------------------------------------------- */
     .btn-top-mag-on {
       top: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(16, 185, 129, 0.16);
-      border: 2px solid #10b981;
+      background: rgba(11, 17, 33, 0.88);
+      border: 2.5px solid #10b981;
       color: #10b981;
       box-shadow: 
-        0 0 20px rgba(16, 185, 129, 0.45),
+        0 0 20px rgba(16, 185, 129, 0.6),
         inset 0 0 12px rgba(16, 185, 129, 0.3);
     }
     .btn-top-mag-on svg {
       width: 22px;
       height: 22px;
+      fill: #ffffff !important;
     }
     .btn-top-mag-on:hover {
-      background: rgba(16, 185, 129, 0.32);
+      background: rgba(16, 185, 129, 0.3);
       border-color: #34d399;
-      color: #34d399;
       box-shadow: 
-        0 0 28px rgba(52, 211, 153, 0.8),
-        inset 0 0 16px rgba(52, 211, 153, 0.45);
+        0 0 28px rgba(52, 211, 153, 0.85),
+        inset 0 0 14px rgba(16, 185, 129, 0.5);
     }
     .btn-top-mag-on.active-state {
-      background: rgba(16, 185, 129, 0.55) !important;
-      border-color: #a7f3d0 !important;
+      background: #10b981 !important;
+      border-color: #ffffff !important;
       color: #ffffff !important;
       box-shadow: 
         0 0 34px #10b981,
-        inset 0 0 20px #10b981 !important;
+        inset 0 0 18px #ffffff !important;
     }
 
     /* -------------------------------------------------------------------------
-       5. BOTTOM (6 O'CLOCK): MAGNET OFF (LUMINOUS CORAL ROSE)
+       5. BOTTOM (6 O'CLOCK): MAGNET OFF (SAFETY FIRE CORAL)
+       Released / de-energized cargo coil
        ------------------------------------------------------------------------- */
     .btn-bottom-mag-off {
       bottom: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(244, 63, 94, 0.14);
-      border: 2px solid #f43f5e;
-      color: #f43f5e;
+      background: rgba(11, 17, 33, 0.88);
+      border: 2.5px solid #f97316;
+      color: #f97316;
       box-shadow: 
-        0 0 18px rgba(244, 63, 94, 0.4),
-        inset 0 0 12px rgba(244, 63, 94, 0.25);
+        0 0 18px rgba(249, 115, 22, 0.6),
+        inset 0 0 12px rgba(249, 115, 22, 0.3);
     }
     .btn-bottom-mag-off svg {
       width: 22px;
       height: 22px;
+      fill: #ffffff !important;
+    }
+    .btn-bottom-mag-off svg line {
+      stroke: #ffffff !important;
+      stroke-width: 2.5;
     }
     .btn-bottom-mag-off:hover {
-      background: rgba(244, 63, 94, 0.3);
-      border-color: #fb7185;
-      color: #fb7185;
+      background: rgba(249, 115, 22, 0.3);
+      border-color: #fb923c;
       box-shadow: 
-        0 0 26px rgba(251, 113, 133, 0.75),
-        inset 0 0 16px rgba(251, 113, 133, 0.4);
+        0 0 26px rgba(251, 146, 60, 0.85),
+        inset 0 0 14px rgba(249, 115, 22, 0.5);
     }
     .btn-bottom-mag-off.active-state {
-      background: rgba(244, 63, 94, 0.5) !important;
-      border-color: #fecdd3 !important;
+      background: #f97316 !important;
+      border-color: #ffffff !important;
       color: #ffffff !important;
       box-shadow: 
-        0 0 30px #f43f5e,
-        inset 0 0 18px #f43f5e !important;
+        0 0 30px #f97316,
+        inset 0 0 18px #ffffff !important;
     }
 
     /* Tooltips */
