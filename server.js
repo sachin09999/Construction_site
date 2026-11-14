@@ -689,8 +689,19 @@ app.all(['/api/action', '/api/control'], async (req, res) => {
     return res.status(400).json({ success: false, error: 'Missing target/id or action parameter' });
   }
 
+  // Handle crane motion or magnet FIRST before speed
+  const isCraneMotion = (target === 'crane' || target === 'crane_motion') && ['forward', 'reverse', 'stop', 'cw', 'ccw', '1', '0'].includes(action);
+  const isMagnetAction = (target === 'magnet' || target === 'magnet_state') && ['on', 'off', '1', '0', 'true', 'false'].includes(action);
+
+  if (isCraneMotion) {
+    return executeCraneCommand('crane', action, res);
+  }
+  if (isMagnetAction) {
+    return executeCraneCommand('magnet', action, res);
+  }
+
   // Handle speed setting
-  if (target === 'speed' || target === 'crane_speed' || (target === 'crane' && action === 'speed') || (target === 'crane' && value !== undefined)) {
+  if (target === 'speed' || target === 'crane_speed' || action === 'speed' || (target === 'crane' && action === '' && value !== undefined)) {
     const spd = Number(value !== undefined ? value : action);
     if (!Number.isInteger(spd) || spd < 0 || spd > 255) {
       return res.status(400).json({ success: false, error: 'speed must be an integer from 0 to 255' });
