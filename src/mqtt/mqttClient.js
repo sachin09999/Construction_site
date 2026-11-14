@@ -62,6 +62,11 @@ function connect(onUpdate, onTelemetry) {
 }
 
 function handleIncoming(topic, payload) {
+  // Any incoming traffic confirms active online connectivity
+  store.setDeviceStatus("esp32", "online");
+  store.setDeviceStatus(process.env.DEVICE_ID || "underconstruction-esp32", "online");
+  store.setValue("esp32_status", "online", "");
+
   // If telemetry callback is provided and payload has sensor data
   const data = payload.values || payload.data || payload;
   if (data && typeof data === "object") {
@@ -74,6 +79,7 @@ function handleIncoming(topic, payload) {
   if (topic === topicStatus() || topic.includes("status") || topic === "v1/devices/me/attributes") {
     const status = payload.status || payload.value || "online";
     store.setDeviceStatus("esp32", status);
+    store.setDeviceStatus(process.env.DEVICE_ID || "underconstruction-esp32", status);
     const updated = store.setValue("esp32_status", status, "");
     if (onUpdateCallback) onUpdateCallback("esp32_status", updated);
     return;
@@ -118,10 +124,10 @@ function publishActuatorCommand(itemId, command) {
   if (targetId === "crane_motion" || itemId === "crane") {
     if (["forward", "cw", "clockwise", "1"].includes(wireCommand)) {
       wireCommand = "forward";
-      rpcMethod = "setForward";
+      rpcMethod = "setReverse"; // INVERTED: Physical crane wiring turns clockwise on setReverse
     } else if (["reverse", "ccw", "counterclockwise", "anticlockwise"].includes(wireCommand)) {
       wireCommand = "reverse";
-      rpcMethod = "setReverse";
+      rpcMethod = "setForward"; // INVERTED: Physical crane wiring turns counter-clockwise on setForward
     } else {
       wireCommand = "stop";
       rpcMethod = "setStop";

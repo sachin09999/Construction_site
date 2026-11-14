@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -9,50 +9,50 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     /* =========================================================================
-       DESIGN SYSTEM - HIGH-CONTRAST INDUSTRIAL AR HUD (SMOKED GLASS)
+       DESIGN SYSTEM - CRYSTAL CLEAR FROSTED GLASS (ZERO BLACKISH TINT)
        ========================================================================= */
     :root, html, html.dark, html.light {
       --bg: transparent;
       --bg-ambient: none;
       
-      --text: #ffffff;
-      --text-muted: #e2e8f0;
-      --text-dim: #94a3b8;
+      --text: #0f172a;
+      --text-muted: #334155;
+      --text-dim: #64748b;
       
-      /* Sleek High-Contrast Translucent Smoked Glass */
-      --card-blue-bg: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(10, 15, 28, 0.78) 100%);
-      --card-blue-border: rgba(56, 189, 248, 0.65);
-      --card-blue-text: #38bdf8;
-      --card-blue-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+      /* Vibrant Crystal Frosted Glass Cards (Clean & Bright) */
+      --card-blue-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(224, 242, 254, 0.55) 100%);
+      --card-blue-border: rgba(56, 189, 248, 0.7);
+      --card-blue-text: #0284c7;
+      --card-blue-shadow: 0 8px 24px rgba(2, 132, 199, 0.15);
 
-      --card-green-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(10, 15, 28, 0.78) 100%);
-      --card-green-border: rgba(52, 211, 153, 0.65);
-      --card-green-text: #34d399;
-      --card-green-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+      --card-green-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(209, 250, 229, 0.55) 100%);
+      --card-green-border: rgba(52, 211, 153, 0.7);
+      --card-green-text: #059669;
+      --card-green-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
 
-      --card-purple-bg: linear-gradient(135deg, rgba(139, 92, 246, 0.22) 0%, rgba(10, 15, 28, 0.78) 100%);
-      --card-purple-border: rgba(167, 139, 250, 0.65);
-      --card-purple-text: #c084fc;
-      --card-purple-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+      --card-purple-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(237, 233, 254, 0.55) 100%);
+      --card-purple-border: rgba(167, 139, 250, 0.7);
+      --card-purple-text: #7c3aed;
+      --card-purple-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
 
-      --card-pink-bg: linear-gradient(135deg, rgba(239, 68, 68, 0.22) 0%, rgba(10, 15, 28, 0.78) 100%);
-      --card-pink-border: rgba(248, 113, 113, 0.65);
-      --card-pink-text: #f87171;
-      --card-pink-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+      --card-pink-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 228, 230, 0.55) 100%);
+      --card-pink-border: rgba(251, 113, 133, 0.7);
+      --card-pink-text: #e11d48;
+      --card-pink-shadow: 0 8px 24px rgba(225, 29, 72, 0.15);
 
-      --card-amber-bg: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(10, 15, 28, 0.78) 100%);
-      --card-amber-border: rgba(245, 158, 11, 0.65);
-      --card-amber-text: #fbbf24;
+      --card-amber-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(254, 243, 199, 0.55) 100%);
+      --card-amber-border: rgba(245, 158, 11, 0.7);
+      --card-amber-text: #d97706;
 
-      --glass-base: rgba(10, 15, 28, 0.78);
-      --glass-elevated: rgba(15, 23, 42, 0.88);
-      --glass-border: rgba(255, 255, 255, 0.16);
-      --glass-shine: inset 0 1px 1px 0 rgba(255, 255, 255, 0.22), 0 8px 24px rgba(0, 0, 0, 0.5);
-      --line: rgba(255, 255, 255, 0.14);
-      --accent: #38bdf8;
+      --glass-base: rgba(255, 255, 255, 0.65);
+      --glass-elevated: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.75);
+      --glass-shine: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95), 0 8px 24px rgba(0, 0, 0, 0.08);
+      --line: rgba(226, 232, 240, 0.85);
+      --accent: #0284c7;
       --green: #10b981;
       --red: #ef4444;
-      --amber: #fbbf24;
+      --amber: #f59e0b;
     }
 
     * { box-sizing: border-box; user-select: none; margin: 0; padding: 0; }
@@ -469,8 +469,8 @@
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1;
-      color: #ffffff;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+      color: #0f172a;
+      text-shadow: none;
     }
     .motion-indicator-tag {
       font-size: 10.5px;
@@ -549,7 +549,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #cbd5e1 !important;
+      color: #475569 !important;
     }
     .metric-value {
       font-family: 'JetBrains Mono', monospace;
@@ -560,7 +560,7 @@
       display: flex;
       align-items: baseline;
       gap: 5px;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+      text-shadow: none;
     }
     .metric-unit {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -999,22 +999,22 @@
 
             <div class="compass-stage">
               <svg class="compass-svg" viewBox="0 0 175 175">
-                <circle cx="87.5" cy="87.5" r="78" fill="rgba(10, 15, 28, 0.4)" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="2" />
-                <circle cx="87.5" cy="87.5" r="68" fill="none" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1.5" stroke-dasharray="4 6" />
+                <circle cx="87.5" cy="87.5" r="78" fill="rgba(241, 245, 249, 0.7)" stroke="#0284c7" stroke-opacity="0.3" stroke-width="2" />
+                <circle cx="87.5" cy="87.5" r="68" fill="none" stroke="#94a3b8" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 6" />
 
                 <!-- Cardinal Marks -->
-                <text x="87.5" y="26" font-size="11" font-weight="900" text-anchor="middle" fill="#38bdf8">N</text>
-                <text x="154" y="91" font-size="11" font-weight="900" text-anchor="middle" fill="#ffffff" opacity="0.85">E</text>
-                <text x="87.5" y="158" font-size="11" font-weight="900" text-anchor="middle" fill="#ffffff" opacity="0.85">S</text>
-                <text x="21" y="91" font-size="11" font-weight="900" text-anchor="middle" fill="#ffffff" opacity="0.85">W</text>
+                <text x="87.5" y="26" font-size="11" font-weight="900" text-anchor="middle" fill="#0284c7">N</text>
+                <text x="154" y="91" font-size="11" font-weight="900" text-anchor="middle" fill="#475569" opacity="0.9">E</text>
+                <text x="87.5" y="158" font-size="11" font-weight="900" text-anchor="middle" fill="#475569" opacity="0.9">S</text>
+                <text x="21" y="91" font-size="11" font-weight="900" text-anchor="middle" fill="#475569" opacity="0.9">W</text>
 
                 <!-- Rotating Crane Jib Arm -->
                 <g class="needle-arm" id="needleArm">
-                  <line x1="87.5" y1="87.5" x2="87.5" y2="30" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" />
+                  <line x1="87.5" y1="87.5" x2="87.5" y2="30" stroke="#0284c7" stroke-width="5" stroke-linecap="round" />
                   <line x1="87.5" y1="87.5" x2="87.5" y2="116" stroke="#94a3b8" stroke-width="5.5" stroke-linecap="round" />
                   <circle cx="87.5" cy="116" r="5" fill="#94a3b8" />
-                  <circle cx="87.5" cy="30" r="6" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
-                  <circle cx="87.5" cy="87.5" r="8" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" />
+                  <circle cx="87.5" cy="30" r="6" fill="#0284c7" stroke="#ffffff" stroke-width="2" />
+                  <circle cx="87.5" cy="87.5" r="8" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" />
                 </g>
               </svg>
             </div>
@@ -1416,12 +1416,12 @@
       });
 
       // =======================================================================
-      // THEME: PERMANENT HIGH-CONTRAST INDUSTRIAL HUD MODE (AR OVERLAY)
+      // THEME: CRYSTAL FROSTED GLASS HUD MODE (ZERO BLACKISH TINT)
       // =======================================================================
       function applyTheme() {
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
-        localStorage.setItem("uc_theme", "dark");
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+        localStorage.setItem("uc_theme", "light");
         if (typeof renderCharts === "function") {
           renderCharts();
         }
@@ -1585,50 +1585,90 @@
       }
 
       // =======================================================================
-      // SNAPSHOT DATA FETCH
+      // SNAPSHOT DATA FETCH (SUPPORTS DUAL CEMENT-PLANT & DIRECT STATE APIS)
       // =======================================================================
       async function fetchSnapshot() {
         try {
-          const res = await fetch(`${API}/api/refresh`);
-          if (!res.ok) return;
-          const data = await res.json();
+          let res = await fetch(`${API}/api/refresh`);
+          let data = null;
+          if (res.ok) {
+            data = await res.json();
+          } else {
+            res = await fetch(`${API}/api/state`);
+            if (res.ok) data = await res.json();
+          }
+          if (!data) return;
+
           const items = data.items || {};
+          const s = data.state || (data.telemetry ? data : {});
+          const t = s.telemetry || (s.voltage_V !== undefined ? s : {});
 
-          // Power metrics
-          if (items.voltage_V?.value !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(items.voltage_V.value).toFixed(2);
-          if (items.current_mA?.value !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(items.current_mA.value);
-          if (items.power_mW?.value !== undefined && $("valPower")) $("valPower").textContent = Math.round(items.power_mW.value);
+          // Power metrics (fallback to state.telemetry if Cement items empty)
+          const volt = items.voltage_V?.value !== undefined ? items.voltage_V.value : t.voltage_V;
+          if (volt !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(volt).toFixed(2);
 
-          // Orientation
-          setOrientationUI(items.jib_yaw_deg?.value, items.jib_deflection_deg?.value);
+          const curr = items.current_mA?.value !== undefined ? items.current_mA.value : t.current_mA;
+          if (curr !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(curr);
 
-          // Motion & Magnet
-          if (items.crane_motion?.value) setMotionUI(items.crane_motion.value);
-          if (items.magnet_state?.value) setMagnetUI(items.magnet_state.value);
+          const pow = items.power_mW?.value !== undefined ? items.power_mW.value : t.power_mW;
+          if (pow !== undefined && $("valPower")) $("valPower").textContent = Math.round(pow);
+
+          // Orientation (yaw & deflection tilt)
+          const yaw = items.jib_yaw_deg?.value !== undefined ? items.jib_yaw_deg.value : t.jib_yaw_deg;
+          const defl = items.jib_deflection_deg?.value !== undefined ? items.jib_deflection_deg.value : t.jib_deflection_deg;
+          if (yaw !== undefined || defl !== undefined) {
+            setOrientationUI(yaw !== undefined ? yaw : 0, defl !== undefined ? defl : 0);
+          }
+
+          // Motion & Magnet states
+          let motion = items.crane_motion?.value;
+          if (!motion && s.lastCommand) {
+            const m = s.lastCommand.method;
+            if (m === "setForward") motion = "forward";
+            else if (m === "setReverse") motion = "reverse";
+            else if (m === "setStop") motion = "stop";
+          }
+          if (motion) setMotionUI(motion);
+
+          let mag = items.magnet_state?.value;
+          if (!mag && s.lastCommand) {
+            const m = s.lastCommand.method;
+            if (m === "setMagnetOn") mag = "on";
+            else if (m === "setMagnetOff") mag = "off";
+          }
+          if (mag) setMagnetUI(mag);
+
           if (items.crane_speed?.value) {
             if ($("speedSlider")) $("speedSlider").value = items.crane_speed.value;
             if ($("speedDisplay")) $("speedDisplay").textContent = items.crane_speed.value;
           }
 
           // Runtimes
-          if (items.current_session_time_sec?.value && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(items.current_session_time_sec.value);
-          if (items.total_operation_time_sec?.value && $("valLifetimeHours")) {
-            const hrs = (Number(items.total_operation_time_sec.value) / 3600).toFixed(1);
+          const sess = items.current_session_time_sec?.value !== undefined ? items.current_session_time_sec.value : t.current_session_time_sec;
+          if (sess !== undefined && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(sess);
+
+          const total = items.total_operation_time_sec?.value !== undefined ? items.total_operation_time_sec.value : t.total_operation_time_sec;
+          if (total !== undefined && $("valLifetimeHours")) {
+            const hrs = (Number(total) / 3600).toFixed(1);
             $("valLifetimeHours").textContent = `${hrs} hrs`;
           }
 
           // Hardware Chips
+          const mpu = items.mpu_ok?.value !== undefined ? items.mpu_ok.value : t.mpu_ok;
+          const mag_chip = items.mag_ok?.value !== undefined ? items.mag_ok.value : t.mag_ok;
+          const ina = items.ina226_ok?.value !== undefined ? items.ina226_ok.value : t.ina226_ok;
+
           const setChip = (id, ok) => {
             const el = $(id);
             if (!el) return;
             if (ok === true || ok === 1) { el.textContent = "OK"; el.className = "status-badge ok"; }
             else { el.textContent = "FAULT"; el.className = "status-badge fault"; }
           };
-          if (items.mpu_ok) { setChip("chipMpu", items.mpu_ok.value); setChip("chipMpuPreview", items.mpu_ok.value); }
-          if (items.mag_ok) { setChip("chipMag", items.mag_ok.value); setChip("chipMagPreview", items.mag_ok.value); }
-          if (items.ina226_ok) { setChip("chipIna", items.ina226_ok.value); setChip("chipInaPreview", items.ina226_ok.value); }
+          if (mpu !== undefined) { setChip("chipMpu", mpu); setChip("chipMpuPreview", mpu); }
+          if (mag_chip !== undefined) { setChip("chipMag", mag_chip); setChip("chipMagPreview", mag_chip); }
+          if (ina !== undefined) { setChip("chipIna", ina); setChip("chipInaPreview", ina); }
 
-          const isOnline = items.esp32_status?.value === "online";
+          const isOnline = items.esp32_status?.value ? (items.esp32_status.value === "online") : (s.online !== undefined ? Boolean(s.online) : true);
           if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !isOnline);
           if ($("esp32StatusText")) $("esp32StatusText").textContent = isOnline ? "ESP32 Online" : "ESP32 Offline";
         } catch (e) {}
@@ -1650,7 +1690,21 @@
         ws.onmessage = (event) => {
           try {
             const msg = JSON.parse(event.data);
-            if (msg.type === "update") {
+            if (msg.type === "snapshot" && msg.state) {
+              const s = msg.state;
+              const t = s.telemetry || {};
+              if (t.voltage_V !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(t.voltage_V).toFixed(2);
+              if (t.current_mA !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(t.current_mA);
+              if (t.power_mW !== undefined && $("valPower")) $("valPower").textContent = Math.round(t.power_mW);
+              if (t.jib_yaw_deg !== undefined || t.jib_deflection_deg !== undefined) {
+                setOrientationUI(t.jib_yaw_deg !== undefined ? t.jib_yaw_deg : 0, t.jib_deflection_deg !== undefined ? t.jib_deflection_deg : 0);
+              }
+              if (t.current_session_time_sec !== undefined && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(t.current_session_time_sec);
+              if (t.total_operation_time_sec !== undefined && $("valLifetimeHours")) $("valLifetimeHours").textContent = `${(Number(t.total_operation_time_sec) / 3600).toFixed(1)} hrs`;
+              const isOnline = s.online !== undefined ? Boolean(s.online) : true;
+              if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !isOnline);
+              if ($("esp32StatusText")) $("esp32StatusText").textContent = isOnline ? "ESP32 Online" : "ESP32 Offline";
+            } else if (msg.type === "update") {
               const { item_id, value } = msg;
               if (item_id === "voltage_V" && $("valVoltage")) $("valVoltage").textContent = Number(value).toFixed(2);
               if (item_id === "current_mA" && $("valCurrent")) $("valCurrent").textContent = Math.round(value);
@@ -1669,8 +1723,11 @@
               if (t.voltage_V !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(t.voltage_V).toFixed(2);
               if (t.current_mA !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(t.current_mA);
               if (t.power_mW !== undefined && $("valPower")) $("valPower").textContent = Math.round(t.power_mW);
-              if (t.jib_yaw_deg !== undefined) setOrientationUI(t.jib_yaw_deg, t.jib_deflection_deg);
+              if (t.jib_yaw_deg !== undefined || t.jib_deflection_deg !== undefined) {
+                setOrientationUI(t.jib_yaw_deg !== undefined ? t.jib_yaw_deg : 0, t.jib_deflection_deg !== undefined ? t.jib_deflection_deg : 0);
+              }
               if (t.current_session_time_sec && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(t.current_session_time_sec);
+              if (t.total_operation_time_sec && $("valLifetimeHours")) $("valLifetimeHours").textContent = `${(Number(t.total_operation_time_sec) / 3600).toFixed(1)} hrs`;
             } else if (msg.type === "status") {
               const online = Boolean(msg.data?.online);
               if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !online);

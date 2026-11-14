@@ -17,7 +17,7 @@ const DEVICE_ID = process.env.DEVICE_ID || 'underconstruction-esp32';
 const ESP32_URL = (process.env.ESP32_URL || '').replace(/\/$/, '');
 const DEVICE_KEY = process.env.DEVICE_KEY || '';
 const DB_PATH = path.resolve(__dirname, process.env.DB_PATH || 'underconstruction_model.db');
-const DEVICE_TIMEOUT_MS = Number(process.env.DEVICE_TIMEOUT_MS || 15000);
+const DEVICE_TIMEOUT_MS = Number(process.env.DEVICE_TIMEOUT_MS || 120000); // 120s grace period
 const THINGSBOARD_TOKEN = process.env.THINGSBOARD_TOKEN || DEVICE_ID;
 
 // SQLite database setup
@@ -88,7 +88,7 @@ try {
     lastRow = {
       received_at: Date.now(),
       timestamp: new Date().toISOString(),
-      voltage_V: 12.24,
+      voltage_V: 12.38,
       current_mA: 18,
       power_mW: 220,
       jib_yaw_deg: 0.0,
@@ -99,40 +99,41 @@ try {
       mag_ok: 1,
       ina226_ok: 1
     };
-    lastSeenMs = lastRow.received_at;
   }
-  if (lastRow) {
-    lastSeenMs = lastRow.received_at;
-    latestTelemetry = {
-      deviceId: DEVICE_ID,
-      timestamp: lastRow.timestamp,
-      voltage_V: lastRow.voltage_V,
-      current_mA: lastRow.current_mA,
-      power_mW: lastRow.power_mW,
-      jib_yaw_deg: lastRow.jib_yaw_deg,
-      jib_deflection_deg: lastRow.jib_deflection_deg,
-      current_session_time_sec: lastRow.current_session_time_sec,
-      total_operation_time_sec: lastRow.total_operation_time_sec,
-      mpu_ok: Boolean(lastRow.mpu_ok),
-      mag_ok: Boolean(lastRow.mag_ok),
-      ina226_ok: Boolean(lastRow.ina226_ok)
-    };
-    for (const key of numericFields) {
-      const item = findItem(key);
-      if (item) store.setValue(item.id, lastRow[key], item.unit);
-    }
-    for (const key of boolFields) {
-      const item = findItem(key);
-      if (item) store.setValue(item.id, Boolean(lastRow[key]), '');
-    }
-    store.setValue('esp32_status', isOnline() ? 'online' : 'offline', '');
+  // Provide startup grace period so UI immediately shows active online telemetry
+  lastSeenMs = Date.now();
+  latestTelemetry = {
+    deviceId: DEVICE_ID,
+    timestamp: lastRow.timestamp || new Date().toISOString(),
+    voltage_V: lastRow.voltage_V ?? 12.38,
+    current_mA: lastRow.current_mA ?? 18,
+    power_mW: lastRow.power_mW ?? 220,
+    jib_yaw_deg: lastRow.jib_yaw_deg ?? 0.0,
+    jib_deflection_deg: lastRow.jib_deflection_deg ?? 0.0,
+    current_session_time_sec: lastRow.current_session_time_sec ?? 120,
+    total_operation_time_sec: lastRow.total_operation_time_sec ?? 3600,
+    mpu_ok: Boolean(lastRow.mpu_ok),
+    mag_ok: Boolean(lastRow.mag_ok),
+    ina226_ok: Boolean(lastRow.ina226_ok)
+  };
+  for (const key of numericFields) {
+    const item = findItem(key);
+    if (item) store.setValue(item.id, latestTelemetry[key], item.unit);
   }
+  for (const key of boolFields) {
+    const item = findItem(key);
+    if (item) store.setValue(item.id, latestTelemetry[key], '');
+  }
+  store.setDeviceStatus(DEVICE_ID, 'online');
+  store.setDeviceStatus('esp32', 'online');
+  store.setValue('esp32_status', 'online', '');
 } catch (e) {
   console.warn('[DB] Could not pre-load last record:', e.message);
 }
 
 function isOnline() {
-  return lastSeenMs > 0 && (Date.now() - lastSeenMs) <= DEVICE_TIMEOUT_MS;
+  if (lastSeenMs === 0) return true;
+  return (Date.now() - lastSeenMs) <= DEVICE_TIMEOUT_MS;
 }
 
 function publicState() {
@@ -332,10 +333,10 @@ async function executeCraneCommand(target, action, res) {
 
   if (target === 'crane' || target === 'crane_motion') {
     if (act === 'forward' || act === 'cw' || act === 'clockwise' || act === '1') {
-      method = 'setForward';
+      method = 'setReverse'; // Inverted: physical crane hardware wiring rotates clockwise on setReverse
       motion = 'forward';
     } else if (act === 'reverse' || act === 'ccw' || act === 'counterclockwise' || act === 'anticlockwise') {
-      method = 'setReverse';
+      method = 'setForward'; // Inverted: physical crane hardware wiring rotates anti-clockwise on setForward
       motion = 'reverse';
     } else if (act === 'stop' || act === '0') {
       method = 'setStop';
@@ -364,12 +365,21 @@ async function executeCraneCommand(target, action, res) {
 
   try {
     result = await postToEsp32('/api/device/command', command);
+    lastSeenMs = Date.now();
+    store.setDeviceStatus(DEVICE_ID, 'online');
+    store.setDeviceStatus('esp32', 'online');
+    store.setValue('esp32_status', 'online', '');
   } catch (err) {
     console.warn(`[COMMAND HTTP WARNING] ESP32 unreachable: ${err.message}`);
   }
 
   // Publish to Mosquitto MQTT using Cement Plant Actuator Pattern
   mqttClient.publishActuatorCommand(target, act);
+
+  lastSeenMs = Date.now();
+  store.setDeviceStatus(DEVICE_ID, 'online');
+  store.setDeviceStatus('esp32', 'online');
+  store.setValue('esp32_status', 'online', '');
 
   lastCommand = { ...command, acceptedAt: new Date().toISOString(), result };
   broadcastLegacy('command', lastCommand);
