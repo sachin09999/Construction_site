@@ -1925,9 +1925,6 @@
             $("needlePower").style.transform = `rotate(${pAngle}deg)`;
           }
         }
-            $("needlePower").style.transform = `rotate(${pAngle}deg)`;
-          }
-        }
 
         // 4. Jib Heading (yaw) & Deflection
         const yaw = isVal(telemetry.jib_yaw_deg) ? telemetry.jib_yaw_deg : (isVal(cementItems.jib_yaw_deg?.value) ? cementItems.jib_yaw_deg.value : null);

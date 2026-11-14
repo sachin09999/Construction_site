@@ -406,13 +406,6 @@ async function executeCraneCommand(target, action, res) {
   // 1. Publish immediately to Mosquitto MQTT using Cement Plant Actuator Pattern (instant non-blocking)
   mqttClient.publishActuatorCommand(target, act, speed);
 
-  // If starting rotation, also explicitly dispatch setSpeed over HTTP & MQTT to prevent stalling at 30 PWM
-  if (motion === 'forward' || motion === 'reverse') {
-    try {
-      postToEsp32('/api/device/command', { method: 'setSpeed', params: speed, speed }).catch(() => {});
-    } catch (_) {}
-  }
-
   // 2. Dispatch command to ESP32 over HTTP in background without stalling control response
   postToEsp32('/api/device/command', command)
     .then(r => {

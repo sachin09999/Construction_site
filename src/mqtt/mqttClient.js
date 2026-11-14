@@ -181,17 +181,9 @@ function publishActuatorCommand(itemId, command, customSpeed) {
       client.publish(topicCommand(), JSON.stringify(rpcPayload), { qos: 1, retain: false });
       client.publish("plant/underconstruction/command", JSON.stringify(rpcPayload), { qos: 1, retain: false });
       client.publish("crane/command", JSON.stringify(rpcPayload), { qos: 1, retain: false });
-
-      // If moving, explicitly dispatch setSpeed to ensure physical motor PWM is not stalled at 30
-      if (wireCommand === "forward" || wireCommand === "reverse") {
-        const speedPayload = { method: "setSpeed", params: speed, speed };
-        client.publish(topicCommand(), JSON.stringify(speedPayload), { qos: 1, retain: false });
-        client.publish("plant/underconstruction/command", JSON.stringify(speedPayload), { qos: 1, retain: false });
-        client.publish("crane/command", JSON.stringify(speedPayload), { qos: 1, retain: false });
-      }
     }
 
-    console.log(`[MQTT] Published command for ${targetId} (${wireCommand}) at speed ${speed}`);
+    console.log(`[MQTT] Published command for ${targetId} (${wireCommand}) with method ${rpcMethod}`);
     return true;
   } catch (err) {
     console.error(`[MQTT] Failed to publish for ${targetId}:`, err.message);
