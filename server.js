@@ -17,7 +17,7 @@ const DEVICE_ID = process.env.DEVICE_ID || 'underconstruction-esp32';
 const ESP32_URL = (process.env.ESP32_URL || '').replace(/\/$/, '');
 const DEVICE_KEY = process.env.DEVICE_KEY || '';
 const DB_PATH = path.resolve(__dirname, process.env.DB_PATH || 'underconstruction_model.db');
-const DEVICE_TIMEOUT_MS = Number(process.env.DEVICE_TIMEOUT_MS || 120000); // 120s grace period
+const DEVICE_TIMEOUT_MS = Number(process.env.DEVICE_TIMEOUT_MS || 300000); // 5 min grace period
 const THINGSBOARD_TOKEN = process.env.THINGSBOARD_TOKEN || DEVICE_ID;
 
 // SQLite database setup
@@ -224,6 +224,15 @@ app.get('/api/devices', (req, res) => {
 
 // GET /api/refresh -> full data snapshot + device status in one round-trip
 app.get('/api/refresh', (req, res) => {
+  // Sync store with latestTelemetry if items are unpopulated
+  if (latestTelemetry) {
+    for (const [key, val] of Object.entries(latestTelemetry)) {
+      if (val !== null && val !== undefined) {
+        const item = findItem(key);
+        if (item) store.setValue(item.id, val, item.unit);
+      }
+    }
+  }
   res.json({
     items: store.all(),
     devices: store.allDevices(),
@@ -303,8 +312,8 @@ function ingestTelemetry(payload) {
   return telemetry;
 }
 
-// ESP32 Telemetry Ingestion API
-app.post('/api/device/telemetry', requireDeviceKey, (req, res) => {
+// ESP32 Telemetry Ingestion API (Supports multiple REST paths)
+app.post(['/api/device/telemetry', '/api/telemetry', '/telemetry'], requireDeviceKey, (req, res) => {
   const telemetry = ingestTelemetry(req.body);
   res.json({ success: true, deviceId: DEVICE_ID, receivedAt: telemetry ? telemetry.timestamp : new Date().toISOString() });
 });
@@ -521,6 +530,7 @@ wsServer.attach(server, publicState);
 // Connect MQTT client with dual update & telemetry pipeline
 mqttClient.connect(
   (itemId, updated) => {
+    lastSeenMs = Date.now();
     wsServer.broadcastItem(itemId, updated);
   },
   (telemetryPayload) => {

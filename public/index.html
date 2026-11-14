@@ -1585,95 +1585,129 @@
       }
 
       // =======================================================================
-      // SNAPSHOT DATA FETCH (SUPPORTS DUAL CEMENT-PLANT & DIRECT STATE APIS)
+      // LIVE TELEMETRY PARSER & UI SYNCHRONIZER
+      // =======================================================================
+      function isVal(v) {
+        return v !== null && v !== undefined && v !== "" && !Number.isNaN(Number(v));
+      }
+
+      function updateDashboardTelemetry(telemetry, stateOnline, lastCommand, cementItems = {}) {
+        if (!telemetry || typeof telemetry !== "object") telemetry = {};
+
+        // 1. Voltage
+        const volt = isVal(telemetry.voltage_V) ? telemetry.voltage_V : (isVal(cementItems.voltage_V?.value) ? cementItems.voltage_V.value : null);
+        if (isVal(volt) && $("valVoltage")) $("valVoltage").textContent = Number(volt).toFixed(2);
+
+        // 2. Current
+        const curr = isVal(telemetry.current_mA) ? telemetry.current_mA : (isVal(cementItems.current_mA?.value) ? cementItems.current_mA.value : null);
+        if (isVal(curr) && $("valCurrent")) $("valCurrent").textContent = Math.round(Number(curr));
+
+        // 3. Power
+        const pow = isVal(telemetry.power_mW) ? telemetry.power_mW : (isVal(cementItems.power_mW?.value) ? cementItems.power_mW.value : null);
+        if (isVal(pow) && $("valPower")) $("valPower").textContent = Math.round(Number(pow));
+
+        // 4. Jib Heading (yaw) & Deflection
+        const yaw = isVal(telemetry.jib_yaw_deg) ? telemetry.jib_yaw_deg : (isVal(cementItems.jib_yaw_deg?.value) ? cementItems.jib_yaw_deg.value : null);
+        const defl = isVal(telemetry.jib_deflection_deg) ? telemetry.jib_deflection_deg : (isVal(cementItems.jib_deflection_deg?.value) ? cementItems.jib_deflection_deg.value : null);
+        if (isVal(yaw) || isVal(defl)) {
+          setOrientationUI(isVal(yaw) ? yaw : null, isVal(defl) ? defl : null);
+        }
+
+        // 5. Session Runtime
+        const sess = isVal(telemetry.current_session_time_sec) ? telemetry.current_session_time_sec : (isVal(cementItems.current_session_time_sec?.value) ? cementItems.current_session_time_sec.value : null);
+        if (isVal(sess) && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(sess);
+
+        // 6. Total Lifetime Hours
+        const total = isVal(telemetry.total_operation_time_sec) ? telemetry.total_operation_time_sec : (isVal(cementItems.total_operation_time_sec?.value) ? cementItems.total_operation_time_sec.value : null);
+        if (isVal(total) && $("valLifetimeHours")) {
+          const hrs = (Number(total) / 3600).toFixed(1);
+          $("valLifetimeHours").textContent = `${hrs} hrs`;
+        }
+
+        // 7. Sensor Diagnostic Chips
+        const setChip = (id, ok) => {
+          const el = $(id);
+          if (!el) return;
+          const isOk = (ok === true || ok === 1 || ok === "1" || ok === "true" || ok === "OK");
+          el.textContent = isOk ? "OK" : "FAULT";
+          el.className = isOk ? "status-badge ok" : "status-badge fault";
+        };
+
+        const mpu = telemetry.mpu_ok !== undefined && telemetry.mpu_ok !== null ? telemetry.mpu_ok : cementItems.mpu_ok?.value;
+        const mag = telemetry.mag_ok !== undefined && telemetry.mag_ok !== null ? telemetry.mag_ok : cementItems.mag_ok?.value;
+        const ina = telemetry.ina226_ok !== undefined && telemetry.ina226_ok !== null ? telemetry.ina226_ok : cementItems.ina226_ok?.value;
+
+        if (mpu !== undefined && mpu !== null) { setChip("chipMpu", mpu); setChip("chipMpuPreview", mpu); }
+        if (mag !== undefined && mag !== null) { setChip("chipMag", mag); setChip("chipMagPreview", mag); }
+        if (ina !== undefined && ina !== null) { setChip("chipIna", ina); setChip("chipInaPreview", ina); }
+
+        // 8. Online Status
+        const isOnline = stateOnline !== undefined ? Boolean(stateOnline) : (cementItems.esp32_status?.value === "online");
+        if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !isOnline);
+        if ($("esp32StatusText")) $("esp32StatusText").textContent = isOnline ? "ESP32 Online" : "ESP32 Offline";
+        if ($("chipEsp")) {
+          $("chipEsp").textContent = isOnline ? "ONLINE" : "OFFLINE";
+          $("chipEsp").className = isOnline ? "status-badge ok" : "status-badge fault";
+        }
+
+        // 9. Motion & Magnet Actuator Status
+        let motion = cementItems.crane_motion?.value;
+        if (!motion && lastCommand) {
+          const m = lastCommand.method;
+          if (m === "setForward") motion = "forward";
+          else if (m === "setReverse") motion = "reverse";
+          else if (m === "setStop") motion = "stop";
+        }
+        if (motion) setMotionUI(motion);
+
+        let magRelay = cementItems.magnet_state?.value;
+        if (!magRelay && lastCommand) {
+          const m = lastCommand.method;
+          if (m === "setMagnetOn") magRelay = "on";
+          else if (m === "setMagnetOff") magRelay = "off";
+        }
+        if (magRelay) setMagnetUI(magRelay);
+
+        if (cementItems.crane_speed?.value) {
+          if ($("speedSlider")) $("speedSlider").value = cementItems.crane_speed.value;
+          if ($("speedDisplay")) $("speedDisplay").textContent = cementItems.crane_speed.value;
+        }
+      }
+
+      // =======================================================================
+      // SNAPSHOT DATA FETCH (DUAL /api/state & /api/refresh with CONTINUOUS POLLING)
       // =======================================================================
       async function fetchSnapshot() {
         try {
-          let res = await fetch(`${API}/api/refresh`);
-          let data = null;
-          if (res.ok) {
-            data = await res.json();
-          } else {
-            res = await fetch(`${API}/api/state`);
-            if (res.ok) data = await res.json();
-          }
-          if (!data) return;
+          // Direct fetch of /api/state (guaranteed primary endpoint for physical crane ESP32 telemetry)
+          let stateJson = null;
+          try {
+            const stateRes = await fetch(`${API}/api/state`, { cache: "no-store" });
+            if (stateRes.ok) stateJson = await stateRes.json();
+          } catch (_) {}
 
-          const items = data.items || {};
-          const s = data.state || (data.telemetry ? data : {});
-          const t = s.telemetry || (s.voltage_V !== undefined ? s : {});
+          // Also fetch /api/refresh for Cement Plant registry items
+          let refreshJson = null;
+          try {
+            const refreshRes = await fetch(`${API}/api/refresh`, { cache: "no-store" });
+            if (refreshRes.ok) refreshJson = await refreshRes.json();
+          } catch (_) {}
 
-          // Power metrics (fallback to state.telemetry if Cement items empty)
-          const volt = items.voltage_V?.value !== undefined ? items.voltage_V.value : t.voltage_V;
-          if (volt !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(volt).toFixed(2);
+          const s = (stateJson && stateJson.state) ? stateJson.state : (refreshJson && refreshJson.state ? refreshJson.state : {});
+          const telemetry = s.telemetry || (refreshJson && refreshJson.state && refreshJson.state.telemetry) || {};
+          const cementItems = (refreshJson && refreshJson.items) || {};
+          const isOnline = s.online !== undefined ? s.online : true;
+          const lastCmd = s.lastCommand || (refreshJson && refreshJson.state && refreshJson.state.lastCommand);
 
-          const curr = items.current_mA?.value !== undefined ? items.current_mA.value : t.current_mA;
-          if (curr !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(curr);
-
-          const pow = items.power_mW?.value !== undefined ? items.power_mW.value : t.power_mW;
-          if (pow !== undefined && $("valPower")) $("valPower").textContent = Math.round(pow);
-
-          // Orientation (yaw & deflection tilt)
-          const yaw = items.jib_yaw_deg?.value !== undefined ? items.jib_yaw_deg.value : t.jib_yaw_deg;
-          const defl = items.jib_deflection_deg?.value !== undefined ? items.jib_deflection_deg.value : t.jib_deflection_deg;
-          if (yaw !== undefined || defl !== undefined) {
-            setOrientationUI(yaw !== undefined ? yaw : 0, defl !== undefined ? defl : 0);
-          }
-
-          // Motion & Magnet states
-          let motion = items.crane_motion?.value;
-          if (!motion && s.lastCommand) {
-            const m = s.lastCommand.method;
-            if (m === "setForward") motion = "forward";
-            else if (m === "setReverse") motion = "reverse";
-            else if (m === "setStop") motion = "stop";
-          }
-          if (motion) setMotionUI(motion);
-
-          let mag = items.magnet_state?.value;
-          if (!mag && s.lastCommand) {
-            const m = s.lastCommand.method;
-            if (m === "setMagnetOn") mag = "on";
-            else if (m === "setMagnetOff") mag = "off";
-          }
-          if (mag) setMagnetUI(mag);
-
-          if (items.crane_speed?.value) {
-            if ($("speedSlider")) $("speedSlider").value = items.crane_speed.value;
-            if ($("speedDisplay")) $("speedDisplay").textContent = items.crane_speed.value;
-          }
-
-          // Runtimes
-          const sess = items.current_session_time_sec?.value !== undefined ? items.current_session_time_sec.value : t.current_session_time_sec;
-          if (sess !== undefined && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(sess);
-
-          const total = items.total_operation_time_sec?.value !== undefined ? items.total_operation_time_sec.value : t.total_operation_time_sec;
-          if (total !== undefined && $("valLifetimeHours")) {
-            const hrs = (Number(total) / 3600).toFixed(1);
-            $("valLifetimeHours").textContent = `${hrs} hrs`;
-          }
-
-          // Hardware Chips
-          const mpu = items.mpu_ok?.value !== undefined ? items.mpu_ok.value : t.mpu_ok;
-          const mag_chip = items.mag_ok?.value !== undefined ? items.mag_ok.value : t.mag_ok;
-          const ina = items.ina226_ok?.value !== undefined ? items.ina226_ok.value : t.ina226_ok;
-
-          const setChip = (id, ok) => {
-            const el = $(id);
-            if (!el) return;
-            if (ok === true || ok === 1) { el.textContent = "OK"; el.className = "status-badge ok"; }
-            else { el.textContent = "FAULT"; el.className = "status-badge fault"; }
-          };
-          if (mpu !== undefined) { setChip("chipMpu", mpu); setChip("chipMpuPreview", mpu); }
-          if (mag_chip !== undefined) { setChip("chipMag", mag_chip); setChip("chipMagPreview", mag_chip); }
-          if (ina !== undefined) { setChip("chipIna", ina); setChip("chipInaPreview", ina); }
-
-          const isOnline = items.esp32_status?.value ? (items.esp32_status.value === "online") : (s.online !== undefined ? Boolean(s.online) : true);
-          if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !isOnline);
-          if ($("esp32StatusText")) $("esp32StatusText").textContent = isOnline ? "ESP32 Online" : "ESP32 Offline";
-        } catch (e) {}
+          updateDashboardTelemetry(telemetry, isOnline, lastCmd, cementItems);
+        } catch (e) {
+          console.warn("[Snapshot Fetch Warning]", e);
+        }
       }
+
+      // Instant initial load + continuous polling every 1200ms
       fetchSnapshot();
+      setInterval(fetchSnapshot, 1200);
 
       // =======================================================================
       // REAL-TIME WEBSOCKET
@@ -1692,42 +1726,29 @@
             const msg = JSON.parse(event.data);
             if (msg.type === "snapshot" && msg.state) {
               const s = msg.state;
-              const t = s.telemetry || {};
-              if (t.voltage_V !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(t.voltage_V).toFixed(2);
-              if (t.current_mA !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(t.current_mA);
-              if (t.power_mW !== undefined && $("valPower")) $("valPower").textContent = Math.round(t.power_mW);
-              if (t.jib_yaw_deg !== undefined || t.jib_deflection_deg !== undefined) {
-                setOrientationUI(t.jib_yaw_deg !== undefined ? t.jib_yaw_deg : 0, t.jib_deflection_deg !== undefined ? t.jib_deflection_deg : 0);
-              }
-              if (t.current_session_time_sec !== undefined && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(t.current_session_time_sec);
-              if (t.total_operation_time_sec !== undefined && $("valLifetimeHours")) $("valLifetimeHours").textContent = `${(Number(t.total_operation_time_sec) / 3600).toFixed(1)} hrs`;
-              const isOnline = s.online !== undefined ? Boolean(s.online) : true;
-              if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !isOnline);
-              if ($("esp32StatusText")) $("esp32StatusText").textContent = isOnline ? "ESP32 Online" : "ESP32 Offline";
+              updateDashboardTelemetry(s.telemetry, s.online, s.lastCommand);
+            } else if (msg.type === "telemetry" && msg.data) {
+              updateDashboardTelemetry(msg.data, true, null);
             } else if (msg.type === "update") {
               const { item_id, value } = msg;
-              if (item_id === "voltage_V" && $("valVoltage")) $("valVoltage").textContent = Number(value).toFixed(2);
-              if (item_id === "current_mA" && $("valCurrent")) $("valCurrent").textContent = Math.round(value);
-              if (item_id === "power_mW" && $("valPower")) $("valPower").textContent = Math.round(value);
-              if (item_id === "jib_yaw_deg") setOrientationUI(value, null);
-              if (item_id === "jib_deflection_deg") setOrientationUI(null, value);
+              if (item_id === "voltage_V" && isVal(value) && $("valVoltage")) $("valVoltage").textContent = Number(value).toFixed(2);
+              if (item_id === "current_mA" && isVal(value) && $("valCurrent")) $("valCurrent").textContent = Math.round(Number(value));
+              if (item_id === "power_mW" && isVal(value) && $("valPower")) $("valPower").textContent = Math.round(Number(value));
+              if (item_id === "jib_yaw_deg" && isVal(value)) setOrientationUI(value, null);
+              if (item_id === "jib_deflection_deg" && isVal(value)) setOrientationUI(null, value);
               if (item_id === "crane_motion") setMotionUI(value);
               if (item_id === "magnet_state") setMagnetUI(value);
-              if (item_id === "current_session_time_sec" && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(value);
+              if (item_id === "current_session_time_sec" && isVal(value) && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(value);
+              if (item_id === "total_operation_time_sec" && isVal(value) && $("valLifetimeHours")) $("valLifetimeHours").textContent = `${(Number(value) / 3600).toFixed(1)} hrs`;
+              if (item_id === "esp32_status") {
+                const online = (value === "online");
+                if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !online);
+                if ($("esp32StatusText")) $("esp32StatusText").textContent = online ? "ESP32 Online" : "ESP32 Offline";
+              }
               if (item_id === "crane_speed") {
                 if ($("speedSlider")) $("speedSlider").value = value;
                 if ($("speedDisplay")) $("speedDisplay").textContent = value;
               }
-            } else if (msg.type === "telemetry" && msg.data) {
-              const t = msg.data;
-              if (t.voltage_V !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(t.voltage_V).toFixed(2);
-              if (t.current_mA !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(t.current_mA);
-              if (t.power_mW !== undefined && $("valPower")) $("valPower").textContent = Math.round(t.power_mW);
-              if (t.jib_yaw_deg !== undefined || t.jib_deflection_deg !== undefined) {
-                setOrientationUI(t.jib_yaw_deg !== undefined ? t.jib_yaw_deg : 0, t.jib_deflection_deg !== undefined ? t.jib_deflection_deg : 0);
-              }
-              if (t.current_session_time_sec && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(t.current_session_time_sec);
-              if (t.total_operation_time_sec && $("valLifetimeHours")) $("valLifetimeHours").textContent = `${(Number(t.total_operation_time_sec) / 3600).toFixed(1)} hrs`;
             } else if (msg.type === "status") {
               const online = Boolean(msg.data?.online);
               if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !online);
