@@ -1,0 +1,13 @@
+node_modules/
+.env
+*.db
+*.db-shm
+*.db-wal
+underconstruction_model.db
+mosquitto/data/*
+!mosquitto/data/.gitkeep
+mosquitto/log/*
+!mosquitto/log/.gitkeep
+*_backup*.*
+npm-debug.log*
+.DS_Store

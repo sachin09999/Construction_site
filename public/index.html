@@ -1,0 +1,1886 @@
+<!doctype html>
+<html lang="en" class="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Under Construction | Crane Digital Twin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================================
+       DESIGN SYSTEM - VIBRANT FROSTED GLASS & MODERN INDUSTRIAL AESTHETIC
+       ========================================================================= */
+    :root {
+      --bg: #f4f7fb;
+      --bg-ambient: linear-gradient(135deg, #eef4ff 0%, #fdf2f8 35%, #ecfeff 70%, #f0fdf4 100%);
+      
+      --text: #0f172a;
+      --text-muted: #334155;
+      --text-dim: #64748b;
+      
+      /* Colorful Frosted Glass Cards */
+      --card-blue-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(224, 242, 254, 0.45) 100%);
+      --card-blue-border: rgba(56, 189, 248, 0.6);
+      --card-blue-text: #0284c7;
+      --card-blue-shadow: 0 10px 24px -4px rgba(2, 132, 199, 0.15);
+
+      --card-green-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(209, 250, 229, 0.45) 100%);
+      --card-green-border: rgba(52, 211, 153, 0.6);
+      --card-green-text: #059669;
+      --card-green-shadow: 0 10px 24px -4px rgba(16, 185, 129, 0.15);
+
+      --card-purple-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(237, 233, 254, 0.45) 100%);
+      --card-purple-border: rgba(167, 139, 250, 0.6);
+      --card-purple-text: #7c3aed;
+      --card-purple-shadow: 0 10px 24px -4px rgba(124, 58, 237, 0.15);
+
+      --card-pink-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 228, 230, 0.45) 100%);
+      --card-pink-border: rgba(251, 113, 133, 0.6);
+      --card-pink-text: #e11d48;
+      --card-pink-shadow: 0 10px 24px -4px rgba(225, 29, 72, 0.15);
+
+      --card-amber-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(254, 243, 199, 0.45) 100%);
+      --card-amber-border: rgba(245, 158, 11, 0.6);
+      --card-amber-text: #d97706;
+
+      --glass-base: rgba(255, 255, 255, 0.58);
+      --glass-elevated: rgba(255, 255, 255, 0.78);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --glass-shine: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95), 0 6px 20px rgba(31, 38, 135, 0.05);
+      --line: rgba(226, 232, 240, 0.8);
+      --accent: #0284c7;
+      --green: #10b981;
+      --red: #ef4444;
+      --amber: #f59e0b;
+    }
+
+    /* Dark Mode */
+    html.dark {
+      --bg: #090e1a;
+      --bg-ambient: linear-gradient(135deg, #090e1a 0%, #0d1527 50%, #111827 100%);
+      --text: #f8fafc;
+      --text-muted: #cbd5e1;
+      --text-dim: #94a3b8;
+      
+      --card-blue-bg: linear-gradient(135deg, rgba(14, 165, 233, 0.18) 0%, rgba(15, 23, 42, 0.65) 100%);
+      --card-blue-border: rgba(56, 189, 248, 0.45);
+      --card-blue-text: #38bdf8;
+      --card-blue-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+
+      --card-green-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(15, 23, 42, 0.65) 100%);
+      --card-green-border: rgba(52, 211, 153, 0.45);
+      --card-green-text: #34d399;
+      --card-green-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+
+      --card-purple-bg: linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(15, 23, 42, 0.65) 100%);
+      --card-purple-border: rgba(167, 139, 250, 0.45);
+      --card-purple-text: #a78bfa;
+      --card-purple-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+
+      --card-pink-bg: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(15, 23, 42, 0.65) 100%);
+      --card-pink-border: rgba(251, 113, 133, 0.45);
+      --card-pink-text: #f472b6;
+      --card-pink-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+
+      --card-amber-bg: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(15, 23, 42, 0.65) 100%);
+      --card-amber-border: rgba(245, 158, 11, 0.45);
+      --card-amber-text: #fbbf24;
+
+      --glass-base: rgba(15, 23, 42, 0.58);
+      --glass-elevated: rgba(30, 41, 59, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.16);
+      --glass-shine: inset 0 1px 1px 0 rgba(255, 255, 255, 0.2), 0 6px 20px rgba(0, 0, 0, 0.35);
+      --line: rgba(51, 65, 85, 0.7);
+      --accent: #38bdf8;
+    }
+
+    * { box-sizing: border-box; user-select: none; margin: 0; padding: 0; }
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden; /* Strict no-scroll architecture */
+      background: var(--bg);
+      background-image: var(--bg-ambient);
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Ambient Light Orbs for Glass Transparency */
+    .ambient-glows {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.45;
+      animation: floatAmbient 24s infinite alternate ease-in-out;
+    }
+    html.dark .ambient-orb { opacity: 0.25; filter: blur(95px); }
+    .orb-1 {
+      width: 460px; height: 460px; top: -60px; left: -60px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, transparent 70%);
+      animation-duration: 20s;
+    }
+    .orb-2 {
+      width: 420px; height: 420px; top: 10%; right: -60px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%);
+      animation-duration: 26s;
+    }
+    .orb-3 {
+      width: 500px; height: 500px; bottom: -80px; left: 25%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 70%);
+      animation-duration: 30s;
+    }
+
+    @keyframes floatAmbient {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, 20px) scale(1.05); }
+      100% { transform: translate(-20px, 35px) scale(0.95); }
+    }
+
+    /* =========================================================================
+       APP SHELL
+       ========================================================================= */
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 14px 12px;
+      gap: 8px;
+    }
+
+    /* =========================================================================
+       HEADER (42px)
+       ========================================================================= */
+    header {
+      height: 42px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 14px;
+      background: var(--glass-base);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      box-shadow: var(--glass-shine);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .brand-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: white;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+    }
+    .brand-title {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .brand-tag {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: rgba(2, 132, 199, 0.12);
+      padding: 1.5px 6px;
+      border-radius: 5px;
+      border: 1px solid rgba(2, 132, 199, 0.25);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3.5px 9px;
+      border-radius: 20px;
+      background: var(--glass-elevated);
+      border: 1px solid var(--line);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+      animation: pulse 2s infinite;
+    }
+    .pulse-dot.offline {
+      background: var(--red);
+      box-shadow: none;
+      animation: none;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .btn-icon {
+      background: var(--glass-elevated);
+      border: 1px solid var(--line);
+      color: var(--text);
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.15s ease;
+    }
+    .btn-icon:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* =========================================================================
+       NAVIGATION TABS BAR (38px) - PROFESSIONAL SEGMENTED CONTROLLER
+       ========================================================================= */
+    .tabs-bar {
+      height: 38px;
+      flex-shrink: 0;
+      display: flex;
+      gap: 6px;
+      padding: 3px 5px;
+      background: var(--glass-base);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      box-shadow: var(--glass-shine);
+      position: relative;
+      z-index: 10;
+    }
+    .tab-btn {
+      flex: 1;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 12px;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(0, 0, 0, 0.04);
+    }
+    html.dark .tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      background: var(--glass-elevated);
+      border-color: rgba(56, 189, 248, 0.45);
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12), var(--glass-shine);
+    }
+    html.dark .tab-btn.active {
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35), var(--glass-shine);
+    }
+    .tab-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.82;
+      transition: transform 0.18s ease;
+    }
+    .tab-btn.active .tab-icon {
+      opacity: 1;
+      transform: scale(1.08);
+      color: var(--accent);
+    }
+    html.dark .tab-btn.active .tab-icon {
+      color: #38bdf8;
+    }
+    .tab-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .tab-chip {
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 999px;
+      line-height: 1;
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--text-dim);
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+    html.dark .tab-chip {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-dim);
+    }
+    .tab-btn.active .tab-chip.chip-live {
+      background: rgba(16, 185, 129, 0.18);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .tab-btn.active .tab-chip.chip-ready {
+      background: rgba(2, 132, 199, 0.18);
+      color: #0284c7;
+      border: 1px solid rgba(2, 132, 199, 0.3);
+    }
+    html.dark .tab-btn.active .tab-chip.chip-ready {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.18);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .tab-btn.active .tab-chip.chip-streams {
+      background: rgba(124, 58, 237, 0.18);
+      color: #7c3aed;
+      border: 1px solid rgba(124, 58, 237, 0.3);
+    }
+    html.dark .tab-btn.active .tab-chip.chip-streams {
+      color: #a78bfa;
+      background: rgba(167, 139, 250, 0.18);
+      border-color: rgba(167, 139, 250, 0.3);
+    }
+    .tab-btn.active .tab-chip.chip-ok {
+      background: rgba(16, 185, 129, 0.18);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* =========================================================================
+       VIEWPORT WORKSPACE & TAB PANES
+       ========================================================================= */
+    .viewport-content {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .tab-pane {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: scale(0.995);
+      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      height: 100%;
+      display: flex;
+      gap: 9px;
+    }
+    .tab-pane.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: scale(1);
+      z-index: 2;
+    }
+
+    /* Generic Card */
+    .card {
+      background: var(--glass-base);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid var(--glass-border);
+      border-radius: 13px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: var(--glass-shine);
+      transition: all 0.15s ease;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+    .card-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge {
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--line);
+    }
+    html.dark .badge { background: rgba(255, 255, 255, 0.08); }
+
+    /* =========================================================================
+       TAB 1: DIGITAL TWIN (COMPASS + 4 METRIC CARDS + HEALTH)
+       ========================================================================= */
+    .twin-layout {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 9px;
+    }
+
+    /* Left Jib Compass Stage */
+    .compass-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+    }
+    .compass-stage {
+      position: relative;
+      width: 175px;
+      height: 175px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto 0;
+    }
+    .compass-svg { width: 100%; height: 100%; overflow: visible; }
+    .needle-arm {
+      transform-origin: 87.5px 87.5px;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .heading-readout {
+      text-align: center;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 4px;
+    }
+    .heading-degrees {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .motion-indicator-tag {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+
+    /* Right Metrics Grid */
+    .metrics-matrix-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      height: 100%;
+    }
+    .metrics-quad {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 9px;
+    }
+    .metric-card {
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform 0.15s ease;
+    }
+    .metric-card:hover { transform: translateY(-2px); }
+
+    .card-blue {
+      background: var(--card-blue-bg);
+      border: 1px solid var(--card-blue-border);
+      box-shadow: var(--card-blue-shadow), var(--glass-shine);
+    }
+    .card-blue .metric-title, .card-blue .metric-value { color: var(--card-blue-text); }
+
+    .card-green {
+      background: var(--card-green-bg);
+      border: 1px solid var(--card-green-border);
+      box-shadow: var(--card-green-shadow), var(--glass-shine);
+    }
+    .card-green .metric-title, .card-green .metric-value { color: var(--card-green-text); }
+
+    .card-purple {
+      background: var(--card-purple-bg);
+      border: 1px solid var(--card-purple-border);
+      box-shadow: var(--card-purple-shadow), var(--glass-shine);
+    }
+    .card-purple .metric-title, .card-purple .metric-value { color: var(--card-purple-text); }
+
+    .card-pink {
+      background: var(--card-pink-bg);
+      border: 1px solid var(--card-pink-border);
+      box-shadow: var(--card-pink-shadow), var(--glass-shine);
+    }
+    .card-pink .metric-title, .card-pink .metric-value { color: var(--card-pink-text); }
+
+    .card-amber {
+      background: var(--card-amber-bg);
+      border: 1px solid var(--card-amber-border);
+    }
+
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .metric-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .metric-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-top: 3px;
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+    .metric-unit {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      opacity: 0.8;
+    }
+    .metric-hint {
+      font-size: 9.5px;
+      color: var(--text-dim);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Bottom Info Strip */
+    .system-health-strip {
+      height: 42px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: var(--glass-base);
+      border: 1px solid var(--glass-border);
+      border-radius: 11px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .health-tags {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .tag-ok { color: var(--green); font-weight: 800; }
+    .tag-fault { color: var(--red); font-weight: 800; }
+
+    /* =========================================================================
+       TAB 2: CRANE & MAGNET CONTROL (SPACIOUS REMOTES)
+       ========================================================================= */
+    .controls-layout {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 280px 1fr 270px;
+      gap: 9px;
+    }
+
+    .jog-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      height: 100%;
+    }
+    .control-btn {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 11px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-elevated);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .control-btn:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .control-btn:active { transform: scale(0.97); }
+
+    .control-btn.active-forward {
+      background: rgba(14, 165, 233, 0.25) !important;
+      border-color: #0284c7 !important;
+      color: #0284c7 !important;
+      box-shadow: 0 0 16px rgba(2, 132, 199, 0.35) !important;
+    }
+    .control-btn.active-reverse {
+      background: rgba(124, 58, 237, 0.25) !important;
+      border-color: #7c3aed !important;
+      color: #7c3aed !important;
+      box-shadow: 0 0 16px rgba(124, 58, 237, 0.35) !important;
+    }
+    .control-btn.stop {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: rgba(239, 68, 68, 0.45);
+      color: var(--red);
+    }
+    .control-btn.stop:hover { background: rgba(239, 68, 68, 0.3); }
+
+    /* Speed Modulation Card */
+    .speed-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 18px 22px;
+    }
+    .speed-center { text-align: center; }
+    .speed-val-huge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+    .speed-bar-wrap { margin: 12px 0; }
+    input[type=range] {
+      width: 100%;
+      height: 7px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.1);
+      outline: none;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    html.dark input[type=range] { background: rgba(255,255,255,0.15); }
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+    .preset-chip {
+      background: var(--glass-elevated);
+      border: 1px solid var(--glass-border);
+      border-radius: 7px;
+      padding: 7px 4px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.15s ease;
+    }
+    .preset-chip:hover {
+      border-color: var(--card-amber-text);
+      color: var(--card-amber-text);
+      background: rgba(245, 158, 11, 0.15);
+    }
+
+    /* Electromagnet Card */
+    .magnet-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      padding: 18px 16px;
+    }
+    .magnet-halo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin: 6px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      border: 2px solid var(--glass-border);
+      background: var(--glass-elevated);
+      transition: all 0.25s ease;
+    }
+    .magnet-halo.on {
+      border-color: var(--green);
+      background: rgba(16, 185, 129, 0.2);
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
+    }
+    .magnet-halo.off {
+      border-color: var(--red);
+      background: rgba(239, 68, 68, 0.18);
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.25);
+    }
+    .magnet-toggle-group { display: flex; gap: 8px; margin-top: 10px; }
+
+    /* =========================================================================
+       TAB 3: TELEMETRY GRAPHS (HISTORICAL CURVES)
+       ========================================================================= */
+    .graphs-layout {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .graphs-topbar {
+      height: 34px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px;
+    }
+    .range-selector { display: flex; gap: 5px; }
+    .range-pill {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 10.5px;
+      cursor: pointer;
+    }
+    .range-pill.active {
+      background: var(--glass-elevated);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .charts-row {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      min-height: 0;
+    }
+    .chart-panel {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: 0;
+      padding: 10px 14px;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .chart-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .chart-canvas-wrap {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      min-height: 0;
+    }
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* =========================================================================
+       TAB 4: DIAGNOSTICS & SYSTEM HEALTH
+       ========================================================================= */
+    .diag-layout {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 9px;
+    }
+    .diag-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      justify-content: space-around;
+      padding: 14px 16px;
+    }
+    .diag-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 12px;
+      background: var(--glass-elevated);
+      border: 1px solid var(--glass-border);
+      border-radius: 9px;
+    }
+    .status-badge {
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2.5px 8px;
+      border-radius: 5px;
+    }
+    .status-badge.ok { background: rgba(16, 185, 129, 0.16); color: var(--green); }
+    .status-badge.fault { background: rgba(239, 68, 68, 0.16); color: var(--red); }
+
+    .service-info-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 16px 20px;
+    }
+    .service-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--glass-elevated);
+      border: 1px solid var(--glass-border);
+      border-radius: 9px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .service-item-row strong {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-weight: 700;
+      font-size: 11px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Light Orbs -->
+  <div class="ambient-glows" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- HEADER BAR (42px) -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">🏗️</div>
+        <div class="brand-title">
+          <span>Under Construction</span>
+          <span style="color:var(--text-dim); font-weight:400;">/</span>
+          <span>Crane Digital Twin</span>
+          <span class="brand-tag">v2.0 Live</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- ESP32 Status -->
+        <div class="status-pill">
+          <span class="pulse-dot" id="esp32Dot"></span>
+          <span id="esp32StatusText">Connecting…</span>
+        </div>
+
+        <!-- Mosquitto MQTT Status -->
+        <div class="status-pill">
+          <span style="color:var(--text-dim);">MQTT:</span>
+          <span style="color:var(--green); font-weight:800;">Broker Active</span>
+        </div>
+
+        <!-- ThingsBoard Forwarding -->
+        <div class="status-pill">
+          <span style="color:var(--text-dim);">ThingsBoard:</span>
+          <span style="color:var(--accent); font-weight:800;">Active</span>
+        </div>
+
+        <!-- Theme Switcher -->
+        <button class="btn-icon" id="themeToggle" title="Toggle Light/Dark Theme">☀️</button>
+        <!-- Instant Refresh -->
+        <button class="btn-icon" id="refreshBtn" title="Instant Refresh Data">🔄</button>
+      </div>
+    </header>
+
+    <!-- NAVIGATION TABS BAR (38px) - PROFESSIONAL SEGMENTED CONTROLLER -->
+    <nav class="tabs-bar" role="tablist" aria-label="Dashboard Views">
+      <button class="tab-btn active" role="tab" id="btn-tab-twin" data-tab="tab-twin" aria-selected="true" aria-controls="tab-twin">
+        <span class="tab-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M7 20V4h10v16M12 4v4M12 12v4M2 14h5M17 14h5"/></svg>
+        </span>
+        <span class="tab-label">Digital Twin</span>
+        <span class="tab-chip chip-live">LIVE 3D</span>
+      </button>
+
+      <button class="tab-btn" role="tab" id="btn-tab-controls" data-tab="tab-controls" aria-selected="false" aria-controls="tab-controls">
+        <span class="tab-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+        </span>
+        <span class="tab-label">Crane & Magnet Control</span>
+        <span class="tab-chip chip-ready">ACTUATORS</span>
+      </button>
+
+      <button class="tab-btn" role="tab" id="btn-tab-graphs" data-tab="tab-graphs" aria-selected="false" aria-controls="tab-graphs">
+        <span class="tab-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 16l4-5 4 3 6-7"/></svg>
+        </span>
+        <span class="tab-label">Telemetry Curves</span>
+        <span class="tab-chip chip-streams">3 CHANNELS</span>
+      </button>
+
+      <button class="tab-btn" role="tab" id="btn-tab-diagnostics" data-tab="tab-diagnostics" aria-selected="false" aria-controls="tab-diagnostics">
+        <span class="tab-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </span>
+        <span class="tab-label">System Diagnostics</span>
+        <span class="tab-chip chip-ok" id="tabDiagStatus">ALL OK</span>
+      </button>
+    </nav>
+
+    <!-- VIEWPORT CONTENT AREA -->
+    <main class="viewport-content">
+
+      <!-- ===================================================================
+           TAB 1: DIGITAL TWIN OVERVIEW
+           =================================================================== -->
+      <div class="tab-pane active" id="tab-twin">
+        <div class="twin-layout">
+
+          <!-- Left Compass Visualizer -->
+          <div class="card compass-card">
+            <div class="card-head" style="width:100%;">
+              <div class="card-title">🧭 Jib Azimuth Heading</div>
+              <span class="badge" id="deflectionBadge">0.00° Tilt</span>
+            </div>
+
+            <div class="compass-stage">
+              <svg class="compass-svg" viewBox="0 0 175 175">
+                <circle cx="87.5" cy="87.5" r="78" fill="none" stroke="currentColor" stroke-opacity="0.08" stroke-width="7" />
+                <circle cx="87.5" cy="87.5" r="68" fill="none" stroke="currentColor" stroke-opacity="0.15" stroke-width="1.5" stroke-dasharray="3 8" />
+
+                <!-- Cardinal Marks -->
+                <text x="87.5" y="26" font-size="10" font-weight="800" text-anchor="middle" fill="currentColor" opacity="0.6">N</text>
+                <text x="154" y="91" font-size="10" font-weight="800" text-anchor="middle" fill="currentColor" opacity="0.6">E</text>
+                <text x="87.5" y="158" font-size="10" font-weight="800" text-anchor="middle" fill="currentColor" opacity="0.6">S</text>
+                <text x="21" y="91" font-size="10" font-weight="800" text-anchor="middle" fill="currentColor" opacity="0.6">W</text>
+
+                <!-- Rotating Crane Jib Arm -->
+                <g class="needle-arm" id="needleArm">
+                  <line x1="87.5" y1="87.5" x2="87.5" y2="30" stroke="#0284c7" stroke-width="4.5" stroke-linecap="round" />
+                  <line x1="87.5" y1="87.5" x2="87.5" y2="116" stroke="#64748b" stroke-width="5.5" stroke-linecap="round" />
+                  <circle cx="87.5" cy="116" r="5" fill="#64748b" />
+                  <circle cx="87.5" cy="30" r="5.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
+                  <circle cx="87.5" cy="87.5" r="8" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" />
+                </g>
+              </svg>
+            </div>
+
+            <div class="heading-readout">
+              <span class="heading-degrees" id="yawDegrees">--.-</span>
+              <span style="font-weight:800; font-size:16px; color:var(--text-dim);">°</span>
+            </div>
+            <div class="motion-indicator-tag" id="motionPill" style="background:rgba(239,68,68,0.15); color:var(--red);">
+              STOPPED
+            </div>
+          </div>
+
+          <!-- Right Metrics Matrix & Runtime Strip -->
+          <div class="metrics-matrix-wrap">
+            <div class="metrics-quad">
+
+              <!-- Voltage (Sky Blue) -->
+              <div class="card metric-card card-blue">
+                <div class="metric-header">
+                  <span class="metric-title">Supply Voltage</span>
+                  <span style="font-size:16px;">⚡</span>
+                </div>
+                <div class="metric-value">
+                  <span id="valVoltage">--.-</span>
+                  <span class="metric-unit">V</span>
+                </div>
+                <div class="metric-hint">INA226 Shunt Bus Monitor</div>
+              </div>
+
+              <!-- Current (Mint Green) -->
+              <div class="card metric-card card-green">
+                <div class="metric-header">
+                  <span class="metric-title">Current Load</span>
+                  <span style="font-size:16px;">🔋</span>
+                </div>
+                <div class="metric-value">
+                  <span id="valCurrent">---</span>
+                  <span class="metric-unit">mA</span>
+                </div>
+                <div class="metric-hint">Active Motor & Logic Current</div>
+              </div>
+
+              <!-- Power (Lavender Purple) -->
+              <div class="card metric-card card-purple">
+                <div class="metric-header">
+                  <span class="metric-title">Active Power</span>
+                  <span style="font-size:16px;">💡</span>
+                </div>
+                <div class="metric-value">
+                  <span id="valPower">----</span>
+                  <span class="metric-unit">mW</span>
+                </div>
+                <div class="metric-hint">Real-Time Power Consumption</div>
+              </div>
+
+              <!-- Jib Deflection (Coral Pink) -->
+              <div class="card metric-card card-pink">
+                <div class="metric-header">
+                  <span class="metric-title">Boom Deflection</span>
+                  <span style="font-size:16px;">📐</span>
+                </div>
+                <div class="metric-value">
+                  <span id="valDeflection">0.00</span>
+                  <span class="metric-unit">°</span>
+                </div>
+                <div class="metric-hint">MPU6500 Structural Incline</div>
+              </div>
+
+            </div>
+
+            <!-- Bottom System Info Strip -->
+            <div class="system-health-strip">
+              <div class="health-tags">
+                <span>⏱️ Session: <strong id="valSessionTime" style="font-family:'JetBrains Mono';">00:00:00</strong></span>
+                <span>⌛ Lifetime: <strong id="valLifetimeHours" style="font-family:'JetBrains Mono';">-- hrs</strong></span>
+              </div>
+              <div class="health-tags">
+                <span>MPU: <strong class="tag-ok" id="chipMpuPreview">OK</strong></span>
+                <span>MAG: <strong class="tag-ok" id="chipMagPreview">OK</strong></span>
+                <span>INA: <strong class="tag-ok" id="chipInaPreview">OK</strong></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===================================================================
+           TAB 2: CRANE & MAGNET CONTROL
+           =================================================================== -->
+      <div class="tab-pane" id="tab-controls">
+        <div class="controls-layout">
+
+          <!-- 360° Circular Transparent Actuator Controller Dial -->
+          <div class="card card-blue" style="justify-content:space-between; align-items:center;">
+            <div class="card-head" style="width:100%;">
+              <div class="card-title">🎮 360° Crane Controller</div>
+              <span class="badge" id="motionStatusBadge">STOPPED</span>
+            </div>
+
+            <!-- Embedded Transparent Circular Controller -->
+            <div style="flex:1; width:100%; display:flex; align-items:center; justify-content:center; position:relative; min-height:220px;">
+              <iframe src="/widget/control" style="width:230px; height:230px; border:none; background:transparent;" allowtransparency="true"></iframe>
+            </div>
+
+            <div style="font-size:10px; color:var(--text-dim); text-align:center; padding: 2px 0;">
+              Publishes directly to Mosquitto MQTT &amp; WebSocket
+            </div>
+          </div>
+
+          <!-- Speed Modulation PWM (Amber Card) -->
+          <div class="card card-amber speed-card">
+            <div class="card-head">
+              <div class="card-title" style="color:var(--card-amber-text)">⚡ Motor Speed PWM</div>
+              <span class="badge" style="color:var(--card-amber-text)">0 - 255 PWM</span>
+            </div>
+
+            <div class="speed-center">
+              <div class="speed-val-huge" id="speedDisplay" style="color:var(--card-amber-text)">180</div>
+              <div style="font-size:10px; color:var(--text-muted); font-weight:800; text-transform:uppercase; margin-top:2px;">Target Speed PWM</div>
+            </div>
+
+            <div class="speed-bar-wrap">
+              <input type="range" id="speedSlider" min="0" max="255" value="180">
+            </div>
+
+            <div class="preset-grid">
+              <div class="preset-chip" onclick="setPreset(64)">Slow (64)</div>
+              <div class="preset-chip" onclick="setPreset(128)">Half (128)</div>
+              <div class="preset-chip active" onclick="setPreset(180)">Cruise (180)</div>
+              <div class="preset-chip" onclick="setPreset(255)">Max (255)</div>
+            </div>
+          </div>
+
+          <!-- Cargo Electromagnet (Pink Card) -->
+          <div class="card card-pink magnet-card">
+            <div class="card-head">
+              <div class="card-title" style="color:var(--card-pink-text)">🧲 Cargo Electromagnet</div>
+              <span class="badge" id="magnetTag" style="color:var(--card-pink-text)">RELAY OFF</span>
+            </div>
+
+            <div class="magnet-halo off" id="magnetCircle">🧲</div>
+            <div style="font-size:12px; font-weight:800; color:var(--card-pink-text)" id="magnetStatusText">Magnet Power: OFF</div>
+
+            <div class="magnet-toggle-group">
+              <button class="control-btn" style="flex:1; padding:10px; background:rgba(16,185,129,0.22); border-color:var(--green); color:var(--green);" id="btnMagOn">⚡ ON</button>
+              <button class="control-btn" style="flex:1; padding:10px; background:rgba(239,68,68,0.22); border-color:var(--red); color:var(--red);" id="btnMagOff">OFF</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===================================================================
+           TAB 3: TELEMETRY CURVES (HISTORICAL GRAPHS)
+           =================================================================== -->
+      <div class="tab-pane" id="tab-graphs">
+        <div class="graphs-layout">
+          <div class="card card-blue graphs-topbar">
+            <div style="font-size:11px; font-weight:800; text-transform:uppercase;">Sensor Telemetry Historical Trends</div>
+            <div class="range-selector">
+              <button class="range-pill active" data-range="1h">1 Hour</button>
+              <button class="range-pill" data-range="24h">24 Hours</button>
+              <button class="range-pill" data-range="7d">7 Days</button>
+              <button class="range-pill" data-range="30d">30 Days</button>
+            </div>
+          </div>
+
+          <!-- 3 Side-by-side Telemetry Curves -->
+          <div class="charts-row">
+            <!-- Power Curve -->
+            <div class="card card-blue chart-panel">
+              <div class="chart-header">
+                <span class="chart-title">💡 Power Load (mW)</span>
+                <span class="badge" id="powerStat">-- mW</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="chartPower"></canvas>
+              </div>
+            </div>
+
+            <!-- Jib Yaw Curve -->
+            <div class="card card-purple chart-panel">
+              <div class="chart-header">
+                <span class="chart-title">🧭 Jib Yaw Heading (°)</span>
+                <span class="badge" id="yawStat">-- °</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="chartYaw"></canvas>
+              </div>
+            </div>
+
+            <!-- Deflection Curve -->
+            <div class="card card-pink chart-panel">
+              <div class="chart-header">
+                <span class="chart-title">📐 Boom Incline (°)</span>
+                <span class="badge" id="deflectionStat">-- °</span>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="chartDeflection"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================================================================
+           TAB 4: SYSTEM DIAGNOSTICS & HARDWARE MATRIX
+           =================================================================== -->
+      <div class="tab-pane" id="tab-diagnostics">
+        <div class="diag-layout">
+
+          <!-- Hardware Sensor Health List -->
+          <div class="card card-green diag-list">
+            <div class="card-head">
+              <div class="card-title">🩺 Hardware Sensor Matrix</div>
+              <span class="badge">I2C BUS</span>
+            </div>
+
+            <div class="diag-row">
+              <div>
+                <strong style="font-size:12px;">MPU6500 IMU</strong>
+                <small style="display:block; color:var(--text-muted); font-size:10px;">Boom Pitch, Roll & Deflection</small>
+              </div>
+              <span class="status-badge ok" id="chipMpu">OK</span>
+            </div>
+
+            <div class="diag-row">
+              <div>
+                <strong style="font-size:12px;">QMC5883L Magnetometer</strong>
+                <small style="display:block; color:var(--text-muted); font-size:10px;">Slew Compass Azimuth (0–360°)</small>
+              </div>
+              <span class="status-badge ok" id="chipMag">OK</span>
+            </div>
+
+            <div class="diag-row">
+              <div>
+                <strong style="font-size:12px;">INA226 Power Monitor</strong>
+                <small style="display:block; color:var(--text-muted); font-size:10px;">Bus Voltage, Current Shunt & Power</small>
+              </div>
+              <span class="status-badge ok" id="chipIna">OK</span>
+            </div>
+
+            <div class="diag-row">
+              <div>
+                <strong style="font-size:12px;">ESP32 Controller</strong>
+                <small style="display:block; color:var(--text-muted); font-size:10px;">Physical LAN Network Link</small>
+              </div>
+              <span class="status-badge ok" id="chipEsp">ONLINE</span>
+            </div>
+          </div>
+
+          <!-- Digital Twin Architecture Services -->
+          <div class="card service-info-panel">
+            <div class="card-head">
+              <div class="card-title">🌐 Digital Twin Services Status</div>
+              <span class="badge">DOCKER ENGINE</span>
+            </div>
+
+            <div class="service-item-row">
+              <span>Mosquitto MQTT Broker:</span>
+              <strong>mqtt://mosquitto:1883 (QoS 1)</strong>
+            </div>
+
+            <div class="service-item-row">
+              <span>ThingsBoard Gateway:</span>
+              <strong>allcad-chennai.selfip.com:8081</strong>
+            </div>
+
+            <div class="service-item-row">
+              <span>Dual WebSocket Pipeline:</span>
+              <strong>ws://${window.location.host}/ws (Active)</strong>
+            </div>
+
+            <div class="service-item-row">
+              <span>SQLite Telemetry Database:</span>
+              <strong>WAL Mode (underconstruction_model.db)</strong>
+            </div>
+
+            <div class="service-item-row">
+              <span>Physical Crane LAN IP:</span>
+              <strong>http://10.10.12.63</strong>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const API = window.location.origin;
+      const $ = id => document.getElementById(id);
+
+      // Top-level Application State
+      let currentRange = "1h";
+      let historyCache = [];
+
+      // Toast Notification
+      function toast(msg) {
+        const t = $("toast");
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 1500);
+      }
+
+      // =======================================================================
+      // PROFESSIONAL TAB NAVIGATION SYSTEM (ROCK SOLID & ACCESSIBLE)
+      // =======================================================================
+      function switchTab(targetId) {
+        if (!targetId) return;
+        if (!targetId.startsWith("tab-")) {
+          targetId = "tab-" + targetId;
+        }
+
+        const targetPane = $(targetId);
+        if (!targetPane) return;
+
+        // Update tab buttons
+        document.querySelectorAll(".tab-btn").forEach(btn => {
+          const isActive = btn.dataset.tab === targetId;
+          btn.classList.toggle("active", isActive);
+          btn.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+
+        // Update tab panes
+        document.querySelectorAll(".tab-pane").forEach(pane => {
+          pane.classList.toggle("active", pane.id === targetId);
+        });
+
+        // Sync URL Hash cleanly without history spam
+        const cleanName = targetId.replace("tab-", "");
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, null, "#" + cleanName);
+        } else {
+          window.location.hash = cleanName;
+        }
+
+        // Trigger Canvas Resize / Chart Draw on Graphs Tab
+        if (targetId === "tab-graphs") {
+          setTimeout(() => {
+            renderCharts();
+          }, 60);
+        }
+      }
+
+      // Attach Click Event Listeners to Tabs
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          switchTab(btn.dataset.tab);
+        });
+      });
+
+      // Keyboard arrow keys navigation for accessibility
+      const tabList = document.querySelector(".tabs-bar");
+      if (tabList) {
+        tabList.addEventListener("keydown", (e) => {
+          const tabs = Array.from(document.querySelectorAll(".tab-btn"));
+          const activeIdx = tabs.findIndex(t => t.classList.contains("active"));
+          if (e.key === "ArrowRight") {
+            const nextIdx = (activeIdx + 1) % tabs.length;
+            tabs[nextIdx].focus();
+            switchTab(tabs[nextIdx].dataset.tab);
+          } else if (e.key === "ArrowLeft") {
+            const prevIdx = (activeIdx - 1 + tabs.length) % tabs.length;
+            tabs[prevIdx].focus();
+            switchTab(tabs[prevIdx].dataset.tab);
+          }
+        });
+      }
+
+      // Expose switchTab globally
+      window.switchTab = switchTab;
+
+      // Handle Initial Hash on Page Load
+      const initialHash = (window.location.hash || "").replace("#", "").trim();
+      if (initialHash && $(`tab-${initialHash}`)) {
+        switchTab(`tab-${initialHash}`);
+      } else {
+        switchTab("tab-twin");
+      }
+
+      // Listen to popstate / hashchange
+      window.addEventListener("hashchange", () => {
+        const h = (window.location.hash || "").replace("#", "").trim();
+        if (h && $(`tab-${h}`)) {
+          switchTab(`tab-${h}`);
+        }
+      });
+
+      // =======================================================================
+      // THEME SWITCHER
+      // =======================================================================
+      const themeToggle = $("themeToggle");
+      function applyTheme(theme) {
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          document.documentElement.classList.remove("light");
+          if (themeToggle) themeToggle.textContent = "🌙";
+        } else {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+          if (themeToggle) themeToggle.textContent = "☀️";
+        }
+        localStorage.setItem("uc_theme", theme);
+        if (typeof renderCharts === "function") {
+          renderCharts();
+        }
+      }
+
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const isDark = document.documentElement.classList.contains("dark");
+          applyTheme(isDark ? "light" : "dark");
+        });
+      }
+
+      const savedTheme = localStorage.getItem("uc_theme") || "light";
+      applyTheme(savedTheme);
+
+      // =======================================================================
+      // UNIFIED ACTION DISPATCHER (SINGLE API ROUTE)
+      // =======================================================================
+      async function sendAction(id, action, value) {
+        try {
+          const res = await fetch(`${API}/api/action`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, action, value })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            toast(`Executed: ${action || value}`);
+          }
+        } catch (e) {
+          toast("Action Failed");
+        }
+      }
+
+      // Crane Slew Buttons (if present in DOM)
+      if ($("btnCW")) {
+        $("btnCW").addEventListener("click", () => {
+          setMotionUI("forward");
+          sendAction("crane", "forward");
+        });
+      }
+      if ($("btnCCW")) {
+        $("btnCCW").addEventListener("click", () => {
+          setMotionUI("reverse");
+          sendAction("crane", "reverse");
+        });
+      }
+      if ($("btnStop")) {
+        $("btnStop").addEventListener("click", () => {
+          setMotionUI("stop");
+          sendAction("crane", "stop");
+        });
+      }
+
+      // Magnet Controls
+      if ($("btnMagOn")) {
+        $("btnMagOn").addEventListener("click", () => {
+          setMagnetUI("on");
+          sendAction("magnet", "on");
+        });
+      }
+      if ($("btnMagOff")) {
+        $("btnMagOff").addEventListener("click", () => {
+          setMagnetUI("off");
+          sendAction("magnet", "off");
+        });
+      }
+
+      // Speed Modulation Presets
+      window.setPreset = function(spd) {
+        if ($("speedSlider")) $("speedSlider").value = spd;
+        if ($("speedDisplay")) $("speedDisplay").textContent = spd;
+        document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("active"));
+        if (window.event && window.event.target) window.event.target.classList.add("active");
+        sendAction("crane_speed", undefined, spd);
+      };
+
+      if ($("speedSlider")) {
+        $("speedSlider").addEventListener("input", e => {
+          if ($("speedDisplay")) $("speedDisplay").textContent = e.target.value;
+        });
+        $("speedSlider").addEventListener("change", e => {
+          sendAction("crane_speed", undefined, Number(e.target.value));
+        });
+      }
+
+      // Refresh Button
+      if ($("refreshBtn")) {
+        $("refreshBtn").addEventListener("click", () => {
+          fetchSnapshot();
+          loadHistoryData();
+          toast("State Refreshed");
+        });
+      }
+
+      // =======================================================================
+      // LIVE STATE UPGRADES
+      // =======================================================================
+      function setMotionUI(state) {
+        if ($("btnCW")) $("btnCW").classList.toggle("active-forward", state === "forward");
+        if ($("btnCCW")) $("btnCCW").classList.toggle("active-reverse", state === "reverse");
+
+        const pill = $("motionPill");
+        const badge = $("motionStatusBadge");
+        if (state === "forward") {
+          if (pill) {
+            pill.textContent = "CW ROTATING ↻";
+            pill.style.background = "rgba(14, 165, 233, 0.2)";
+            pill.style.color = "#0284c7";
+          }
+          if (badge) { badge.textContent = "FORWARD (CW)"; badge.style.color = "#0284c7"; }
+        } else if (state === "reverse") {
+          if (pill) {
+            pill.textContent = "CCW ROTATING ↺";
+            pill.style.background = "rgba(124, 58, 237, 0.2)";
+            pill.style.color = "#7c3aed";
+          }
+          if (badge) { badge.textContent = "REVERSE (CCW)"; badge.style.color = "#7c3aed"; }
+        } else {
+          if (pill) {
+            pill.textContent = "STOPPED";
+            pill.style.background = "rgba(239, 68, 68, 0.15)";
+            pill.style.color = "var(--red)";
+          }
+          if (badge) { badge.textContent = "STOPPED"; badge.style.color = "var(--red)"; }
+        }
+      }
+
+      function setMagnetUI(state) {
+        const halo = $("magnetCircle");
+        const statusText = $("magnetStatusText");
+        const tag = $("magnetTag");
+
+        if (state === "on") {
+          if (halo) halo.className = "magnet-halo on";
+          if (statusText) { statusText.textContent = "Magnet Power: ON"; statusText.style.color = "var(--green)"; }
+          if (tag) { tag.textContent = "RELAY ON"; tag.style.color = "var(--green)"; }
+        } else {
+          if (halo) halo.className = "magnet-halo off";
+          if (statusText) { statusText.textContent = "Magnet Power: OFF"; statusText.style.color = "var(--red)"; }
+          if (tag) { tag.textContent = "RELAY OFF"; tag.style.color = "var(--red)"; }
+        }
+      }
+
+      function setOrientationUI(yaw, deflection) {
+        if (yaw !== null && yaw !== undefined) {
+          const num = Number(yaw);
+          if (Number.isFinite(num)) {
+            if ($("yawDegrees")) $("yawDegrees").textContent = num.toFixed(1);
+            if ($("needleArm")) $("needleArm").style.transform = `rotate(${num}deg)`;
+          }
+        }
+        if (deflection !== null && deflection !== undefined) {
+          const num = Number(deflection);
+          if (Number.isFinite(num)) {
+            if ($("valDeflection")) $("valDeflection").textContent = num.toFixed(2);
+            if ($("deflectionBadge")) $("deflectionBadge").textContent = `${num.toFixed(2)}° Tilt`;
+          }
+        }
+      }
+
+      function formatDuration(sec) {
+        const s = Math.max(0, Math.floor(Number(sec) || 0));
+        const hrs = Math.floor(s / 3600);
+        const mins = Math.floor((s % 3600) / 60);
+        const secs = s % 60;
+        return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+
+      // =======================================================================
+      // SNAPSHOT DATA FETCH
+      // =======================================================================
+      async function fetchSnapshot() {
+        try {
+          const res = await fetch(`${API}/api/refresh`);
+          if (!res.ok) return;
+          const data = await res.json();
+          const items = data.items || {};
+
+          // Power metrics
+          if (items.voltage_V?.value !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(items.voltage_V.value).toFixed(2);
+          if (items.current_mA?.value !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(items.current_mA.value);
+          if (items.power_mW?.value !== undefined && $("valPower")) $("valPower").textContent = Math.round(items.power_mW.value);
+
+          // Orientation
+          setOrientationUI(items.jib_yaw_deg?.value, items.jib_deflection_deg?.value);
+
+          // Motion & Magnet
+          if (items.crane_motion?.value) setMotionUI(items.crane_motion.value);
+          if (items.magnet_state?.value) setMagnetUI(items.magnet_state.value);
+          if (items.crane_speed?.value) {
+            if ($("speedSlider")) $("speedSlider").value = items.crane_speed.value;
+            if ($("speedDisplay")) $("speedDisplay").textContent = items.crane_speed.value;
+          }
+
+          // Runtimes
+          if (items.current_session_time_sec?.value && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(items.current_session_time_sec.value);
+          if (items.total_operation_time_sec?.value && $("valLifetimeHours")) {
+            const hrs = (Number(items.total_operation_time_sec.value) / 3600).toFixed(1);
+            $("valLifetimeHours").textContent = `${hrs} hrs`;
+          }
+
+          // Hardware Chips
+          const setChip = (id, ok) => {
+            const el = $(id);
+            if (!el) return;
+            if (ok === true || ok === 1) { el.textContent = "OK"; el.className = "status-badge ok"; }
+            else { el.textContent = "FAULT"; el.className = "status-badge fault"; }
+          };
+          if (items.mpu_ok) { setChip("chipMpu", items.mpu_ok.value); setChip("chipMpuPreview", items.mpu_ok.value); }
+          if (items.mag_ok) { setChip("chipMag", items.mag_ok.value); setChip("chipMagPreview", items.mag_ok.value); }
+          if (items.ina226_ok) { setChip("chipIna", items.ina226_ok.value); setChip("chipInaPreview", items.ina226_ok.value); }
+
+          const isOnline = items.esp32_status?.value === "online";
+          if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !isOnline);
+          if ($("esp32StatusText")) $("esp32StatusText").textContent = isOnline ? "ESP32 Online" : "ESP32 Offline";
+        } catch (e) {}
+      }
+      fetchSnapshot();
+
+      // =======================================================================
+      // REAL-TIME WEBSOCKET
+      // =======================================================================
+      function connectWebSocket() {
+        const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
+        const ws = new WebSocket(`${proto}//${window.location.host}/ws`);
+
+        ws.onopen = () => {
+          if ($("esp32Dot")) $("esp32Dot").classList.remove("offline");
+          if ($("esp32StatusText")) $("esp32StatusText").textContent = "ESP32 Online";
+        };
+
+        ws.onmessage = (event) => {
+          try {
+            const msg = JSON.parse(event.data);
+            if (msg.type === "update") {
+              const { item_id, value } = msg;
+              if (item_id === "voltage_V" && $("valVoltage")) $("valVoltage").textContent = Number(value).toFixed(2);
+              if (item_id === "current_mA" && $("valCurrent")) $("valCurrent").textContent = Math.round(value);
+              if (item_id === "power_mW" && $("valPower")) $("valPower").textContent = Math.round(value);
+              if (item_id === "jib_yaw_deg") setOrientationUI(value, null);
+              if (item_id === "jib_deflection_deg") setOrientationUI(null, value);
+              if (item_id === "crane_motion") setMotionUI(value);
+              if (item_id === "magnet_state") setMagnetUI(value);
+              if (item_id === "current_session_time_sec" && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(value);
+              if (item_id === "crane_speed") {
+                if ($("speedSlider")) $("speedSlider").value = value;
+                if ($("speedDisplay")) $("speedDisplay").textContent = value;
+              }
+            } else if (msg.type === "telemetry" && msg.data) {
+              const t = msg.data;
+              if (t.voltage_V !== undefined && $("valVoltage")) $("valVoltage").textContent = Number(t.voltage_V).toFixed(2);
+              if (t.current_mA !== undefined && $("valCurrent")) $("valCurrent").textContent = Math.round(t.current_mA);
+              if (t.power_mW !== undefined && $("valPower")) $("valPower").textContent = Math.round(t.power_mW);
+              if (t.jib_yaw_deg !== undefined) setOrientationUI(t.jib_yaw_deg, t.jib_deflection_deg);
+              if (t.current_session_time_sec && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(t.current_session_time_sec);
+            } else if (msg.type === "status") {
+              const online = Boolean(msg.data?.online);
+              if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !online);
+              if ($("esp32StatusText")) $("esp32StatusText").textContent = online ? "ESP32 Online" : "ESP32 Offline";
+            }
+          } catch (e) {}
+        };
+
+        ws.onclose = () => {
+          if ($("esp32Dot")) $("esp32Dot").classList.add("offline");
+          if ($("esp32StatusText")) $("esp32StatusText").textContent = "Reconnecting…";
+          setTimeout(connectWebSocket, 2000);
+        };
+        ws.onerror = () => ws.close();
+      }
+      connectWebSocket();
+
+      // =======================================================================
+      // TELEMETRY CURVES (CANVAS GRAPHS)
+      // =======================================================================
+      document.querySelectorAll(".range-pill").forEach(b => {
+        b.addEventListener("click", () => {
+          document.querySelectorAll(".range-pill").forEach(btn => btn.classList.remove("active"));
+          b.classList.add("active");
+          currentRange = b.dataset.range;
+          loadHistoryData();
+        });
+      });
+
+      function drawCanvasGraph(canvasId, rows, key, strokeColor, statId, unit) {
+        const canvas = $(canvasId);
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+
+        const W = rect.width;
+        const H = rect.height;
+        ctx.clearRect(0, 0, W, H);
+
+        const values = rows.map(r => Number(r[key])).filter(v => Number.isFinite(v));
+        if (values.length < 2) {
+          ctx.fillStyle = "rgba(100, 116, 139, 0.6)";
+          ctx.font = "11px 'Plus Jakarta Sans', sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText("Gathering historical data…", W / 2, H / 2);
+          return;
+        }
+
+        const latest = values[values.length - 1];
+        if ($(statId)) $(statId).textContent = `${latest.toFixed(1)} ${unit}`;
+
+        let min = Math.min(...values);
+        let max = Math.max(...values);
+        if (min === max) { min -= 1; max += 1; }
+        const pad = (max - min) * 0.12;
+        min -= pad;
+        max += pad;
+        const range = max - min;
+
+        // Gridlines
+        const isDark = document.documentElement.classList.contains("dark");
+        ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(0, 0, 0, 0.06)";
+        ctx.lineWidth = 1;
+        for (let i = 1; i <= 3; i++) {
+          const y = (H / 4) * i;
+          ctx.beginPath();
+          ctx.moveTo(8, y);
+          ctx.lineTo(W - 8, y);
+          ctx.stroke();
+        }
+
+        const stepX = (W - 16) / (values.length - 1);
+        const points = values.map((v, i) => ({
+          x: 8 + i * stepX,
+          y: H - 12 - ((v - min) / range) * (H - 24)
+        }));
+
+        // Area Gradient Fill
+        const gradient = ctx.createLinearGradient(0, 0, 0, H);
+        gradient.addColorStop(0, strokeColor.replace("rgb", "rgba").replace(")", ", 0.28)"));
+        gradient.addColorStop(1, strokeColor.replace("rgb", "rgba").replace(")", ", 0.0)"));
+
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 0; i < points.length - 1; i++) {
+          const xc = (points[i].x + points[i + 1].x) / 2;
+          const yc = (points[i].y + points[i + 1].y) / 2;
+          ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        }
+        ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+        ctx.lineTo(points[points.length - 1].x, H);
+        ctx.lineTo(points[0].x, H);
+        ctx.closePath();
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        // Stroke Line
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 0; i < points.length - 1; i++) {
+          const xc = (points[i].x + points[i + 1].x) / 2;
+          const yc = (points[i].y + points[i + 1].y) / 2;
+          ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        }
+        ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2.4;
+        ctx.stroke();
+
+        // End Dot
+        const last = points[points.length - 1];
+        ctx.beginPath();
+        ctx.arc(last.x, last.y, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      function renderCharts() {
+        if (!historyCache || !historyCache.length) return;
+        drawCanvasGraph("chartPower", historyCache, "power_mW", "rgb(8, 145, 178)", "powerStat", "mW");
+        drawCanvasGraph("chartYaw", historyCache, "jib_yaw_deg", "rgb(124, 58, 237)", "yawStat", "°");
+        drawCanvasGraph("chartDeflection", historyCache, "jib_deflection_deg", "rgb(225, 29, 72)", "deflectionStat", "°");
+      }
+
+      async function loadHistoryData() {
+        try {
+          const res = await fetch(`${API}/api/history?range=${currentRange}&limit=250`);
+          const data = await res.json();
+          historyCache = data.data || [];
+          if ((!historyCache || historyCache.length < 2) && currentRange === "1h") {
+            const fallbackRes = await fetch(`${API}/api/history?range=all&limit=250`);
+            const fallbackData = await fallbackRes.json();
+            if (fallbackData.data && fallbackData.data.length >= 2) {
+              historyCache = fallbackData.data;
+            }
+          }
+          renderCharts();
+        } catch (e) {}
+      }
+      loadHistoryData();
+
+      window.addEventListener("resize", () => {
+        renderCharts();
+      });
+
+    })();
+  </script>
+</body>
+</html>

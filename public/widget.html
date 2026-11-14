@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--
+  Under Construction Crane - Cupola-Native Inline Widget
+  Usage: widget.html?id=voltage_V or widget.html?id=jib_yaw_deg
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crane Sensor Widget</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    #widget {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+    }
+    #label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+    }
+    #value {
+      font-size: 20px;
+      font-weight: 800;
+      color: #38bdf8;
+      font-variant-numeric: tabular-nums;
+    }
+    #unit {
+      font-size: 13px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+    .status-ok { color: #34d399 !important; }
+    .status-fault { color: #f87171 !important; }
+  </style>
+</head>
+<body>
+  <div id="widget">
+    <span id="label">Sensor</span>
+    <span id="value">--</span>
+    <span id="unit"></span>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get("id") || "voltage_V";
+    const customColor = params.get("color");
+    const customSize = params.get("size");
+
+    const labelEl = document.getElementById("label");
+    const valueEl = document.getElementById("value");
+    const unitEl = document.getElementById("unit");
+
+    if (customColor) valueEl.style.color = customColor;
+    if (customSize) valueEl.style.fontSize = customSize;
+
+    labelEl.textContent = itemId.replace(/_/g, " ");
+
+    const API = window.location.origin;
+    const wsUrl = (window.location.protocol === "https:" ? "wss://" : "ws://") + window.location.host + "/ws";
+
+    // Initial snapshot fetch
+    fetch(`${API}/api/item/${encodeURIComponent(itemId)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.value !== undefined && data.value !== null) {
+          updateDisplay(data);
+        }
+      })
+      .catch(() => {});
+
+    function formatVal(v) {
+      if (typeof v === "boolean") return v ? "OK" : "FAULT";
+      if (typeof v === "number") return v.toFixed(2);
+      return String(v);
+    }
+
+    function updateDisplay(data) {
+      const v = data.value;
+      if (v === null || v === undefined) {
+        valueEl.textContent = "--";
+        return;
+      }
+      valueEl.textContent = formatVal(v);
+      if (data.unit) unitEl.textContent = data.unit;
+      if (typeof v === "boolean") {
+        valueEl.className = v ? "status-ok" : "status-fault";
+      }
+    }
+
+    // Connect WebSocket
+    function connect() {
+      const ws = new WebSocket(wsUrl);
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type: "subscribe", item_id: itemId }));
+      };
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.type === "update" && msg.item_id === itemId) {
+            updateDisplay(msg);
+          } else if (msg.type === "telemetry" && msg.data && msg.data[itemId] !== undefined) {
+            updateDisplay({ value: msg.data[itemId], unit: unitEl.textContent });
+          }
+        } catch (e) {}
+      };
+      ws.onclose = () => setTimeout(connect, 3000);
+      ws.onerror = () => ws.close();
+    }
+    connect();
+  </script>
+</body>
+</html>
+

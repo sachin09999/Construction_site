@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+  Under Construction Crane - Cupola Control Trigger & Transparent Widget
+  Usage:
+    Full Glass Control Widget:
+      control.html  (or crane-widget.html)
+      control.html?mode=horizontal
+      control.html?mode=compact
+    Single Hotspot Action Trigger:
+      control.html?id=crane&action=forward
+      control.html?id=crane&action=reverse
+      control.html?id=crane&action=stop
+      control.html?id=magnet&action=on
+      control.html?id=magnet&action=off
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Crane Control</title>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const hasSpecificAction = params.has('action');
+    // If no action is specified, automatically redirect/load the full all-in-one transparent widget
+    if (!hasSpecificAction && !params.has('single')) {
+      window.location.replace(`crane-widget.html${window.location.search}`);
+    }
+  </script>
+  <style>
+    body {
+      margin: 0;
+      background: transparent !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+    .btn {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: #38bdf8; }
+    .btn.active { background: rgba(16, 185, 129, 0.35); border-color: #34d399; color: #34d399; }
+    .btn.stop { background: rgba(239, 68, 68, 0.35); border-color: #ef4444; color: #f87171; }
+    .status { margin-left: 8px; font-size: 11px; font-weight: 700; color: #cbd5e1; }
+  </style>
+</head>
+<body>
+  <button id="triggerBtn" class="btn">
+    <span id="btnIcon">⚡</span>
+    <span id="btnLabel">EXECUTE ACTION</span>
+  </button>
+  <span id="msg" class="status"></span>
+
+  <script>
+    const id = params.get("id") || "crane";
+    const action = params.get("action") || "stop";
+    const auto = params.get("auto") !== "false";
+
+    const btn = document.getElementById("triggerBtn");
+    const btnLabel = document.getElementById("btnLabel");
+    const btnIcon = document.getElementById("btnIcon");
+    const msg = document.getElementById("msg");
+
+    btnLabel.textContent = `${id.toUpperCase()}: ${action.toUpperCase()}`;
+    if (action === "stop") {
+      btn.classList.add("stop");
+      btnIcon.textContent = "⏹";
+    } else if (action === "on" || action === "forward") {
+      btn.classList.add("active");
+      btnIcon.textContent = action === "forward" ? "↻" : "⚡";
+    } else if (action === "reverse") {
+      btn.classList.add("active");
+      btnIcon.textContent = "↺";
+    }
+
+    async function sendAction() {
+      msg.textContent = "Sending...";
+      try {
+        const res = await fetch('/api/action', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, action })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          msg.textContent = "OK";
+        } else {
+          msg.textContent = data.error || "Failed";
+        }
+      } catch (err) {
+        msg.textContent = "Offline";
+      }
+    }
+
+    btn.addEventListener("click", sendAction);
+    if (auto) sendAction();
+  </script>
+</body>
+</html>

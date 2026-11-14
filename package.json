@@ -1,0 +1,21 @@
+{
+  "name": "underconstruction-http-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dedicated HTTP backend for the Under Construction crane model",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "mqtt": "^5.16.1",
+    "ws": "^8.22.0"
+  }
+}

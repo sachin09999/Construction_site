@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: underconstruction-crane-backend
+    restart: unless-stopped
+    ports:
+      - "${PORT:-4000}:4000"
+    env_file:
+      - .env
+    environment:
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+    volumes:
+      - ./server.js:/app/server.js
+      - ./src:/app/src
+      - ./underconstruction_model.db:/app/underconstruction_model.db
+      - ./public:/app/public
+    depends_on:
+      - mosquitto
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: underconstruction-crane-mqtt
+    restart: unless-stopped
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
