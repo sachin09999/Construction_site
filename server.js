@@ -14,7 +14,7 @@ const mqttClient = require('./src/mqtt/mqttClient');
 
 const PORT = Number(process.env.PORT || 4001);
 const DEVICE_ID = process.env.DEVICE_ID || 'underconstruction-esp32';
-let ESP32_URL = (process.env.ESP32_URL || 'http://10.10.12.55').replace(/\/$/, '');
+let ESP32_URL = (process.env.ESP32_URL || 'http://10.10.12.63').replace(/\/$/, '');
 const DEVICE_KEY = process.env.DEVICE_KEY || '';
 const DB_PATH = path.resolve(__dirname, process.env.DB_PATH || 'underconstruction_model.db');
 const DEVICE_TIMEOUT_MS = Number(process.env.DEVICE_TIMEOUT_MS || 86400000); // 24h persistent online status
