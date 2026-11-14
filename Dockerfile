@@ -2,7 +2,7 @@ FROM node:22-bookworm-slim
 
 WORKDIR /app
 ENV NODE_ENV=production
-ENV PORT=4000
+ENV PORT=4001
 
 # Install build dependencies for better-sqlite3 native compilation
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -23,7 +23,7 @@ COPY server.js ./
 COPY src ./src
 COPY public ./public
 
-EXPOSE 4000
+EXPOSE 4001
 
 CMD ["npm", "start"]
 

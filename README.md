@@ -16,7 +16,7 @@ Dedicated Node.js backend for the miniature crane. It uses the Factory Model HTT
    npm install
    npm start
    ```
-6. Check `http://MINI_PC_IP:4000/api/health`.
+6. Check `http://MINI_PC_IP:4001/api/health`.
 
 ## API
 - `GET /api/health` — backend and device status

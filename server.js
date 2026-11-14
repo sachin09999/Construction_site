@@ -12,7 +12,7 @@ const wsServer = require('./src/ws/wsServer');
 const thingsboardService = require('./src/services/thingsboardService');
 const mqttClient = require('./src/mqtt/mqttClient');
 
-const PORT = Number(process.env.PORT || 4000);
+const PORT = Number(process.env.PORT || 4001);
 const DEVICE_ID = process.env.DEVICE_ID || 'underconstruction-esp32';
 const ESP32_URL = (process.env.ESP32_URL || '').replace(/\/$/, '');
 const DEVICE_KEY = process.env.DEVICE_KEY || '';
