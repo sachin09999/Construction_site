@@ -342,10 +342,20 @@ app.get('/api/history', (req, res) => {
   if (!ranges[range]) return res.status(400).json({ success: false, error: 'invalid range' });
   const limit = Math.min(5000, Math.max(1, Number(req.query.limit || 1000)));
   const since = Date.now() - ranges[range] * 1000;
-  const rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+  let rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
     jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
     mpu_ok, mag_ok, ina226_ok FROM telemetry_history
     WHERE received_at >= ? ORDER BY received_at DESC LIMIT ?`).all(since, limit).reverse();
+
+  // If time-window returned fewer than 2 records (e.g. ESP32 was quiet or last record is older than range),
+  // automatically fallback to the latest stored records so curves ALWAYS display!
+  if (!rows || rows.length < 2) {
+    rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+      jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
+      mpu_ok, mag_ok, ina226_ok FROM telemetry_history
+      ORDER BY id DESC LIMIT ?`).all(limit).reverse();
+  }
+
   res.json({ success: true, range, count: rows.length, data: rows });
 });
 

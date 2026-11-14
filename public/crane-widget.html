@@ -25,24 +25,21 @@
     }
 
     /* =========================================================================
-       PURE TRANSPARENT CIRCULAR GUIDE (ZERO TRANSLUCENT FOG)
-       ========================================================================= */
-    /* =========================================================================
-       INDUSTRIAL PRECISION HUD DIAL (CONSTRUCTION-MATCHED PALETTE)
+       CRYSTAL TRANSPARENT HUD DIAL (ZERO BLACKISH TINT)
        ========================================================================= */
     .circular-controller {
       position: relative;
       width: 190px;
       height: 190px;
       border-radius: 50%;
-      background: rgba(10, 15, 28, 0.35) !important;
-      border: 1.5px dashed rgba(251, 191, 36, 0.55); /* Construction Amber ring */
+      background: transparent !important;
+      border: 1.5px dashed rgba(245, 158, 11, 0.65); /* Construction Amber ring */
       display: flex;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.85));
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
     }
 
     /* Subtle Rotating Outer Dash Accent */
@@ -50,7 +47,7 @@
       position: absolute;
       inset: -6px;
       border-radius: 50%;
-      border: 1px dotted rgba(251, 191, 36, 0.35);
+      border: 1px dotted rgba(245, 158, 11, 0.4);
       pointer-events: none;
       animation: slowSpin 40s linear infinite;
     }
@@ -60,7 +57,7 @@
     }
 
     /* =========================================================================
-       HIGH-TECH TRANSLUCENT SMOKED GLASS BUTTONS
+       PURE TRANSPARENT GLASS BUTTONS (ZERO BLACKISH TINT, FULL BACKGROUND VISIBLE)
        ========================================================================= */
     .radial-btn {
       position: absolute;
@@ -70,15 +67,16 @@
       align-items: center;
       justify-content: center;
       outline: none;
-      background: rgba(10, 15, 28, 0.65) !important; /* Sleek translucent dark glass */
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.15) !important; /* Pure transparent glass */
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .radial-btn:hover {
       transform: scale(1.12);
-      background: rgba(10, 15, 28, 0.85) !important;
+      background: rgba(255, 255, 255, 0.35) !important;
     }
 
     .radial-btn:active {
@@ -87,80 +85,70 @@
 
     .radial-btn svg {
       transition: all 0.16s ease;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.95));
+      filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
     }
 
     /* -------------------------------------------------------------------------
-       1. CENTER: STOP ROTATION (INDUSTRIAL SAFETY CRIMSON RED)
+       1. CENTER: STOP ROTATION (SAFETY CRIMSON RED)
        ------------------------------------------------------------------------- */
     .btn-center-stop {
       width: 54px;
       height: 54px;
-      background: rgba(10, 15, 28, 0.7) !important;
+      background: rgba(239, 68, 68, 0.2) !important;
       border: 2.5px solid #ef4444;
-      color: #ffffff;
+      color: #ef4444;
       z-index: 10;
-      box-shadow: 
-        0 0 20px rgba(239, 68, 68, 0.7),
-        inset 0 0 12px rgba(239, 68, 68, 0.35);
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.45);
     }
     .btn-center-stop svg {
       width: 22px;
       height: 22px;
-      fill: #ffffff !important;
-      filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.95));
+      fill: #ef4444 !important;
     }
     .btn-center-stop:hover {
-      background: rgba(239, 68, 68, 0.35) !important;
-      border-color: #f87171;
-      box-shadow: 
-        0 0 28px rgba(239, 68, 68, 0.95),
-        inset 0 0 16px rgba(239, 68, 68, 0.5);
+      background: rgba(239, 68, 68, 0.4) !important;
+      border-color: #dc2626;
+      box-shadow: 0 0 24px rgba(239, 68, 68, 0.7);
     }
     .btn-center-stop.active-state {
       background: #ef4444 !important;
       border-color: #ffffff !important;
-      box-shadow: 
-        0 0 34px #ef4444,
-        inset 0 0 20px #ffffff !important;
+      box-shadow: 0 0 30px #ef4444 !important;
+    }
+    .btn-center-stop.active-state svg {
+      fill: #ffffff !important;
     }
 
     /* -------------------------------------------------------------------------
-       2. LEFT (9 O'CLOCK): ROTATE ANTI-CLOCKWISE / CCW (CONSTRUCTION AMBER GOLD)
+       2. LEFT (9 O'CLOCK): ROTATE ANTI-CLOCKWISE / CCW (AMBER GOLD)
        ------------------------------------------------------------------------- */
     .btn-left-ccw {
       left: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(10, 15, 28, 0.7) !important;
-      border: 2.5px solid #fbbf24;
-      color: #fbbf24;
-      box-shadow: 
-        0 0 18px rgba(251, 191, 36, 0.6),
-        inset 0 0 12px rgba(251, 191, 36, 0.25);
+      background: rgba(245, 158, 11, 0.2) !important;
+      border: 2.5px solid #f59e0b;
+      color: #f59e0b;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
     }
     .btn-left-ccw svg {
       width: 24px;
       height: 24px;
+      stroke: #f59e0b !important;
     }
     .btn-left-ccw:hover {
-      background: rgba(251, 191, 36, 0.3) !important;
-      border-color: #fde047;
-      box-shadow: 
-        0 0 26px rgba(253, 224, 71, 0.85),
-        inset 0 0 14px rgba(251, 191, 36, 0.4);
+      background: rgba(245, 158, 11, 0.4) !important;
+      border-color: #d97706;
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.65);
     }
     .btn-left-ccw.active-state {
-      background: #fbbf24 !important;
+      background: #f59e0b !important;
       border-color: #ffffff !important;
-      color: #0f172a !important;
-      box-shadow: 
-        0 0 32px #fbbf24,
-        inset 0 0 18px #ffffff !important;
+      box-shadow: 0 0 28px #f59e0b !important;
       animation: spinCCW 2.4s linear infinite;
     }
     .btn-left-ccw.active-state svg {
-      stroke: #0f172a !important;
+      stroke: #ffffff !important;
     }
     @keyframes spinCCW {
       0% { transform: rotate(0deg); }
@@ -168,41 +156,35 @@
     }
 
     /* -------------------------------------------------------------------------
-       3. RIGHT (3 O'CLOCK): ROTATE CLOCKWISE / CW (CONSTRUCTION AMBER GOLD)
+       3. RIGHT (3 O'CLOCK): ROTATE CLOCKWISE / CW (AMBER GOLD)
        ------------------------------------------------------------------------- */
     .btn-right-cw {
       right: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(10, 15, 28, 0.7) !important;
-      border: 2.5px solid #fbbf24;
-      color: #fbbf24;
-      box-shadow: 
-        0 0 18px rgba(251, 191, 36, 0.6),
-        inset 0 0 12px rgba(251, 191, 36, 0.25);
+      background: rgba(245, 158, 11, 0.2) !important;
+      border: 2.5px solid #f59e0b;
+      color: #f59e0b;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
     }
     .btn-right-cw svg {
       width: 24px;
       height: 24px;
+      stroke: #f59e0b !important;
     }
     .btn-right-cw:hover {
-      background: rgba(251, 191, 36, 0.3) !important;
-      border-color: #fde047;
-      box-shadow: 
-        0 0 26px rgba(253, 224, 71, 0.85),
-        inset 0 0 14px rgba(251, 191, 36, 0.4);
+      background: rgba(245, 158, 11, 0.4) !important;
+      border-color: #d97706;
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.65);
     }
     .btn-right-cw.active-state {
-      background: #fbbf24 !important;
+      background: #f59e0b !important;
       border-color: #ffffff !important;
-      color: #0f172a !important;
-      box-shadow: 
-        0 0 32px #fbbf24,
-        inset 0 0 18px #ffffff !important;
+      box-shadow: 0 0 28px #f59e0b !important;
       animation: spinCW 2.4s linear infinite;
     }
     .btn-right-cw.active-state svg {
-      stroke: #0f172a !important;
+      stroke: #ffffff !important;
     }
     @keyframes spinCW {
       0% { transform: rotate(0deg); }
@@ -210,71 +192,67 @@
     }
 
     /* -------------------------------------------------------------------------
-       4. TOP (12 O'CLOCK): MAGNET ON (VIVID ELECTRIC EMERALD)
+       4. TOP (12 O'CLOCK): MAGNET ON (EMERALD GREEN)
        ------------------------------------------------------------------------- */
     .btn-top-mag-on {
       top: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(10, 15, 28, 0.7) !important;
+      background: rgba(16, 185, 129, 0.2) !important;
       border: 2.5px solid #10b981;
       color: #10b981;
-      box-shadow: 
-        0 0 20px rgba(16, 185, 129, 0.6),
-        inset 0 0 12px rgba(16, 185, 129, 0.25);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.45);
     }
     .btn-top-mag-on svg {
       width: 24px;
       height: 24px;
+      fill: #10b981 !important;
     }
     .btn-top-mag-on:hover {
-      background: rgba(16, 185, 129, 0.3) !important;
-      border-color: #34d399;
-      box-shadow: 
-        0 0 28px rgba(52, 211, 153, 0.85),
-        inset 0 0 14px rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.4) !important;
+      border-color: #059669;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.7);
     }
     .btn-top-mag-on.active-state {
       background: #10b981 !important;
       border-color: #ffffff !important;
-      color: #ffffff !important;
-      box-shadow: 
-        0 0 34px #10b981,
-        inset 0 0 18px #ffffff !important;
+      box-shadow: 0 0 30px #10b981 !important;
+    }
+    .btn-top-mag-on.active-state svg {
+      fill: #ffffff !important;
     }
 
     /* -------------------------------------------------------------------------
-       5. BOTTOM (6 O'CLOCK): MAGNET OFF (SAFETY FIRE CORAL)
+       5. BOTTOM (6 O'CLOCK): MAGNET OFF (FIRE ORANGE)
        ------------------------------------------------------------------------- */
     .btn-bottom-mag-off {
       bottom: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(10, 15, 28, 0.7) !important;
+      background: rgba(249, 115, 22, 0.2) !important;
       border: 2.5px solid #f97316;
       color: #f97316;
-      box-shadow: 
-        0 0 18px rgba(249, 115, 22, 0.6),
-        inset 0 0 12px rgba(249, 115, 22, 0.25);
+      box-shadow: 0 0 16px rgba(249, 115, 22, 0.45);
     }
     .btn-bottom-mag-off svg {
       width: 24px;
       height: 24px;
+      fill: #f97316 !important;
+      stroke: #f97316 !important;
     }
     .btn-bottom-mag-off:hover {
-      background: rgba(249, 115, 22, 0.3) !important;
-      border-color: #fb923c;
-      box-shadow: 
-        0 0 26px rgba(251, 146, 60, 0.85),
-        inset 0 0 14px rgba(249, 115, 22, 0.4);
+      background: rgba(249, 115, 22, 0.4) !important;
+      border-color: #ea580c;
+      box-shadow: 0 0 24px rgba(249, 115, 22, 0.7);
     }
     .btn-bottom-mag-off.active-state {
       background: #f97316 !important;
       border-color: #ffffff !important;
-      color: #ffffff !important;
-      box-shadow: 
-        0 0 30px #f97316,
-        inset 0 0 18px #ffffff !important;
+      box-shadow: 0 0 30px #f97316 !important;
+    }
+    .btn-bottom-mag-off.active-state svg {
+      fill: #ffffff !important;
+      stroke: #ffffff !important;
     }
   </style>
 </head>

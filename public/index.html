@@ -1364,9 +1364,9 @@
 
         // Trigger Canvas Resize / Chart Draw on Graphs Tab
         if (targetId === "tab-graphs") {
-          setTimeout(() => {
-            renderCharts();
-          }, 60);
+          loadHistoryData();
+          setTimeout(() => { renderCharts(); }, 60);
+          setTimeout(() => { renderCharts(); }, 250);
         }
       }
 
@@ -1630,7 +1630,11 @@
           if (!el) return;
           const isOk = (ok === true || ok === 1 || ok === "1" || ok === "true" || ok === "OK");
           el.textContent = isOk ? "OK" : "FAULT";
-          el.className = isOk ? "status-badge ok" : "status-badge fault";
+          if (id.includes("Preview")) {
+            el.className = isOk ? "tag-ok" : "tag-fault";
+          } else {
+            el.className = isOk ? "status-badge ok" : "status-badge fault";
+          }
         };
 
         const mpu = telemetry.mpu_ok !== undefined && telemetry.mpu_ok !== null ? telemetry.mpu_ok : cementItems.mpu_ok?.value;
@@ -1784,17 +1788,26 @@
         const ctx = canvas.getContext("2d");
         const dpr = window.devicePixelRatio || 1;
         const rect = canvas.getBoundingClientRect();
-        if (rect.width === 0 || rect.height === 0) return;
+        let W = rect.width;
+        let H = rect.height;
+        if (!W || !H) {
+          const parent = canvas.parentElement;
+          if (parent) {
+            W = parent.clientWidth || 300;
+            H = parent.clientHeight || 150;
+          }
+        }
+        if (!W || !H) return;
 
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
         ctx.scale(dpr, dpr);
-
-        const W = rect.width;
-        const H = rect.height;
         ctx.clearRect(0, 0, W, H);
 
-        const values = rows.map(r => Number(r[key])).filter(v => Number.isFinite(v));
+        const values = rows
+          .filter(r => r[key] !== null && r[key] !== undefined && r[key] !== "")
+          .map(r => Number(r[key]))
+          .filter(v => Number.isFinite(v));
         if (values.length < 2) {
           ctx.fillStyle = "rgba(100, 116, 139, 0.6)";
           ctx.font = "11px 'Plus Jakarta Sans', sans-serif";
