@@ -6,6 +6,7 @@ const { findItem } = require("../config/itemRegistry");
 
 let client = null;
 let onUpdateCallback = null;
+let onTelemetryCallback = null;
 
 const PREFIX = process.env.MQTT_PREFIX || "plant/underconstruction";
 const MQTT_HOST = process.env.MQTT_HOST || "host.docker.internal";
@@ -18,8 +19,9 @@ function topicStatus()          { return `${PREFIX}/status`; }
 function topicActuatorCommand() { return `${PREFIX}/actuator/command`; }
 function topicActuatorState()   { return `${PREFIX}/actuator/state`; }
 
-function connect(onUpdate) {
+function connect(onUpdate, onTelemetry) {
   onUpdateCallback = onUpdate;
+  onTelemetryCallback = onTelemetry;
   const url = `mqtt://${MQTT_HOST}:${MQTT_PORT}`;
   const options = {
     reconnectPeriod: 4000,
@@ -37,12 +39,7 @@ function connect(onUpdate) {
 
     client.on("connect", () => {
       console.log(`[MQTT] Connected to Mosquitto broker at ${url} (Prefix: ${PREFIX})`);
-      client.subscribe(topicValues());
-      client.subscribe(topicStatus());
-      client.subscribe(topicActuatorState());
-      client.subscribe(`${PREFIX}/telemetry`);
-      client.subscribe("v1/devices/me/telemetry");
-      client.subscribe("v1/devices/me/attributes");
+      client.subscribe("#"); // Wildcard subscription to capture all crane telemetry topics
     });
 
     client.on("reconnect", () => console.log("[MQTT] Reconnecting to broker..."));
@@ -65,8 +62,16 @@ function connect(onUpdate) {
 }
 
 function handleIncoming(topic, payload) {
+  // If telemetry callback is provided and payload has sensor data
+  const data = payload.values || payload.data || payload;
+  if (data && typeof data === "object") {
+    if (onTelemetryCallback) {
+      onTelemetryCallback(data);
+    }
+  }
+
   // 1. Device Connectivity Status
-  if (topic === topicStatus() || topic === "v1/devices/me/attributes") {
+  if (topic === topicStatus() || topic.includes("status") || topic === "v1/devices/me/attributes") {
     const status = payload.status || payload.value || "online";
     store.setDeviceStatus("esp32", status);
     const updated = store.setValue("esp32_status", status, "");
@@ -75,7 +80,7 @@ function handleIncoming(topic, payload) {
   }
 
   // 2. Actuator State Feedback (e.g. from physical crane ESP32)
-  if (topic === topicActuatorState()) {
+  if (topic === topicActuatorState() || topic.includes("actuator")) {
     const actId = payload.actuator || payload.id || payload.item_id;
     const item = findItem(actId);
     const stateVal = payload.state !== undefined ? payload.state : payload.value;
@@ -87,8 +92,7 @@ function handleIncoming(topic, payload) {
   }
 
   // 3. Telemetry values payload
-  if (topic === topicValues() || topic === `${PREFIX}/telemetry` || topic === "v1/devices/me/telemetry") {
-    const data = payload.values || payload.data || payload;
+  if (topic === topicValues() || topic.includes("telemetry") || topic.includes("values")) {
     for (const [key, val] of Object.entries(data)) {
       const item = findItem(key);
       if (item && val !== null && val !== undefined) {
