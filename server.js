@@ -112,9 +112,9 @@ try {
     jib_deflection_deg: lastRow.jib_deflection_deg ?? 0.0,
     current_session_time_sec: lastRow.current_session_time_sec ?? 120,
     total_operation_time_sec: lastRow.total_operation_time_sec ?? 3600,
-    mpu_ok: Boolean(lastRow.mpu_ok),
-    mag_ok: Boolean(lastRow.mag_ok),
-    ina226_ok: Boolean(lastRow.ina226_ok)
+    mpu_ok: lastRow.mpu_ok !== undefined && lastRow.mpu_ok !== null ? Boolean(lastRow.mpu_ok) : true,
+    mag_ok: lastRow.mag_ok !== undefined && lastRow.mag_ok !== null ? Boolean(lastRow.mag_ok) : true,
+    ina226_ok: lastRow.ina226_ok !== undefined && lastRow.ina226_ok !== null ? Boolean(lastRow.ina226_ok) : true
   };
   for (const key of numericFields) {
     const item = findItem(key);
@@ -265,12 +265,29 @@ app.get('/api/device/:id', (req, res) => {
 // Central Telemetry Ingestion (Handles HTTP, MQTT, and Polled inputs)
 function ingestTelemetry(payload) {
   if (!payload || typeof payload !== 'object') return null;
-  const receivedAt = Date.now();
-  const telemetry = {};
 
-  for (const key of numericFields) telemetry[key] = numberOrNull(payload[key]);
-  for (const key of boolFields) telemetry[key] = payload[key] === undefined ? null : Boolean(payload[key]);
-  telemetry.firmware_version = typeof payload.firmware_version === 'string' ? payload.firmware_version : null;
+  // Validate that payload contains actual telemetry sensor metrics before processing
+  const hasTelemetry = numericFields.some(k => payload[k] !== undefined && payload[k] !== null) ||
+                       boolFields.some(k => payload[k] !== undefined && payload[k] !== null) ||
+                       payload.voltage !== undefined || payload.voltage_V !== undefined ||
+                       payload.yaw !== undefined || payload.jib_yaw_deg !== undefined;
+  if (!hasTelemetry) return null;
+
+  const receivedAt = Date.now();
+  const telemetry = { ...(latestTelemetry || {}) };
+
+  for (const key of numericFields) {
+    const val = numberOrNull(payload[key]);
+    if (val !== null) telemetry[key] = val;
+  }
+  for (const key of boolFields) {
+    if (payload[key] !== undefined && payload[key] !== null) {
+      telemetry[key] = Boolean(payload[key]);
+    }
+  }
+  if (typeof payload.firmware_version === 'string') {
+    telemetry.firmware_version = payload.firmware_version;
+  }
   telemetry.deviceId = DEVICE_ID;
   telemetry.timestamp = new Date(receivedAt).toISOString();
 

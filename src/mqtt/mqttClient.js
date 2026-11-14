@@ -69,10 +69,15 @@ function handleIncoming(topic, payload) {
 
   // If telemetry callback is provided and payload has sensor data
   const data = payload.values || payload.data || payload;
-  if (data && typeof data === "object") {
-    if (onTelemetryCallback) {
-      onTelemetryCallback(data);
-    }
+  const isTelemetryTopic = topic === topicValues() || topic.includes("telemetry") || topic.includes("values");
+  const hasTelemetryKeys = data && typeof data === "object" && (
+    data.voltage_V !== undefined || data.voltage !== undefined ||
+    data.current_mA !== undefined || data.current !== undefined ||
+    data.jib_yaw_deg !== undefined || data.yaw !== undefined
+  );
+
+  if (onTelemetryCallback && (isTelemetryTopic || hasTelemetryKeys)) {
+    onTelemetryCallback(data);
   }
 
   // 1. Device Connectivity Status
