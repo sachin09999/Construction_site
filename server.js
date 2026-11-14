@@ -127,6 +127,7 @@ try {
   store.setDeviceStatus(DEVICE_ID, 'online');
   store.setDeviceStatus('esp32', 'online');
   store.setValue('esp32_status', 'online', '');
+  store.setValue('crane_speed', 180, 'PWM');
 } catch (e) {
   console.warn('[DB] Could not pre-load last record:', e.message);
 }
@@ -398,32 +399,38 @@ async function executeCraneCommand(target, action, res) {
     return res.status(400).json({ success: false, error: `Unknown control target: ${target}` });
   }
 
-  const command = { method };
+  const speed = Math.max(160, Number(store.getValue('crane_speed') || store.get('crane_speed')?.value) || 180);
+  const command = { method, speed, params: speed };
   let result = {};
 
-  try {
-    result = await postToEsp32('/api/device/command', command);
-    lastSeenMs = Date.now();
-    store.setDeviceStatus(DEVICE_ID, 'online');
-    store.setDeviceStatus('esp32', 'online');
-    store.setValue('esp32_status', 'online', '');
-  } catch (err) {
-    console.warn(`[COMMAND HTTP WARNING] ESP32 unreachable: ${err.message}`);
+  // 1. Publish immediately to Mosquitto MQTT using Cement Plant Actuator Pattern (instant non-blocking)
+  mqttClient.publishActuatorCommand(target, act, speed);
+
+  // If starting rotation, also explicitly dispatch setSpeed over HTTP & MQTT to prevent stalling at 30 PWM
+  if (motion === 'forward' || motion === 'reverse') {
+    try {
+      postToEsp32('/api/device/command', { method: 'setSpeed', params: speed, speed }).catch(() => {});
+    } catch (_) {}
   }
 
-  // Publish to Mosquitto MQTT using Cement Plant Actuator Pattern
-  mqttClient.publishActuatorCommand(target, act);
-
-  lastSeenMs = Date.now();
-  store.setDeviceStatus(DEVICE_ID, 'online');
-  store.setDeviceStatus('esp32', 'online');
-  store.setValue('esp32_status', 'online', '');
+  // 2. Dispatch command to ESP32 over HTTP in background without stalling control response
+  postToEsp32('/api/device/command', command)
+    .then(r => {
+      result = r;
+      lastSeenMs = Date.now();
+      store.setDeviceStatus(DEVICE_ID, 'online');
+      store.setDeviceStatus('esp32', 'online');
+      store.setValue('esp32_status', 'online', '');
+    })
+    .catch(err => {
+      console.warn(`[COMMAND HTTP WARNING] ESP32 unreachable: ${err.message}`);
+    });
 
   lastCommand = { ...command, acceptedAt: new Date().toISOString(), result };
   broadcastLegacy('command', lastCommand);
   store.setValue('last_command', command.method, '');
 
-  return res.json({ success: true, target, action: act, command, result });
+  return res.json({ success: true, target, action: act, command });
 }
 
 // Cupola360 Explicit APIButton Endpoints (POST and GET supported)

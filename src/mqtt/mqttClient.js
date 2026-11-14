@@ -118,13 +118,15 @@ function handleIncoming(topic, payload) {
  * Publish Actuator Command matching Cement Plant Pattern
  * @param {string} itemId - Target actuator ('crane_motion', 'magnet_state', 'crane_speed', 'crane', 'magnet')
  * @param {string|number} command - Action command ('forward', 'reverse', 'stop', 'on', 'off', speed number)
+ * @param {number} [customSpeed] - Optional motor speed (defaults to 180 PWM)
  */
-function publishActuatorCommand(itemId, command) {
+function publishActuatorCommand(itemId, command, customSpeed) {
   const item = findItem(itemId);
   const targetId = item ? item.id : itemId;
 
   let rpcMethod = null;
   let wireCommand = String(command).toLowerCase().trim();
+  const speed = customSpeed || Number(store.getValue("crane_speed") || store.get("crane_speed")?.value) || 180;
 
   if (targetId === "crane_motion" || itemId === "crane") {
     if (["forward", "cw", "clockwise", "1"].includes(wireCommand)) {
@@ -163,23 +165,33 @@ function publishActuatorCommand(itemId, command) {
   }
 
   try {
-    // 1. Publish standard Cement Plant actuator payload
+    // 1. Publish standard Cement Plant actuator payload (NEVER retain actuator commands)
     const actuatorMsg = JSON.stringify({
       type: "actuator",
       actuator: targetId,
       command: wireCommand,
+      speed,
       ts: Date.now()
     });
-    client.publish(topicActuatorCommand(), actuatorMsg, { qos: 1, retain: true });
+    client.publish(topicActuatorCommand(), actuatorMsg, { qos: 1, retain: false });
 
-    // 2. Publish standard ESP32 RPC method payload
+    // 2. Publish standard ESP32 RPC method payload (to both target & root topics)
     if (rpcMethod) {
-      const rpcPayload = { method: rpcMethod };
-      if (rpcMethod === "setSpeed") rpcPayload.params = wireCommand;
-      client.publish(topicCommand(), JSON.stringify(rpcPayload), { qos: 1 });
+      const rpcPayload = { method: rpcMethod, speed, params: speed };
+      client.publish(topicCommand(), JSON.stringify(rpcPayload), { qos: 1, retain: false });
+      client.publish("plant/underconstruction/command", JSON.stringify(rpcPayload), { qos: 1, retain: false });
+      client.publish("crane/command", JSON.stringify(rpcPayload), { qos: 1, retain: false });
+
+      // If moving, explicitly dispatch setSpeed to ensure physical motor PWM is not stalled at 30
+      if (wireCommand === "forward" || wireCommand === "reverse") {
+        const speedPayload = { method: "setSpeed", params: speed, speed };
+        client.publish(topicCommand(), JSON.stringify(speedPayload), { qos: 1, retain: false });
+        client.publish("plant/underconstruction/command", JSON.stringify(speedPayload), { qos: 1, retain: false });
+        client.publish("crane/command", JSON.stringify(speedPayload), { qos: 1, retain: false });
+      }
     }
 
-    console.log(`[MQTT] Published command for ${targetId} (${wireCommand}) to ${topicActuatorCommand()}`);
+    console.log(`[MQTT] Published command for ${targetId} (${wireCommand}) at speed ${speed}`);
     return true;
   } catch (err) {
     console.error(`[MQTT] Failed to publish for ${targetId}:`, err.message);

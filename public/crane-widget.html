@@ -320,13 +320,19 @@
     const btnMagOn = document.getElementById('btnMagOn');
     const btnMagOff = document.getElementById('btnMagOff');
 
-    // Action Dispatcher
+    // Action Dispatcher with Debounce Protection
+    let isSending = false;
     async function sendAction(id, action) {
+      if (isSending && action !== 'stop') return;
+      isSending = true;
+      setTimeout(() => { isSending = false; }, 200);
+
+      const payload = { id, action, speed: 180 };
       try {
         await fetch(API_ACTION, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, action })
+          body: JSON.stringify(payload)
         });
       } catch (err) {
         // Fallback direct POST to relative /api/action
@@ -334,34 +340,39 @@
           await fetch('/api/action', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id, action })
+            body: JSON.stringify(payload)
           });
         } catch (_) {}
       }
     }
 
     // Click Handlers
-    btnCW.addEventListener('click', () => {
+    btnCW.addEventListener('click', (e) => {
+      e.preventDefault();
       setMotionUI('forward');
       sendAction('crane', 'forward');
     });
 
-    btnCCW.addEventListener('click', () => {
+    btnCCW.addEventListener('click', (e) => {
+      e.preventDefault();
       setMotionUI('reverse');
       sendAction('crane', 'reverse');
     });
 
-    btnStop.addEventListener('click', () => {
+    btnStop.addEventListener('click', (e) => {
+      e.preventDefault();
       setMotionUI('stop');
       sendAction('crane', 'stop');
     });
 
-    btnMagOn.addEventListener('click', () => {
+    btnMagOn.addEventListener('click', (e) => {
+      e.preventDefault();
       setMagnetUI('on');
       sendAction('magnet', 'on');
     });
 
-    btnMagOff.addEventListener('click', () => {
+    btnMagOff.addEventListener('click', (e) => {
+      e.preventDefault();
       setMagnetUI('off');
       sendAction('magnet', 'off');
     });

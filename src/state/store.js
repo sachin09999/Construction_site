@@ -40,6 +40,11 @@ function get(id) {
   return state.get(resolvedId) || null;
 }
 
+function getValue(id) {
+  const item = get(id);
+  return item ? item.value : null;
+}
+
 function all() {
   const out = {};
   for (const [id, val] of state.entries()) {
@@ -69,6 +74,7 @@ function allDevices() {
 module.exports = {
   setValue,
   get,
+  getValue,
   all,
   setDeviceStatus,
   getDeviceStatus,
