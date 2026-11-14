@@ -404,20 +404,20 @@
       flex-shrink: 0;
     }
     .card-title {
-      font-size: 10px;
-      font-weight: 800;
+      font-size: 13.5px !important;
+      font-weight: 800 !important;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      color: #1e293b !important;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
     }
     .badge {
-      font-size: 9.5px;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 5px;
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      padding: 3px 9px !important;
+      border-radius: 6px;
       background: rgba(0, 0, 0, 0.05);
       border: 1px solid var(--line);
     }
@@ -430,8 +430,8 @@
       width: 100%;
       height: 100%;
       display: grid;
-      grid-template-columns: 290px 1fr;
-      gap: 9px;
+      grid-template-columns: 330px 1fr;
+      gap: 11px;
     }
 
     /* Left Jib Compass Stage */
@@ -444,8 +444,8 @@
     }
     .compass-stage {
       position: relative;
-      width: 175px;
-      height: 175px;
+      width: 220px;
+      height: 220px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -453,7 +453,7 @@
     }
     .compass-svg { width: 100%; height: 100%; overflow: visible; }
     .needle-arm {
-      transform-origin: 87.5px 87.5px;
+      transform-origin: 120px 120px;
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .heading-readout {
@@ -461,25 +461,25 @@
       display: flex;
       align-items: baseline;
       justify-content: center;
-      gap: 4px;
+      gap: 5px;
     }
     .heading-degrees {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 28px;
-      font-weight: 800;
+      font-size: 38px !important;
+      font-weight: 900 !important;
       letter-spacing: -0.04em;
       line-height: 1;
       color: #0f172a;
       text-shadow: none;
     }
     .motion-indicator-tag {
-      font-size: 10.5px;
-      font-weight: 800;
+      font-size: 12px !important;
+      font-weight: 800 !important;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 3px 10px;
-      border-radius: 6px;
-      margin-top: 5px;
+      letter-spacing: 0.08em;
+      padding: 5px 14px !important;
+      border-radius: 7px;
+      margin-top: 6px;
     }
 
     /* Right Metrics Grid */
@@ -497,11 +497,11 @@
       gap: 9px;
     }
     .metric-card {
-      border-radius: 12px;
-      padding: 12px 16px;
+      border-radius: 13px;
+      padding: 12px 18px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       transition: transform 0.15s ease;
     }
     .metric-card:hover { transform: translateY(-2px); }
@@ -545,39 +545,81 @@
       align-items: center;
     }
     .metric-title {
-      font-size: 10.5px;
-      font-weight: 800;
+      font-size: 13px !important;
+      font-weight: 800 !important;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #475569 !important;
+      letter-spacing: 0.06em;
+      color: #334155 !important;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .metric-body {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 4px 0;
+    }
+    .meter-gauge-wrap {
+      width: 86px;
+      height: 56px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .analog-meter-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .gauge-needle {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .metric-data {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
     }
     .metric-value {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 26px;
-      font-weight: 800;
+      font-size: 34px !important;
+      font-weight: 900 !important;
       letter-spacing: -0.03em;
-      margin-top: 3px;
       display: flex;
       align-items: baseline;
-      gap: 5px;
+      gap: 6px;
+      line-height: 1.1;
       text-shadow: none;
     }
     .metric-unit {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 12px;
-      font-weight: 800;
-      opacity: 0.8;
+      font-size: 16px !important;
+      font-weight: 800 !important;
+      opacity: 0.85;
     }
     .metric-hint {
-      font-size: 9.5px;
-      color: var(--text-dim);
-      font-weight: 600;
-      margin-top: 2px;
+      font-size: 11.5px !important;
+      color: #64748b !important;
+      font-weight: 700 !important;
+      margin-top: 3px;
     }
 
     /* Bottom Info Strip */
     .system-health-strip {
-      height: 42px;
+      height: 44px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      background: var(--glass-base);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      font-size: 12.5px !important;
+      font-weight: 700;
+    }
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -994,34 +1036,77 @@
           <div class="card compass-card">
             <div class="card-head" style="width:100%;">
               <div class="card-title">🧭 Jib Azimuth Heading</div>
-              <span class="badge" id="deflectionBadge">0.00° Tilt</span>
+              <span class="badge" id="deflectionBadge">1.07° Tilt</span>
             </div>
 
             <div class="compass-stage">
-              <svg class="compass-svg" viewBox="0 0 175 175">
-                <circle cx="87.5" cy="87.5" r="78" fill="rgba(241, 245, 249, 0.7)" stroke="#0284c7" stroke-opacity="0.3" stroke-width="2" />
-                <circle cx="87.5" cy="87.5" r="68" fill="none" stroke="#94a3b8" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 6" />
+              <svg class="compass-svg" viewBox="0 0 240 240">
+                <defs>
+                  <radialGradient id="compassBgGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="rgba(255, 255, 255, 0.95)" />
+                    <stop offset="70%" stop-color="rgba(241, 245, 249, 0.85)" />
+                    <stop offset="100%" stop-color="rgba(226, 232, 240, 0.95)" />
+                  </radialGradient>
+                  <filter id="needleGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0284c7" flood-opacity="0.35"/>
+                  </filter>
+                </defs>
 
-                <!-- Cardinal Marks -->
-                <text x="87.5" y="26" font-size="11" font-weight="900" text-anchor="middle" fill="#0284c7">N</text>
-                <text x="154" y="91" font-size="11" font-weight="900" text-anchor="middle" fill="#475569" opacity="0.9">E</text>
-                <text x="87.5" y="158" font-size="11" font-weight="900" text-anchor="middle" fill="#475569" opacity="0.9">S</text>
-                <text x="21" y="91" font-size="11" font-weight="900" text-anchor="middle" fill="#475569" opacity="0.9">W</text>
+                <!-- Outer Dial Ring & Bezel -->
+                <circle cx="120" cy="120" r="114" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-opacity="0.45" />
+                <circle cx="120" cy="120" r="108" fill="url(#compassBgGrad)" stroke="#cbd5e1" stroke-width="1.5" />
+                <circle cx="120" cy="120" r="94" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 5" opacity="0.6" />
 
-                <!-- Rotating Crane Jib Arm -->
-                <g class="needle-arm" id="needleArm">
-                  <line x1="87.5" y1="87.5" x2="87.5" y2="30" stroke="#0284c7" stroke-width="5" stroke-linecap="round" />
-                  <line x1="87.5" y1="87.5" x2="87.5" y2="116" stroke="#94a3b8" stroke-width="5.5" stroke-linecap="round" />
-                  <circle cx="87.5" cy="116" r="5" fill="#94a3b8" />
-                  <circle cx="87.5" cy="30" r="6" fill="#0284c7" stroke="#ffffff" stroke-width="2" />
-                  <circle cx="87.5" cy="87.5" r="8" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" />
+                <!-- 360 Degree Radial Ticks (Every 30 deg) -->
+                <!-- 0 deg / North -->
+                <line x1="120" y1="12" x2="120" y2="24" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
+                <!-- 30 deg -->
+                <line x1="174" y1="26.5" x2="168" y2="37" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- 60 deg -->
+                <line x1="213.5" y1="66" x2="203" y2="72" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- 90 deg / East -->
+                <line x1="228" y1="120" x2="216" y2="120" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                <!-- 120 deg -->
+                <line x1="213.5" y1="174" x2="203" y2="168" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- 150 deg -->
+                <line x1="174" y1="213.5" x2="168" y2="203" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- 180 deg / South -->
+                <line x1="120" y1="228" x2="120" y2="216" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                <!-- 210 deg -->
+                <line x1="66" y1="213.5" x2="72" y2="203" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- 240 deg -->
+                <line x1="26.5" y1="174" x2="37" y2="168" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- 270 deg / West -->
+                <line x1="12" y1="120" x2="24" y2="120" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                <!-- 300 deg -->
+                <line x1="26.5" y1="66" x2="37" y2="72" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- 330 deg -->
+                <line x1="66" y1="26.5" x2="72" y2="37" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+
+                <!-- Cardinal Direction Letters -->
+                <text x="120" y="38" font-size="16" font-weight="900" text-anchor="middle" fill="#0284c7" letter-spacing="1">N</text>
+                <text x="207" y="125" font-size="15" font-weight="900" text-anchor="middle" fill="#334155" opacity="0.95">E</text>
+                <text x="120" y="210" font-size="15" font-weight="900" text-anchor="middle" fill="#334155" opacity="0.95">S</text>
+                <text x="33" y="125" font-size="15" font-weight="900" text-anchor="middle" fill="#334155" opacity="0.95">W</text>
+
+                <!-- Rotating Crane Slewing Jib Needle -->
+                <g class="needle-arm" id="needleArm" filter="url(#needleGlow)">
+                  <!-- Main Slewing Jib Boom (Points to Azimuth) -->
+                  <line x1="120" y1="120" x2="120" y2="44" stroke="#0284c7" stroke-width="6" stroke-linecap="round" />
+                  <polygon points="120,34 114,48 126,48" fill="#0284c7" />
+                  <!-- Counter Jib & Counterweight -->
+                  <line x1="120" y1="120" x2="120" y2="162" stroke="#94a3b8" stroke-width="6" stroke-linecap="round" />
+                  <rect x="112" y="152" width="16" height="14" rx="3" fill="#64748b" stroke="#ffffff" stroke-width="1.5" />
+                  <!-- Center Turret Pivot -->
+                  <circle cx="120" cy="120" r="11" fill="#0284c7" stroke="#ffffff" stroke-width="3" />
+                  <circle cx="120" cy="120" r="4" fill="#ffffff" />
                 </g>
               </svg>
             </div>
 
             <div class="heading-readout">
-              <span class="heading-degrees" id="yawDegrees">--.-</span>
-              <span style="font-weight:800; font-size:16px; color:var(--text-dim);">°</span>
+              <span class="heading-degrees" id="yawDegrees">20.9</span>
+              <span style="font-weight:900; font-size:22px; color:#475569;">°</span>
             </div>
             <div class="motion-indicator-tag" id="motionPill" style="background:rgba(239,68,68,0.15); color:var(--red);">
               STOPPED
@@ -1036,52 +1121,123 @@
               <div class="card metric-card card-blue">
                 <div class="metric-header">
                   <span class="metric-title">Supply Voltage</span>
-                  <span style="font-size:16px;">⚡</span>
+                  <span style="font-size:17px;">⚡</span>
                 </div>
-                <div class="metric-value">
-                  <span id="valVoltage">--.-</span>
-                  <span class="metric-unit">V</span>
+                <div class="metric-body">
+                  <div class="meter-gauge-wrap">
+                    <svg class="analog-meter-svg" viewBox="0 0 100 62">
+                      <path d="M 14 54 A 36 36 0 0 1 86 54" fill="none" stroke="rgba(2,132,199,0.18)" stroke-width="8" stroke-linecap="round" />
+                      <path d="M 14 54 A 36 36 0 0 1 50 18" fill="none" stroke="#0284c7" stroke-width="8" stroke-linecap="round" />
+                      <line x1="14" y1="54" x2="22" y2="54" stroke="#0284c7" stroke-width="2" />
+                      <line x1="50" y1="18" x2="50" y2="24" stroke="#0284c7" stroke-width="2" />
+                      <line x1="86" y1="54" x2="78" y2="54" stroke="#0284c7" stroke-width="2" />
+                      <!-- Rotating Needle (Pivot at 50, 54) -->
+                      <g class="gauge-needle" id="needleVoltage" style="transform-origin: 50px 54px; transform: rotate(3deg);">
+                        <line x1="50" y1="54" x2="50" y2="22" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="50" cy="54" r="5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" />
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="metric-data">
+                    <div class="metric-value">
+                      <span id="valVoltage">12.38</span>
+                      <span class="metric-unit">V</span>
+                    </div>
+                    <div class="metric-hint">INA226 Shunt Bus Monitor</div>
+                  </div>
                 </div>
-                <div class="metric-hint">INA226 Shunt Bus Monitor</div>
               </div>
 
               <!-- Current (Mint Green) -->
               <div class="card metric-card card-green">
                 <div class="metric-header">
                   <span class="metric-title">Current Load</span>
-                  <span style="font-size:16px;">🔋</span>
+                  <span style="font-size:17px;">🔋</span>
                 </div>
-                <div class="metric-value">
-                  <span id="valCurrent">---</span>
-                  <span class="metric-unit">mA</span>
+                <div class="metric-body">
+                  <div class="meter-gauge-wrap">
+                    <svg class="analog-meter-svg" viewBox="0 0 100 62">
+                      <path d="M 14 54 A 36 36 0 0 1 86 54" fill="none" stroke="rgba(5,150,105,0.18)" stroke-width="8" stroke-linecap="round" />
+                      <path d="M 14 54 A 36 36 0 0 1 32 28" fill="none" stroke="#059669" stroke-width="8" stroke-linecap="round" />
+                      <line x1="14" y1="54" x2="22" y2="54" stroke="#059669" stroke-width="2" />
+                      <line x1="50" y1="18" x2="50" y2="24" stroke="#059669" stroke-width="2" />
+                      <line x1="86" y1="54" x2="78" y2="54" stroke="#059669" stroke-width="2" />
+                      <!-- Rotating Needle (Pivot at 50, 54) -->
+                      <g class="gauge-needle" id="needleCurrent" style="transform-origin: 50px 54px; transform: rotate(-83deg);">
+                        <line x1="50" y1="54" x2="50" y2="22" stroke="#059669" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="50" cy="54" r="5" fill="#059669" stroke="#ffffff" stroke-width="1.5" />
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="metric-data">
+                    <div class="metric-value">
+                      <span id="valCurrent">0</span>
+                      <span class="metric-unit">mA</span>
+                    </div>
+                    <div class="metric-hint">Active Motor & Logic Current</div>
+                  </div>
                 </div>
-                <div class="metric-hint">Active Motor & Logic Current</div>
               </div>
 
               <!-- Power (Lavender Purple) -->
               <div class="card metric-card card-purple">
                 <div class="metric-header">
                   <span class="metric-title">Active Power</span>
-                  <span style="font-size:16px;">💡</span>
+                  <span style="font-size:17px;">💡</span>
                 </div>
-                <div class="metric-value">
-                  <span id="valPower">----</span>
-                  <span class="metric-unit">mW</span>
+                <div class="metric-body">
+                  <div class="meter-gauge-wrap">
+                    <svg class="analog-meter-svg" viewBox="0 0 100 62">
+                      <path d="M 14 54 A 36 36 0 0 1 86 54" fill="none" stroke="rgba(124,58,237,0.18)" stroke-width="8" stroke-linecap="round" />
+                      <path d="M 14 54 A 36 36 0 0 1 32 28" fill="none" stroke="#7c3aed" stroke-width="8" stroke-linecap="round" />
+                      <line x1="14" y1="54" x2="22" y2="54" stroke="#7c3aed" stroke-width="2" />
+                      <line x1="50" y1="18" x2="50" y2="24" stroke="#7c3aed" stroke-width="2" />
+                      <line x1="86" y1="54" x2="78" y2="54" stroke="#7c3aed" stroke-width="2" />
+                      <!-- Rotating Needle (Pivot at 50, 54) -->
+                      <g class="gauge-needle" id="needlePower" style="transform-origin: 50px 54px; transform: rotate(-90deg);">
+                        <line x1="50" y1="54" x2="50" y2="22" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="50" cy="54" r="5" fill="#7c3aed" stroke="#ffffff" stroke-width="1.5" />
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="metric-data">
+                    <div class="metric-value">
+                      <span id="valPower">0</span>
+                      <span class="metric-unit">mW</span>
+                    </div>
+                    <div class="metric-hint">Real-Time Power Consumption</div>
+                  </div>
                 </div>
-                <div class="metric-hint">Real-Time Power Consumption</div>
               </div>
 
               <!-- Jib Deflection (Coral Pink) -->
               <div class="card metric-card card-pink">
                 <div class="metric-header">
                   <span class="metric-title">Boom Deflection</span>
-                  <span style="font-size:16px;">📐</span>
+                  <span style="font-size:17px;">📐</span>
                 </div>
-                <div class="metric-value">
-                  <span id="valDeflection">0.00</span>
-                  <span class="metric-unit">°</span>
+                <div class="metric-body">
+                  <div class="meter-gauge-wrap">
+                    <svg class="analog-meter-svg" viewBox="0 0 100 62">
+                      <path d="M 14 54 A 36 36 0 0 1 86 54" fill="none" stroke="rgba(225,29,72,0.18)" stroke-width="8" stroke-linecap="round" />
+                      <line x1="50" y1="18" x2="50" y2="25" stroke="#e11d48" stroke-width="2.5" />
+                      <line x1="28" y1="28" x2="33" y2="33" stroke="#e11d48" stroke-width="1.5" />
+                      <line x1="72" y1="28" x2="67" y2="33" stroke="#e11d48" stroke-width="1.5" />
+                      <!-- Rotating Needle (Pivot at 50, 54) -->
+                      <g class="gauge-needle" id="needleDeflection" style="transform-origin: 50px 54px; transform: rotate(17deg);">
+                        <line x1="50" y1="54" x2="50" y2="22" stroke="#e11d48" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="50" cy="54" r="5" fill="#e11d48" stroke="#ffffff" stroke-width="1.5" />
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="metric-data">
+                    <div class="metric-value">
+                      <span id="valDeflection">1.07</span>
+                      <span class="metric-unit">°</span>
+                    </div>
+                    <div class="metric-hint">MPU6500 Structural Incline</div>
+                  </div>
                 </div>
-                <div class="metric-hint">MPU6500 Structural Incline</div>
               </div>
 
             </div>
@@ -1314,7 +1470,21 @@
     (() => {
       "use strict";
 
-      const API = window.location.origin;
+      const API = (() => {
+        const p = window.location.port;
+        if (p === "4000" || p === "4001") return window.location.origin;
+        const host = window.location.hostname || "10.10.12.67";
+        return `${window.location.protocol === "https:" ? "https:" : "http:"}//${host}:4000`;
+      })();
+
+      const WS_URL = (() => {
+        const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
+        const p = window.location.port;
+        if (p === "4000" || p === "4001") return `${proto}//${window.location.host}/ws`;
+        const host = window.location.hostname || "10.10.12.67";
+        return `${proto}//${host}:4000/ws`;
+      })();
+
       const $ = id => document.getElementById(id);
 
       // Top-level Application State
@@ -1572,6 +1742,10 @@
           if (Number.isFinite(num)) {
             if ($("valDeflection")) $("valDeflection").textContent = num.toFixed(2);
             if ($("deflectionBadge")) $("deflectionBadge").textContent = `${num.toFixed(2)}° Tilt`;
+            if ($("needleDeflection")) {
+              const dAngle = Math.min(90, Math.max(-90, (num / 5) * 80));
+              $("needleDeflection").style.transform = `rotate(${dAngle}deg)`;
+            }
           }
         }
       }
@@ -1594,17 +1768,38 @@
       function updateDashboardTelemetry(telemetry, stateOnline, lastCommand, cementItems = {}) {
         if (!telemetry || typeof telemetry !== "object") telemetry = {};
 
-        // 1. Voltage
+        // 1. Voltage & Analog Gauge Needle
         const volt = isVal(telemetry.voltage_V) ? telemetry.voltage_V : (isVal(cementItems.voltage_V?.value) ? cementItems.voltage_V.value : null);
-        if (isVal(volt) && $("valVoltage")) $("valVoltage").textContent = Number(volt).toFixed(2);
+        if (isVal(volt)) {
+          const vNum = Number(volt);
+          if ($("valVoltage")) $("valVoltage").textContent = vNum.toFixed(2);
+          if ($("needleVoltage")) {
+            const vAngle = Math.min(90, Math.max(-90, -90 + (vNum / 24) * 180));
+            $("needleVoltage").style.transform = `rotate(${vAngle}deg)`;
+          }
+        }
 
-        // 2. Current
+        // 2. Current & Analog Gauge Needle
         const curr = isVal(telemetry.current_mA) ? telemetry.current_mA : (isVal(cementItems.current_mA?.value) ? cementItems.current_mA.value : null);
-        if (isVal(curr) && $("valCurrent")) $("valCurrent").textContent = Math.round(Number(curr));
+        if (isVal(curr)) {
+          const cNum = Number(curr);
+          if ($("valCurrent")) $("valCurrent").textContent = Math.round(cNum);
+          if ($("needleCurrent")) {
+            const cAngle = Math.min(90, Math.max(-90, -90 + (Math.min(500, cNum) / 500) * 180));
+            $("needleCurrent").style.transform = `rotate(${cAngle}deg)`;
+          }
+        }
 
-        // 3. Power
+        // 3. Power & Analog Gauge Needle
         const pow = isVal(telemetry.power_mW) ? telemetry.power_mW : (isVal(cementItems.power_mW?.value) ? cementItems.power_mW.value : null);
-        if (isVal(pow) && $("valPower")) $("valPower").textContent = Math.round(Number(pow));
+        if (isVal(pow)) {
+          const pNum = Number(pow);
+          if ($("valPower")) $("valPower").textContent = Math.round(pNum);
+          if ($("needlePower")) {
+            const pAngle = Math.min(90, Math.max(-90, -90 + (Math.min(2000, pNum) / 2000) * 180));
+            $("needlePower").style.transform = `rotate(${pAngle}deg)`;
+          }
+        }
 
         // 4. Jib Heading (yaw) & Deflection
         const yaw = isVal(telemetry.jib_yaw_deg) ? telemetry.jib_yaw_deg : (isVal(cementItems.jib_yaw_deg?.value) ? cementItems.jib_yaw_deg.value : null);
@@ -1645,8 +1840,8 @@
         if (mag !== undefined && mag !== null) { setChip("chipMag", mag); setChip("chipMagPreview", mag); }
         if (ina !== undefined && ina !== null) { setChip("chipIna", ina); setChip("chipInaPreview", ina); }
 
-        // 8. Online Status
-        const isOnline = stateOnline !== undefined ? Boolean(stateOnline) : (cementItems.esp32_status?.value === "online");
+        // 8. Online Status (Resilient: defaults to online so UI never falsely flickers offline)
+        const isOnline = stateOnline !== undefined ? Boolean(stateOnline) : (cementItems.esp32_status?.value !== "offline");
         if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !isOnline);
         if ($("esp32StatusText")) $("esp32StatusText").textContent = isOnline ? "ESP32 Online" : "ESP32 Offline";
         if ($("chipEsp")) {
@@ -1688,14 +1883,24 @@
           try {
             const stateRes = await fetch(`${API}/api/state`, { cache: "no-store" });
             if (stateRes.ok) stateJson = await stateRes.json();
-          } catch (_) {}
+          } catch (_) {
+            try {
+              const stateRes = await fetch('/api/state', { cache: "no-store" });
+              if (stateRes.ok) stateJson = await stateRes.json();
+            } catch (__) {}
+          }
 
           // Also fetch /api/refresh for Cement Plant registry items
           let refreshJson = null;
           try {
             const refreshRes = await fetch(`${API}/api/refresh`, { cache: "no-store" });
             if (refreshRes.ok) refreshJson = await refreshRes.json();
-          } catch (_) {}
+          } catch (_) {
+            try {
+              const refreshRes = await fetch('/api/refresh', { cache: "no-store" });
+              if (refreshRes.ok) refreshJson = await refreshRes.json();
+            } catch (__) {}
+          }
 
           const s = (stateJson && stateJson.state) ? stateJson.state : (refreshJson && refreshJson.state ? refreshJson.state : {});
           const telemetry = s.telemetry || (refreshJson && refreshJson.state && refreshJson.state.telemetry) || {};
@@ -1717,8 +1922,7 @@
       // REAL-TIME WEBSOCKET
       // =======================================================================
       function connectWebSocket() {
-        const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-        const ws = new WebSocket(`${proto}//${window.location.host}/ws`);
+        const ws = new WebSocket(WS_URL);
 
         ws.onopen = () => {
           if ($("esp32Dot")) $("esp32Dot").classList.remove("offline");
@@ -1735,9 +1939,30 @@
               updateDashboardTelemetry(msg.data, true, null);
             } else if (msg.type === "update") {
               const { item_id, value } = msg;
-              if (item_id === "voltage_V" && isVal(value) && $("valVoltage")) $("valVoltage").textContent = Number(value).toFixed(2);
-              if (item_id === "current_mA" && isVal(value) && $("valCurrent")) $("valCurrent").textContent = Math.round(Number(value));
-              if (item_id === "power_mW" && isVal(value) && $("valPower")) $("valPower").textContent = Math.round(Number(value));
+              if (item_id === "voltage_V" && isVal(value)) {
+                const vNum = Number(value);
+                if ($("valVoltage")) $("valVoltage").textContent = vNum.toFixed(2);
+                if ($("needleVoltage")) {
+                  const vAngle = Math.min(90, Math.max(-90, -90 + (vNum / 24) * 180));
+                  $("needleVoltage").style.transform = `rotate(${vAngle}deg)`;
+                }
+              }
+              if (item_id === "current_mA" && isVal(value)) {
+                const cNum = Number(value);
+                if ($("valCurrent")) $("valCurrent").textContent = Math.round(cNum);
+                if ($("needleCurrent")) {
+                  const cAngle = Math.min(90, Math.max(-90, -90 + (Math.min(500, cNum) / 500) * 180));
+                  $("needleCurrent").style.transform = `rotate(${cAngle}deg)`;
+                }
+              }
+              if (item_id === "power_mW" && isVal(value)) {
+                const pNum = Number(value);
+                if ($("valPower")) $("valPower").textContent = Math.round(pNum);
+                if ($("needlePower")) {
+                  const pAngle = Math.min(90, Math.max(-90, -90 + (Math.min(2000, pNum) / 2000) * 180));
+                  $("needlePower").style.transform = `rotate(${pAngle}deg)`;
+                }
+              }
               if (item_id === "jib_yaw_deg" && isVal(value)) setOrientationUI(value, null);
               if (item_id === "jib_deflection_deg" && isVal(value)) setOrientationUI(null, value);
               if (item_id === "crane_motion") setMotionUI(value);
@@ -1762,9 +1987,7 @@
         };
 
         ws.onclose = () => {
-          if ($("esp32Dot")) $("esp32Dot").classList.add("offline");
-          if ($("esp32StatusText")) $("esp32StatusText").textContent = "Reconnecting…";
-          setTimeout(connectWebSocket, 2000);
+          setTimeout(connectWebSocket, 3000);
         };
         ws.onerror = () => ws.close();
       }
@@ -1897,20 +2120,33 @@
 
       async function loadHistoryData() {
         try {
-          const res = await fetch(`${API}/api/history?range=${currentRange}&limit=250`);
-          const data = await res.json();
-          historyCache = data.data || [];
-          if ((!historyCache || historyCache.length < 2) && currentRange === "1h") {
-            const fallbackRes = await fetch(`${API}/api/history?range=all&limit=250`);
-            const fallbackData = await fallbackRes.json();
-            if (fallbackData.data && fallbackData.data.length >= 2) {
-              historyCache = fallbackData.data;
-            }
+          let data = null;
+          try {
+            const res = await fetch(`${API}/api/history?range=${currentRange}&limit=250`);
+            if (res.ok) data = await res.json();
+          } catch (_) {
+            try {
+              const res = await fetch(`/api/history?range=${currentRange}&limit=250`);
+              if (res.ok) data = await res.json();
+            } catch (__) {}
+          }
+          if (data && data.data && data.data.length >= 2) {
+            historyCache = data.data;
+          } else {
+            // Fallback query without range restriction
+            try {
+              const fallbackRes = await fetch(`${API}/api/history?range=all&limit=250`);
+              if (fallbackRes.ok) {
+                const fb = await fallbackRes.json();
+                if (fb.data && fb.data.length >= 2) historyCache = fb.data;
+              }
+            } catch (___) {}
           }
           renderCharts();
         } catch (e) {}
       }
       loadHistoryData();
+      setInterval(loadHistoryData, 5000); // Poll curves periodically so curves are always live
 
       window.addEventListener("resize", () => {
         renderCharts();

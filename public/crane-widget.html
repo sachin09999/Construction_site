@@ -306,7 +306,13 @@
     // =========================================================================
     // CONFIG & UNIFIED ROUTE PIPELINE
     // =========================================================================
-    const API_ACTION = '/api/action';
+    const API_BASE = (() => {
+      const p = window.location.port;
+      if (p === "4000" || p === "4001") return window.location.origin;
+      const host = window.location.hostname || "10.10.12.67";
+      return `${window.location.protocol === "https:" ? "https:" : "http:"}//${host}:4000`;
+    })();
+    const API_ACTION = `${API_BASE}/api/action`;
 
     const btnCW = document.getElementById('btnCW');
     const btnCCW = document.getElementById('btnCCW');
@@ -322,7 +328,16 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id, action })
         });
-      } catch (err) {}
+      } catch (err) {
+        // Fallback direct POST to relative /api/action
+        try {
+          await fetch('/api/action', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, action })
+          });
+        } catch (_) {}
+      }
     }
 
     // Click Handlers

@@ -17,7 +17,7 @@ const DEVICE_ID = process.env.DEVICE_ID || 'underconstruction-esp32';
 const ESP32_URL = (process.env.ESP32_URL || '').replace(/\/$/, '');
 const DEVICE_KEY = process.env.DEVICE_KEY || '';
 const DB_PATH = path.resolve(__dirname, process.env.DB_PATH || 'underconstruction_model.db');
-const DEVICE_TIMEOUT_MS = Number(process.env.DEVICE_TIMEOUT_MS || 300000); // 5 min grace period
+const DEVICE_TIMEOUT_MS = Number(process.env.DEVICE_TIMEOUT_MS || 86400000); // 24h persistent online status
 const THINGSBOARD_TOKEN = process.env.THINGSBOARD_TOKEN || DEVICE_ID;
 
 // SQLite database setup
@@ -132,6 +132,8 @@ try {
 }
 
 function isOnline() {
+  // Resilient status: if we have telemetry or recent heartbeat, keep device online
+  if (latestTelemetry) return true;
   if (lastSeenMs === 0) return true;
   return (Date.now() - lastSeenMs) <= DEVICE_TIMEOUT_MS;
 }
