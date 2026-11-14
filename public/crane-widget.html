@@ -35,11 +35,13 @@
       width: 190px;
       height: 190px;
       border-radius: 50%;
-      background: transparent !important;
-      border: 1.5px dashed rgba(251, 191, 36, 0.45); /* Construction Amber ring */
+      background: rgba(10, 15, 28, 0.35) !important;
+      border: 1.5px dashed rgba(251, 191, 36, 0.55); /* Construction Amber ring */
       display: flex;
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.85));
     }
 
@@ -48,7 +50,7 @@
       position: absolute;
       inset: -6px;
       border-radius: 50%;
-      border: 1px dotted rgba(251, 191, 36, 0.28);
+      border: 1px dotted rgba(251, 191, 36, 0.35);
       pointer-events: none;
       animation: slowSpin 40s linear infinite;
     }
@@ -58,7 +60,7 @@
     }
 
     /* =========================================================================
-       100% PURE CRYSTAL TRANSPARENT BUTTONS (ZERO BLACK FILL)
+       HIGH-TECH TRANSLUCENT SMOKED GLASS BUTTONS
        ========================================================================= */
     .radial-btn {
       position: absolute;
@@ -68,15 +70,15 @@
       align-items: center;
       justify-content: center;
       outline: none;
-      background: transparent !important; /* Pure transparent - no black */
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      background: rgba(10, 15, 28, 0.65) !important; /* Sleek translucent dark glass */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .radial-btn:hover {
       transform: scale(1.12);
-      background: rgba(255, 255, 255, 0.14) !important;
+      background: rgba(10, 15, 28, 0.85) !important;
     }
 
     .radial-btn:active {
@@ -94,7 +96,7 @@
     .btn-center-stop {
       width: 54px;
       height: 54px;
-      background: transparent !important;
+      background: rgba(10, 15, 28, 0.7) !important;
       border: 2.5px solid #ef4444;
       color: #ffffff;
       z-index: 10;
@@ -109,7 +111,7 @@
       filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.95));
     }
     .btn-center-stop:hover {
-      background: rgba(239, 68, 68, 0.25) !important;
+      background: rgba(239, 68, 68, 0.35) !important;
       border-color: #f87171;
       box-shadow: 
         0 0 28px rgba(239, 68, 68, 0.95),
@@ -130,7 +132,7 @@
       left: 8px;
       width: 45px;
       height: 45px;
-      background: transparent !important;
+      background: rgba(10, 15, 28, 0.7) !important;
       border: 2.5px solid #fbbf24;
       color: #fbbf24;
       box-shadow: 
@@ -142,7 +144,7 @@
       height: 24px;
     }
     .btn-left-ccw:hover {
-      background: rgba(251, 191, 36, 0.2) !important;
+      background: rgba(251, 191, 36, 0.3) !important;
       border-color: #fde047;
       box-shadow: 
         0 0 26px rgba(253, 224, 71, 0.85),
@@ -172,7 +174,7 @@
       right: 8px;
       width: 45px;
       height: 45px;
-      background: transparent !important;
+      background: rgba(10, 15, 28, 0.7) !important;
       border: 2.5px solid #fbbf24;
       color: #fbbf24;
       box-shadow: 
@@ -184,7 +186,7 @@
       height: 24px;
     }
     .btn-right-cw:hover {
-      background: rgba(251, 191, 36, 0.2) !important;
+      background: rgba(251, 191, 36, 0.3) !important;
       border-color: #fde047;
       box-shadow: 
         0 0 26px rgba(253, 224, 71, 0.85),
@@ -214,7 +216,7 @@
       top: 8px;
       width: 45px;
       height: 45px;
-      background: transparent !important;
+      background: rgba(10, 15, 28, 0.7) !important;
       border: 2.5px solid #10b981;
       color: #10b981;
       box-shadow: 
@@ -226,7 +228,7 @@
       height: 24px;
     }
     .btn-top-mag-on:hover {
-      background: rgba(16, 185, 129, 0.2) !important;
+      background: rgba(16, 185, 129, 0.3) !important;
       border-color: #34d399;
       box-shadow: 
         0 0 28px rgba(52, 211, 153, 0.85),
@@ -248,7 +250,7 @@
       bottom: 8px;
       width: 45px;
       height: 45px;
-      background: transparent !important;
+      background: rgba(10, 15, 28, 0.7) !important;
       border: 2.5px solid #f97316;
       color: #f97316;
       box-shadow: 
@@ -260,7 +262,7 @@
       height: 24px;
     }
     .btn-bottom-mag-off:hover {
-      background: rgba(249, 115, 22, 0.2) !important;
+      background: rgba(249, 115, 22, 0.3) !important;
       border-color: #fb923c;
       box-shadow: 
         0 0 26px rgba(251, 146, 60, 0.85),
