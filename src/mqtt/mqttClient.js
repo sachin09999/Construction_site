@@ -177,7 +177,7 @@ function publishActuatorCommand(itemId, command, customSpeed) {
 
     // 2. Publish standard ESP32 RPC method payload (to both target & root topics)
     if (rpcMethod) {
-      const rpcPayload = { method: rpcMethod, speed, params: speed };
+      const rpcPayload = rpcMethod === 'setSpeed' ? { method: rpcMethod, params: speed } : { method: rpcMethod };
       client.publish(topicCommand(), JSON.stringify(rpcPayload), { qos: 1, retain: false });
       client.publish("plant/underconstruction/command", JSON.stringify(rpcPayload), { qos: 1, retain: false });
       client.publish("crane/command", JSON.stringify(rpcPayload), { qos: 1, retain: false });

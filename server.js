@@ -496,7 +496,7 @@ app.post('/api/diag/test-command', async (req, res) => {
   else if (action === 'on') method = 'setMagnetOn';
   else if (action === 'off') method = 'setMagnetOff';
 
-  const commandPayload = { method, speed: Number(speed), params: Number(speed) };
+  const commandPayload = { method };
   report.http.attempted = true;
   report.http.payload = commandPayload;
 
@@ -590,7 +590,7 @@ async function executeCraneCommand(target, action, res) {
   }
 
   const speed = Math.max(160, Number(store.getValue('crane_speed') || store.get('crane_speed')?.value) || 180);
-  const command = { method, speed, params: speed };
+  const command = { method };
   let result = {};
 
   // 1. Publish immediately to Mosquitto MQTT using Cement Plant Actuator Pattern (instant non-blocking)
