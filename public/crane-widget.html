@@ -58,8 +58,7 @@
     }
 
     /* =========================================================================
-       HIGH-CONTRAST OPTICAL LENS BUTTONS
-       Blocks messy background noise so icons pop with 100% crisp clarity
+       TRANSPARENT TINTED BLACK GLASS BUTTONS (NOT OPAQUE)
        ========================================================================= */
     .radial-btn {
       position: absolute;
@@ -69,14 +68,15 @@
       align-items: center;
       justify-content: center;
       outline: none;
-      background: rgba(11, 17, 33, 0.88); /* Deep slate lens blocks background clutter */
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      background: rgba(0, 0, 0, 0.45); /* Transparent tinted black - not opaque */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .radial-btn:hover {
       transform: scale(1.12);
+      background: rgba(0, 0, 0, 0.65);
     }
 
     .radial-btn:active {
@@ -84,9 +84,8 @@
     }
 
     .radial-btn svg {
-      fill: #ffffff !important;
       transition: all 0.16s ease;
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.9));
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.95));
     }
 
     /* -------------------------------------------------------------------------
@@ -95,7 +94,7 @@
     .btn-center-stop {
       width: 54px;
       height: 54px;
-      background: rgba(220, 38, 38, 0.35);
+      background: rgba(220, 38, 38, 0.28);
       border: 2.5px solid #ef4444;
       color: #ffffff;
       z-index: 10;
@@ -110,7 +109,7 @@
       filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.95));
     }
     .btn-center-stop:hover {
-      background: rgba(220, 38, 38, 0.58);
+      background: rgba(220, 38, 38, 0.55);
       border-color: #f87171;
       box-shadow: 
         0 0 28px rgba(239, 68, 68, 0.95),
@@ -125,14 +124,13 @@
     }
 
     /* -------------------------------------------------------------------------
-       2. LEFT (9 O'CLOCK): ROTATE CCW (CONSTRUCTION CRANE AMBER GOLD)
-       Matches the physical yellow tower crane
+       2. LEFT (9 O'CLOCK): ROTATE ANTI-CLOCKWISE / CCW (CONSTRUCTION AMBER GOLD)
        ------------------------------------------------------------------------- */
     .btn-left-ccw {
       left: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(11, 17, 33, 0.88);
+      background: rgba(0, 0, 0, 0.45);
       border: 2.5px solid #fbbf24;
       color: #fbbf24;
       box-shadow: 
@@ -142,10 +140,9 @@
     .btn-left-ccw svg {
       width: 24px;
       height: 24px;
-      fill: #ffffff !important;
     }
     .btn-left-ccw:hover {
-      background: rgba(251, 191, 36, 0.28);
+      background: rgba(251, 191, 36, 0.25);
       border-color: #fde047;
       box-shadow: 
         0 0 26px rgba(253, 224, 71, 0.85),
@@ -161,7 +158,7 @@
       animation: spinCCW 2.4s linear infinite;
     }
     .btn-left-ccw.active-state svg {
-      fill: #0f172a !important;
+      stroke: #0f172a !important;
     }
     @keyframes spinCCW {
       0% { transform: rotate(0deg); }
@@ -169,14 +166,13 @@
     }
 
     /* -------------------------------------------------------------------------
-       3. RIGHT (3 O'CLOCK): ROTATE CW (CONSTRUCTION CRANE AMBER GOLD)
-       Matches the physical yellow tower crane
+       3. RIGHT (3 O'CLOCK): ROTATE CLOCKWISE / CW (CONSTRUCTION AMBER GOLD)
        ------------------------------------------------------------------------- */
     .btn-right-cw {
       right: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(11, 17, 33, 0.88);
+      background: rgba(0, 0, 0, 0.45);
       border: 2.5px solid #fbbf24;
       color: #fbbf24;
       box-shadow: 
@@ -186,10 +182,9 @@
     .btn-right-cw svg {
       width: 24px;
       height: 24px;
-      fill: #ffffff !important;
     }
     .btn-right-cw:hover {
-      background: rgba(251, 191, 36, 0.28);
+      background: rgba(251, 191, 36, 0.25);
       border-color: #fde047;
       box-shadow: 
         0 0 26px rgba(253, 224, 71, 0.85),
@@ -205,7 +200,7 @@
       animation: spinCW 2.4s linear infinite;
     }
     .btn-right-cw.active-state svg {
-      fill: #0f172a !important;
+      stroke: #0f172a !important;
     }
     @keyframes spinCW {
       0% { transform: rotate(0deg); }
@@ -214,13 +209,12 @@
 
     /* -------------------------------------------------------------------------
        4. TOP (12 O'CLOCK): MAGNET ON (VIVID ELECTRIC EMERALD)
-       High-voltage coil active
        ------------------------------------------------------------------------- */
     .btn-top-mag-on {
       top: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(11, 17, 33, 0.88);
+      background: rgba(0, 0, 0, 0.45);
       border: 2.5px solid #10b981;
       color: #10b981;
       box-shadow: 
@@ -230,10 +224,9 @@
     .btn-top-mag-on svg {
       width: 22px;
       height: 22px;
-      fill: #ffffff !important;
     }
     .btn-top-mag-on:hover {
-      background: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.25);
       border-color: #34d399;
       box-shadow: 
         0 0 28px rgba(52, 211, 153, 0.85),
@@ -250,13 +243,12 @@
 
     /* -------------------------------------------------------------------------
        5. BOTTOM (6 O'CLOCK): MAGNET OFF (SAFETY FIRE CORAL)
-       Released / de-energized cargo coil
        ------------------------------------------------------------------------- */
     .btn-bottom-mag-off {
       bottom: 8px;
       width: 45px;
       height: 45px;
-      background: rgba(11, 17, 33, 0.88);
+      background: rgba(0, 0, 0, 0.45);
       border: 2.5px solid #f97316;
       color: #f97316;
       box-shadow: 
@@ -266,14 +258,9 @@
     .btn-bottom-mag-off svg {
       width: 22px;
       height: 22px;
-      fill: #ffffff !important;
-    }
-    .btn-bottom-mag-off svg line {
-      stroke: #ffffff !important;
-      stroke-width: 2.5;
     }
     .btn-bottom-mag-off:hover {
-      background: rgba(249, 115, 22, 0.3);
+      background: rgba(249, 115, 22, 0.25);
       border-color: #fb923c;
       box-shadow: 
         0 0 26px rgba(251, 146, 60, 0.85),
@@ -287,69 +274,51 @@
         0 0 30px #f97316,
         inset 0 0 18px #ffffff !important;
     }
-
-    /* Tooltips */
-    .radial-btn[data-tip]:hover::after {
-      content: attr(data-tip);
-      position: absolute;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
-      font-size: 10px;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 6px;
-      white-space: nowrap;
-      pointer-events: none;
-      z-index: 100;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    .btn-top-mag-on[data-tip]:hover::after { top: -30px; }
-    .btn-bottom-mag-off[data-tip]:hover::after { bottom: -30px; }
-    .btn-left-ccw[data-tip]:hover::after { left: -82px; }
-    .btn-right-cw[data-tip]:hover::after { right: -82px; }
-    .btn-center-stop[data-tip]:hover::after { bottom: -30px; }
   </style>
 </head>
 <body>
 
-  <!-- Pure Transparent Circular Controller (No Translucent Fog) -->
+  <!-- Pure Transparent Circular Controller -->
   <div class="circular-controller" id="controller">
     <div class="orbit-ring"></div>
 
     <!-- 12 O'CLOCK: MAGNET ON (EMERALD GREEN) -->
-    <button class="radial-btn btn-top-mag-on" id="btnMagOn" data-tip="Magnet ON" aria-label="Magnet On">
-      <svg viewBox="0 0 24 24">
-        <path d="M3 7v6a9 9 0 0 0 18 0V7h-4v6a5 5 0 0 1-10 0V7H3zm0-4h4v3H3V3zm14 0h4v3h-4V3z"/>
+    <button class="radial-btn btn-top-mag-on" id="btnMagOn" aria-label="Magnet On">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4v7a8 8 0 0 0 16 0V4"/>
+        <path d="M4 8h4M16 8h4"/>
       </svg>
     </button>
 
-    <!-- 9 O'CLOCK: ROTATE LEFT CCW (ELECTRIC CYAN) -->
-    <button class="radial-btn btn-left-ccw" id="btnCCW" data-tip="Rotate CCW" aria-label="Rotate CCW">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.77 20 14.44 20 13c0-4.42-3.58-8-8-8zM6.24 6.74L4.78 8.2A8.99 8.99 0 0 0 4 13c0 4.42 3.58 8 8 8v-4c-2.21 0-4-1.79-4-4 0-1.01.25-1.97.7-2.8l-2.46-2.46z"/>
+    <!-- 9 O'CLOCK: ROTATE LEFT - ANTICLOCKWISE (CCW) -->
+    <button class="radial-btn btn-left-ccw" id="btnCCW" aria-label="Anticlockwise">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9c-2.6 0-5 1-6.8 2.6"/>
+        <polyline points="3 4 3 9 8 9"/>
       </svg>
     </button>
 
     <!-- CENTER: PUNCHABLE STOP (CRIMSON RED) -->
-    <button class="radial-btn btn-center-stop" id="btnStop" data-tip="STOP" aria-label="Stop">
-      <svg viewBox="0 0 24 24">
+    <button class="radial-btn btn-center-stop" id="btnStop" aria-label="Stop">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="#ffffff">
         <rect x="6" y="6" width="12" height="12" rx="2.5" />
       </svg>
     </button>
 
-    <!-- 3 O'CLOCK: ROTATE RIGHT CW (ROYAL SKY BLUE) -->
-    <button class="radial-btn btn-right-cw" id="btnCW" data-tip="Rotate CW" aria-label="Rotate CW">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6 0 1.01.25 1.97.7 2.8L5.24 17.26C4.46 15.77 4 14.44 4 13c0-4.42 3.58-8 8-8zm5.76 1.74l1.46 1.46C19.75 9.03 20 9.99 20 11c0 2.21-1.79 4-4 4v4c4.42 0 8-3.58 8-8 0-1.76-.57-3.39-1.54-4.74l-2.7-2.52z"/>
+    <!-- 3 O'CLOCK: ROTATE RIGHT - CLOCKWISE (CW) -->
+    <button class="radial-btn btn-right-cw" id="btnCW" aria-label="Clockwise">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 1 1-9-9c2.6 0 5 1 6.8 2.6"/>
+        <polyline points="21 4 21 9 16 9"/>
       </svg>
     </button>
 
-    <!-- 6 O'CLOCK: MAGNET OFF (CORAL ROSE) -->
-    <button class="radial-btn btn-bottom-mag-off" id="btnMagOff" data-tip="Magnet OFF" aria-label="Magnet Off">
-      <svg viewBox="0 0 24 24">
-        <path d="M3 7v6a9 9 0 0 0 18 0V7h-4v6a5 5 0 0 1-10 0V7H3zm0-4h4v3H3V3zm14 0h4v3h-4V3z" opacity="0.4"/>
-        <line x1="2" y1="2" x2="22" y2="22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- 6 O'CLOCK: MAGNET OFF (CORAL ORANGE) -->
+    <button class="radial-btn btn-bottom-mag-off" id="btnMagOff" aria-label="Magnet Off">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4v7a8 8 0 0 0 16 0V4" opacity="0.6"/>
+        <path d="M4 8h4M16 8h4" opacity="0.6"/>
+        <line x1="3" y1="3" x2="21" y2="21" stroke="#ffffff" stroke-width="2.6"/>
       </svg>
     </button>
 
