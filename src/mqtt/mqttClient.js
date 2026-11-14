@@ -199,10 +199,15 @@ function publish(subTopic, message) {
   return true;
 }
 
+function isConnected() {
+  return Boolean(client && client.connected);
+}
+
 module.exports = {
   connect,
   publish,
   publishActuatorCommand,
+  isConnected,
   topicCommand,
   topicValues,
   topicStatus,

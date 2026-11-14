@@ -70,6 +70,31 @@ app.get(['/widget/sensor', '/widget/live', '/widget'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'widget.html'));
 });
 
+// Dedicated Hardware Diagnostic & Telemetry Log Route
+app.get(['/diag', '/diagnostics', '/debug'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'diag.html'));
+});
+
+// Diagnostic Log Ring Buffer (Last 250 in-memory system events)
+const DIAG_LOG_MAX = 250;
+const diagLogs = [];
+
+function logDiag(level, source, message, details = null) {
+  const entry = {
+    id: Date.now() + '-' + Math.random().toString(36).substr(2, 5),
+    timestamp: new Date().toISOString(),
+    level, // 'INFO', 'WARN', 'ERROR', 'SUCCESS'
+    source, // 'ESP32_HTTP', 'MQTT', 'TELEMETRY', 'ACTUATOR', 'SYSTEM', 'DB'
+    message,
+    details
+  };
+  diagLogs.unshift(entry);
+  if (diagLogs.length > DIAG_LOG_MAX) diagLogs.pop();
+  return entry;
+}
+
+logDiag('INFO', 'SYSTEM', 'Crane Digital Twin Backend diagnostic service initialized');
+
 let latestTelemetry = null;
 let lastSeenMs = 0;
 let lastCommand = null;
@@ -176,7 +201,9 @@ async function postToEsp32(endpoint, body = {}) {
     throw new Error('ESP32_URL is not configured');
   }
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), Number(process.env.ESP32_TIMEOUT_MS || 1500));
+  const timeoutMs = Number(process.env.ESP32_TIMEOUT_MS || 1500);
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  const t0 = Date.now();
   try {
     const response = await fetch(`${ESP32_URL}${endpoint}`, {
       method: 'POST',
@@ -184,11 +211,20 @@ async function postToEsp32(endpoint, body = {}) {
       body: JSON.stringify(body),
       signal: controller.signal
     });
+    const latency = Date.now() - t0;
     const raw = await response.text();
     let result;
     try { result = raw ? JSON.parse(raw) : {}; } catch { result = { raw }; }
-    if (!response.ok) throw new Error(`ESP32 HTTP ${response.status}: ${raw}`);
+    if (!response.ok) {
+      logDiag('ERROR', 'ESP32_HTTP', `ESP32 returned HTTP ${response.status} (${latency}ms): ${raw}`);
+      throw new Error(`ESP32 HTTP ${response.status}: ${raw}`);
+    }
+    logDiag('SUCCESS', 'ESP32_HTTP', `ESP32 200 OK (${latency}ms): ${JSON.stringify(body)}`);
     return result;
+  } catch (err) {
+    const latency = Date.now() - t0;
+    logDiag('WARN', 'ESP32_HTTP', `ESP32 HTTP failed to ${ESP32_URL}${endpoint} (${latency}ms): ${err.message}`);
+    throw err;
   } finally {
     clearTimeout(timeout);
   }
@@ -329,6 +365,8 @@ function ingestTelemetry(payload) {
   // 4. Forward telemetry to ThingsBoard (Cement Plant logic)
   thingsboardService.sendTelemetry(THINGSBOARD_TOKEN, payload).catch(() => {});
 
+  logDiag('INFO', 'TELEMETRY', `Sensor packet received: V=${telemetry.voltage_V}V, I=${telemetry.current_mA}mA, Yaw=${telemetry.jib_yaw_deg}°, Defl=${telemetry.jib_deflection_deg}°`, telemetry);
+
   return telemetry;
 }
 
@@ -360,6 +398,154 @@ app.get('/api/history', (req, res) => {
   }
 
   res.json({ success: true, range, count: rows.length, data: rows });
+});
+
+// =============================================================================
+// Standalone Diagnostic & Telemetry Logger APIs
+// =============================================================================
+
+// GET /api/diag/status -> Comprehensive Hardware & Network Status
+app.get('/api/diag/status', async (req, res) => {
+  const startTime = Date.now();
+  let esp32Status = { ok: false, latencyMs: null, error: null, url: ESP32_URL, statusCode: null };
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 1200);
+    const resp = await fetch(`${ESP32_URL}/api/device/state`, {
+      method: 'GET',
+      headers: { 'X-Device-Key': DEVICE_KEY },
+      signal: controller.signal
+    }).catch(async () => {
+      return await fetch(`${ESP32_URL}/`, { signal: controller.signal });
+    });
+    clearTimeout(timeout);
+    esp32Status.latencyMs = Date.now() - startTime;
+    esp32Status.ok = Boolean(resp && resp.ok);
+    esp32Status.statusCode = resp ? resp.status : null;
+  } catch (err) {
+    esp32Status.latencyMs = Date.now() - startTime;
+    esp32Status.error = err.message;
+  }
+
+  // Database stats
+  let dbStats = { totalRecords: 0, latestRecord: null, ageSeconds: null };
+  try {
+    const row = db.prepare('SELECT count(*) as count FROM telemetry_history').get();
+    dbStats.totalRecords = row ? row.count : 0;
+    const latest = db.prepare('SELECT * FROM telemetry_history ORDER BY id DESC LIMIT 1').get();
+    if (latest) {
+      dbStats.latestRecord = latest;
+      const ts = latest.received_at || (latest.timestamp ? Date.parse(latest.timestamp) : null);
+      if (ts) dbStats.ageSeconds = Math.round((Date.now() - ts) / 1000);
+    }
+  } catch (err) {
+    dbStats.error = err.message;
+  }
+
+  res.json({
+    success: true,
+    deviceId: DEVICE_ID,
+    esp32: esp32Status,
+    mqtt: {
+      connected: mqttClient.isConnected ? mqttClient.isConnected() : false,
+      host: process.env.MQTT_HOST || 'mosquitto',
+      port: process.env.MQTT_PORT || 1883,
+      prefix: process.env.MQTT_PREFIX || 'plant/crane'
+    },
+    database: dbStats,
+    telemetry: latestTelemetry,
+    lastCommand,
+    server: {
+      uptimeSeconds: Math.round(process.uptime()),
+      memory: process.memoryUsage(),
+      time: new Date().toISOString()
+    }
+  });
+});
+
+// GET /api/diag/logs -> Real-time Circular Event Buffer
+app.get('/api/diag/logs', (req, res) => {
+  const limit = Math.min(250, Number(req.query.limit) || 100);
+  const filter = String(req.query.filter || 'all').toLowerCase();
+  let logs = diagLogs;
+  if (filter !== 'all') {
+    logs = logs.filter(l => l.source.toLowerCase() === filter || l.level.toLowerCase() === filter);
+  }
+  res.json({ success: true, count: logs.length, logs: logs.slice(0, limit) });
+});
+
+// POST /api/diag/test-command -> Test actuator with instant latency and status feedback
+app.post('/api/diag/test-command', async (req, res) => {
+  const { target = 'crane', action = 'stop', speed = 180 } = req.body || {};
+  const t0 = Date.now();
+  const report = {
+    target, action, speed: Number(speed),
+    mqtt: { published: false, error: null },
+    http: { attempted: false, url: `${ESP32_URL}/api/device/command`, ok: false, statusCode: null, latencyMs: null, error: null, response: null }
+  };
+
+  // 1. MQTT
+  try {
+    mqttClient.publishActuatorCommand(target, action, Number(speed));
+    report.mqtt.published = true;
+    logDiag('INFO', 'MQTT', `Test command published: ${target} (${action}) @ ${speed} PWM`);
+  } catch (err) {
+    report.mqtt.error = err.message;
+    logDiag('ERROR', 'MQTT', `Failed to publish test command: ${err.message}`);
+  }
+
+  // 2. Direct HTTP
+  let method = 'setStop';
+  if (action === 'forward' || action === 'cw') method = 'setReverse';
+  else if (action === 'reverse' || action === 'ccw') method = 'setForward';
+  else if (action === 'on') method = 'setMagnetOn';
+  else if (action === 'off') method = 'setMagnetOff';
+
+  const commandPayload = { method, speed: Number(speed), params: Number(speed) };
+  report.http.attempted = true;
+  report.http.payload = commandPayload;
+
+  try {
+    const r = await postToEsp32('/api/device/command', commandPayload);
+    report.http.ok = true;
+    report.http.latencyMs = Date.now() - t0;
+    report.http.response = r;
+    logDiag('SUCCESS', 'ESP32_HTTP', `ESP32 accepted command: ${method} (${report.http.latencyMs}ms)`, r);
+  } catch (err) {
+    report.http.latencyMs = Date.now() - t0;
+    report.http.error = err.message;
+    logDiag('WARN', 'ESP32_HTTP', `ESP32 HTTP dispatch failed: ${err.message} (${report.http.latencyMs}ms)`);
+  }
+
+  res.json({ success: true, report });
+});
+
+// GET /api/diag/scan -> Scan LAN subnet for ESP32 devices
+app.get('/api/diag/scan', async (req, res) => {
+  const subnet = req.query.subnet || '10.10.12.';
+  const start = Number(req.query.start || 55);
+  const end = Number(req.query.end || 75);
+  const results = [];
+
+  const promises = [];
+  for (let i = start; i <= end; i++) {
+    const ip = `${subnet}${i}`;
+    promises.push((async () => {
+      const controller = new AbortController();
+      const to = setTimeout(() => controller.abort(), 600);
+      const t0 = Date.now();
+      try {
+        const resp = await fetch(`http://${ip}/`, { signal: controller.signal });
+        clearTimeout(to);
+        results.push({ ip, alive: true, status: resp.status, latencyMs: Date.now() - t0 });
+      } catch (err) {
+        clearTimeout(to);
+      }
+    })());
+  }
+  await Promise.allSettled(promises);
+  res.json({ success: true, subnet, range: `${start}-${end}`, responsive: results });
 });
 
 // Unified Control Command Handler (Supports Cupola360 APIButton POST, Cement Plant GET/POST, and Browser tests)

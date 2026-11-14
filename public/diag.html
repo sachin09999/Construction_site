@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crane Hardware & Network Diagnostics | Under Construction</title>
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --bg-card: rgba(18, 26, 43, 0.85);
+      --border: rgba(43, 62, 94, 0.6);
+      --text: #e2e8f0;
+      --text-muted: #8899b0;
+      --primary: #38bdf8;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(ellipse at 15% 10%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 45%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    /* Header */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-title h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge-chip {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(30, 41, 59, 0.8);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .btn:hover {
+      background: rgba(51, 65, 85, 0.9);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .btn-primary {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #0369a1;
+    }
+    .btn-danger {
+      background: #991b1b;
+      border-color: #ef4444;
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background: #b91c1c;
+    }
+    .btn-success {
+      background: #065f46;
+      border-color: #10b981;
+      color: #fff;
+    }
+    .btn-success:hover {
+      background: #047857;
+    }
+
+    /* Grid Layout */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
+    }
+    .card-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(43, 62, 94, 0.4);
+      padding-bottom: 8px;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+      background: #64748b;
+    }
+    .status-dot.ok { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
+    .status-dot.warn { background: var(--accent-amber); box-shadow: 0 0 8px var(--accent-amber); }
+    .status-dot.err { background: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
+
+    /* Key Value Stats */
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+    }
+    .metric-row .label { color: var(--text-muted); }
+    .metric-row .val { font-family: var(--font-mono); font-weight: 600; }
+
+    /* Sensor Metric Cards */
+    .sensor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .sensor-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .sensor-box .title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .sensor-box .number {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .sensor-box .unit {
+      font-size: 10px;
+      color: #64748b;
+    }
+
+    /* Actuator Controls */
+    .actuator-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .actuator-controls .btn {
+      flex: 1 1 120px;
+      justify-content: center;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+    .speed-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      background: rgba(15, 23, 42, 0.5);
+      padding: 10px;
+      border-radius: 6px;
+    }
+    .speed-slider-wrap input[type=range] {
+      flex: 1;
+      cursor: pointer;
+    }
+
+    /* Command Report Box */
+    .command-report {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #94a3b8;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    /* Log Stream Terminal */
+    .log-panel {
+      display: flex;
+      flex-direction: column;
+      height: 400px;
+    }
+    .log-header-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .log-filters {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .terminal-window {
+      flex: 1;
+      background: #020617;
+      border: 1px solid rgba(43, 62, 94, 0.5);
+      border-radius: 6px;
+      padding: 10px;
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .log-entry {
+      display: flex;
+      gap: 8px;
+      padding: 3px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .log-entry:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .log-time { color: #475569; white-space: nowrap; }
+    .log-source { font-weight: 700; width: 95px; white-space: nowrap; }
+    .log-source.TELEMETRY { color: #38bdf8; }
+    .log-source.ACTUATOR { color: #a78bfa; }
+    .log-source.ESP32_HTTP { color: #f59e0b; }
+    .log-source.MQTT { color: #10b981; }
+    .log-source.SYSTEM { color: #94a3b8; }
+    .log-level { font-weight: 700; width: 55px; }
+    .log-level.INFO { color: #38bdf8; }
+    .log-level.SUCCESS { color: #10b981; }
+    .log-level.WARN { color: #f59e0b; }
+    .log-level.ERROR { color: #ef4444; }
+    .log-msg { flex: 1; color: #cbd5e1; word-break: break-all; }
+
+    /* Scan Results modal/box */
+    .scan-results {
+      margin-top: 10px;
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="header-title">
+      <h1>🛠️ Crane Hardware & Network Diagnostics</h1>
+      <span class="badge-chip">Live Root Cause Inspector</span>
+    </div>
+    <div class="nav-actions">
+      <a href="/" class="btn">🏠 Digital Twin Dashboard</a>
+      <a href="/widget/control" class="btn">🕹️ Crane Remote Widget</a>
+      <button class="btn btn-primary" id="btnRefreshStatus" onclick="refreshAll(true)">🔄 Refresh Diagnostics</button>
+    </div>
+  </header>
+
+  <!-- 3-Column Status Grid -->
+  <section class="grid-3">
+    
+    <!-- Card 1: ESP32 Reachability -->
+    <div class="card">
+      <div class="card-title">
+        <span><span class="status-dot" id="dotEsp32"></span>ESP32 Microcontroller Node</span>
+        <span class="badge-chip" id="esp32PingBadge">CHECKING...</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Configured URL:</span>
+        <span class="val" id="valEsp32Url">http://10.10.12.63</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Ping Roundtrip:</span>
+        <span class="val" id="valEsp32Latency">-- ms</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">HTTP Status:</span>
+        <span class="val" id="valEsp32Http">--</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Last Heartbeat:</span>
+        <span class="val" id="valEsp32LastSeen">--</span>
+      </div>
+      <div style="margin-top: 12px; display: flex; gap: 8px;">
+        <button class="btn btn-primary" style="flex:1;" onclick="pingEsp32()">⚡ Test Ping</button>
+        <button class="btn" style="flex:1;" onclick="scanSubnet()">🔍 Scan 10.10.12.x</button>
+      </div>
+      <div class="scan-results" id="scanResultsBox"></div>
+    </div>
+
+    <!-- Card 2: Mosquitto MQTT Broker -->
+    <div class="card">
+      <div class="card-title">
+        <span><span class="status-dot" id="dotMqtt"></span>Mosquitto MQTT Broker</span>
+        <span class="badge-chip" id="mqttStatusBadge">CONNECTED</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Broker URI:</span>
+        <span class="val" id="valMqttHost">mqtt://mosquitto:1883</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Actuator Prefix:</span>
+        <span class="val" id="valMqttPrefix">plant/crane/#</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Command Mode:</span>
+        <span class="val" style="color:var(--accent-green);">Non-Retained (QoS 1)</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Dual Delivery:</span>
+        <span class="val">HTTP + MQTT Fallback</span>
+      </div>
+      <div style="margin-top: 12px;">
+        <button class="btn" style="width:100%;" onclick="sendActuatorTest('crane', 'stop')">📢 Test MQTT Stop Broadcast</button>
+      </div>
+    </div>
+
+    <!-- Card 3: SQLite Telemetry History Database -->
+    <div class="card">
+      <div class="card-title">
+        <span><span class="status-dot ok"></span>Telemetry Database (SQLite)</span>
+        <span class="badge-chip">PERSISTENT</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Database File:</span>
+        <span class="val">underconstruction_model.db</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Total Sensor Records:</span>
+        <span class="val" id="valDbCount">--</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Latest Record Time:</span>
+        <span class="val" id="valDbLatestTime">--</span>
+      </div>
+      <div class="metric-row">
+        <span class="label">Packet Age:</span>
+        <span class="val" id="valDbAge">--</span>
+      </div>
+      <div style="margin-top: 12px;">
+        <a href="/api/history?range=1h" target="_blank" class="btn" style="width:100%; justify-content:center;">📥 View Raw JSON API (/api/history)</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 2-Column: Live Telemetry + Interactive Actuator Test -->
+  <section class="grid-2">
+
+    <!-- Column 1: Live Hardware Sensor Telemetry -->
+    <div class="card">
+      <div class="card-title">
+        <span>📊 Current Hardware Sensor Values</span>
+        <span class="badge-chip" id="sensorLiveBadge">LIVE</span>
+      </div>
+      <div class="sensor-grid">
+        <div class="sensor-box">
+          <div class="title">Bus Voltage</div>
+          <div class="number" id="diagValVolt">--</div>
+          <div class="unit">Volts (INA226)</div>
+        </div>
+        <div class="sensor-box">
+          <div class="title">Current Shunt</div>
+          <div class="number" id="diagValCurr">--</div>
+          <div class="unit">mA (INA226)</div>
+        </div>
+        <div class="sensor-box">
+          <div class="title">Power</div>
+          <div class="number" id="diagValPower">--</div>
+          <div class="unit">mW (INA226)</div>
+        </div>
+        <div class="sensor-box">
+          <div class="title">Jib Azimuth Yaw</div>
+          <div class="number" id="diagValYaw">--</div>
+          <div class="unit">Deg (QMC5883L)</div>
+        </div>
+        <div class="sensor-box">
+          <div class="title">Incline / Tilt</div>
+          <div class="number" id="diagValDefl">--</div>
+          <div class="unit">Deg (MPU6500)</div>
+        </div>
+        <div class="sensor-box">
+          <div class="title">Sensors Status</div>
+          <div class="number" style="font-size:12px; margin-top:4px;" id="diagValChips">MPU: OK | MAG: OK</div>
+          <div class="unit">I2C Bus Link</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px;">
+        <div class="metric-row">
+          <span class="label">Current Session Time:</span>
+          <span class="val" id="diagValSession">-- sec</span>
+        </div>
+        <div class="metric-row">
+          <span class="label">Total Lifetime Operation:</span>
+          <span class="val" id="diagValTotal">-- sec</span>
+        </div>
+        <div class="metric-row">
+          <span class="label">Last Ingested Timestamp:</span>
+          <span class="val" id="diagValTimestamp">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2: Interactive Actuator Command Diagnostics -->
+    <div class="card">
+      <div class="card-title">
+        <span>🕹️ Actuator Command Execution & Diagnostics</span>
+        <span class="badge-chip">DUAL PROTOCOL TEST</span>
+      </div>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+        Click to dispatch command. Shows exact roundtrip latency and HTTP/MQTT response immediately:
+      </p>
+
+      <div class="actuator-controls">
+        <button class="btn btn-primary" onclick="sendActuatorTest('crane', 'forward')">🔄 Rotate CW (Forward)</button>
+        <button class="btn btn-primary" onclick="sendActuatorTest('crane', 'reverse')">🔄 Rotate CCW (Reverse)</button>
+        <button class="btn btn-danger" onclick="sendActuatorTest('crane', 'stop')">⏹️ Crane Stop</button>
+      </div>
+
+      <div class="actuator-controls">
+        <button class="btn btn-success" onclick="sendActuatorTest('magnet', 'on')">🧲 Magnet ON</button>
+        <button class="btn" onclick="sendActuatorTest('magnet', 'off')">⚪ Magnet OFF</button>
+        <button class="btn" onclick="sendActuatorTest('reboot', '')">🔄 Reboot ESP32</button>
+      </div>
+
+      <div class="speed-slider-wrap">
+        <span style="font-size:12px; font-weight:600;">Speed PWM:</span>
+        <input type="range" id="inputDiagSpeed" min="60" max="255" value="180" oninput="document.getElementById('lblSpeedVal').innerText=this.value">
+        <span id="lblSpeedVal" style="font-family:var(--font-mono); font-weight:700; width:35px;">180</span>
+      </div>
+
+      <div style="margin-top:12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px;">
+          Actuator Dispatch Trace:
+        </div>
+        <div class="command-report" id="commandReportBox">
+          Ready for test. Click any actuator button above.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Real-time Event & Telemetry Log Stream -->
+  <section class="card log-panel">
+    <div class="log-header-tools">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-weight:700; font-size:13px; text-transform:uppercase;">📜 Live Sensor & System Event Stream</span>
+        <span class="badge-chip" id="logCountBadge">0 events</span>
+      </div>
+      <div class="log-filters">
+        <button class="filter-btn active" onclick="setLogFilter('all', this)">ALL</button>
+        <button class="filter-btn" onclick="setLogFilter('TELEMETRY', this)">TELEMETRY</button>
+        <button class="filter-btn" onclick="setLogFilter('ACTUATOR', this)">ACTUATOR</button>
+        <button class="filter-btn" onclick="setLogFilter('ESP32_HTTP', this)">ESP32 HTTP</button>
+        <button class="filter-btn" onclick="setLogFilter('MQTT', this)">MQTT</button>
+        <button class="filter-btn" onclick="setLogFilter('WARN', this)">WARNINGS</button>
+        <button class="filter-btn" onclick="togglePauseLog(this)" id="btnPauseLog">⏸️ Pause</button>
+        <button class="filter-btn" onclick="clearLogDisplay()">🧹 Clear View</button>
+      </div>
+    </div>
+
+    <div class="terminal-window" id="terminalWindow">
+      <div class="log-entry">
+        <span class="log-time">--:--:--</span>
+        <span class="log-source SYSTEM">SYSTEM</span>
+        <span class="log-level INFO">INFO</span>
+        <span class="log-msg">Connecting to diagnostic log stream...</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let currentFilter = 'all';
+    let isLogPaused = false;
+    let pollTimer = null;
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch('/api/diag/status');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        renderStatus(data);
+      } catch (err) {
+        console.warn('Status fetch error:', err);
+      }
+    }
+
+    function renderStatus(data) {
+      if (!data) return;
+
+      // 1. ESP32 Reachability
+      const esp = data.esp32 || {};
+      const dotEsp = document.getElementById('dotEsp32');
+      const badgeEsp = document.getElementById('esp32PingBadge');
+      document.getElementById('valEsp32Url').innerText = esp.url || '--';
+      document.getElementById('valEsp32Latency').innerText = esp.latencyMs !== null ? `${esp.latencyMs} ms` : 'Timeout';
+      
+      if (esp.ok) {
+        dotEsp.className = 'status-dot ok';
+        badgeEsp.className = 'badge-chip';
+        badgeEsp.innerText = `ONLINE (${esp.statusCode || 200})`;
+        badgeEsp.style.color = '#10b981';
+        badgeEsp.style.borderColor = 'rgba(16,185,129,0.4)';
+        document.getElementById('valEsp32Http').innerText = `200 OK (${esp.latencyMs}ms)`;
+      } else {
+        dotEsp.className = 'status-dot warn';
+        badgeEsp.className = 'badge-chip';
+        badgeEsp.innerText = esp.error ? esp.error.substring(0, 20) : 'UNREACHABLE';
+        badgeEsp.style.color = '#f59e0b';
+        badgeEsp.style.borderColor = 'rgba(245,158,11,0.4)';
+        document.getElementById('valEsp32Http').innerText = esp.error || 'Connection Failed';
+      }
+
+      // 2. MQTT Status
+      const mqtt = data.mqtt || {};
+      const dotMqtt = document.getElementById('dotMqtt');
+      const badgeMqtt = document.getElementById('mqttStatusBadge');
+      document.getElementById('valMqttHost').innerText = `${mqtt.host}:${mqtt.port}`;
+      document.getElementById('valMqttPrefix').innerText = `${mqtt.prefix}/#`;
+      if (mqtt.connected) {
+        dotMqtt.className = 'status-dot ok';
+        badgeMqtt.innerText = 'BROKER ACTIVE';
+        badgeMqtt.style.color = '#10b981';
+      } else {
+        dotMqtt.className = 'status-dot err';
+        badgeMqtt.innerText = 'DISCONNECTED';
+        badgeMqtt.style.color = '#ef4444';
+      }
+
+      // 3. Database Stats
+      const db = data.database || {};
+      document.getElementById('valDbCount').innerText = `${db.totalRecords || 0} rows`;
+      if (db.latestRecord) {
+        document.getElementById('valDbLatestTime').innerText = db.latestRecord.timestamp ? db.latestRecord.timestamp.split('T')[1].replace('Z','') : '--';
+        document.getElementById('valDbAge').innerText = db.ageSeconds !== null ? `${db.ageSeconds}s ago` : '--';
+      }
+
+      // 4. Current Sensor Values
+      const t = data.telemetry || {};
+      document.getElementById('diagValVolt').innerText = (t.voltage_V !== undefined && t.voltage_V !== null) ? `${Number(t.voltage_V).toFixed(2)}` : '--';
+      document.getElementById('diagValCurr').innerText = (t.current_mA !== undefined && t.current_mA !== null) ? `${Math.round(t.current_mA)}` : '--';
+      document.getElementById('diagValPower').innerText = (t.power_mW !== undefined && t.power_mW !== null) ? `${Math.round(t.power_mW)}` : '--';
+      document.getElementById('diagValYaw').innerText = (t.jib_yaw_deg !== undefined && t.jib_yaw_deg !== null) ? `${Number(t.jib_yaw_deg).toFixed(1)}°` : '--';
+      document.getElementById('diagValDefl').innerText = (t.jib_deflection_deg !== undefined && t.jib_deflection_deg !== null) ? `${Number(t.jib_deflection_deg).toFixed(2)}°` : '--';
+
+      const mpu = t.mpu_ok ? 'MPU: OK' : 'MPU: ERR';
+      const mag = t.mag_ok ? 'MAG: OK' : 'MAG: ERR';
+      const ina = t.ina226_ok ? 'INA: OK' : 'INA: ERR';
+      document.getElementById('diagValChips').innerText = `${mpu} | ${mag} | ${ina}`;
+
+      document.getElementById('diagValSession').innerText = t.current_session_time_sec ? `${Math.round(t.current_session_time_sec)} sec` : '--';
+      document.getElementById('diagValTotal').innerText = t.total_operation_time_sec ? `${Math.round(t.total_operation_time_sec)} sec` : '--';
+      document.getElementById('diagValTimestamp').innerText = t.timestamp || '--';
+      document.getElementById('valEsp32LastSeen').innerText = t.timestamp ? t.timestamp.split('T')[1].replace('Z','') : '--';
+    }
+
+    async function fetchLogs() {
+      if (isLogPaused) return;
+      try {
+        const res = await fetch(`/api/diag/logs?limit=80&filter=${currentFilter}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        renderLogs(data.logs || []);
+      } catch (e) {}
+    }
+
+    function renderLogs(logs) {
+      const win = document.getElementById('terminalWindow');
+      document.getElementById('logCountBadge').innerText = `${logs.length} logged`;
+      if (!logs.length) {
+        win.innerHTML = '<div style="color:#64748b; padding:10px;">No logs matching current filter.</div>';
+        return;
+      }
+      let html = '';
+      for (const log of logs) {
+        const timeStr = log.timestamp ? log.timestamp.split('T')[1].replace('Z','') : '--:--:--';
+        const detailsStr = log.details ? ' ' + JSON.stringify(log.details) : '';
+        html += `<div class="log-entry">
+          <span class="log-time">${timeStr}</span>
+          <span class="log-source ${log.source}">${log.source}</span>
+          <span class="log-level ${log.level}">${log.level}</span>
+          <span class="log-msg">${escapeHtml(log.message)}${detailsStr ? `<span style="color:#64748b; font-size:10px;">${escapeHtml(detailsStr)}</span>` : ''}</span>
+        </div>`;
+      }
+      win.innerHTML = html;
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    async function sendActuatorTest(target, action) {
+      const speed = Number(document.getElementById('inputDiagSpeed').value) || 180;
+      const box = document.getElementById('commandReportBox');
+      box.innerHTML = `<span style="color:#38bdf8;">[DISPATCHING]</span> ${target} -> ${action} (speed ${speed})...`;
+      
+      const t0 = Date.now();
+      try {
+        const res = await fetch('/api/diag/test-command', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ target, action, speed })
+        });
+        const latency = Date.now() - t0;
+        const data = await res.json();
+        const rep = data.report || {};
+        
+        let out = `<strong>Command: ${target} [${action}] (${latency}ms)</strong><br>`;
+        out += `MQTT Publish: ${rep.mqtt?.published ? '<span style="color:#10b981;">SUCCESS</span>' : '<span style="color:#ef4444;">FAILED (' + rep.mqtt?.error + ')</span>'}<br>`;
+        if (rep.http?.ok) {
+          out += `ESP32 HTTP: <span style="color:#10b981;">200 OK (${rep.http?.latencyMs}ms)</span> response: ${JSON.stringify(rep.http?.response)}`;
+        } else {
+          out += `ESP32 HTTP: <span style="color:#f59e0b;">FAILED (${rep.http?.latencyMs}ms)</span> - ${rep.http?.error || 'No response'}`;
+        }
+        box.innerHTML = out;
+        fetchLogs();
+      } catch (err) {
+        box.innerHTML = `<span style="color:#ef4444;">Dispatch Error:</span> ${err.message}`;
+      }
+    }
+
+    async function pingEsp32() {
+      const box = document.getElementById('commandReportBox');
+      box.innerHTML = '<span style="color:#38bdf8;">[PING]</span> Probing ESP32 http://10.10.12.63...';
+      await fetchStatus();
+      box.innerHTML = 'Ping test executed. Check status card above.';
+      fetchLogs();
+    }
+
+    async function scanSubnet() {
+      const box = document.getElementById('scanResultsBox');
+      box.style.display = 'block';
+      box.innerHTML = 'Scanning 10.10.12.55 through 10.10.12.75 for responsive devices...';
+      try {
+        const res = await fetch('/api/diag/scan?subnet=10.10.12.&start=55&end=75');
+        const data = await res.json();
+        if (data.responsive && data.responsive.length > 0) {
+          let html = '<strong style="color:#10b981;">Responsive Hosts Found:</strong><br>';
+          for (const h of data.responsive) {
+            html += `• ${h.ip} (HTTP ${h.status}, ${h.latencyMs}ms)<br>`;
+          }
+          box.innerHTML = html;
+        } else {
+          box.innerHTML = '<span style="color:#f59e0b;">No HTTP webservers responded in range 10.10.12.55 - 10.10.12.75.</span> (ESP32 might be in AP mode or offline)';
+        }
+      } catch (e) {
+        box.innerHTML = 'Scan error: ' + e.message;
+      }
+    }
+
+    function setLogFilter(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        if (b.id !== 'btnPauseLog') b.classList.remove('active');
+      });
+      if (btn) btn.classList.add('active');
+      fetchLogs();
+    }
+
+    function togglePauseLog(btn) {
+      isLogPaused = !isLogPaused;
+      btn.innerText = isLogPaused ? '▶️ Resume' : '⏸️ Pause';
+      btn.style.color = isLogPaused ? '#f59e0b' : '';
+    }
+
+    function clearLogDisplay() {
+      document.getElementById('terminalWindow').innerHTML = '<div style="color:#64748b; padding:10px;">View cleared. New incoming logs will appear below.</div>';
+    }
+
+    function refreshAll(manual = false) {
+      fetchStatus();
+      fetchLogs();
+      if (manual) {
+        const btn = document.getElementById('btnRefreshStatus');
+        btn.innerText = '✅ Refreshed';
+        setTimeout(() => btn.innerText = '🔄 Refresh Diagnostics', 1000);
+      }
+    }
+
+    // Auto-refresh loop
+    refreshAll();
+    setInterval(fetchStatus, 2000);
+    setInterval(fetchLogs, 1500);
+  </script>
+</body>
+</html>
