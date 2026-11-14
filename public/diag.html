@@ -586,13 +586,13 @@
       document.getElementById('valEsp32Url').innerText = esp.url || '--';
       document.getElementById('valEsp32Latency').innerText = esp.latencyMs !== null ? `${esp.latencyMs} ms` : 'Timeout';
       
-      if (esp.ok) {
+      if (esp.ok || (esp.statusCode && esp.statusCode < 500)) {
         dotEsp.className = 'status-dot ok';
         badgeEsp.className = 'badge-chip';
         badgeEsp.innerText = `ONLINE (${esp.statusCode || 200})`;
         badgeEsp.style.color = '#10b981';
         badgeEsp.style.borderColor = 'rgba(16,185,129,0.4)';
-        document.getElementById('valEsp32Http').innerText = `200 OK (${esp.latencyMs}ms)`;
+        document.getElementById('valEsp32Http').innerText = `HTTP ${esp.statusCode || 200} OK (${esp.latencyMs}ms)`;
       } else {
         dotEsp.className = 'status-dot warn';
         badgeEsp.className = 'badge-chip';

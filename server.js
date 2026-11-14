@@ -411,18 +411,12 @@ app.get('/api/diag/status', async (req, res) => {
 
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 1200);
-    const resp = await fetch(`${ESP32_URL}/api/device/state`, {
-      method: 'GET',
-      headers: { 'X-Device-Key': DEVICE_KEY },
-      signal: controller.signal
-    }).catch(async () => {
-      return await fetch(`${ESP32_URL}/`, { signal: controller.signal });
-    });
+    const timeout = setTimeout(() => controller.abort(), 1500);
+    const resp = await fetch(`${ESP32_URL}/`, { signal: controller.signal });
     clearTimeout(timeout);
     esp32Status.latencyMs = Date.now() - startTime;
-    esp32Status.ok = Boolean(resp && resp.ok);
-    esp32Status.statusCode = resp ? resp.status : null;
+    esp32Status.ok = Boolean(resp && (resp.ok || resp.status < 500));
+    esp32Status.statusCode = resp ? resp.status : 200;
   } catch (err) {
     esp32Status.latencyMs = Date.now() - startTime;
     esp32Status.error = err.message;
