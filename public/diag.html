@@ -728,7 +728,10 @@
         if (data.responsive && data.responsive.length > 0) {
           let html = '<strong style="color:#10b981;">Responsive Hosts Found:</strong><br>';
           for (const h of data.responsive) {
-            html += `• ${h.ip} (HTTP ${h.status}, ${h.latencyMs}ms)<br>`;
+            html += `<div style="display:flex; justify-content:space-between; align-items:center; margin:6px 0;">
+              <span>• <strong>${h.ip}</strong> (HTTP ${h.status}, ${h.latencyMs}ms)</span>
+              <button class="btn btn-primary" style="padding:3px 10px; font-size:11px;" onclick="setActiveEsp32('${h.ip}')">👉 Use This IP (${h.ip})</button>
+            </div>`;
           }
           box.innerHTML = html;
         } else {
@@ -736,6 +739,27 @@
         }
       } catch (e) {
         box.innerHTML = 'Scan error: ' + e.message;
+      }
+    }
+
+    async function setActiveEsp32(ip) {
+      const targetUrl = 'http://' + ip;
+      const box = document.getElementById('scanResultsBox');
+      box.innerHTML += `<div style="color:#38bdf8; margin-top:6px;">Switching active backend target to ${targetUrl}...</div>`;
+      try {
+        const res = await fetch('/api/diag/set-target', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: targetUrl })
+        });
+        const data = await res.json();
+        if (data.success) {
+          box.innerHTML += `<div style="color:#10b981; font-weight:700; margin-top:4px;">✅ Active target updated to ${data.currentUrl}! Pinging now...</div>`;
+          await fetchStatus();
+          fetchLogs();
+        }
+      } catch (e) {
+        box.innerHTML += `<div style="color:#ef4444;">Failed to switch target: ${e.message}</div>`;
       }
     }
 

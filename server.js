@@ -14,7 +14,7 @@ const mqttClient = require('./src/mqtt/mqttClient');
 
 const PORT = Number(process.env.PORT || 4001);
 const DEVICE_ID = process.env.DEVICE_ID || 'underconstruction-esp32';
-const ESP32_URL = (process.env.ESP32_URL || '').replace(/\/$/, '');
+let ESP32_URL = (process.env.ESP32_URL || 'http://10.10.12.55').replace(/\/$/, '');
 const DEVICE_KEY = process.env.DEVICE_KEY || '';
 const DB_PATH = path.resolve(__dirname, process.env.DB_PATH || 'underconstruction_model.db');
 const DEVICE_TIMEOUT_MS = Number(process.env.DEVICE_TIMEOUT_MS || 86400000); // 24h persistent online status
@@ -546,6 +546,16 @@ app.get('/api/diag/scan', async (req, res) => {
   }
   await Promise.allSettled(promises);
   res.json({ success: true, subnet, range: `${start}-${end}`, responsive: results });
+});
+
+// POST /api/diag/set-target -> Dynamically switch target ESP32 URL/IP
+app.post('/api/diag/set-target', (req, res) => {
+  const url = String(req.body?.url || '').trim().replace(/\/$/, '');
+  if (!url) return res.status(400).json({ success: false, error: 'url required' });
+  const oldUrl = ESP32_URL;
+  ESP32_URL = url.startsWith('http') ? url : `http://${url}`;
+  logDiag('INFO', 'SYSTEM', `Target ESP32 URL dynamically switched from ${oldUrl} to ${ESP32_URL}`);
+  res.json({ success: true, oldUrl, currentUrl: ESP32_URL });
 });
 
 // Unified Control Command Handler (Supports Cupola360 APIButton POST, Cement Plant GET/POST, and Browser tests)
