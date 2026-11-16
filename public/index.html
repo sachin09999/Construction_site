@@ -738,145 +738,139 @@
     .tag-fault { color: var(--red); font-weight: 800; }
 
     /* =========================================================================
-       TAB 2: MOTOR THROTTLE CONTROL
+       TAB 2: MOTOR THROTTLE COCKPIT (FULL-SCREEN DUAL CONSOLE)
        ========================================================================= */
     .controls-layout {
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 14px;
     }
-    .controls-layout .speed-card {
-      width: 100%;
-      max-width: 680px;
-      min-height: 480px;
-    }
-
-    .jog-column {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 10px;
-      height: 100%;
-    }
-    .control-btn {
-      width: 100%;
-      padding: 13px 14px;
-      border-radius: 11px;
-      border: 1px solid var(--glass-border);
-      background: var(--glass-elevated);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.15s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-    }
-    .control-btn:hover {
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-    .control-btn:active { transform: scale(0.97); }
-
-    .control-btn.active-forward {
-      background: rgba(14, 165, 233, 0.25) !important;
-      border-color: #0284c7 !important;
-      color: #0284c7 !important;
-      box-shadow: 0 0 16px rgba(2, 132, 199, 0.35) !important;
-    }
-    .control-btn.active-reverse {
-      background: rgba(124, 58, 237, 0.25) !important;
-      border-color: #7c3aed !important;
-      color: #7c3aed !important;
-      box-shadow: 0 0 16px rgba(124, 58, 237, 0.35) !important;
-    }
-    .control-btn.stop {
-      background: rgba(239, 68, 68, 0.18);
-      border-color: rgba(239, 68, 68, 0.45);
-      color: var(--red);
-    }
-    .control-btn.stop:hover { background: rgba(239, 68, 68, 0.3); }
-
-    /* Speed Modulation Card - Executive Aerospace Throttle */
-    .speed-card {
+    .throttle-gauge-card {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 16px 20px;
-      gap: 10px;
+      align-items: center;
+      padding: 20px 24px;
     }
-    .speed-tacho-wrap {
+    .throttle-tacho-stage {
       position: relative;
       width: 100%;
-      max-width: 200px;
-      margin: 0 auto;
+      max-width: 360px;
+      height: 270px;
+      margin: auto 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    .speed-tacho-svg {
+    .throttle-tacho-stage svg {
       width: 100%;
-      height: 110px;
+      height: 100%;
       overflow: visible;
     }
-    .speed-tacho-center {
+    .throttle-digital-readout {
       position: absolute;
-      top: 52%;
+      top: 68%;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
     }
-    .speed-val-huge {
+    .throttle-val-huge {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 42px;
+      font-size: 64px;
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1;
       color: #f59e0b;
-      text-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
+      text-shadow: 0 0 24px rgba(245, 158, 11, 0.45);
     }
-    .speed-sub-metrics {
+    .throttle-sub-metrics {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      margin-top: 3px;
+      gap: 8px;
+      margin-top: 6px;
     }
-    .speed-pct-badge {
+    .throttle-pct-badge {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 800;
-      padding: 1px 7px;
-      border-radius: 5px;
+      padding: 3px 9px;
+      border-radius: 6px;
       background: rgba(245, 158, 11, 0.18);
       color: #f59e0b;
       border: 1px solid rgba(245, 158, 11, 0.35);
     }
-    .speed-tier-label {
-      font-size: 9.5px;
+    .throttle-tier-label {
+      font-size: 10.5px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .throttle-deck-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 24px;
+      gap: 14px;
+    }
+    .throttle-telemetry-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 14px;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+    }
+    .throttle-telemetry-item {
+      text-align: center;
+    }
+    .throttle-telemetry-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .throttle-telemetry-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .throttle-lever-section {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .throttle-section-title {
+      font-size: 11px;
       font-weight: 900;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .throttle-row {
+    .slider-nudge-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin: 4px 0;
     }
-    .nudge-btn {
-      width: 38px;
-      height: 38px;
+    .nudge-mini-btn {
+      padding: 9px 14px;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--line);
@@ -886,12 +880,9 @@
       font-weight: 900;
       cursor: pointer;
       transition: all 0.15s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       flex-shrink: 0;
     }
-    .nudge-btn:hover {
+    .nudge-mini-btn:hover {
       background: rgba(245, 158, 11, 0.25);
       border-color: #f59e0b;
       color: #f59e0b;
@@ -901,12 +892,12 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
     .slider-ticks {
       display: flex;
       justify-content: space-between;
-      font-size: 9.5px;
+      font-size: 10px;
       font-family: 'JetBrains Mono', monospace;
       font-weight: 800;
       color: var(--text-dim);
@@ -914,44 +905,55 @@
     }
     input[type=range] {
       width: 100%;
-      height: 8px;
-      border-radius: 5px;
-      background: rgba(255,255,255,0.15);
+      height: 9px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.15);
       outline: none;
       accent-color: #f59e0b;
       cursor: pointer;
     }
-    .preset-grid {
+    .preset-console-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-top: 2px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
     }
-    .preset-chip {
+    .preset-action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: 9px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 7px 4px;
-      text-align: center;
-      font-weight: 800;
-      font-size: 11px;
       cursor: pointer;
-      color: var(--text-muted);
       transition: all 0.18s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+      color: var(--text);
+      text-align: left;
     }
-    .preset-chip small {
-      font-size: 9px;
-      opacity: 0.75;
+    .preset-action-btn .btn-title {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      display: block;
+    }
+    .preset-action-btn .btn-sub {
+      font-size: 10px;
+      color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
+      display: block;
+      margin-top: 1px;
     }
-    .preset-chip:hover, .preset-chip.active {
+    .preset-action-btn:hover, .preset-action-btn.active {
+      background: rgba(245, 158, 11, 0.2) !important;
       border-color: #f59e0b !important;
       color: #f59e0b !important;
-      background: rgba(245, 158, 11, 0.2) !important;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.3) !important;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.3) !important;
+    }
+    .preset-action-btn.stop-btn:hover, .preset-action-btn.stop-btn.active {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border-color: #ef4444 !important;
+      color: #ef4444 !important;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.3) !important;
     }
 
     /* Individual Per-Graph Calendar and Filters ("Alag Alag") */
@@ -1770,75 +1772,166 @@
       <div class="tab-pane" id="tab-controls">
         <div class="controls-layout">
 
-          <!-- Speed Modulation PWM (Executive Amber Card) -->
-          <div class="card card-amber speed-card">
-            <div class="card-head">
-              <div class="card-title" style="color:var(--card-amber-text)">⚡ Motor Throttle Control</div>
+          <!-- Left Column: Heavy Motor Output Tachometer Gauge -->
+          <div class="card card-amber throttle-gauge-card">
+            <div class="card-head" style="width:100%;">
+              <div class="card-title" style="color:var(--card-amber-text)">⚡ MOTOR TACHOMETER</div>
               <span class="badge" id="speedPwmBadge" style="color:var(--card-amber-text)">180 / 255 PWM</span>
             </div>
 
-            <!-- Tachometer Visualizer -->
-            <div class="speed-tacho-wrap">
-              <svg class="speed-tacho-svg" viewBox="0 0 160 100">
+            <!-- Tachometer Stage -->
+            <div class="throttle-tacho-stage">
+              <svg viewBox="0 0 300 240">
                 <defs>
-                  <linearGradient id="tachoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <linearGradient id="tachoSweepGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#00f0ff" />
                     <stop offset="50%" stop-color="#f59e0b" />
                     <stop offset="100%" stop-color="#ef4444" />
                   </linearGradient>
-                  <filter id="tachoGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="3" result="blur" />
+                  <filter id="neonTacho" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
                     <feMerge>
                       <feMergeNode in="blur" />
                       <feMergeNode in="SourceGraphic" />
                     </feMerge>
                   </filter>
                 </defs>
-                <path d="M 22 95 A 62 62 0 1 1 138 95" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="8" stroke-linecap="round" />
-                <path id="speedTachoArc" d="M 22 95 A 62 62 0 1 1 138 95" fill="none" stroke="url(#tachoGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="270" stroke-dashoffset="80" filter="url(#tachoGlow)" style="transition: stroke-dashoffset 0.2s ease;" />
+
+                <!-- Bezel & Background Dial Plate -->
+                <circle cx="150" cy="140" r="118" fill="#0b1329" stroke="rgba(245, 158, 11, 0.25)" stroke-width="2" />
+                <circle cx="150" cy="140" r="110" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1.5" />
+
+                <!-- Base 240° Track Arc (R=100 from -120° to +120°) -->
+                <path d="M 63.4 190 A 100 100 0 1 1 236.6 190" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="8" stroke-linecap="round" />
+
+                <!-- Active Colored Dynamic Glow Arc (Length = 419) -->
+                <path id="speedTachoArc" d="M 63.4 190 A 100 100 0 1 1 236.6 190" fill="none" stroke="url(#tachoSweepGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="419" stroke-dashoffset="123" filter="url(#neonTacho)" style="transition: stroke-dashoffset 0.25s ease;" />
+
+                <!-- Major Graduation Ticks (0, 51, 102, 153, 204, 255) -->
+                <line x1="73.8" y1="184.0" x2="63.4" y2="190.0" stroke="#00f0ff" stroke-width="3" />
+                <line x1="66.3" y1="112.8" x2="54.9" y2="109.1" stroke="#38bdf8" stroke-width="2.5" />
+                <line x1="114.2" y1="59.6" x2="109.3" y2="48.6" stroke="#10b981" stroke-width="2.5" />
+                <line x1="185.8" y1="59.6" x2="190.7" y2="48.6" stroke="#f59e0b" stroke-width="2.5" />
+                <line x1="233.7" y1="112.8" x2="245.1" y2="109.1" stroke="#f97316" stroke-width="2.5" />
+                <line x1="226.2" y1="184.0" x2="236.6" y2="190.0" stroke="#ef4444" stroke-width="3" />
+
+                <!-- Outer Scale Numbers -->
+                <text x="86" y="177" font-size="11" font-weight="900" fill="#94a3b8" font-family="'JetBrains Mono', monospace" text-anchor="middle">0</text>
+                <text x="80" y="117" font-size="11" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">50</text>
+                <text x="120" y="72" font-size="11" font-weight="900" fill="#10b981" font-family="'JetBrains Mono', monospace" text-anchor="middle">100</text>
+                <text x="180" y="72" font-size="11" font-weight="900" fill="#f59e0b" font-family="'JetBrains Mono', monospace" text-anchor="middle">150</text>
+                <text x="220" y="117" font-size="11" font-weight="900" fill="#fb923c" font-family="'JetBrains Mono', monospace" text-anchor="middle">200</text>
+                <text x="214" y="177" font-size="11" font-weight="900" fill="#f87171" font-family="'JetBrains Mono', monospace" text-anchor="middle">255</text>
+
+                <!-- Rotating Precision Indicator Needle -->
+                <g class="gauge-needle" id="needleThrottle" style="transform-origin: 150px 140px; transform: rotate(49.4deg); transition: transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);">
+                  <polygon points="148.5,140 151.5,140 150.5,52 149.5,52" fill="#ffffff" />
+                  <polygon points="149.2,54 150.8,54 150,42" fill="#f59e0b" filter="url(#neonTacho)" />
+                  <circle cx="150" cy="140" r="10" fill="#0f172a" stroke="#475569" stroke-width="2" />
+                  <circle cx="150" cy="140" r="5" fill="#1e293b" />
+                  <circle cx="150" cy="140" r="2.5" fill="#f59e0b" />
+                </g>
               </svg>
-              <div class="speed-tacho-center">
-                <div class="speed-val-huge" id="speedDisplay">180</div>
-                <div class="speed-sub-metrics">
-                  <span class="speed-pct-badge" id="speedPct">71%</span>
-                  <span class="speed-tier-label" id="speedTier">CRUISE SPEED</span>
+
+              <!-- Digital Readout Cluster (Below Pivot) -->
+              <div class="throttle-digital-readout">
+                <div class="throttle-val-huge" id="speedDisplay">180</div>
+                <div class="throttle-sub-metrics">
+                  <span class="throttle-pct-badge" id="speedPct">71% PWM</span>
+                  <span class="throttle-tier-label" id="speedTier">CRUISE SPEED</span>
                 </div>
               </div>
             </div>
 
-            <!-- Precision Throttle Stepper Row -->
-            <div class="throttle-row">
-              <button class="nudge-btn" onclick="nudgeSpeed(-10)" title="Decrease -10 PWM">-10</button>
-              <div class="speed-slider-wrap">
-                <input type="range" id="speedSlider" min="0" max="255" value="180">
-                <div class="slider-ticks">
-                  <span>0</span>
-                  <span>64</span>
-                  <span>128</span>
-                  <span>180</span>
-                  <span>255</span>
-                </div>
+            <!-- Bottom Live Telemetry Strip -->
+            <div class="throttle-telemetry-strip" style="width:100%;">
+              <div class="throttle-telemetry-item">
+                <div class="throttle-telemetry-label">⚡ Bus Voltage</div>
+                <div class="throttle-telemetry-val" id="throttleVolts">12.38 V</div>
               </div>
-              <button class="nudge-btn" onclick="nudgeSpeed(10)" title="Increase +10 PWM">+10</button>
+              <div class="throttle-telemetry-item">
+                <div class="throttle-telemetry-label">🔋 Motor Current</div>
+                <div class="throttle-telemetry-val" id="throttleCurrent">0 mA</div>
+              </div>
+              <div class="throttle-telemetry-item">
+                <div class="throttle-telemetry-label">💡 Power Draw</div>
+                <div class="throttle-telemetry-val" id="throttlePower">0 mW</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Heavy Throttle Actuator Console & Presets -->
+          <div class="card card-amber throttle-deck-card">
+            <div class="card-head">
+              <div class="card-title" style="color:var(--card-amber-text)">🎛️ SPEED MODULATION &amp; PRESETS</div>
+              <span class="badge" style="color:var(--card-amber-text)">STEP CONSOLE</span>
             </div>
 
-            <!-- Preset Speed Modes -->
-            <div class="preset-grid">
-              <div class="preset-chip" data-val="64" onclick="setPreset(64)">
-                <span>🐢 SLOW</span>
-                <small>64 (25%)</small>
+            <!-- Precision Throttle Stepper Section -->
+            <div class="throttle-lever-section">
+              <div class="throttle-section-title">
+                <span>Direct Throttle Lever</span>
+                <span style="font-family:'JetBrains Mono',monospace; color:#f59e0b;">0 – 255 PWM</span>
               </div>
-              <div class="preset-chip" data-val="128" onclick="setPreset(128)">
-                <span>⚖️ HALF</span>
-                <small>128 (50%)</small>
+              
+              <div class="slider-nudge-row">
+                <button class="nudge-mini-btn" onclick="nudgeSpeed(-10)" title="Step -10">-10</button>
+                <button class="nudge-mini-btn" onclick="nudgeSpeed(-1)" title="Step -1">-1</button>
+                <div class="speed-slider-wrap">
+                  <input type="range" id="speedSlider" min="0" max="255" value="180">
+                  <div class="slider-ticks">
+                    <span>0 (IDLE)</span>
+                    <span>64 (CREEP)</span>
+                    <span>128 (HALF)</span>
+                    <span>180 (CRUISE)</span>
+                    <span>255 (MAX)</span>
+                  </div>
+                </div>
+                <button class="nudge-mini-btn" onclick="nudgeSpeed(1)" title="Step +1">+1</button>
+                <button class="nudge-mini-btn" onclick="nudgeSpeed(10)" title="Step +10">+10</button>
               </div>
-              <div class="preset-chip active" data-val="180" onclick="setPreset(180)">
-                <span>🚀 CRUISE</span>
-                <small>180 (71%)</small>
+            </div>
+
+            <!-- Heavy Duty Preset Button Console (5 Industrial Modes) -->
+            <div class="preset-console-grid">
+              <div class="preset-action-btn stop-btn" data-val="0" onclick="setPreset(0)">
+                <div>
+                  <span class="btn-title">🛑 EMERGENCY STOP</span>
+                  <span class="btn-sub">0 PWM • 0% Output</span>
+                </div>
+                <span class="badge" style="border-color:#ef4444; color:#ef4444;">IDLE</span>
               </div>
-              <div class="preset-chip" data-val="255" onclick="setPreset(255)">
-                <span>⚡ MAX</span>
-                <small>255 (100%)</small>
+
+              <div class="preset-action-btn" data-val="64" onclick="setPreset(64)">
+                <div>
+                  <span class="btn-title">🐢 CREEP INCHING</span>
+                  <span class="btn-sub">64 PWM • 25% Output</span>
+                </div>
+                <span class="badge">PRECISION</span>
+              </div>
+
+              <div class="preset-action-btn" data-val="128" onclick="setPreset(128)">
+                <div>
+                  <span class="btn-title">⚙️ MODERATE WORK</span>
+                  <span class="btn-sub">128 PWM • 50% Output</span>
+                </div>
+                <span class="badge">STANDARD</span>
+              </div>
+
+              <div class="preset-action-btn active" data-val="180" onclick="setPreset(180)">
+                <div>
+                  <span class="btn-title">🚀 HIGHWAY CRUISE</span>
+                  <span class="btn-sub">180 PWM • 71% Output</span>
+                </div>
+                <span class="badge" style="border-color:#f59e0b; color:#f59e0b;">CRUISE</span>
+              </div>
+
+              <div class="preset-action-btn" data-val="255" onclick="setPreset(255)" style="grid-column: 1 / -1;">
+                <div>
+                  <span class="btn-title">⚡ MAXIMUM TORQUE BOOST</span>
+                  <span class="btn-sub">255 PWM • 100% Full Speed Drive</span>
+                </div>
+                <span class="badge" style="border-color:#ef4444; color:#ef4444;">FULL POWER</span>
               </div>
             </div>
           </div>
@@ -2229,25 +2322,31 @@
         if ($("speedPwmBadge")) $("speedPwmBadge").textContent = `${v} / 255 PWM`;
         
         const pct = Math.round((v / 255) * 100);
-        if ($("speedPct")) $("speedPct").textContent = `${pct}%`;
+        if ($("speedPct")) $("speedPct").textContent = `${pct}% PWM`;
 
-        // Update Arc Dashoffset (Arc length = 270)
+        // Update Arc Dashoffset (Arc length = 419)
         if ($("speedTachoArc")) {
-          const maxOffset = 270;
+          const maxOffset = 419;
           const offset = Math.max(0, maxOffset - (v / 255) * maxOffset);
           $("speedTachoArc").style.strokeDashoffset = offset;
         }
 
+        // Rotate Tachometer Needle (-120deg at 0 PWM to +120deg at 255 PWM)
+        if ($("needleThrottle")) {
+          const angle = -120 + (v / 255) * 240;
+          $("needleThrottle").style.transform = `rotate(${angle.toFixed(1)}deg)`;
+        }
+
         // Tier classification
-        let tier = "IDLE";
-        if (v >= 230) tier = "MAX BOOST";
-        else if (v >= 160) tier = "CRUISE SPEED";
-        else if (v >= 90) tier = "MODERATE SPEED";
-        else if (v > 0) tier = "CREEP SPEED";
+        let tier = "IDLE (0%)";
+        if (v >= 230) tier = "FULL BOOST (100%)";
+        else if (v >= 160) tier = "CRUISE SPEED (71%)";
+        else if (v >= 90) tier = "MODERATE SPEED (50%)";
+        else if (v > 0) tier = "CREEP SPEED (25%)";
         if ($("speedTier")) $("speedTier").textContent = tier;
 
-        // Active preset chips
-        document.querySelectorAll(".preset-chip").forEach(c => {
+        // Active preset buttons
+        document.querySelectorAll(".preset-action-btn").forEach(c => {
           const pVal = Number(c.getAttribute("data-val"));
           c.classList.toggle("active", pVal === v);
         });
@@ -2379,6 +2478,7 @@
           const vNum = Number(volt);
           if ($("valVoltage")) $("valVoltage").textContent = vNum.toFixed(2);
           if ($("valVoltageBadge")) $("valVoltageBadge").textContent = `${vNum.toFixed(2)} V`;
+          if ($("throttleVolts")) $("throttleVolts").textContent = `${vNum.toFixed(2)} V`;
           if ($("needleVoltage")) {
             const vAngle = Math.min(90, Math.max(-90, -90 + (vNum / 24) * 180));
             $("needleVoltage").style.transform = `rotate(${vAngle}deg)`;
@@ -2391,6 +2491,7 @@
           const cNum = Number(curr);
           if ($("valCurrent")) $("valCurrent").textContent = Math.round(cNum);
           if ($("valCurrentBadge")) $("valCurrentBadge").textContent = `${Math.round(cNum)} mA`;
+          if ($("throttleCurrent")) $("throttleCurrent").textContent = `${Math.round(cNum)} mA`;
           if ($("needleCurrent")) {
             const cAngle = Math.min(90, Math.max(-90, -90 + (Math.min(500, cNum) / 500) * 180));
             $("needleCurrent").style.transform = `rotate(${cAngle}deg)`;
@@ -2403,6 +2504,7 @@
           const pNum = Number(pow);
           if ($("valPower")) $("valPower").textContent = Math.round(pNum);
           if ($("valPowerBadge")) $("valPowerBadge").textContent = `${Math.round(pNum)} mW`;
+          if ($("throttlePower")) $("throttlePower").textContent = `${Math.round(pNum)} mW`;
           if ($("needlePower")) {
             const pAngle = Math.min(90, Math.max(-90, -90 + (Math.min(2000, pNum) / 2000) * 180));
             $("needlePower").style.transform = `rotate(${pAngle}deg)`;
