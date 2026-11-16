@@ -818,15 +818,15 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 20px 24px;
-      gap: 12px;
+      padding: 22px 28px;
+      gap: 16px;
     }
     .throttle-tacho-stage {
       position: relative;
       width: 100%;
-      max-width: 300px;
-      height: 185px;
-      margin: 0 auto;
+      max-width: 440px;
+      height: 320px;
+      margin: auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -838,43 +838,64 @@
     }
     .throttle-digital-readout {
       position: absolute;
-      top: 68%;
+      top: 60%;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
     }
     .throttle-val-huge {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 52px;
+      font-size: 72px;
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1;
-      color: #f59e0b;
-      text-shadow: 0 0 24px rgba(245, 158, 11, 0.45);
+      color: #ffffff;
+      text-shadow: 0 0 28px rgba(255, 255, 255, 0.45);
     }
     .throttle-sub-metrics {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
       margin-top: 6px;
     }
-    .throttle-pct-badge {
-      font-family: 'JetBrains Mono', monospace;
+    .throttle-sub-tier {
       font-size: 13px;
       font-weight: 800;
-      padding: 3px 9px;
-      border-radius: 6px;
-      background: rgba(245, 158, 11, 0.18);
-      color: #f59e0b;
-      border: 1px solid rgba(245, 158, 11, 0.35);
-    }
-    .throttle-tier-label {
-      font-size: 10.5px;
-      font-weight: 900;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .simple-slider-box {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .hero-simple-slider {
+      width: 100%;
+      height: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+      accent-color: #00f0ff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .hero-simple-slider:hover {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+    }
+    .slider-ticks-simple {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
       color: var(--text-muted);
+      padding: 0 4px;
     }
     .throttle-deck-card {
       display: flex;
@@ -1940,64 +1961,25 @@
               <div class="throttle-digital-readout">
                 <div class="throttle-val-huge" id="speedDisplay">180</div>
                 <div class="throttle-sub-metrics">
-                  <span class="throttle-pct-badge" id="speedPct">71% PWM</span>
-                  <span class="throttle-tier-label" id="speedTier" style="color:#ffffff;">CRUISE SPEED</span>
+                  <div class="throttle-sub-tier" id="speedTier">CRUISE SPEED • 71%</div>
                 </div>
               </div>
             </div>
 
-            <!-- Precision Throttle Stepper Section -->
-            <div class="throttle-lever-section">
-              <div class="throttle-section-title">
-                <span>Direct Throttle Lever</span>
-                <span id="sliderPwmLabel" style="font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:800;">180 / 255 PWM</span>
+            <!-- Simple Slider Only -->
+            <div class="simple-slider-box">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:11.5px; font-weight:800; text-transform:uppercase; color:var(--text-muted); letter-spacing:0.08em;">Throttle Position</span>
+                <span id="sliderPwmLabel" style="font-family:'JetBrains Mono',monospace; color:#00f0ff; font-weight:900; font-size:13px;">180 / 255 PWM</span>
               </div>
-              
-              <div class="slider-nudge-row">
-                <button class="nudge-mini-btn" onclick="nudgeSpeed(-10)" title="Step -10">-10</button>
-                <button class="nudge-mini-btn" onclick="nudgeSpeed(-1)" title="Step -1">-1</button>
-                <div class="speed-slider-wrap">
-                  <input type="range" id="speedSlider" min="0" max="255" value="180">
-                  <div class="slider-ticks">
-                    <span>0 (IDLE)</span>
-                    <span>64 (CREEP)</span>
-                    <span>128 (HALF)</span>
-                    <span>180 (CRUISE)</span>
-                    <span>255 (MAX)</span>
-                  </div>
-                </div>
-                <button class="nudge-mini-btn" onclick="nudgeSpeed(1)" title="Step +1">+1</button>
-                <button class="nudge-mini-btn" onclick="nudgeSpeed(10)" title="Step +10">+10</button>
+              <input type="range" id="speedSlider" min="0" max="255" value="180" class="hero-simple-slider">
+              <div class="slider-ticks-simple">
+                <span>0 (IDLE)</span>
+                <span>64</span>
+                <span>128</span>
+                <span>180</span>
+                <span>255 (MAX)</span>
               </div>
-            </div>
-
-            <!-- Simplified Clean Preset Modes (5 Direct Modes) -->
-            <div class="preset-simple-row">
-              <button class="preset-action-btn stop-btn" data-val="0" onclick="setPreset(0)">
-                <span class="preset-btn-icon">🛑</span>
-                <span class="preset-btn-name">STOP</span>
-                <span class="preset-btn-val">0</span>
-              </button>
-              <button class="preset-action-btn" data-val="64" onclick="setPreset(64)">
-                <span class="preset-btn-icon">🐢</span>
-                <span class="preset-btn-name">SLOW</span>
-                <span class="preset-btn-val">64</span>
-              </button>
-              <button class="preset-action-btn" data-val="128" onclick="setPreset(128)">
-                <span class="preset-btn-icon">⚙️</span>
-                <span class="preset-btn-name">HALF</span>
-                <span class="preset-btn-val">128</span>
-              </button>
-              <button class="preset-action-btn active" data-val="180" onclick="setPreset(180)">
-                <span class="preset-btn-icon">🚀</span>
-                <span class="preset-btn-name">CRUISE</span>
-                <span class="preset-btn-val">180</span>
-              </button>
-              <button class="preset-action-btn max-btn" data-val="255" onclick="setPreset(255)">
-                <span class="preset-btn-icon">⚡</span>
-                <span class="preset-btn-name">MAX</span>
-                <span class="preset-btn-val">255</span>
-              </button>
             </div>
           </div>
 
@@ -2349,12 +2331,12 @@
         }
 
         // Tier classification
-        let tier = "IDLE (0%)";
-        if (v >= 230) tier = "FULL BOOST (100%)";
-        else if (v >= 160) tier = "CRUISE SPEED (71%)";
-        else if (v >= 90) tier = "MODERATE SPEED (50%)";
-        else if (v > 0) tier = "CREEP SPEED (25%)";
-        if ($("speedTier")) $("speedTier").textContent = tier;
+        let tier = "IDLE";
+        if (v >= 230) tier = "FULL BOOST";
+        else if (v >= 160) tier = "CRUISE SPEED";
+        else if (v >= 90) tier = "MODERATE SPEED";
+        else if (v > 0) tier = "CREEP SPEED";
+        if ($("speedTier")) $("speedTier").textContent = v === 0 ? "IDLE • 0%" : `${tier} • ${pct}%`;
 
         // Active preset buttons
         document.querySelectorAll(".preset-action-btn").forEach(c => {
