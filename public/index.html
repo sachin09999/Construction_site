@@ -979,48 +979,100 @@
       accent-color: #f59e0b;
       cursor: pointer;
     }
-    .preset-console-grid {
+    /* Runtime Side-by-Side (Session Time & Up Time) */
+    .runtime-side-by-side {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 2px;
+    }
+    .runtime-metric-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 10px;
+      padding: 12px 14px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .runtime-metric-box:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    .runtime-metric-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .runtime-metric-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+    }
+
+    /* Simplified Preset Button Row */
+    .preset-simple-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
     }
     .preset-action-btn {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
+      justify-content: center;
+      padding: 12px 6px;
       border-radius: 9px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
       transition: all 0.18s ease;
-      color: var(--text);
-      text-align: left;
+      color: #ffffff;
+      text-align: center;
+      gap: 3px;
     }
-    .preset-action-btn .btn-title {
-      font-size: 12px;
+    .preset-btn-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .preset-btn-name {
+      font-size: 11px;
       font-weight: 900;
-      letter-spacing: 0.04em;
-      display: block;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #ffffff;
     }
-    .preset-action-btn .btn-sub {
-      font-size: 10px;
-      color: var(--text-muted);
+    .preset-btn-val {
       font-family: 'JetBrains Mono', monospace;
-      display: block;
-      margin-top: 1px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
     }
     .preset-action-btn:hover, .preset-action-btn.active {
-      background: rgba(245, 158, 11, 0.2) !important;
-      border-color: #f59e0b !important;
-      color: #f59e0b !important;
-      box-shadow: 0 0 16px rgba(245, 158, 11, 0.3) !important;
+      background: rgba(255, 255, 255, 0.22) !important;
+      border-color: #ffffff !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.4) !important;
     }
     .preset-action-btn.stop-btn:hover, .preset-action-btn.stop-btn.active {
-      background: rgba(239, 68, 68, 0.2) !important;
+      background: rgba(239, 68, 68, 0.25) !important;
       border-color: #ef4444 !important;
-      color: #ef4444 !important;
-      box-shadow: 0 0 16px rgba(239, 68, 68, 0.3) !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.4) !important;
+    }
+    .preset-action-btn.max-btn:hover, .preset-action-btn.max-btn.active {
+      background: rgba(245, 158, 11, 0.25) !important;
+      border-color: #f59e0b !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.4) !important;
     }
 
     /* Individual Per-Graph Calendar and Filters ("Alag Alag") */
@@ -1903,18 +1955,30 @@
             </div>
           </div>
 
-          <!-- Right Column: Heavy Throttle Actuator Console & Presets (White Transparent Glass) -->
+          <!-- Right Column: Speed Control & Side-by-Side Runtime Strip (White Transparent Glass) -->
           <div class="card white-transparent-glass throttle-deck-card">
             <div class="card-head">
               <div class="card-title">🎛️ SPEED MODULATION &amp; PRESETS</div>
-              <span class="badge">STEP CONSOLE</span>
+              <span class="badge" id="speedCardBadge" style="border-color:rgba(255,255,255,0.25); color:#ffffff;">MOTOR CONSOLE</span>
+            </div>
+
+            <!-- Session Time & Up Time Side-by-Side -->
+            <div class="runtime-side-by-side">
+              <div class="runtime-metric-box">
+                <div class="runtime-metric-label">⏱️ SESSION TIME</div>
+                <div class="runtime-metric-value" id="throttleSessionTime">00:00:00</div>
+              </div>
+              <div class="runtime-metric-box">
+                <div class="runtime-metric-label">⌛ UP TIME</div>
+                <div class="runtime-metric-value" id="throttleUpTime">0.0 hrs</div>
+              </div>
             </div>
 
             <!-- Precision Throttle Stepper Section -->
             <div class="throttle-lever-section">
               <div class="throttle-section-title">
                 <span>Direct Throttle Lever</span>
-                <span style="font-family:'JetBrains Mono',monospace; color:#f59e0b;">0 – 255 PWM</span>
+                <span id="sliderPwmLabel" style="font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:800;">180 / 255 PWM</span>
               </div>
               
               <div class="slider-nudge-row">
@@ -1935,47 +1999,33 @@
               </div>
             </div>
 
-            <!-- Heavy Duty Preset Button Console (5 Industrial Modes) -->
-            <div class="preset-console-grid">
-              <div class="preset-action-btn stop-btn" data-val="0" onclick="setPreset(0)">
-                <div>
-                  <span class="btn-title">🛑 EMERGENCY STOP</span>
-                  <span class="btn-sub">0 PWM • 0% Output</span>
-                </div>
-                <span class="badge" style="border-color:#ef4444; color:#ef4444;">IDLE</span>
-              </div>
-
-              <div class="preset-action-btn" data-val="64" onclick="setPreset(64)">
-                <div>
-                  <span class="btn-title">🐢 CREEP INCHING</span>
-                  <span class="btn-sub">64 PWM • 25% Output</span>
-                </div>
-                <span class="badge">PRECISION</span>
-              </div>
-
-              <div class="preset-action-btn" data-val="128" onclick="setPreset(128)">
-                <div>
-                  <span class="btn-title">⚙️ MODERATE WORK</span>
-                  <span class="btn-sub">128 PWM • 50% Output</span>
-                </div>
-                <span class="badge">STANDARD</span>
-              </div>
-
-              <div class="preset-action-btn active" data-val="180" onclick="setPreset(180)">
-                <div>
-                  <span class="btn-title">🚀 HIGHWAY CRUISE</span>
-                  <span class="btn-sub">180 PWM • 71% Output</span>
-                </div>
-                <span class="badge" style="border-color:#f59e0b; color:#f59e0b;">CRUISE</span>
-              </div>
-
-              <div class="preset-action-btn" data-val="255" onclick="setPreset(255)" style="grid-column: 1 / -1;">
-                <div>
-                  <span class="btn-title">⚡ MAXIMUM TORQUE BOOST</span>
-                  <span class="btn-sub">255 PWM • 100% Full Speed Drive</span>
-                </div>
-                <span class="badge" style="border-color:#ef4444; color:#ef4444;">FULL POWER</span>
-              </div>
+            <!-- Simplified Clean Preset Modes (5 Direct Modes) -->
+            <div class="preset-simple-row">
+              <button class="preset-action-btn stop-btn" data-val="0" onclick="setPreset(0)">
+                <span class="preset-btn-icon">🛑</span>
+                <span class="preset-btn-name">STOP</span>
+                <span class="preset-btn-val">0</span>
+              </button>
+              <button class="preset-action-btn" data-val="64" onclick="setPreset(64)">
+                <span class="preset-btn-icon">🐢</span>
+                <span class="preset-btn-name">SLOW</span>
+                <span class="preset-btn-val">64</span>
+              </button>
+              <button class="preset-action-btn" data-val="128" onclick="setPreset(128)">
+                <span class="preset-btn-icon">⚙️</span>
+                <span class="preset-btn-name">HALF</span>
+                <span class="preset-btn-val">128</span>
+              </button>
+              <button class="preset-action-btn active" data-val="180" onclick="setPreset(180)">
+                <span class="preset-btn-icon">🚀</span>
+                <span class="preset-btn-name">CRUISE</span>
+                <span class="preset-btn-val">180</span>
+              </button>
+              <button class="preset-action-btn max-btn" data-val="255" onclick="setPreset(255)">
+                <span class="preset-btn-icon">⚡</span>
+                <span class="preset-btn-name">MAX</span>
+                <span class="preset-btn-val">255</span>
+              </button>
             </div>
           </div>
 
@@ -2272,6 +2322,7 @@
         if ($("speedSlider")) $("speedSlider").value = v;
         if ($("speedDisplay")) $("speedDisplay").textContent = v;
         if ($("speedPwmBadge")) $("speedPwmBadge").textContent = `${v} / 255 PWM`;
+        if ($("sliderPwmLabel")) $("sliderPwmLabel").textContent = `${v} / 255 PWM`;
         
         const pct = Math.round((v / 255) * 100);
         if ($("speedPct")) $("speedPct").textContent = `${pct}% PWM`;
@@ -2472,13 +2523,18 @@
 
         // 5. Session Runtime
         const sess = isVal(telemetry.current_session_time_sec) ? telemetry.current_session_time_sec : (isVal(cementItems.current_session_time_sec?.value) ? cementItems.current_session_time_sec.value : null);
-        if (isVal(sess) && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(sess);
+        if (isVal(sess)) {
+          const sessFormatted = formatDuration(sess);
+          if ($("valSessionTime")) $("valSessionTime").textContent = sessFormatted;
+          if ($("throttleSessionTime")) $("throttleSessionTime").textContent = sessFormatted;
+        }
 
         // 6. Total Lifetime Hours
         const total = isVal(telemetry.total_operation_time_sec) ? telemetry.total_operation_time_sec : (isVal(cementItems.total_operation_time_sec?.value) ? cementItems.total_operation_time_sec.value : null);
-        if (isVal(total) && $("valLifetimeHours")) {
-          const hrs = (Number(total) / 3600).toFixed(1);
-          $("valLifetimeHours").textContent = `${hrs} hrs`;
+        if (isVal(total)) {
+          const hrs = `${(Number(total) / 3600).toFixed(1)} hrs`;
+          if ($("valLifetimeHours")) $("valLifetimeHours").textContent = hrs;
+          if ($("throttleUpTime")) $("throttleUpTime").textContent = hrs;
         }
 
         // 7. Sensor Diagnostic Chips
@@ -2620,8 +2676,16 @@
               if (item_id === "jib_deflection_deg" && isVal(value)) setOrientationUI(null, value);
               if (item_id === "crane_motion") setMotionUI(value);
               if (item_id === "magnet_state") setMagnetUI(value);
-              if (item_id === "current_session_time_sec" && isVal(value) && $("valSessionTime")) $("valSessionTime").textContent = formatDuration(value);
-              if (item_id === "total_operation_time_sec" && isVal(value) && $("valLifetimeHours")) $("valLifetimeHours").textContent = `${(Number(value) / 3600).toFixed(1)} hrs`;
+              if (item_id === "current_session_time_sec" && isVal(value)) {
+                const sFmt = formatDuration(value);
+                if ($("valSessionTime")) $("valSessionTime").textContent = sFmt;
+                if ($("throttleSessionTime")) $("throttleSessionTime").textContent = sFmt;
+              }
+              if (item_id === "total_operation_time_sec" && isVal(value)) {
+                const hFmt = `${(Number(value) / 3600).toFixed(1)} hrs`;
+                if ($("valLifetimeHours")) $("valLifetimeHours").textContent = hFmt;
+                if ($("throttleUpTime")) $("throttleUpTime").textContent = hFmt;
+              }
               if (item_id === "esp32_status") {
                 const online = (value === "online");
                 if ($("esp32Dot")) $("esp32Dot").classList.toggle("offline", !online);
