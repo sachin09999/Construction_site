@@ -376,66 +376,100 @@ app.post(['/api/device/telemetry', '/api/telemetry', '/telemetry'], requireDevic
   res.json({ success: true, deviceId: DEVICE_ID, receivedAt: telemetry ? telemetry.timestamp : new Date().toISOString() });
 });
 
-// History ranges: 1h, 1d, 1w, 1m, 1y or specific calendar date YYYY-MM-DD.
+// History ranges: 1h, 24h, 7d, 30d, 1y, all or specific calendar date YYYY-MM-DD.
 app.get('/api/history', async (req, res) => {
-  const ranges = { '1h': 3600, '24h': 86400, '1d': 86400, '7d': 604800, '1w': 604800, '30d': 2592000, '1m': 2592000, '1y': 31536000, 'all': 315360000 };
+  const ranges = {
+    '1h': 3600,
+    '24h': 86400,
+    '1d': 86400,
+    '7d': 604800,
+    '1w': 604800,
+    '30d': 2592000,
+    '1m': 2592000,
+    '1y': 31536000,
+    'all': 315360000
+  };
   const range = String(req.query.range || '1h');
-  const limit = Math.min(5000, Math.max(1, Number(req.query.limit || 1000)));
-  const dateStr = req.query.date ? String(req.query.date) : null;
+  const limit = Math.min(2000, Math.max(10, Number(req.query.limit || 250)));
+  const dateStr = req.query.date ? String(req.query.date).trim() : null;
+
   let rows = [];
 
-  if (dateStr) {
-    // Specific calendar day query (e.g. 2026-11-16)
-    const startOfDay = new Date(dateStr + 'T00:00:00').getTime();
-    const endOfDay = startOfDay + 86400000;
-    if (!isNaN(startOfDay)) {
-      rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
-        jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
-        mpu_ok, mag_ok, ina226_ok FROM telemetry_history
-        WHERE received_at >= ? AND received_at < ? ORDER BY received_at DESC LIMIT ?`).all(startOfDay, endOfDay, limit).reverse();
+  try {
+    if (dateStr) {
+      // Specific calendar day query (e.g. 2026-11-12)
+      // Matches both ISO timestamp prefix and downsamples evenly across the entire day
+      const sql = `
+        WITH filtered AS (
+          SELECT id, timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+                 jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
+                 mpu_ok, mag_ok, ina226_ok, received_at
+          FROM telemetry_history
+          WHERE timestamp LIKE ?
+        ),
+        numbered AS (
+          SELECT *, ROW_NUMBER() OVER (ORDER BY received_at ASC) as rn, COUNT(*) OVER () as total
+          FROM filtered
+        )
+        SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+               jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
+               mpu_ok, mag_ok, ina226_ok
+        FROM numbered
+        WHERE (rn - 1) % MAX(1, total / ?) = 0
+        ORDER BY received_at ASC
+        LIMIT ?
+      `;
+      rows = db.prepare(sql).all(dateStr + '%', limit, limit);
+
+    } else {
+      if (!ranges[range]) return res.status(400).json({ success: false, error: 'invalid range' });
+
+      // Determine reference anchor time:
+      // If live telemetry is coming in (within 5 mins), anchor to Date.now().
+      // If ESP32 is currently off/quiet, anchor to the latest record in the database
+      // so historical session analysis (1h, 24h, 7d, 30d) cleanly displays the session progression.
+      const maxRec = db.prepare('SELECT MAX(received_at) as maxR FROM telemetry_history').get();
+      const latestDbTime = (maxRec && maxRec.maxR) ? Number(maxRec.maxR) : Date.now();
+      const isLive = (Date.now() - latestDbTime) < 300000;
+      const refTime = isLive ? Date.now() : latestDbTime;
+      const windowSeconds = ranges[range];
+      const since = refTime - windowSeconds * 1000;
+
+      const sql = `
+        WITH filtered AS (
+          SELECT id, timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+                 jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
+                 mpu_ok, mag_ok, ina226_ok, received_at
+          FROM telemetry_history
+          WHERE received_at >= ? AND received_at <= ?
+        ),
+        numbered AS (
+          SELECT *, ROW_NUMBER() OVER (ORDER BY received_at ASC) as rn, COUNT(*) OVER () as total
+          FROM filtered
+        )
+        SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+               jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
+               mpu_ok, mag_ok, ina226_ok
+        FROM numbered
+        WHERE (rn - 1) % MAX(1, total / ?) = 0
+        ORDER BY received_at ASC
+        LIMIT ?
+      `;
+      rows = db.prepare(sql).all(since, refTime, limit, limit);
+
+      // If window has fewer than 2 records (e.g. fresh DB), fallback to latest stored records
+      if (!rows || rows.length < 2) {
+        rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+          jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
+          mpu_ok, mag_ok, ina226_ok FROM telemetry_history
+          ORDER BY id DESC LIMIT ?`).all(limit).reverse();
+      }
     }
-  } else {
-    if (!ranges[range]) return res.status(400).json({ success: false, error: 'invalid range' });
-    const since = Date.now() - ranges[range] * 1000;
-    rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
-      jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
-      mpu_ok, mag_ok, ina226_ok FROM telemetry_history
-      WHERE received_at >= ? ORDER BY received_at DESC LIMIT ?`).all(since, limit).reverse();
+  } catch (err) {
+    console.error('[API/HISTORY] Query error:', err);
   }
 
-  // If time-window returned fewer than 2 records (e.g. ESP32 was quiet or last record is older than range),
-  // automatically fallback to the latest stored records so curves ALWAYS display!
-  if (!rows || rows.length < 2) {
-    rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
-      jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
-      mpu_ok, mag_ok, ina226_ok FROM telemetry_history
-      ORDER BY id DESC LIMIT ?`).all(limit).reverse();
-  }
-
-  // If local DB is still empty and Port 4000 is running side-by-side, proxy directly server-side
-  if ((!rows || rows.length < 2) && PORT !== 4000) {
-    const historySources = [
-      `http://127.0.0.1:4000/api/history?range=${range}&limit=${limit}`,
-      `http://host.docker.internal:4000/api/history?range=${range}&limit=${limit}`,
-      `http://10.10.12.67:4000/api/history?range=${range}&limit=${limit}`
-    ];
-    for (const hUrl of historySources) {
-      try {
-        const controller = new AbortController();
-        const to = setTimeout(() => controller.abort(), 1000);
-        const pResp = await fetch(hUrl, { signal: controller.signal });
-        clearTimeout(to);
-        if (pResp.ok) {
-          const pJson = await pResp.json();
-          if (pJson && pJson.data && pJson.data.length > 0) {
-            return res.json(pJson);
-          }
-        }
-      } catch (_) {}
-    }
-  }
-
-  res.json({ success: true, range, count: rows.length, data: rows });
+  res.json({ success: true, range, date: dateStr, count: rows.length, data: rows });
 });
 
 // =============================================================================

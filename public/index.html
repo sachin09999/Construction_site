@@ -2890,7 +2890,7 @@
         });
       });
 
-      function drawCanvasGraph(canvasId, rows, key, strokeColor, statId, unit) {
+      function drawCanvasGraph(canvasId, rows, key, strokeColor, statId, unit, emptyMsg) {
         const canvas = $(canvasId);
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
@@ -2914,16 +2914,20 @@
 
         const isDark = document.documentElement.classList.contains("dark");
 
-        const values = rows
-          .filter(r => r[key] !== null && r[key] !== undefined && r[key] !== "")
+        const values = (rows || [])
+          .filter(r => r && r[key] !== null && r[key] !== undefined && r[key] !== "")
           .map(r => Number(r[key]))
           .filter(v => Number.isFinite(v));
 
         if (values.length < 2) {
-          ctx.fillStyle = isDark ? "rgba(148, 163, 184, 0.5)" : "rgba(100, 116, 139, 0.6)";
-          ctx.font = "600 12px 'Plus Jakarta Sans', sans-serif";
+          ctx.fillStyle = isDark ? "rgba(148, 163, 184, 0.7)" : "rgba(100, 116, 139, 0.8)";
+          ctx.font = "700 13px 'Plus Jakarta Sans', sans-serif";
           ctx.textAlign = "center";
-          ctx.fillText("Gathering historical data…", W / 2, H / 2);
+          ctx.textBaseline = "middle";
+          ctx.fillText(emptyMsg || "No historical telemetry recorded for this selection", W / 2, H / 2);
+          if ($(statId)) {
+            $(statId).innerHTML = `<strong>-- ${unit}</strong>`;
+          }
           return;
         }
 
@@ -3063,24 +3067,28 @@
           const res = await fetch(url);
           if (res.ok) {
             const data = await res.json();
-            if (data && data.data && data.data.length >= 2) {
-              state.cache = data.data;
-              renderSingleChart(channel);
-            }
+            state.cache = (data && Array.isArray(data.data)) ? data.data : [];
+          } else {
+            state.cache = [];
           }
-        } catch (e) {}
+        } catch (e) {
+          state.cache = [];
+        }
+        renderSingleChart(channel);
       }
 
       function renderSingleChart(channel) {
         if (typeof chartStates === "undefined" || !chartStates || !chartStates[channel]) return;
         const state = chartStates[channel];
-        if (!state || !state.cache || !state.cache.length) return;
+        if (!state) return;
+        const rows = state.cache || [];
+        const emptyLabel = state.date ? `No telemetry recorded on ${state.date}` : "Gathering historical data…";
         if (channel === 'power') {
-          drawCanvasGraph("chartPower", state.cache, "power_mW", "rgb(56, 189, 248)", "powerStat", "mW");
+          drawCanvasGraph("chartPower", rows, "power_mW", "rgb(56, 189, 248)", "powerStat", "mW", emptyLabel);
         } else if (channel === 'yaw') {
-          drawCanvasGraph("chartYaw", state.cache, "jib_yaw_deg", "rgb(168, 85, 247)", "yawStat", "°");
+          drawCanvasGraph("chartYaw", rows, "jib_yaw_deg", "rgb(168, 85, 247)", "yawStat", "°", emptyLabel);
         } else if (channel === 'deflection') {
-          drawCanvasGraph("chartDeflection", state.cache, "jib_deflection_deg", "rgb(251, 113, 133)", "deflectionStat", "°");
+          drawCanvasGraph("chartDeflection", rows, "jib_deflection_deg", "rgb(251, 113, 133)", "deflectionStat", "°", emptyLabel);
         }
       }
 
@@ -3105,6 +3113,13 @@
 
       window.setChartDate = function(channel, dateVal) {
         if (!chartStates[channel]) return;
+        if (!dateVal) {
+          const pillsWrap = $(`pills${channel.charAt(0).toUpperCase() + channel.slice(1)}`);
+          const activePill = pillsWrap ? (pillsWrap.querySelector(".mini-pill.active") || pillsWrap.querySelector(".mini-pill")) : null;
+          const range = activePill ? activePill.textContent.trim().toLowerCase() : "1h";
+          window.setChartRange(channel, range, activePill);
+          return;
+        }
         chartStates[channel].date = dateVal;
         const pillsWrap = $(`pills${channel.charAt(0).toUpperCase() + channel.slice(1)}`);
         if (pillsWrap) pillsWrap.querySelectorAll(".mini-pill").forEach(p => p.classList.remove("active"));
