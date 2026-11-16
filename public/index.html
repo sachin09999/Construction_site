@@ -1449,7 +1449,7 @@
         <span class="tab-icon">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 16l4-5 4 3 6-7"/></svg>
         </span>
-        <span class="tab-label">Telemetry Curves</span>
+        <span class="tab-label">History Charts</span>
         <span class="tab-chip chip-streams">3 CHANNELS</span>
       </button>
     </nav>
@@ -1949,18 +1949,15 @@
                 <text x="256" y="94" font-size="12" font-weight="900" fill="#00f0ff" font-family="'JetBrains Mono', monospace" text-anchor="middle">200</text>
                 <text x="250" y="176" font-size="12" font-weight="900" fill="#ffffff" font-family="'JetBrains Mono', monospace" text-anchor="middle">255</text>
 
-                <!-- Rotating Precision Indicator Needle (Pivot at 150, 115) -->
+                <!-- Rotating Hubless Pointer Needle (No Pin, Zero Overlap with 180) -->
                 <g class="gauge-needle" id="needleThrottle" style="transform-origin: 150px 115px; transform: rotate(49.4deg); transition: transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);">
-                  <polygon points="148.5,115 151.5,115 150.5,38 149.5,38" fill="#ffffff" />
-                  <polygon points="149.2,40 150.8,40 150,28" fill="#00f0ff" filter="url(#neonTacho)" />
-                  <circle cx="150" cy="115" r="7" fill="rgba(255, 255, 255, 0.15)" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1.5" />
-                  <circle cx="150" cy="115" r="3.5" fill="#ffffff" />
-                  <circle cx="150" cy="115" r="1.8" fill="#00f0ff" />
+                  <polygon points="148.5,58 151.5,58 150.5,28 149.5,28" fill="#ffffff" />
+                  <polygon points="149,30 151,30 150,20" fill="#00f0ff" filter="url(#neonTacho)" />
                 </g>
 
-                <!-- Integrated Digital Speed Readout (Safely Below Pivot, Far from Scale Ticks) -->
-                <text id="speedDisplay" x="150" y="152" font-size="52" font-weight="900" fill="#ffffff" font-family="'JetBrains Mono', monospace" text-anchor="middle" filter="url(#neonTacho)">180</text>
-                <text id="speedTier" x="150" y="176" font-size="11.5" font-weight="800" fill="#38bdf8" font-family="'JetBrains Mono', monospace" text-anchor="middle" letter-spacing="1.2">CRUISE SPEED • 71%</text>
+                <!-- Integrated Digital Speed Readout (Pure Unobstructed Center - Zero Overlap) -->
+                <text id="speedDisplay" x="150" y="125" font-size="56" font-weight="900" fill="#ffffff" font-family="'JetBrains Mono', monospace" text-anchor="middle" dominant-baseline="central" filter="url(#neonTacho)">180</text>
+                <text id="speedTier" x="150" y="160" font-size="12" font-weight="800" fill="#38bdf8" font-family="'JetBrains Mono', monospace" text-anchor="middle" letter-spacing="1.2">CRUISE SPEED • 71%</text>
               </svg>
             </div>
 
@@ -2021,19 +2018,10 @@
       </div>
 
       <!-- ===================================================================
-           TAB 3: TELEMETRY CURVES (HISTORICAL GRAPHS)
+           TAB 3: HISTORY CHARTS (HISTORICAL GRAPHS)
            =================================================================== -->
       <div class="tab-pane" id="tab-graphs">
         <div class="graphs-layout">
-          <div class="card card-blue graphs-topbar">
-            <div style="font-size:11px; font-weight:800; text-transform:uppercase;">Sensor Telemetry Historical Trends</div>
-            <div class="range-selector">
-              <button class="range-pill active" data-range="1h">1 Hour</button>
-              <button class="range-pill" data-range="24h">24 Hours</button>
-              <button class="range-pill" data-range="7d">7 Days</button>
-              <button class="range-pill" data-range="30d">30 Days</button>
-            </div>
-          </div>
 
           <!-- 3 Side-by-side Telemetry Curves with Independent Date Pickers ("Alag Alag") -->
           <div class="charts-row">
