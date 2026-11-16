@@ -818,15 +818,15 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      align-items: center;
       padding: 20px 24px;
+      gap: 12px;
     }
     .throttle-tacho-stage {
       position: relative;
       width: 100%;
-      max-width: 360px;
-      height: 270px;
-      margin: auto 0;
+      max-width: 300px;
+      height: 185px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -845,7 +845,7 @@
     }
     .throttle-val-huge {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 64px;
+      font-size: 52px;
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1;
@@ -979,43 +979,51 @@
       accent-color: #f59e0b;
       cursor: pointer;
     }
-    /* Runtime Side-by-Side (Session Time & Up Time) */
-    .runtime-side-by-side {
+    /* Large Runtime Side-by-Side (Hero Cards for Right Deck) */
+    .runtime-hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 2px;
+      gap: 16px;
+      margin: auto 0;
     }
-    .runtime-metric-box {
+    .runtime-hero-card {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 10px;
-      padding: 12px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      padding: 30px 16px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
       transition: all 0.2s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
-    .runtime-metric-box:hover {
-      background: rgba(255, 255, 255, 0.09);
-      border-color: rgba(255, 255, 255, 0.3);
+    .runtime-hero-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
     }
-    .runtime-metric-label {
-      font-size: 11px;
+    .runtime-hero-label {
+      font-size: 13px;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
     }
-    .runtime-metric-value {
+    .runtime-hero-val {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 20px;
+      font-size: 38px;
       font-weight: 900;
       color: #ffffff;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
     }
 
     /* Simplified Preset Button Row */
@@ -1867,10 +1875,10 @@
       <div class="tab-pane" id="tab-controls">
         <div class="controls-layout">
 
-          <!-- Left Column: Heavy Motor Output Tachometer Gauge (White Transparent Glass) -->
+          <!-- Left Column: Motor Speed Control (Dial + Slider + Presets) -->
           <div class="card white-transparent-glass throttle-gauge-card">
             <div class="card-head" style="width:100%;">
-              <div class="card-title">⚡ MOTOR TACHOMETER</div>
+              <div class="card-title">⚡ MOTOR SPEED CONTROL</div>
               <span class="badge" id="speedPwmBadge">180 / 255 PWM</span>
             </div>
 
@@ -1938,42 +1946,6 @@
               </div>
             </div>
 
-            <!-- Bottom Live Telemetry Strip -->
-            <div class="throttle-telemetry-strip" style="width:100%;">
-              <div class="throttle-telemetry-item">
-                <div class="throttle-telemetry-label">⚡ Bus Voltage</div>
-                <div class="throttle-telemetry-val" id="throttleVolts">12.38 V</div>
-              </div>
-              <div class="throttle-telemetry-item">
-                <div class="throttle-telemetry-label">🔋 Motor Current</div>
-                <div class="throttle-telemetry-val" id="throttleCurrent">0 mA</div>
-              </div>
-              <div class="throttle-telemetry-item">
-                <div class="throttle-telemetry-label">💡 Power Draw</div>
-                <div class="throttle-telemetry-val" id="throttlePower">0 mW</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Speed Control & Side-by-Side Runtime Strip (White Transparent Glass) -->
-          <div class="card white-transparent-glass throttle-deck-card">
-            <div class="card-head">
-              <div class="card-title">🎛️ SPEED MODULATION &amp; PRESETS</div>
-              <span class="badge" id="speedCardBadge" style="border-color:rgba(255,255,255,0.25); color:#ffffff;">MOTOR CONSOLE</span>
-            </div>
-
-            <!-- Session Time & Up Time Side-by-Side -->
-            <div class="runtime-side-by-side">
-              <div class="runtime-metric-box">
-                <div class="runtime-metric-label">⏱️ SESSION TIME</div>
-                <div class="runtime-metric-value" id="throttleSessionTime">00:00:00</div>
-              </div>
-              <div class="runtime-metric-box">
-                <div class="runtime-metric-label">⌛ UP TIME</div>
-                <div class="runtime-metric-value" id="throttleUpTime">0.0 hrs</div>
-              </div>
-            </div>
-
             <!-- Precision Throttle Stepper Section -->
             <div class="throttle-lever-section">
               <div class="throttle-section-title">
@@ -2026,6 +1998,42 @@
                 <span class="preset-btn-name">MAX</span>
                 <span class="preset-btn-val">255</span>
               </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Session & Up Time in Large Text + Live Telemetry (White Transparent Glass) -->
+          <div class="card white-transparent-glass throttle-deck-card">
+            <div class="card-head">
+              <div class="card-title">⏱️ SYSTEM RUNTIME &amp; OPERATION</div>
+              <span class="badge" id="speedCardBadge" style="border-color:rgba(255,255,255,0.25); color:#ffffff;">LIVE TELEMETRY</span>
+            </div>
+
+            <!-- Session Time & Up Time Side-by-Side in Large Text -->
+            <div class="runtime-hero-grid">
+              <div class="runtime-hero-card">
+                <div class="runtime-hero-label">⏱️ SESSION TIME</div>
+                <div class="runtime-hero-val" id="throttleSessionTime">00:00:00</div>
+              </div>
+              <div class="runtime-hero-card">
+                <div class="runtime-hero-label">⌛ UP TIME</div>
+                <div class="runtime-hero-val" id="throttleUpTime">0.0 hrs</div>
+              </div>
+            </div>
+
+            <!-- Live Electrical & Sensor Telemetry Strip -->
+            <div class="throttle-telemetry-strip" style="width:100%; margin-top:auto;">
+              <div class="throttle-telemetry-item">
+                <div class="throttle-telemetry-label">⚡ Bus Voltage</div>
+                <div class="throttle-telemetry-val" id="throttleVolts">12.38 V</div>
+              </div>
+              <div class="throttle-telemetry-item">
+                <div class="throttle-telemetry-label">🔋 Motor Current</div>
+                <div class="throttle-telemetry-val" id="throttleCurrent">0 mA</div>
+              </div>
+              <div class="throttle-telemetry-item">
+                <div class="throttle-telemetry-label">💡 Power Draw</div>
+                <div class="throttle-telemetry-val" id="throttlePower">0 mW</div>
+              </div>
             </div>
           </div>
 
