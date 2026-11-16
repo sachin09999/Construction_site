@@ -1256,6 +1256,27 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 9px;
       min-height: 0;
+      position: relative;
+    }
+    .charts-row.has-maximized {
+      display: flex !important;
+    }
+    .charts-row.has-maximized > .chart-panel:not(.maximized) {
+      display: none !important;
+    }
+    .charts-row.has-maximized > .chart-panel.maximized {
+      width: 100% !important;
+      height: 100% !important;
+      flex: 1 !important;
+      border: 1.5px solid rgba(56, 189, 248, 0.75) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(2, 132, 199, 0.3) !important;
+    }
+    .chart-panel.maximized .chart-title {
+      font-size: 15px !important;
+    }
+    .chart-panel.maximized .badge {
+      font-size: 13px !important;
+      padding: 4px 12px !important;
     }
     .chart-panel {
       display: flex;
@@ -1269,6 +1290,54 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
+    }
+    .chart-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-chart-maximize {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.12) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+      color: #ffffff !important;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .btn-chart-maximize:hover {
+      background: rgba(56, 189, 248, 0.35) !important;
+      border-color: #38bdf8 !important;
+      color: #38bdf8 !important;
+      transform: scale(1.08);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5) !important;
+    }
+    .btn-chart-maximize .icon-maximize {
+      display: block;
+    }
+    .btn-chart-maximize .icon-minimize {
+      display: none;
+    }
+    .chart-panel.maximized .btn-chart-maximize .icon-maximize {
+      display: none !important;
+    }
+    .chart-panel.maximized .btn-chart-maximize .icon-minimize {
+      display: block !important;
+    }
+    .chart-panel.maximized .btn-chart-maximize {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border-color: #ef4444 !important;
+      color: #ffffff !important;
+    }
+    .chart-panel.maximized .btn-chart-maximize:hover {
+      background: rgba(239, 68, 68, 0.5) !important;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.6) !important;
     }
     .chart-title {
       font-size: 13.5px;
@@ -2044,7 +2113,23 @@
             <div class="card card-blue chart-panel" id="panelPower">
               <div class="chart-header">
                 <span class="chart-title">💡 Power Load (mW)</span>
-                <span class="badge" id="powerStat">-- mW</span>
+                <div class="chart-header-actions">
+                  <span class="badge" id="powerStat">-- mW</span>
+                  <button type="button" class="btn-chart-maximize" onclick="toggleMaximizeChart('panelPower')" title="Maximize graph" aria-label="Maximize graph">
+                    <svg class="icon-maximize" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                    <svg class="icon-minimize" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="4 14 10 14 10 20"></polyline>
+                      <polyline points="20 10 14 10 14 4"></polyline>
+                      <line x1="14" y1="10" x2="21" y2="3"></line>
+                      <line x1="10" y1="14" x2="3" y2="21"></line>
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div class="chart-individual-filter">
                 <div class="filter-pills" id="pillsPower">
@@ -2067,7 +2152,23 @@
             <div class="card card-purple chart-panel" id="panelYaw">
               <div class="chart-header">
                 <span class="chart-title">🧭 Jib Yaw Heading (°)</span>
-                <span class="badge" id="yawStat">-- °</span>
+                <div class="chart-header-actions">
+                  <span class="badge" id="yawStat">-- °</span>
+                  <button type="button" class="btn-chart-maximize" onclick="toggleMaximizeChart('panelYaw')" title="Maximize graph" aria-label="Maximize graph">
+                    <svg class="icon-maximize" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                    <svg class="icon-minimize" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="4 14 10 14 10 20"></polyline>
+                      <polyline points="20 10 14 10 14 4"></polyline>
+                      <line x1="14" y1="10" x2="21" y2="3"></line>
+                      <line x1="10" y1="14" x2="3" y2="21"></line>
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div class="chart-individual-filter">
                 <div class="filter-pills" id="pillsYaw">
@@ -2090,7 +2191,23 @@
             <div class="card card-pink chart-panel" id="panelDeflection">
               <div class="chart-header">
                 <span class="chart-title">📐 Boom Incline (°)</span>
-                <span class="badge" id="deflectionStat">-- °</span>
+                <div class="chart-header-actions">
+                  <span class="badge" id="deflectionStat">-- °</span>
+                  <button type="button" class="btn-chart-maximize" onclick="toggleMaximizeChart('panelDeflection')" title="Maximize graph" aria-label="Maximize graph">
+                    <svg class="icon-maximize" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                    <svg class="icon-minimize" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="4 14 10 14 10 20"></polyline>
+                      <polyline points="20 10 14 10 14 4"></polyline>
+                      <line x1="14" y1="10" x2="21" y2="3"></line>
+                      <line x1="10" y1="14" x2="3" y2="21"></line>
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div class="chart-individual-filter">
                 <div class="filter-pills" id="pillsDeflection">
@@ -2192,6 +2309,11 @@
           loadHistoryData();
           setTimeout(() => { renderCharts(); }, 60);
           setTimeout(() => { renderCharts(); }, 250);
+        } else {
+          const maxPanel = document.querySelector(".chart-panel.maximized");
+          if (maxPanel && window.toggleMaximizeChart) {
+            window.toggleMaximizeChart(maxPanel.id);
+          }
         }
       }
 
@@ -2988,6 +3110,51 @@
         if (pillsWrap) pillsWrap.querySelectorAll(".mini-pill").forEach(p => p.classList.remove("active"));
         fetchChartData(channel);
       };
+
+      // Graph Maximize / Full-View Toggle
+      window.toggleMaximizeChart = function(panelId) {
+        const panel = $(panelId);
+        if (!panel) return;
+        const row = panel.closest(".charts-row");
+        const isMax = panel.classList.contains("maximized");
+        const channel = panelId === "panelPower" ? "power" : (panelId === "panelYaw" ? "yaw" : "deflection");
+
+        if (isMax) {
+          panel.classList.remove("maximized");
+          if (row) row.classList.remove("has-maximized");
+          const btn = panel.querySelector(".btn-chart-maximize");
+          if (btn) btn.setAttribute("title", "Maximize graph");
+        } else {
+          document.querySelectorAll(".chart-panel.maximized").forEach(p => {
+            p.classList.remove("maximized");
+            const b = p.querySelector(".btn-chart-maximize");
+            if (b) b.setAttribute("title", "Maximize graph");
+          });
+          panel.classList.add("maximized");
+          if (row) row.classList.add("has-maximized");
+          const btn = panel.querySelector(".btn-chart-maximize");
+          if (btn) btn.setAttribute("title", "Exit full view (Esc)");
+        }
+
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            if (panel.classList.contains("maximized")) {
+              renderSingleChart(channel);
+            } else {
+              renderCharts();
+            }
+          }, 40);
+        });
+      };
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          const max = document.querySelector(".chart-panel.maximized");
+          if (max && window.toggleMaximizeChart) {
+            window.toggleMaximizeChart(max.id);
+          }
+        }
+      });
 
       // Initial load for each independent chart
       ['power', 'yaw', 'deflection'].forEach(ch => fetchChartData(ch));
