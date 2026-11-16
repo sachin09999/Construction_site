@@ -156,8 +156,10 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 10px 14px 12px;
-      gap: 8px;
+      padding: 8px 12px 10px;
+      gap: 7px;
+      transform: scale(0.96);
+      transform-origin: center center;
     }
 
     /* =========================================================================
@@ -170,12 +172,12 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 14px;
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(28px) saturate(200%);
-      -webkit-backdrop-filter: blur(28px) saturate(200%);
-      border: 1.5px solid rgba(255, 255, 255, 0.40);
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
       border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
     }
 
     .brand {
@@ -278,12 +280,12 @@
       display: flex;
       gap: 6px;
       padding: 3px 5px;
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(28px) saturate(200%);
-      -webkit-backdrop-filter: blur(28px) saturate(200%);
-      border: 1.5px solid rgba(255, 255, 255, 0.40);
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
       border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
       position: relative;
       z-index: 10;
     }
@@ -308,23 +310,23 @@
     }
     .tab-btn:hover {
       color: #ffffff;
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.12);
     }
     html.dark .tab-btn:hover {
       color: #ffffff;
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.12);
     }
     .tab-btn.active {
       color: #ffffff;
-      background: rgba(15, 23, 42, 0.65);
-      border-color: rgba(255, 255, 255, 0.45);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      background: rgba(56, 189, 248, 0.25) !important;
+      border-color: rgba(56, 189, 248, 0.6) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
     }
     html.dark .tab-btn.active {
       color: #ffffff;
-      background: rgba(15, 23, 42, 0.65);
-      border-color: rgba(255, 255, 255, 0.45);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      background: rgba(56, 189, 248, 0.25) !important;
+      border-color: rgba(56, 189, 248, 0.6) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
     }
     .tab-icon {
       display: flex;
@@ -423,18 +425,18 @@
       z-index: 2;
     }
 
-    /* Generic Card - White Transparent Glassmorphism for Live Camera Stream Overlay */
+    /* Generic Card - Blackish Translucent Glassmorphism for Live Camera Stream Overlay */
     .card {
-      background: rgba(255, 255, 255, 0.20) !important;
-      backdrop-filter: blur(28px) saturate(200%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-      border: 1.5px solid rgba(255, 255, 255, 0.40) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.16) !important;
       border-radius: 14px;
       padding: 12px 14px;
       display: flex;
       flex-direction: column;
       position: relative;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.70), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
       transition: all 0.15s ease;
     }
 
@@ -484,11 +486,11 @@
       align-items: center;
       justify-content: space-between;
       padding: 16px 18px;
-      background: rgba(255, 255, 255, 0.20) !important;
-      backdrop-filter: blur(28px) saturate(200%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-      border: 1.5px solid rgba(255, 255, 255, 0.40) !important;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.70), 0 0 24px rgba(2, 132, 199, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
     }
     .compass-stage {
       position: relative;
@@ -510,11 +512,11 @@
       align-items: baseline;
       justify-content: center;
       gap: 6px;
-      background: rgba(15, 23, 42, 0.75) !important;
+      background: rgba(2, 6, 23, 0.90) !important;
       padding: 6px 24px;
       border-radius: 12px;
-      border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+      border: 1.5px solid rgba(56, 189, 248, 0.40) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.60) !important;
       margin-top: 6px;
     }
     .heading-degrees {
@@ -574,45 +576,45 @@
     .metric-card:hover { transform: translateY(-2px); }
 
     .card-blue {
-      background: rgba(255, 255, 255, 0.20) !important;
-      backdrop-filter: blur(28px) saturate(200%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-      border: 1.5px solid rgba(56, 189, 248, 0.65) !important;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(2, 132, 199, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(56, 189, 248, 0.50) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.70), 0 0 24px rgba(2, 132, 199, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
     }
     .card-blue .metric-title { color: #38bdf8 !important; text-shadow: 0 0 12px rgba(56, 189, 248, 0.8) !important; }
 
     .card-green {
-      background: rgba(255, 255, 255, 0.20) !important;
-      backdrop-filter: blur(28px) saturate(200%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-      border: 1.5px solid rgba(52, 211, 153, 0.65) !important;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(16, 185, 129, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(52, 211, 153, 0.50) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.70), 0 0 24px rgba(16, 185, 129, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
     }
     .card-green .metric-title { color: #34d399 !important; text-shadow: 0 0 12px rgba(52, 211, 153, 0.8) !important; }
 
     .card-purple {
-      background: rgba(255, 255, 255, 0.20) !important;
-      backdrop-filter: blur(28px) saturate(200%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-      border: 1.5px solid rgba(167, 139, 250, 0.65) !important;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(168, 85, 247, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(167, 139, 250, 0.50) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.70), 0 0 24px rgba(168, 85, 247, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
     }
     .card-purple .metric-title { color: #c084fc !important; text-shadow: 0 0 12px rgba(167, 139, 250, 0.8) !important; }
 
     .card-pink {
-      background: rgba(255, 255, 255, 0.20) !important;
-      backdrop-filter: blur(28px) saturate(200%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-      border: 1.5px solid rgba(251, 113, 133, 0.65) !important;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(244, 63, 94, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(251, 113, 133, 0.50) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.70), 0 0 24px rgba(244, 63, 94, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
     }
     .card-pink .metric-title { color: #fb7185 !important; text-shadow: 0 0 12px rgba(251, 113, 133, 0.8) !important; }
 
     .card-amber {
-      background: rgba(255, 255, 255, 0.20) !important;
-      border: 1.5px solid rgba(245, 158, 11, 0.65) !important;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      border: 1.5px solid rgba(245, 158, 11, 0.50) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.70), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
     }
 
     .metric-header {
@@ -620,11 +622,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(15, 23, 42, 0.70);
+      background: rgba(2, 6, 23, 0.80);
       padding: 6px 14px;
       border-radius: 9px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
     }
     .metric-title {
       font-size: 15px !important;
@@ -671,11 +673,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(15, 23, 42, 0.75) !important;
+      background: rgba(2, 6, 23, 0.90) !important;
       padding: 6px 16px;
       border-radius: 10px;
-      border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.60) !important;
       margin-top: 6px;
     }
     .metric-value {
@@ -717,14 +719,14 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 18px;
-      background: rgba(255, 255, 255, 0.20) !important;
-      backdrop-filter: blur(28px) saturate(200%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-      border: 1.5px solid rgba(255, 255, 255, 0.40) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
       border-radius: 12px;
       font-size: 13.5px !important;
       font-weight: 800;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
     }
     .health-tags {
       display: flex;
@@ -745,13 +747,13 @@
       gap: 14px;
     }
     
-    /* White Transparent Glassmorphism Mode */
+    /* White / Dark Transparent Glassmorphism Mode */
     .white-transparent-glass {
-      background: rgba(255, 255, 255, 0.20) !important;
-      backdrop-filter: blur(28px) saturate(200%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-      border: 1.5px solid rgba(255, 255, 255, 0.40) !important;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+      background: rgba(10, 15, 29, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.70), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
     }
     .white-transparent-glass .card-title {
       color: #ffffff !important;
@@ -2106,8 +2108,18 @@
     (() => {
       "use strict";
 
-      const API = window.location.origin;
-      const WS_URL = `${window.location.protocol === "https:" ? "wss:" : "ws:"}//${window.location.host}/ws`;
+      // Multi-Port Resolution: Resolves port 4000 whether loaded from 3000, 4000, 6002, or file:
+      const API = (() => {
+        if (window.location.protocol === "file:") return "http://localhost:4000";
+        const host = window.location.hostname || "localhost";
+        return window.location.port === "4000" ? window.location.origin : `${window.location.protocol}//${host}:4000`;
+      })();
+
+      const WS_URL = (() => {
+        const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
+        const host = window.location.hostname || "localhost";
+        return `${proto}//${host}:4000/ws`;
+      })();
 
       const $ = id => document.getElementById(id);
 
@@ -2581,14 +2593,24 @@
           let refreshJson = null;
 
           try {
-            const stateRes = await fetch('/api/state', { cache: "no-store" });
+            const stateRes = await fetch(`${API}/api/state`, { cache: "no-store" });
             if (stateRes.ok) stateJson = await stateRes.json();
-          } catch (_) {}
+          } catch (_) {
+            try {
+              const stateRes = await fetch('/api/state', { cache: "no-store" });
+              if (stateRes.ok) stateJson = await stateRes.json();
+            } catch (_) {}
+          }
 
           try {
-            const refreshRes = await fetch('/api/refresh', { cache: "no-store" });
+            const refreshRes = await fetch(`${API}/api/refresh`, { cache: "no-store" });
             if (refreshRes.ok) refreshJson = await refreshRes.json();
-          } catch (_) {}
+          } catch (_) {
+            try {
+              const refreshRes = await fetch('/api/refresh', { cache: "no-store" });
+              if (refreshRes.ok) refreshJson = await refreshRes.json();
+            } catch (_) {}
+          }
 
           const s = (stateJson && stateJson.state) ? stateJson.state : (refreshJson && refreshJson.state ? refreshJson.state : {});
           const telemetry = s.telemetry || (refreshJson && refreshJson.state && refreshJson.state.telemetry) || {};
@@ -2871,7 +2893,7 @@
       async function fetchChartData(channel) {
         const state = chartStates[channel];
         if (!state) return;
-        let url = `/api/history?limit=250`;
+        let url = `${API}/api/history?limit=250`;
         if (state.date) {
           url += `&date=${encodeURIComponent(state.date)}`;
         } else {
