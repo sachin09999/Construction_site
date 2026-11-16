@@ -799,53 +799,214 @@
     }
     .control-btn.stop:hover { background: rgba(239, 68, 68, 0.3); }
 
-    /* Speed Modulation Card */
+    /* Speed Modulation Card - Executive Aerospace Throttle */
     .speed-card {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-      padding: 18px 22px;
+      justify-content: space-between;
+      padding: 16px 20px;
+      gap: 10px;
     }
-    .speed-center { text-align: center; }
+    .speed-tacho-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .speed-tacho-svg {
+      width: 100%;
+      height: 110px;
+      overflow: visible;
+    }
+    .speed-tacho-center {
+      position: absolute;
+      top: 52%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
     .speed-val-huge {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 44px;
-      font-weight: 800;
-      letter-spacing: -0.05em;
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
       line-height: 1;
+      color: #f59e0b;
+      text-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
     }
-    .speed-bar-wrap { margin: 12px 0; }
+    .speed-sub-metrics {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+    .speed-pct-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 5px;
+      background: rgba(245, 158, 11, 0.18);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .speed-tier-label {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .throttle-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0;
+    }
+    .nudge-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nudge-btn:hover {
+      background: rgba(245, 158, 11, 0.25);
+      border-color: #f59e0b;
+      color: #f59e0b;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+    }
+    .speed-slider-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      color: var(--text-dim);
+      padding: 0 4px;
+    }
     input[type=range] {
       width: 100%;
-      height: 7px;
-      border-radius: 4px;
-      background: rgba(0,0,0,0.1);
+      height: 8px;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.15);
       outline: none;
-      accent-color: var(--accent);
+      accent-color: #f59e0b;
       cursor: pointer;
     }
-    html.dark input[type=range] { background: rgba(255,255,255,0.15); }
     .preset-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
+      gap: 8px;
+      margin-top: 2px;
     }
     .preset-chip {
-      background: var(--glass-elevated);
-      border: 1px solid var(--glass-border);
-      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 8px;
       padding: 7px 4px;
       text-align: center;
       font-weight: 800;
       font-size: 11px;
       cursor: pointer;
       color: var(--text-muted);
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .preset-chip small {
+      font-size: 9px;
+      opacity: 0.75;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .preset-chip:hover, .preset-chip.active {
+      border-color: #f59e0b !important;
+      color: #f59e0b !important;
+      background: rgba(245, 158, 11, 0.2) !important;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.3) !important;
+    }
+
+    /* Individual Per-Graph Calendar and Filters ("Alag Alag") */
+    .chart-individual-filter {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 10px;
+      margin-bottom: 6px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 4px;
+    }
+    .mini-pill {
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 800;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      color: var(--text-muted);
+      cursor: pointer;
       transition: all 0.15s ease;
     }
-    .preset-chip:hover {
-      border-color: var(--card-amber-text);
-      color: var(--card-amber-text);
-      background: rgba(245, 158, 11, 0.15);
+    .mini-pill:hover, .mini-pill.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    }
+    .calendar-pick-wrap {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .cal-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .graph-date-input {
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+      cursor: pointer;
+    }
+    .graph-date-input::-webkit-calendar-picker-indicator {
+      filter: invert(0.85);
+      cursor: pointer;
     }
 
     /* Electromagnet Card */
@@ -1620,27 +1781,76 @@
             </div>
           </div>
 
-          <!-- Speed Modulation PWM (Amber Card) -->
+          <!-- Speed Modulation PWM (Executive Amber Card) -->
           <div class="card card-amber speed-card">
             <div class="card-head">
-              <div class="card-title" style="color:var(--card-amber-text)">⚡ Motor Speed PWM</div>
-              <span class="badge" style="color:var(--card-amber-text)">0 - 255 PWM</span>
+              <div class="card-title" style="color:var(--card-amber-text)">⚡ Motor Throttle Control</div>
+              <span class="badge" id="speedPwmBadge" style="color:var(--card-amber-text)">180 / 255 PWM</span>
             </div>
 
-            <div class="speed-center">
-              <div class="speed-val-huge" id="speedDisplay" style="color:var(--card-amber-text)">180</div>
-              <div style="font-size:10px; color:var(--text-muted); font-weight:800; text-transform:uppercase; margin-top:2px;">Target Speed PWM</div>
+            <!-- Tachometer Visualizer -->
+            <div class="speed-tacho-wrap">
+              <svg class="speed-tacho-svg" viewBox="0 0 160 100">
+                <defs>
+                  <linearGradient id="tachoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#00f0ff" />
+                    <stop offset="50%" stop-color="#f59e0b" />
+                    <stop offset="100%" stop-color="#ef4444" />
+                  </linearGradient>
+                  <filter id="tachoGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                <path d="M 22 95 A 62 62 0 1 1 138 95" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="8" stroke-linecap="round" />
+                <path id="speedTachoArc" d="M 22 95 A 62 62 0 1 1 138 95" fill="none" stroke="url(#tachoGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="270" stroke-dashoffset="80" filter="url(#tachoGlow)" style="transition: stroke-dashoffset 0.2s ease;" />
+              </svg>
+              <div class="speed-tacho-center">
+                <div class="speed-val-huge" id="speedDisplay">180</div>
+                <div class="speed-sub-metrics">
+                  <span class="speed-pct-badge" id="speedPct">71%</span>
+                  <span class="speed-tier-label" id="speedTier">CRUISE SPEED</span>
+                </div>
+              </div>
             </div>
 
-            <div class="speed-bar-wrap">
-              <input type="range" id="speedSlider" min="0" max="255" value="180">
+            <!-- Precision Throttle Stepper Row -->
+            <div class="throttle-row">
+              <button class="nudge-btn" onclick="nudgeSpeed(-10)" title="Decrease -10 PWM">-10</button>
+              <div class="speed-slider-wrap">
+                <input type="range" id="speedSlider" min="0" max="255" value="180">
+                <div class="slider-ticks">
+                  <span>0</span>
+                  <span>64</span>
+                  <span>128</span>
+                  <span>180</span>
+                  <span>255</span>
+                </div>
+              </div>
+              <button class="nudge-btn" onclick="nudgeSpeed(10)" title="Increase +10 PWM">+10</button>
             </div>
 
+            <!-- Preset Speed Modes -->
             <div class="preset-grid">
-              <div class="preset-chip" onclick="setPreset(64)">Slow (64)</div>
-              <div class="preset-chip" onclick="setPreset(128)">Half (128)</div>
-              <div class="preset-chip active" onclick="setPreset(180)">Cruise (180)</div>
-              <div class="preset-chip" onclick="setPreset(255)">Max (255)</div>
+              <div class="preset-chip" data-val="64" onclick="setPreset(64)">
+                <span>🐢 SLOW</span>
+                <small>64 (25%)</small>
+              </div>
+              <div class="preset-chip" data-val="128" onclick="setPreset(128)">
+                <span>⚖️ HALF</span>
+                <small>128 (50%)</small>
+              </div>
+              <div class="preset-chip active" data-val="180" onclick="setPreset(180)">
+                <span>🚀 CRUISE</span>
+                <small>180 (71%)</small>
+              </div>
+              <div class="preset-chip" data-val="255" onclick="setPreset(255)">
+                <span>⚡ MAX</span>
+                <small>255 (100%)</small>
+              </div>
             </div>
           </div>
 
@@ -1678,13 +1888,25 @@
             </div>
           </div>
 
-          <!-- 3 Side-by-side Telemetry Curves -->
+          <!-- 3 Side-by-side Telemetry Curves with Independent Date Pickers ("Alag Alag") -->
           <div class="charts-row">
             <!-- Power Curve -->
-            <div class="card card-blue chart-panel">
+            <div class="card card-blue chart-panel" id="panelPower">
               <div class="chart-header">
                 <span class="chart-title">💡 Power Load (mW)</span>
                 <span class="badge" id="powerStat">-- mW</span>
+              </div>
+              <div class="chart-individual-filter">
+                <div class="filter-pills" id="pillsPower">
+                  <button class="mini-pill active" onclick="setChartRange('power', '1h', this)">1h</button>
+                  <button class="mini-pill" onclick="setChartRange('power', '24h', this)">24h</button>
+                  <button class="mini-pill" onclick="setChartRange('power', '7d', this)">7d</button>
+                  <button class="mini-pill" onclick="setChartRange('power', '30d', this)">30d</button>
+                </div>
+                <div class="calendar-pick-wrap">
+                  <label for="datePower" class="cal-label">📅 Date:</label>
+                  <input type="date" class="graph-date-input" id="datePower" onchange="setChartDate('power', this.value)">
+                </div>
               </div>
               <div class="chart-canvas-wrap">
                 <canvas id="chartPower"></canvas>
@@ -1692,10 +1914,22 @@
             </div>
 
             <!-- Jib Yaw Curve -->
-            <div class="card card-purple chart-panel">
+            <div class="card card-purple chart-panel" id="panelYaw">
               <div class="chart-header">
                 <span class="chart-title">🧭 Jib Yaw Heading (°)</span>
                 <span class="badge" id="yawStat">-- °</span>
+              </div>
+              <div class="chart-individual-filter">
+                <div class="filter-pills" id="pillsYaw">
+                  <button class="mini-pill active" onclick="setChartRange('yaw', '1h', this)">1h</button>
+                  <button class="mini-pill" onclick="setChartRange('yaw', '24h', this)">24h</button>
+                  <button class="mini-pill" onclick="setChartRange('yaw', '7d', this)">7d</button>
+                  <button class="mini-pill" onclick="setChartRange('yaw', '30d', this)">30d</button>
+                </div>
+                <div class="calendar-pick-wrap">
+                  <label for="dateYaw" class="cal-label">📅 Date:</label>
+                  <input type="date" class="graph-date-input" id="dateYaw" onchange="setChartDate('yaw', this.value)">
+                </div>
               </div>
               <div class="chart-canvas-wrap">
                 <canvas id="chartYaw"></canvas>
@@ -1703,10 +1937,22 @@
             </div>
 
             <!-- Deflection Curve -->
-            <div class="card card-pink chart-panel">
+            <div class="card card-pink chart-panel" id="panelDeflection">
               <div class="chart-header">
                 <span class="chart-title">📐 Boom Incline (°)</span>
                 <span class="badge" id="deflectionStat">-- °</span>
+              </div>
+              <div class="chart-individual-filter">
+                <div class="filter-pills" id="pillsDeflection">
+                  <button class="mini-pill active" onclick="setChartRange('deflection', '1h', this)">1h</button>
+                  <button class="mini-pill" onclick="setChartRange('deflection', '24h', this)">24h</button>
+                  <button class="mini-pill" onclick="setChartRange('deflection', '7d', this)">7d</button>
+                  <button class="mini-pill" onclick="setChartRange('deflection', '30d', this)">30d</button>
+                </div>
+                <div class="calendar-pick-wrap">
+                  <label for="dateDeflection" class="cal-label">📅 Date:</label>
+                  <input type="date" class="graph-date-input" id="dateDeflection" onchange="setChartDate('deflection', this.value)">
+                </div>
               </div>
               <div class="chart-canvas-wrap">
                 <canvas id="chartDeflection"></canvas>
@@ -2002,23 +2248,59 @@
         });
       }
 
-      // Speed Modulation Presets
+      // Speed Modulation Controls (Executive Aerospace Throttle)
+      function updateSpeedUI(val) {
+        const v = Math.max(0, Math.min(255, Number(val) || 0));
+        if ($("speedSlider")) $("speedSlider").value = v;
+        if ($("speedDisplay")) $("speedDisplay").textContent = v;
+        if ($("speedPwmBadge")) $("speedPwmBadge").textContent = `${v} / 255 PWM`;
+        
+        const pct = Math.round((v / 255) * 100);
+        if ($("speedPct")) $("speedPct").textContent = `${pct}%`;
+
+        // Update Arc Dashoffset (Arc length = 270)
+        if ($("speedTachoArc")) {
+          const maxOffset = 270;
+          const offset = Math.max(0, maxOffset - (v / 255) * maxOffset);
+          $("speedTachoArc").style.strokeDashoffset = offset;
+        }
+
+        // Tier classification
+        let tier = "IDLE";
+        if (v >= 230) tier = "MAX BOOST";
+        else if (v >= 160) tier = "CRUISE SPEED";
+        else if (v >= 90) tier = "MODERATE SPEED";
+        else if (v > 0) tier = "CREEP SPEED";
+        if ($("speedTier")) $("speedTier").textContent = tier;
+
+        // Active preset chips
+        document.querySelectorAll(".preset-chip").forEach(c => {
+          const pVal = Number(c.getAttribute("data-val"));
+          c.classList.toggle("active", pVal === v);
+        });
+      }
+
       window.setPreset = function(spd) {
-        if ($("speedSlider")) $("speedSlider").value = spd;
-        if ($("speedDisplay")) $("speedDisplay").textContent = spd;
-        document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("active"));
-        if (window.event && window.event.target) window.event.target.classList.add("active");
+        updateSpeedUI(spd);
         sendAction("crane_speed", undefined, spd);
+      };
+
+      window.nudgeSpeed = function(delta) {
+        const cur = Number($("speedSlider")?.value || 180);
+        const next = Math.max(0, Math.min(255, cur + delta));
+        updateSpeedUI(next);
+        sendAction("crane_speed", undefined, next);
       };
 
       if ($("speedSlider")) {
         $("speedSlider").addEventListener("input", e => {
-          if ($("speedDisplay")) $("speedDisplay").textContent = e.target.value;
+          updateSpeedUI(e.target.value);
         });
         $("speedSlider").addEventListener("change", e => {
           sendAction("crane_speed", undefined, Number(e.target.value));
         });
       }
+      updateSpeedUI(180);
 
       // Refresh Button
       if ($("refreshBtn")) {
@@ -2221,8 +2503,7 @@
         if (magRelay) setMagnetUI(magRelay);
 
         if (cementItems.crane_speed?.value) {
-          if ($("speedSlider")) $("speedSlider").value = cementItems.crane_speed.value;
-          if ($("speedDisplay")) $("speedDisplay").textContent = cementItems.crane_speed.value;
+          updateSpeedUI(cementItems.crane_speed.value);
         }
       }
 
@@ -2320,8 +2601,7 @@
                 if ($("esp32StatusText")) $("esp32StatusText").textContent = online ? "ESP32 Online" : "ESP32 Offline";
               }
               if (item_id === "crane_speed") {
-                if ($("speedSlider")) $("speedSlider").value = value;
-                if ($("speedDisplay")) $("speedDisplay").textContent = value;
+                updateSpeedUI(value);
               }
             } else if (msg.type === "status") {
               const online = Boolean(msg.data?.online);
@@ -2506,27 +2786,82 @@
         ctx.fill();
       }
 
-      function renderCharts() {
-        if (!historyCache || !historyCache.length) return;
-        drawCanvasGraph("chartPower", historyCache, "power_mW", "rgb(56, 189, 248)", "powerStat", "mW");
-        drawCanvasGraph("chartYaw", historyCache, "jib_yaw_deg", "rgb(168, 85, 247)", "yawStat", "°");
-        drawCanvasGraph("chartDeflection", historyCache, "jib_deflection_deg", "rgb(251, 113, 133)", "deflectionStat", "°");
-      }
+      // =======================================================================
+      // INDEPENDENT PER-GRAPH TELEMETRY CURVES & CALENDAR SYSTEM ("ALAG ALAG")
+      // =======================================================================
+      const chartStates = {
+        power: { range: '1h', date: null, cache: [] },
+        yaw: { range: '1h', date: null, cache: [] },
+        deflection: { range: '1h', date: null, cache: [] }
+      };
 
-      async function loadHistoryData() {
+      async function fetchChartData(channel) {
+        const state = chartStates[channel];
+        if (!state) return;
+        let url = `/api/history?limit=250`;
+        if (state.date) {
+          url += `&date=${encodeURIComponent(state.date)}`;
+        } else {
+          url += `&range=${encodeURIComponent(state.range || '1h')}`;
+        }
         try {
-          const res = await fetch(`/api/history?range=${currentRange}&limit=250`);
+          const res = await fetch(url);
           if (res.ok) {
             const data = await res.json();
             if (data && data.data && data.data.length >= 2) {
-              historyCache = data.data;
-              renderCharts();
+              state.cache = data.data;
+              renderSingleChart(channel);
             }
           }
         } catch (e) {}
       }
-      loadHistoryData();
-      setInterval(loadHistoryData, 5000); // Poll curves periodically so curves are always live
+
+      function renderSingleChart(channel) {
+        const state = chartStates[channel];
+        if (!state || !state.cache.length) return;
+        if (channel === 'power') {
+          drawCanvasGraph("chartPower", state.cache, "power_mW", "rgb(56, 189, 248)", "powerStat", "mW");
+        } else if (channel === 'yaw') {
+          drawCanvasGraph("chartYaw", state.cache, "jib_yaw_deg", "rgb(168, 85, 247)", "yawStat", "°");
+        } else if (channel === 'deflection') {
+          drawCanvasGraph("chartDeflection", state.cache, "jib_deflection_deg", "rgb(251, 113, 133)", "deflectionStat", "°");
+        }
+      }
+
+      function renderCharts() {
+        renderSingleChart('power');
+        renderSingleChart('yaw');
+        renderSingleChart('deflection');
+      }
+
+      window.setChartRange = function(channel, range, btn) {
+        if (!chartStates[channel]) return;
+        chartStates[channel].range = range;
+        chartStates[channel].date = null;
+        const dateInput = $(`date${channel.charAt(0).toUpperCase() + channel.slice(1)}`);
+        if (dateInput) dateInput.value = "";
+        if (btn && btn.parentElement) {
+          btn.parentElement.querySelectorAll(".mini-pill").forEach(p => p.classList.remove("active"));
+          btn.classList.add("active");
+        }
+        fetchChartData(channel);
+      };
+
+      window.setChartDate = function(channel, dateVal) {
+        if (!chartStates[channel]) return;
+        chartStates[channel].date = dateVal;
+        const pillsWrap = $(`pills${channel.charAt(0).toUpperCase() + channel.slice(1)}`);
+        if (pillsWrap) pillsWrap.querySelectorAll(".mini-pill").forEach(p => p.classList.remove("active"));
+        fetchChartData(channel);
+      };
+
+      // Initial load for each independent chart
+      ['power', 'yaw', 'deflection'].forEach(ch => fetchChartData(ch));
+      setInterval(() => {
+        ['power', 'yaw', 'deflection'].forEach(ch => {
+          if (!chartStates[ch].date) fetchChartData(ch);
+        });
+      }, 5000);
 
       window.addEventListener("resize", () => {
         renderCharts();

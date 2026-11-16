@@ -376,17 +376,32 @@ app.post(['/api/device/telemetry', '/api/telemetry', '/telemetry'], requireDevic
   res.json({ success: true, deviceId: DEVICE_ID, receivedAt: telemetry ? telemetry.timestamp : new Date().toISOString() });
 });
 
-// History ranges: 1h, 1d, 1w, 1m, 1y.
+// History ranges: 1h, 1d, 1w, 1m, 1y or specific calendar date YYYY-MM-DD.
 app.get('/api/history', async (req, res) => {
   const ranges = { '1h': 3600, '24h': 86400, '1d': 86400, '7d': 604800, '1w': 604800, '30d': 2592000, '1m': 2592000, '1y': 31536000, 'all': 315360000 };
   const range = String(req.query.range || '1h');
-  if (!ranges[range]) return res.status(400).json({ success: false, error: 'invalid range' });
   const limit = Math.min(5000, Math.max(1, Number(req.query.limit || 1000)));
-  const since = Date.now() - ranges[range] * 1000;
-  let rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
-    jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
-    mpu_ok, mag_ok, ina226_ok FROM telemetry_history
-    WHERE received_at >= ? ORDER BY received_at DESC LIMIT ?`).all(since, limit).reverse();
+  const dateStr = req.query.date ? String(req.query.date) : null;
+  let rows = [];
+
+  if (dateStr) {
+    // Specific calendar day query (e.g. 2026-11-16)
+    const startOfDay = new Date(dateStr + 'T00:00:00').getTime();
+    const endOfDay = startOfDay + 86400000;
+    if (!isNaN(startOfDay)) {
+      rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+        jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
+        mpu_ok, mag_ok, ina226_ok FROM telemetry_history
+        WHERE received_at >= ? AND received_at < ? ORDER BY received_at DESC LIMIT ?`).all(startOfDay, endOfDay, limit).reverse();
+    }
+  } else {
+    if (!ranges[range]) return res.status(400).json({ success: false, error: 'invalid range' });
+    const since = Date.now() - ranges[range] * 1000;
+    rows = db.prepare(`SELECT timestamp, voltage_V, current_mA, power_mW, jib_yaw_deg,
+      jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
+      mpu_ok, mag_ok, ina226_ok FROM telemetry_history
+      WHERE received_at >= ? ORDER BY received_at DESC LIMIT ?`).all(since, limit).reverse();
+  }
 
   // If time-window returned fewer than 2 records (e.g. ESP32 was quiet or last record is older than range),
   // automatically fallback to the latest stored records so curves ALWAYS display!
