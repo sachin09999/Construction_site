@@ -546,22 +546,6 @@
       margin-top: 8px;
       border: 1px solid currentColor;
     }
-    .compass-runtime-strip {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding-top: 10px;
-      border-top: 1px solid var(--line);
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--text-muted);
-    }
-    .compass-runtime-strip strong {
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--text);
-      font-size: 15.5px;
-    }
 
     /* Right Metrics Grid */
     .metrics-matrix-wrap {
@@ -1631,14 +1615,6 @@
             </div>
             <div class="motion-indicator-tag" id="motionPill" style="background:rgba(239,68,68,0.15); color:var(--red);">
               STOPPED
-            </div>
-            <!-- Session & Lifetime Runtime Counter -->
-            <div class="compass-runtime-strip">
-              <span>⏱️ <strong id="valSessionTime">00:00:00</strong></span>
-              <span>⌛ <strong id="valLifetimeHours">-- hrs</strong></span>
-              <span id="chipMpuPreview" style="display:none;">OK</span>
-              <span id="chipMagPreview" style="display:none;">OK</span>
-              <span id="chipInaPreview" style="display:none;">OK</span>
             </div>
           </div>
 
