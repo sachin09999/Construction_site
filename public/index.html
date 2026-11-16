@@ -1,52 +1,91 @@
 <!doctype html>
-<html lang="en" class="light">
+<html lang="en" class="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Under Construction | Crane Digital Twin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800;900&display=swap" rel="stylesheet">
   <style>
     /* =========================================================================
-       DESIGN SYSTEM - CRYSTAL CLEAR FROSTED GLASS (ZERO BLACKISH TINT)
+       DESIGN SYSTEM - EXECUTIVE CYBER-INDUSTRIAL AEROSPACE HUD
        ========================================================================= */
-    :root, html, html.dark, html.light {
-      --bg: transparent;
-      --bg-ambient: none;
+    :root, html, html.dark {
+      --bg-canvas: #070b14;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
       
+      /* Vibrant Dark Aerospace Instrument Glass Panels */
+      --card-blue-bg: linear-gradient(145deg, rgba(15, 23, 42, 0.88) 0%, rgba(12, 38, 66, 0.78) 100%);
+      --card-blue-border: rgba(56, 189, 248, 0.35);
+      --card-blue-text: #38bdf8;
+      --card-blue-shadow: 0 10px 30px rgba(2, 132, 199, 0.22);
+
+      --card-green-bg: linear-gradient(145deg, rgba(15, 23, 42, 0.88) 0%, rgba(6, 44, 30, 0.78) 100%);
+      --card-green-border: rgba(52, 211, 153, 0.35);
+      --card-green-text: #34d399;
+      --card-green-shadow: 0 10px 30px rgba(16, 185, 129, 0.22);
+
+      --card-purple-bg: linear-gradient(145deg, rgba(15, 23, 42, 0.88) 0%, rgba(38, 20, 68, 0.78) 100%);
+      --card-purple-border: rgba(167, 139, 250, 0.35);
+      --card-purple-text: #c084fc;
+      --card-purple-shadow: 0 10px 30px rgba(168, 85, 247, 0.22);
+
+      --card-pink-bg: linear-gradient(145deg, rgba(15, 23, 42, 0.88) 0%, rgba(56, 17, 30, 0.78) 100%);
+      --card-pink-border: rgba(251, 113, 133, 0.35);
+      --card-pink-text: #fb7185;
+      --card-pink-shadow: 0 10px 30px rgba(244, 63, 94, 0.22);
+
+      --card-amber-bg: linear-gradient(145deg, rgba(15, 23, 42, 0.88) 0%, rgba(54, 30, 10, 0.78) 100%);
+      --card-amber-border: rgba(251, 191, 36, 0.35);
+      --card-amber-text: #fbbf24;
+
+      --glass-base: rgba(15, 23, 42, 0.82);
+      --glass-elevated: rgba(26, 38, 57, 0.88);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-shine: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15), 0 12px 32px rgba(0, 0, 0, 0.5);
+      --line: rgba(255, 255, 255, 0.1);
+      --accent: #38bdf8;
+      --green: #34d399;
+      --red: #f87171;
+      --amber: #fbbf24;
+    }
+
+    html.light {
+      --bg-canvas: #f1f5f9;
       --text: #0f172a;
       --text-muted: #334155;
       --text-dim: #64748b;
       
-      /* Vibrant Crystal Frosted Glass Cards (Clean & Bright) */
-      --card-blue-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(224, 242, 254, 0.55) 100%);
-      --card-blue-border: rgba(56, 189, 248, 0.7);
+      --card-blue-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 242, 254, 0.85) 100%);
+      --card-blue-border: rgba(56, 189, 248, 0.8);
       --card-blue-text: #0284c7;
       --card-blue-shadow: 0 8px 24px rgba(2, 132, 199, 0.15);
 
-      --card-green-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(209, 250, 229, 0.55) 100%);
-      --card-green-border: rgba(52, 211, 153, 0.7);
+      --card-green-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(209, 250, 229, 0.85) 100%);
+      --card-green-border: rgba(52, 211, 153, 0.8);
       --card-green-text: #059669;
       --card-green-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
 
-      --card-purple-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(237, 233, 254, 0.55) 100%);
-      --card-purple-border: rgba(167, 139, 250, 0.7);
+      --card-purple-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(237, 233, 254, 0.85) 100%);
+      --card-purple-border: rgba(167, 139, 250, 0.8);
       --card-purple-text: #7c3aed;
       --card-purple-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
 
-      --card-pink-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 228, 230, 0.55) 100%);
-      --card-pink-border: rgba(251, 113, 133, 0.7);
+      --card-pink-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 228, 230, 0.85) 100%);
+      --card-pink-border: rgba(251, 113, 133, 0.8);
       --card-pink-text: #e11d48;
       --card-pink-shadow: 0 8px 24px rgba(225, 29, 72, 0.15);
 
-      --card-amber-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(254, 243, 199, 0.55) 100%);
-      --card-amber-border: rgba(245, 158, 11, 0.7);
+      --card-amber-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 243, 199, 0.85) 100%);
+      --card-amber-border: rgba(245, 158, 11, 0.8);
       --card-amber-text: #d97706;
 
-      --glass-base: rgba(255, 255, 255, 0.65);
-      --glass-elevated: rgba(255, 255, 255, 0.85);
-      --glass-border: rgba(255, 255, 255, 0.75);
+      --glass-base: rgba(255, 255, 255, 0.85);
+      --glass-elevated: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(226, 232, 240, 0.9);
       --glass-shine: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95), 0 8px 24px rgba(0, 0, 0, 0.08);
       --line: rgba(226, 232, 240, 0.85);
       --accent: #0284c7;
@@ -60,29 +99,46 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden; /* Strict no-scroll architecture */
-      background: transparent !important;
-      background-color: transparent !important;
-      background-image: none !important;
+      background-color: var(--bg-canvas) !important;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.10) 0%, transparent 40%),
+        radial-gradient(circle at 90% 25%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.07) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px !important;
       color: var(--text);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       font-size: 13px;
       line-height: 1.4;
       -webkit-font-smoothing: antialiased;
-      transition: color 0.3s ease;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Ambient Light Orbs Hidden for 100% Transparency in AR/Cupola */
+    html.light body {
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 25%, rgba(168, 85, 247, 0.04) 0%, transparent 45%),
+        linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px) !important;
+    }
+
+    /* Ambient Depth Glows */
     .ambient-glows {
-      display: none !important;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
     }
     .ambient-orb {
       position: absolute;
       border-radius: 50%;
       filter: blur(80px);
-      opacity: 0.45;
+      opacity: 0.35;
       animation: floatAmbient 24s infinite alternate ease-in-out;
     }
-    html.dark .ambient-orb { opacity: 0.25; filter: blur(95px); }
+    html.dark .ambient-orb { opacity: 0.28; filter: blur(95px); }
     .orb-1 {
       width: 460px; height: 460px; top: -60px; left: -60px;
       background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, transparent 70%);
@@ -404,11 +460,11 @@
       flex-shrink: 0;
     }
     .card-title {
-      font-size: 13.5px !important;
+      font-size: 13px !important;
       font-weight: 800 !important;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #1e293b !important;
+      letter-spacing: 0.08em;
+      color: var(--text) !important;
       display: flex;
       align-items: center;
       gap: 7px;
@@ -418,10 +474,14 @@
       font-weight: 800 !important;
       padding: 3px 9px !important;
       border-radius: 6px;
-      background: rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
       border: 1px solid var(--line);
     }
-    html.dark .badge { background: rgba(255, 255, 255, 0.08); }
+    html.light .badge {
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--text);
+    }
 
     /* =========================================================================
        TAB 1: DIGITAL TWIN (COMPASS + 4 METRIC CARDS + HEALTH)
@@ -444,8 +504,8 @@
     }
     .compass-stage {
       position: relative;
-      width: 220px;
-      height: 220px;
+      width: 235px;
+      height: 235px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -465,21 +525,26 @@
     }
     .heading-degrees {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 38px !important;
+      font-size: 42px !important;
       font-weight: 900 !important;
       letter-spacing: -0.04em;
       line-height: 1;
+      color: var(--text);
+      text-shadow: 0 0 20px rgba(56, 189, 248, 0.45);
+    }
+    html.light .heading-degrees {
       color: #0f172a;
       text-shadow: none;
     }
     .motion-indicator-tag {
-      font-size: 12px !important;
+      font-size: 11.5px !important;
       font-weight: 800 !important;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       padding: 5px 14px !important;
       border-radius: 7px;
       margin-top: 6px;
+      border: 1px solid currentColor;
     }
 
     /* Right Metrics Grid */
@@ -512,28 +577,28 @@
       border: 1px solid var(--card-blue-border);
       box-shadow: var(--card-blue-shadow), var(--glass-shine);
     }
-    .card-blue .metric-title { color: var(--card-blue-text); }
+    .card-blue .metric-title { color: var(--card-blue-text) !important; }
 
     .card-green {
       background: var(--card-green-bg);
       border: 1px solid var(--card-green-border);
       box-shadow: var(--card-green-shadow), var(--glass-shine);
     }
-    .card-green .metric-title { color: var(--card-green-text); }
+    .card-green .metric-title { color: var(--card-green-text) !important; }
 
     .card-purple {
       background: var(--card-purple-bg);
       border: 1px solid var(--card-purple-border);
       box-shadow: var(--card-purple-shadow), var(--glass-shine);
     }
-    .card-purple .metric-title { color: var(--card-purple-text); }
+    .card-purple .metric-title { color: var(--card-purple-text) !important; }
 
     .card-pink {
       background: var(--card-pink-bg);
       border: 1px solid var(--card-pink-border);
       box-shadow: var(--card-pink-shadow), var(--glass-shine);
     }
-    .card-pink .metric-title { color: var(--card-pink-text); }
+    .card-pink .metric-title { color: var(--card-pink-text) !important; }
 
     .card-amber {
       background: var(--card-amber-bg);
@@ -547,11 +612,10 @@
       align-items: center;
     }
     .metric-title {
-      font-size: 13px !important;
+      font-size: 12.5px !important;
       font-weight: 800 !important;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #334155 !important;
+      letter-spacing: 0.08em;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -566,8 +630,8 @@
     }
     .meter-gauge-wrap {
       width: 100%;
-      max-width: 220px;
-      height: 112px;
+      max-width: 250px;
+      height: 124px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -588,18 +652,23 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 4px;
-      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      border-top: 1px solid var(--line);
       padding-top: 4px;
     }
     .metric-value {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 22px !important;
+      font-size: 24px !important;
       font-weight: 900 !important;
       letter-spacing: -0.02em;
       display: flex;
       align-items: baseline;
       gap: 4px;
       line-height: 1;
+      color: var(--text);
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.2);
+    }
+    html.light .metric-value {
+      color: #0f172a;
       text-shadow: none;
     }
     .metric-unit {
@@ -610,7 +679,7 @@
     }
     .metric-hint {
       font-size: 11px !important;
-      color: #64748b !important;
+      color: var(--text-dim) !important;
       font-weight: 700 !important;
     }
 
@@ -626,17 +695,6 @@
       border: 1px solid var(--glass-border);
       border-radius: 12px;
       font-size: 12.5px !important;
-      font-weight: 700;
-    }
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      background: var(--glass-base);
-      border: 1px solid var(--glass-border);
-      border-radius: 11px;
-      font-size: 11px;
       font-weight: 700;
     }
     .health-tags {
@@ -956,6 +1014,56 @@
     <div class="ambient-orb orb-3"></div>
   </div>
 
+  <!-- Shared Global SVG Defs for High-Precision Instrument Gauges -->
+  <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+    <defs>
+      <!-- Instrument Dark Face Plate Gradient -->
+      <radialGradient id="meterFacePlateDark" cx="50%" cy="50%" r="65%">
+        <stop offset="0%" stop-color="#0e1726" />
+        <stop offset="70%" stop-color="#080e1b" />
+        <stop offset="100%" stop-color="#030712" />
+      </radialGradient>
+      <!-- Metallic Bezel Rim Gradient -->
+      <linearGradient id="meterBezelRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#64748b" />
+        <stop offset="50%" stop-color="#1e293b" />
+        <stop offset="100%" stop-color="#475569" />
+      </linearGradient>
+
+      <!-- Precision Neon Glow Filters -->
+      <filter id="neonVolt" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00f0ff" flood-opacity="0.9" />
+      </filter>
+      <filter id="neonAmp" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#10b981" flood-opacity="0.9" />
+      </filter>
+      <filter id="neonWatt" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#c084fc" flood-opacity="0.9" />
+      </filter>
+      <filter id="neonIncline" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#fb7185" flood-opacity="0.9" />
+      </filter>
+
+      <!-- Needle Blade Gradients -->
+      <linearGradient id="needleBladeVolt" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="#0284c7" />
+        <stop offset="100%" stop-color="#00f0ff" />
+      </linearGradient>
+      <linearGradient id="needleBladeAmp" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="#059669" />
+        <stop offset="100%" stop-color="#34d399" />
+      </linearGradient>
+      <linearGradient id="needleBladeWatt" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="#7c3aed" />
+        <stop offset="100%" stop-color="#c084fc" />
+      </linearGradient>
+      <linearGradient id="needleBladeIncline" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="#e11d48" />
+        <stop offset="100%" stop-color="#fb7185" />
+      </linearGradient>
+    </defs>
+  </svg>
+
   <div class="app-shell">
 
     <!-- HEADER BAR (42px) -->
@@ -1050,71 +1158,154 @@
             <div class="compass-stage">
               <svg class="compass-svg" viewBox="0 0 240 240">
                 <defs>
-                  <radialGradient id="compassBgGrad" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="rgba(255, 255, 255, 0.95)" />
-                    <stop offset="70%" stop-color="rgba(241, 245, 249, 0.85)" />
-                    <stop offset="100%" stop-color="rgba(226, 232, 240, 0.95)" />
+                  <radialGradient id="compassBgGradDark" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#0e1726" />
+                    <stop offset="75%" stop-color="#080d1a" />
+                    <stop offset="100%" stop-color="#030712" />
                   </radialGradient>
-                  <filter id="needleGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0284c7" flood-opacity="0.35"/>
+                  <linearGradient id="compassBezelMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#475569" />
+                    <stop offset="50%" stop-color="#1e293b" />
+                    <stop offset="100%" stop-color="#334155" />
+                  </linearGradient>
+                  <filter id="neonJibGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#00f0ff" flood-opacity="0.8" />
+                  </filter>
+                  <filter id="northGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#ef4444" flood-opacity="0.85" />
                   </filter>
                 </defs>
 
-                <!-- Outer Dial Ring & Bezel -->
-                <circle cx="120" cy="120" r="114" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-opacity="0.45" />
-                <circle cx="120" cy="120" r="108" fill="url(#compassBgGrad)" stroke="#cbd5e1" stroke-width="1.5" />
-                <circle cx="120" cy="120" r="94" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 5" opacity="0.6" />
+                <!-- Outer CNC Metallic Bezel Ring -->
+                <circle cx="120" cy="120" r="117" fill="none" stroke="url(#compassBezelMetal)" stroke-width="4" />
+                <circle cx="120" cy="120" r="114" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.5" />
+                
+                <!-- Inner Instrument Dial Plate -->
+                <circle cx="120" cy="120" r="110" fill="url(#compassBgGradDark)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.2" />
+
+                <!-- Concentric Range / Radar Rings -->
+                <circle cx="120" cy="120" r="88" fill="none" stroke="rgba(56, 189, 248, 0.15)" stroke-width="1" stroke-dasharray="3 4" />
+                <circle cx="120" cy="120" r="58" fill="none" stroke="rgba(56, 189, 248, 0.12)" stroke-width="1" stroke-dasharray="2 4" />
+                <circle cx="120" cy="120" r="28" fill="none" stroke="rgba(56, 189, 248, 0.10)" stroke-width="0.8" />
+
+                <!-- Crosshair Reference Axes -->
+                <line x1="120" y1="18" x2="120" y2="222" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+                <line x1="18" y1="120" x2="222" y2="120" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
 
                 <!-- 360 Degree Radial Ticks (Every 30 deg) -->
-                <!-- 0 deg / North -->
-                <line x1="120" y1="12" x2="120" y2="24" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
+                <!-- 0 deg / North: Bold Beacon Line -->
+                <line x1="120" y1="14" x2="120" y2="28" stroke="#ef4444" stroke-width="3" stroke-linecap="round" filter="url(#northGlow)" />
                 <!-- 30 deg -->
-                <line x1="174" y1="26.5" x2="168" y2="37" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="173" y1="28.2" x2="167" y2="38.6" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
                 <!-- 60 deg -->
-                <line x1="213.5" y1="66" x2="203" y2="72" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="211.8" y1="67" x2="201.4" y2="73" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
                 <!-- 90 deg / East -->
-                <line x1="228" y1="120" x2="216" y2="120" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="226" y1="120" x2="212" y2="120" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
                 <!-- 120 deg -->
-                <line x1="213.5" y1="174" x2="203" y2="168" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="211.8" y1="173" x2="201.4" y2="167" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
                 <!-- 150 deg -->
-                <line x1="174" y1="213.5" x2="168" y2="203" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="173" y1="211.8" x2="167" y2="201.4" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
                 <!-- 180 deg / South -->
-                <line x1="120" y1="228" x2="120" y2="216" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="120" y1="226" x2="120" y2="212" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
                 <!-- 210 deg -->
-                <line x1="66" y1="213.5" x2="72" y2="203" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="67" y1="211.8" x2="73" y2="201.4" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
                 <!-- 240 deg -->
-                <line x1="26.5" y1="174" x2="37" y2="168" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="28.2" y1="173" x2="38.6" y2="167" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
                 <!-- 270 deg / West -->
-                <line x1="12" y1="120" x2="24" y2="120" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="14" y1="120" x2="28" y2="120" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
                 <!-- 300 deg -->
-                <line x1="26.5" y1="66" x2="37" y2="72" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="28.2" y1="67" x2="38.6" y2="73" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
                 <!-- 330 deg -->
-                <line x1="66" y1="26.5" x2="72" y2="37" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="67" y1="28.2" x2="73" y2="38.6" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" />
 
-                <!-- Cardinal Direction Letters -->
-                <text x="120" y="38" font-size="16" font-weight="900" text-anchor="middle" fill="#0284c7" letter-spacing="1">N</text>
-                <text x="207" y="125" font-size="15" font-weight="900" text-anchor="middle" fill="#334155" opacity="0.95">E</text>
-                <text x="120" y="210" font-size="15" font-weight="900" text-anchor="middle" fill="#334155" opacity="0.95">S</text>
-                <text x="33" y="125" font-size="15" font-weight="900" text-anchor="middle" fill="#334155" opacity="0.95">W</text>
+                <!-- Minor Degree Ticks (Every 10 deg) -->
+                <line x1="138.8" y1="15.6" x2="137.4" y2="23.4" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="156.8" y1="20.4" x2="154.2" y2="27.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="187.6" y1="39.2" x2="183.2" y2="45.6" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="201.6" y1="52.4" x2="195.8" y2="57.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="220.4" y1="83.2" x2="213" y2="85.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="225.2" y1="101.2" x2="217.4" y2="102.6" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                
+                <line x1="225.2" y1="138.8" x2="217.4" y2="137.4" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="220.4" y1="156.8" x2="213" y2="154.2" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="201.6" y1="187.6" x2="195.8" y2="183.2" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="187.6" y1="201.6" x2="183.2" y2="195.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="156.8" y1="220.4" x2="154.2" y2="213" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="138.8" y1="225.2" x2="137.4" y2="217.4" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+
+                <line x1="101.2" y1="225.2" x2="102.6" y2="217.4" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="83.2" y1="220.4" x2="85.8" y2="213" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="52.4" y1="201.6" x2="57.8" y2="195.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="39.2" y1="187.6" x2="45.6" y2="183.2" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="20.4" y1="156.8" x2="27.8" y2="154.2" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="15.6" y1="138.8" x2="23.4" y2="137.4" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+
+                <line x1="15.6" y1="101.2" x2="23.4" y2="102.6" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="20.4" y1="83.2" x2="27.8" y2="85.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="39.2" y1="52.4" x2="45.6" y2="57.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="52.4" y1="39.2" x2="57.8" y2="45.6" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="83.2" y1="20.4" x2="85.8" y2="27.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <line x1="101.2" y1="15.6" x2="102.6" y2="23.4" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+
+                <!-- Cardinal Direction Markers -->
+                <polygon points="120,30 115,38 125,38" fill="#ef4444" filter="url(#northGlow)" />
+                <text x="120" y="50" font-size="14" font-weight="900" text-anchor="middle" fill="#ef4444" letter-spacing="1">N</text>
+                <text x="202" y="125" font-size="13" font-weight="900" text-anchor="middle" fill="#94a3b8">E</text>
+                <text x="120" y="206" font-size="13" font-weight="900" text-anchor="middle" fill="#94a3b8">S</text>
+                <text x="38" y="125" font-size="13" font-weight="900" text-anchor="middle" fill="#94a3b8">W</text>
+
+                <!-- Degree Calibration Annotations -->
+                <text x="162" y="48" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">030°</text>
+                <text x="194" y="80" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">060°</text>
+                <text x="194" y="166" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">120°</text>
+                <text x="162" y="198" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">150°</text>
+                <text x="78" y="198" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">210°</text>
+                <text x="46" y="166" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">240°</text>
+                <text x="46" y="80" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">300°</text>
+                <text x="78" y="48" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">330°</text>
 
                 <!-- Rotating Crane Slewing Jib Needle -->
-                <g class="needle-arm" id="needleArm" filter="url(#needleGlow)">
-                  <!-- Main Slewing Jib Boom (Points to Azimuth) -->
-                  <line x1="120" y1="120" x2="120" y2="44" stroke="#0284c7" stroke-width="6" stroke-linecap="round" />
-                  <polygon points="120,34 114,48 126,48" fill="#0284c7" />
-                  <!-- Counter Jib & Counterweight -->
-                  <line x1="120" y1="120" x2="120" y2="162" stroke="#94a3b8" stroke-width="6" stroke-linecap="round" />
-                  <rect x="112" y="152" width="16" height="14" rx="3" fill="#64748b" stroke="#ffffff" stroke-width="1.5" />
-                  <!-- Center Turret Pivot -->
-                  <circle cx="120" cy="120" r="11" fill="#0284c7" stroke="#ffffff" stroke-width="3" />
-                  <circle cx="120" cy="120" r="4" fill="#ffffff" />
+                <g class="needle-arm" id="needleArm" filter="url(#neonJibGlow)">
+                  <!-- Forward Lattice Jib Chords -->
+                  <line x1="117.5" y1="114" x2="118.5" y2="40" stroke="#00f0ff" stroke-width="2.5" />
+                  <line x1="122.5" y1="114" x2="121.5" y2="40" stroke="#00f0ff" stroke-width="2.5" />
+                  
+                  <!-- Diagonal Lattice Bracing -->
+                  <line x1="117.5" y1="104" x2="122" y2="92" stroke="#38bdf8" stroke-width="1.2" opacity="0.8" />
+                  <line x1="122" y1="92" x2="118" y2="80" stroke="#38bdf8" stroke-width="1.2" opacity="0.8" />
+                  <line x1="118" y1="80" x2="122" y2="68" stroke="#38bdf8" stroke-width="1.2" opacity="0.8" />
+                  <line x1="122" y1="68" x2="118.5" y2="54" stroke="#38bdf8" stroke-width="1.2" opacity="0.8" />
+                  <line x1="118.5" y1="54" x2="121.5" y2="42" stroke="#38bdf8" stroke-width="1.2" opacity="0.8" />
+
+                  <!-- Central Guide Core Ray -->
+                  <line x1="120" y1="112" x2="120" y2="34" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
+
+                  <!-- Jib Tip Directional Arrowhead -->
+                  <polygon points="120,24 113,38 127,38" fill="#00f0ff" />
+                  <circle cx="120" cy="27" r="2.5" fill="#ffffff" />
+
+                  <!-- Rear Counter-Jib Structure -->
+                  <line x1="118" y1="126" x2="118" y2="164" stroke="#64748b" stroke-width="2" />
+                  <line x1="122" y1="126" x2="122" y2="164" stroke="#64748b" stroke-width="2" />
+                  <line x1="118" y1="145" x2="122" y2="145" stroke="#94a3b8" stroke-width="1.5" />
+
+                  <!-- Ballast Counterweight Block -->
+                  <rect x="110" y="156" width="20" height="15" rx="3" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5" />
+                  <!-- Hazard Stripes on Ballast -->
+                  <line x1="113" y1="168" x2="118" y2="158" stroke="#f59e0b" stroke-width="2" />
+                  <line x1="122" y1="168" x2="127" y2="158" stroke="#f59e0b" stroke-width="2" />
+
+                  <!-- Central Slewing Ring & Turret Hub -->
+                  <circle cx="120" cy="120" r="13" fill="#0b1120" stroke="#00f0ff" stroke-width="2.5" />
+                  <circle cx="120" cy="120" r="8" fill="#1e293b" stroke="#ffffff" stroke-width="1.5" />
+                  <circle cx="120" cy="120" r="3.5" fill="#00f0ff" />
                 </g>
               </svg>
             </div>
 
             <div class="heading-readout">
               <span class="heading-degrees" id="yawDegrees">20.9</span>
-              <span style="font-weight:900; font-size:22px; color:#475569;">°</span>
+              <span style="font-weight:900; font-size:24px; color:var(--accent);">°</span>
             </div>
             <div class="motion-indicator-tag" id="motionPill" style="background:rgba(239,68,68,0.15); color:var(--red);">
               STOPPED
@@ -1134,43 +1325,61 @@
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
                     <svg class="analog-meter-svg" viewBox="0 0 200 120">
-                      <!-- Bezel & Dial Face Plate -->
-                      <path d="M 20 108 A 80 80 0 0 1 180 108 L 168 116 L 32 116 Z" fill="rgba(255, 255, 255, 0.85)" stroke="#94a3b8" stroke-width="1.5" />
-                      <!-- Scale Track -->
-                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(2, 132, 199, 0.15)" stroke-width="9" stroke-linecap="round" />
-                      <!-- Normal Zone (11V-14V) -->
-                      <path d="M 94 33.2 A 72 72 0 0 1 120 35.8" fill="none" stroke="#0284c7" stroke-width="9" />
+                      <!-- Bevel & Dial Face Plate -->
+                      <path d="M 14 108 A 86 86 0 0 1 186 108 L 176 116 L 24 116 Z" fill="url(#meterFacePlateDark)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2" />
+                      <path d="M 20 106 A 80 80 0 0 1 180 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="2.5" />
+                      <!-- Scale Track Background Groove -->
+                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="9" stroke-linecap="round" />
                       
-                      <!-- Graduation Numbers along Arc -->
-                      <text x="40" y="102" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">0</text>
-                      <text x="58" y="66" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">6</text>
-                      <text x="100" y="49" font-size="9" font-weight="800" fill="#0284c7" text-anchor="middle">12</text>
-                      <text x="142" y="66" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">18</text>
-                      <text x="160" y="102" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">24</text>
-                      
+                      <!-- Calibrated Zones: Low Amber (0-10V), Safe Cyan (11-15V), Overvoltage Red (16-24V) -->
+                      <path d="M 28 105 A 72 72 0 0 1 64 42.6" fill="none" stroke="rgba(245, 158, 11, 0.55)" stroke-width="8" stroke-linecap="round" />
+                      <path d="M 90.6 33.6 A 72 72 0 0 1 127.6 38.5" fill="none" stroke="#00f0ff" stroke-width="9" filter="url(#neonVolt)" stroke-linecap="round" />
+                      <path d="M 136 42.6 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(239, 68, 68, 0.65)" stroke-width="8" stroke-linecap="round" />
+
                       <!-- Major Calibration Ticks -->
-                      <line x1="28" y1="105" x2="35" y2="105" stroke="#0284c7" stroke-width="2.5" />
-                      <line x1="49.1" y1="54.1" x2="54" y2="59" stroke="#0284c7" stroke-width="2" />
-                      <line x1="100" y1="33" x2="100" y2="40" stroke="#0284c7" stroke-width="2.5" />
-                      <line x1="150.9" y1="54.1" x2="146" y2="59" stroke="#0284c7" stroke-width="2" />
-                      <line x1="172" y1="105" x2="165" y2="105" stroke="#0284c7" stroke-width="2.5" />
-                      
+                      <!-- 0V -->
+                      <line x1="28" y1="105" x2="36" y2="105" stroke="#38bdf8" stroke-width="2.5" />
+                      <!-- 6V -->
+                      <line x1="49.1" y1="54.1" x2="54.8" y2="59.8" stroke="#38bdf8" stroke-width="2" />
+                      <!-- 12V (Center Target) -->
+                      <line x1="100" y1="33" x2="100" y2="42" stroke="#00f0ff" stroke-width="3" filter="url(#neonVolt)" />
+                      <!-- 18V -->
+                      <line x1="150.9" y1="54.1" x2="145.2" y2="59.8" stroke="#38bdf8" stroke-width="2" />
+                      <!-- 24V -->
+                      <line x1="172" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="2.5" />
+
                       <!-- Minor Ticks -->
-                      <line x1="33.5" y1="76.4" x2="38" y2="80" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="72.4" y1="38.5" x2="75" y2="44" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="127.6" y1="38.5" x2="125" y2="44" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="166.5" y1="76.4" x2="162" y2="80" stroke="#94a3b8" stroke-width="1.2" />
+                      <line x1="33.5" y1="76.4" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="72.4" y1="38.5" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="127.6" y1="38.5" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="166.5" y1="76.4" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+
+                      <!-- Graduation Numbers along Arc -->
+                      <text x="42" y="101" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">0</text>
+                      <text x="59" y="67" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">6</text>
+                      <text x="100" y="52" font-size="10" font-weight="900" fill="#00f0ff" text-anchor="middle">12V</text>
+                      <text x="141" y="67" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">18</text>
+                      <text x="158" y="101" font-size="9" font-weight="800" fill="#f87171" text-anchor="middle">24</text>
 
                       <!-- Instrument Calibration Stamp -->
-                      <text x="100" y="74" text-anchor="middle" font-size="8.5" font-weight="900" fill="#0284c7" letter-spacing="1">VOLTS DC</text>
+                      <text x="100" y="73" text-anchor="middle" font-size="8.5" font-weight="900" fill="#38bdf8" letter-spacing="1.2">VOLTS DC</text>
+                      <text x="100" y="83" text-anchor="middle" font-size="6.5" font-weight="700" fill="#64748b" letter-spacing="0.8">INA226 BUS MONITOR</text>
 
                       <!-- Rotating Indicator Needle (Pivot at 100, 105) -->
                       <g class="gauge-needle" id="needleVoltage" style="transform-origin: 100px 105px; transform: rotate(2.8deg);">
-                        <line x1="100" y1="105" x2="100" y2="114" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
-                        <polygon points="98.5,105 101.5,105 100.5,36 99.5,36" fill="#0284c7" />
-                        <polygon points="100,28 98,36 102,36" fill="#f97316" />
-                        <circle cx="100" cy="105" r="6" fill="#0f172a" stroke="#ffffff" stroke-width="2" />
-                        <circle cx="100" cy="105" r="2" fill="#f97316" />
+                        <!-- Counterweight Tail -->
+                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                        <circle cx="100" cy="114" r="2" fill="#334155" />
+                        <!-- Tapered Blade -->
+                        <polygon points="98.5,105 101.5,105 100.8,32 99.2,32" fill="url(#needleBladeVolt)" filter="url(#neonVolt)" />
+                        <!-- Spine Highlight -->
+                        <line x1="100" y1="103" x2="100" y2="28" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
+                        <!-- Arrowhead Tip -->
+                        <polygon points="100,24 97.2,33 102.8,33" fill="#00f0ff" filter="url(#neonVolt)" />
+                        <!-- CNC Pivot Hub -->
+                        <circle cx="100" cy="105" r="7" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
+                        <circle cx="100" cy="105" r="4" fill="#0f172a" />
+                        <circle cx="100" cy="105" r="2" fill="#00f0ff" />
                       </g>
                     </svg>
                   </div>
@@ -1193,42 +1402,48 @@
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
                     <svg class="analog-meter-svg" viewBox="0 0 200 120">
-                      <!-- Bezel & Dial Face Plate -->
-                      <path d="M 20 108 A 80 80 0 0 1 180 108 L 168 116 L 32 116 Z" fill="rgba(255, 255, 255, 0.85)" stroke="#94a3b8" stroke-width="1.5" />
-                      <!-- Scale Track -->
-                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(5, 150, 105, 0.15)" stroke-width="9" stroke-linecap="round" />
-                      <!-- Active Flow Zone -->
-                      <path d="M 28 105 A 72 72 0 0 1 72.4 38.5" fill="none" stroke="#059669" stroke-width="9" />
+                      <path d="M 14 108 A 86 86 0 0 1 186 108 L 176 116 L 24 116 Z" fill="url(#meterFacePlateDark)" stroke="rgba(52, 211, 153, 0.25)" stroke-width="1.2" />
+                      <path d="M 20 106 A 80 80 0 0 1 180 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="2.5" />
+                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="9" stroke-linecap="round" />
                       
-                      <!-- Graduation Numbers along Arc -->
-                      <text x="40" y="102" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">0</text>
-                      <text x="56" y="66" font-size="8.5" font-weight="800" fill="#475569" text-anchor="middle">125</text>
-                      <text x="100" y="49" font-size="8.5" font-weight="800" fill="#059669" text-anchor="middle">250</text>
-                      <text x="144" y="66" font-size="8.5" font-weight="800" fill="#475569" text-anchor="middle">375</text>
-                      <text x="160" y="102" font-size="8.5" font-weight="800" fill="#475569" text-anchor="middle">500</text>
-                      
-                      <!-- Major Calibration Ticks -->
-                      <line x1="28" y1="105" x2="35" y2="105" stroke="#059669" stroke-width="2.5" />
-                      <line x1="49.1" y1="54.1" x2="54" y2="59" stroke="#059669" stroke-width="2" />
-                      <line x1="100" y1="33" x2="100" y2="40" stroke="#059669" stroke-width="2.5" />
-                      <line x1="150.9" y1="54.1" x2="146" y2="59" stroke="#059669" stroke-width="2" />
-                      <line x1="172" y1="105" x2="165" y2="105" stroke="#059669" stroke-width="2.5" />
-                      
+                      <!-- Calibrated Zones: Normal 0-250mA (Green), High 250-375mA (Amber), Stall 375-500mA (Red) -->
+                      <path d="M 28 105 A 72 72 0 0 1 100 33" fill="none" stroke="#10b981" stroke-width="9" filter="url(#neonAmp)" stroke-linecap="round" />
+                      <path d="M 100 33 A 72 72 0 0 1 150.9 54.1" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="8" />
+                      <path d="M 150.9 54.1 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="8" stroke-linecap="round" />
+
+                      <!-- Major Ticks -->
+                      <line x1="28" y1="105" x2="36" y2="105" stroke="#34d399" stroke-width="2.5" />
+                      <line x1="49.1" y1="54.1" x2="54.8" y2="59.8" stroke="#34d399" stroke-width="2" />
+                      <line x1="100" y1="33" x2="100" y2="42" stroke="#10b981" stroke-width="3" filter="url(#neonAmp)" />
+                      <line x1="150.9" y1="54.1" x2="145.2" y2="59.8" stroke="#f59e0b" stroke-width="2" />
+                      <line x1="172" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="2.5" />
+
                       <!-- Minor Ticks -->
-                      <line x1="33.5" y1="76.4" x2="38" y2="80" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="72.4" y1="38.5" x2="75" y2="44" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="127.6" y1="38.5" x2="125" y2="44" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="166.5" y1="76.4" x2="162" y2="80" stroke="#94a3b8" stroke-width="1.2" />
+                      <line x1="33.5" y1="76.4" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="72.4" y1="38.5" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="127.6" y1="38.5" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="166.5" y1="76.4" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
 
-                      <!-- Instrument Calibration Stamp -->
-                      <text x="100" y="74" text-anchor="middle" font-size="8.5" font-weight="900" fill="#059669" letter-spacing="1">MILLIAMPERES</text>
+                      <!-- Graduation Numbers along Arc -->
+                      <text x="42" y="101" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">0</text>
+                      <text x="58" y="67" font-size="8.5" font-weight="800" fill="#94a3b8" text-anchor="middle">125</text>
+                      <text x="100" y="52" font-size="9.5" font-weight="900" fill="#34d399" text-anchor="middle">250</text>
+                      <text x="142" y="67" font-size="8.5" font-weight="800" fill="#f59e0b" text-anchor="middle">375</text>
+                      <text x="158" y="101" font-size="8.5" font-weight="800" fill="#f87171" text-anchor="middle">500</text>
 
-                      <!-- Rotating Indicator Needle (Pivot at 100, 105) -->
+                      <!-- Calibration Stamp -->
+                      <text x="100" y="73" text-anchor="middle" font-size="8.5" font-weight="900" fill="#34d399" letter-spacing="1.2">MILLIAMPERES</text>
+                      <text x="100" y="83" text-anchor="middle" font-size="6.5" font-weight="700" fill="#64748b" letter-spacing="0.8">ACTIVE MOTOR &amp; LOGIC</text>
+
+                      <!-- Rotating Needle -->
                       <g class="gauge-needle" id="needleCurrent" style="transform-origin: 100px 105px; transform: rotate(-90deg);">
-                        <line x1="100" y1="105" x2="100" y2="114" stroke="#059669" stroke-width="3" stroke-linecap="round" />
-                        <polygon points="98.5,105 101.5,105 100.5,36 99.5,36" fill="#059669" />
-                        <polygon points="100,28 98,36 102,36" fill="#10b981" />
-                        <circle cx="100" cy="105" r="6" fill="#0f172a" stroke="#ffffff" stroke-width="2" />
+                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                        <circle cx="100" cy="114" r="2" fill="#334155" />
+                        <polygon points="98.5,105 101.5,105 100.8,32 99.2,32" fill="url(#needleBladeAmp)" filter="url(#neonAmp)" />
+                        <line x1="100" y1="103" x2="100" y2="28" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
+                        <polygon points="100,24 97.2,33 102.8,33" fill="#10b981" filter="url(#neonAmp)" />
+                        <circle cx="100" cy="105" r="7" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
+                        <circle cx="100" cy="105" r="4" fill="#0f172a" />
                         <circle cx="100" cy="105" r="2" fill="#10b981" />
                       </g>
                     </svg>
@@ -1239,7 +1454,7 @@
                     <span id="valCurrent">0</span>
                     <span class="metric-unit">mA</span>
                   </div>
-                  <div class="metric-hint">Active Motor & Logic Current</div>
+                  <div class="metric-hint">Active Motor &amp; Logic Current</div>
                 </div>
               </div>
 
@@ -1252,42 +1467,48 @@
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
                     <svg class="analog-meter-svg" viewBox="0 0 200 120">
-                      <!-- Bezel & Dial Face Plate -->
-                      <path d="M 20 108 A 80 80 0 0 1 180 108 L 168 116 L 32 116 Z" fill="rgba(255, 255, 255, 0.85)" stroke="#94a3b8" stroke-width="1.5" />
-                      <!-- Scale Track -->
-                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(124, 58, 237, 0.15)" stroke-width="9" stroke-linecap="round" />
-                      <!-- Active Power Zone -->
-                      <path d="M 28 105 A 72 72 0 0 1 100 33" fill="none" stroke="#7c3aed" stroke-width="9" />
+                      <path d="M 14 108 A 86 86 0 0 1 186 108 L 176 116 L 24 116 Z" fill="url(#meterFacePlateDark)" stroke="rgba(167, 139, 250, 0.25)" stroke-width="1.2" />
+                      <path d="M 20 106 A 80 80 0 0 1 180 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="2.5" />
+                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="9" stroke-linecap="round" />
                       
-                      <!-- Graduation Numbers along Arc -->
-                      <text x="40" y="102" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">0</text>
-                      <text x="56" y="66" font-size="8.5" font-weight="800" fill="#475569" text-anchor="middle">500</text>
-                      <text x="100" y="49" font-size="8.5" font-weight="800" fill="#7c3aed" text-anchor="middle">1000</text>
-                      <text x="144" y="66" font-size="8.5" font-weight="800" fill="#475569" text-anchor="middle">1500</text>
-                      <text x="160" y="102" font-size="8.5" font-weight="800" fill="#475569" text-anchor="middle">2000</text>
-                      
-                      <!-- Major Calibration Ticks -->
-                      <line x1="28" y1="105" x2="35" y2="105" stroke="#7c3aed" stroke-width="2.5" />
-                      <line x1="49.1" y1="54.1" x2="54" y2="59" stroke="#7c3aed" stroke-width="2" />
-                      <line x1="100" y1="33" x2="100" y2="40" stroke="#7c3aed" stroke-width="2.5" />
-                      <line x1="150.9" y1="54.1" x2="146" y2="59" stroke="#7c3aed" stroke-width="2" />
-                      <line x1="172" y1="105" x2="165" y2="105" stroke="#7c3aed" stroke-width="2.5" />
-                      
+                      <!-- Calibrated Zones: 0-1000mW (Purple), 1000-1500mW (Magenta), 1500-2000mW (Red) -->
+                      <path d="M 28 105 A 72 72 0 0 1 100 33" fill="none" stroke="#c084fc" stroke-width="9" filter="url(#neonWatt)" stroke-linecap="round" />
+                      <path d="M 100 33 A 72 72 0 0 1 150.9 54.1" fill="none" stroke="rgba(217, 70, 239, 0.75)" stroke-width="8" />
+                      <path d="M 150.9 54.1 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="8" stroke-linecap="round" />
+
+                      <!-- Major Ticks -->
+                      <line x1="28" y1="105" x2="36" y2="105" stroke="#c084fc" stroke-width="2.5" />
+                      <line x1="49.1" y1="54.1" x2="54.8" y2="59.8" stroke="#c084fc" stroke-width="2" />
+                      <line x1="100" y1="33" x2="100" y2="42" stroke="#c084fc" stroke-width="3" filter="url(#neonWatt)" />
+                      <line x1="150.9" y1="54.1" x2="145.2" y2="59.8" stroke="#d946ef" stroke-width="2" />
+                      <line x1="172" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="2.5" />
+
                       <!-- Minor Ticks -->
-                      <line x1="33.5" y1="76.4" x2="38" y2="80" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="72.4" y1="38.5" x2="75" y2="44" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="127.6" y1="38.5" x2="125" y2="44" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="166.5" y1="76.4" x2="162" y2="80" stroke="#94a3b8" stroke-width="1.2" />
+                      <line x1="33.5" y1="76.4" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="72.4" y1="38.5" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="127.6" y1="38.5" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="166.5" y1="76.4" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
 
-                      <!-- Instrument Calibration Stamp -->
-                      <text x="100" y="74" text-anchor="middle" font-size="8.5" font-weight="900" fill="#7c3aed" letter-spacing="1">MILLIWATTS</text>
+                      <!-- Graduation Numbers along Arc -->
+                      <text x="42" y="101" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">0</text>
+                      <text x="58" y="67" font-size="8.5" font-weight="800" fill="#94a3b8" text-anchor="middle">500</text>
+                      <text x="100" y="52" font-size="9.5" font-weight="900" fill="#c084fc" text-anchor="middle">1000</text>
+                      <text x="142" y="67" font-size="8.5" font-weight="800" fill="#d946ef" text-anchor="middle">1500</text>
+                      <text x="158" y="101" font-size="8.5" font-weight="800" fill="#f87171" text-anchor="middle">2000</text>
 
-                      <!-- Rotating Indicator Needle (Pivot at 100, 105) -->
+                      <!-- Calibration Stamp -->
+                      <text x="100" y="73" text-anchor="middle" font-size="8.5" font-weight="900" fill="#c084fc" letter-spacing="1.2">MILLIWATTS</text>
+                      <text x="100" y="83" text-anchor="middle" font-size="6.5" font-weight="700" fill="#64748b" letter-spacing="0.8">REAL-TIME POWER CONSUMPTION</text>
+
+                      <!-- Rotating Needle -->
                       <g class="gauge-needle" id="needlePower" style="transform-origin: 100px 105px; transform: rotate(-90deg);">
-                        <line x1="100" y1="105" x2="100" y2="114" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" />
-                        <polygon points="98.5,105 101.5,105 100.5,36 99.5,36" fill="#7c3aed" />
-                        <polygon points="100,28 98,36 102,36" fill="#c084fc" />
-                        <circle cx="100" cy="105" r="6" fill="#0f172a" stroke="#ffffff" stroke-width="2" />
+                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                        <circle cx="100" cy="114" r="2" fill="#334155" />
+                        <polygon points="98.5,105 101.5,105 100.8,32 99.2,32" fill="url(#needleBladeWatt)" filter="url(#neonWatt)" />
+                        <line x1="100" y1="103" x2="100" y2="28" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
+                        <polygon points="100,24 97.2,33 102.8,33" fill="#c084fc" filter="url(#neonWatt)" />
+                        <circle cx="100" cy="105" r="7" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
+                        <circle cx="100" cy="105" r="4" fill="#0f172a" />
                         <circle cx="100" cy="105" r="2" fill="#c084fc" />
                       </g>
                     </svg>
@@ -1311,43 +1532,51 @@
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
                     <svg class="analog-meter-svg" viewBox="0 0 200 120">
-                      <!-- Bezel & Dial Face Plate -->
-                      <path d="M 20 108 A 80 80 0 0 1 180 108 L 168 116 L 32 116 Z" fill="rgba(255, 255, 255, 0.85)" stroke="#94a3b8" stroke-width="1.5" />
-                      <!-- Scale Track -->
-                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(225, 29, 72, 0.15)" stroke-width="9" stroke-linecap="round" />
-                      <!-- Center Level Safety Zone (-1.5° to +1.5°) -->
-                      <path d="M 80 34.5 A 72 72 0 0 1 120 34.5" fill="none" stroke="#10b981" stroke-width="9" />
+                      <path d="M 14 108 A 86 86 0 0 1 186 108 L 176 116 L 24 116 Z" fill="url(#meterFacePlateDark)" stroke="rgba(251, 113, 133, 0.25)" stroke-width="1.2" />
+                      <path d="M 20 106 A 80 80 0 0 1 180 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="2.5" />
+                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="9" stroke-linecap="round" />
                       
-                      <!-- Graduation Numbers along Arc -->
-                      <text x="40" y="102" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">-4°</text>
-                      <text x="58" y="66" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">-2°</text>
-                      <text x="100" y="49" font-size="9" font-weight="900" fill="#10b981" text-anchor="middle">0°</text>
-                      <text x="142" y="66" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">+2°</text>
-                      <text x="160" y="102" font-size="9" font-weight="800" fill="#475569" text-anchor="middle">+4°</text>
-                      
-                      <!-- Major Calibration Ticks -->
-                      <line x1="28" y1="105" x2="35" y2="105" stroke="#e11d48" stroke-width="2.5" />
-                      <line x1="49.1" y1="54.1" x2="54" y2="59" stroke="#e11d48" stroke-width="2" />
-                      <line x1="100" y1="33" x2="100" y2="40" stroke="#10b981" stroke-width="3" />
-                      <line x1="150.9" y1="54.1" x2="146" y2="59" stroke="#e11d48" stroke-width="2" />
-                      <line x1="172" y1="105" x2="165" y2="105" stroke="#e11d48" stroke-width="2.5" />
-                      
+                      <!-- Calibrated Zones: Alarm Left (<-2.5°), Caution Left (-2.5 to -1°), Level Safe (-1° to +1° Green), Caution Right (+1 to +2.5°), Alarm Right (>+2.5°) -->
+                      <path d="M 28 105 A 72 72 0 0 1 40.1 65" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="8" stroke-linecap="round" />
+                      <path d="M 40.1 65 A 72 72 0 0 1 72.4 38.5" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="8" />
+                      <path d="M 72.4 38.5 A 72 72 0 0 1 127.6 38.5" fill="none" stroke="#10b981" stroke-width="9" filter="url(#neonAmp)" stroke-linecap="round" />
+                      <path d="M 127.6 38.5 A 72 72 0 0 1 159.9 65" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="8" />
+                      <path d="M 159.9 65 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="8" stroke-linecap="round" />
+
+                      <!-- Major Ticks -->
+                      <line x1="28" y1="105" x2="36" y2="105" stroke="#ef4444" stroke-width="2.5" />
+                      <line x1="49.1" y1="54.1" x2="54.8" y2="59.8" stroke="#f59e0b" stroke-width="2" />
+                      <line x1="100" y1="33" x2="100" y2="42" stroke="#10b981" stroke-width="3.2" filter="url(#neonAmp)" />
+                      <line x1="150.9" y1="54.1" x2="145.2" y2="59.8" stroke="#f59e0b" stroke-width="2" />
+                      <line x1="172" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="2.5" />
+
                       <!-- Minor Ticks -->
-                      <line x1="33.5" y1="76.4" x2="38" y2="80" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="72.4" y1="38.5" x2="75" y2="44" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="127.6" y1="38.5" x2="125" y2="44" stroke="#94a3b8" stroke-width="1.2" />
-                      <line x1="166.5" y1="76.4" x2="162" y2="80" stroke="#94a3b8" stroke-width="1.2" />
+                      <line x1="33.5" y1="76.4" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="72.4" y1="38.5" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="127.6" y1="38.5" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="166.5" y1="76.4" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
 
-                      <!-- Instrument Calibration Stamp -->
-                      <text x="100" y="74" text-anchor="middle" font-size="8.5" font-weight="900" fill="#e11d48" letter-spacing="1">BOOM INCLINE</text>
+                      <!-- Graduation Numbers along Arc -->
+                      <text x="42" y="101" font-size="9" font-weight="800" fill="#f87171" text-anchor="middle">-4°</text>
+                      <text x="58" y="67" font-size="8.5" font-weight="800" fill="#f59e0b" text-anchor="middle">-2°</text>
+                      <text x="100" y="52" font-size="9.5" font-weight="900" fill="#34d399" text-anchor="middle">0° LEVEL</text>
+                      <text x="142" y="67" font-size="8.5" font-weight="800" fill="#f59e0b" text-anchor="middle">+2°</text>
+                      <text x="158" y="101" font-size="8.5" font-weight="800" fill="#f87171" text-anchor="middle">+4°</text>
 
-                      <!-- Rotating Indicator Needle (Pivot at 100, 105) -->
+                      <!-- Calibration Stamp -->
+                      <text x="100" y="73" text-anchor="middle" font-size="8.5" font-weight="900" fill="#fb7185" letter-spacing="1.2">BOOM INCLINE</text>
+                      <text x="100" y="83" text-anchor="middle" font-size="6.5" font-weight="700" fill="#64748b" letter-spacing="0.8">MPU6500 DUAL-AXIS</text>
+
+                      <!-- Rotating Needle -->
                       <g class="gauge-needle" id="needleDeflection" style="transform-origin: 100px 105px; transform: rotate(24deg);">
-                        <line x1="100" y1="105" x2="100" y2="114" stroke="#e11d48" stroke-width="3" stroke-linecap="round" />
-                        <polygon points="98.5,105 101.5,105 100.5,36 99.5,36" fill="#e11d48" />
-                        <polygon points="100,28 98,36 102,36" fill="#f43f5e" />
-                        <circle cx="100" cy="105" r="6" fill="#0f172a" stroke="#ffffff" stroke-width="2" />
-                        <circle cx="100" cy="105" r="2" fill="#f43f5e" />
+                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
+                        <circle cx="100" cy="114" r="2" fill="#334155" />
+                        <polygon points="98.5,105 101.5,105 100.8,32 99.2,32" fill="url(#needleBladeIncline)" filter="url(#neonIncline)" />
+                        <line x1="100" y1="103" x2="100" y2="28" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
+                        <polygon points="100,24 97.2,33 102.8,33" fill="#fb7185" filter="url(#neonIncline)" />
+                        <circle cx="100" cy="105" r="7" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
+                        <circle cx="100" cy="105" r="4" fill="#0f172a" />
+                        <circle cx="100" cy="105" r="2" fill="#fb7185" />
                       </g>
                     </svg>
                   </div>
@@ -1704,19 +1933,33 @@
       });
 
       // =======================================================================
-      // THEME: CRYSTAL FROSTED GLASS HUD MODE (ZERO BLACKISH TINT)
+      // THEME: EXECUTIVE CYBER-INDUSTRIAL DARK HUD & CRISP DAYTIME MODE
       // =======================================================================
-      function applyTheme() {
-        document.documentElement.classList.remove("dark");
-        document.documentElement.classList.add("light");
-        localStorage.setItem("uc_theme", "light");
+      function applyTheme(theme) {
+        if (!theme) {
+          theme = localStorage.getItem("uc_theme") || "dark";
+        }
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(theme);
+        localStorage.setItem("uc_theme", theme);
+        const btn = $("themeToggle");
+        if (btn) {
+          btn.style.display = "inline-flex";
+          btn.textContent = theme === "dark" ? "☀️" : "🌙";
+          btn.title = theme === "dark" ? "Switch to Day Light Mode" : "Switch to Executive Dark Mode";
+        }
         if (typeof renderCharts === "function") {
           renderCharts();
         }
       }
       applyTheme();
       const themeToggle = $("themeToggle");
-      if (themeToggle) themeToggle.style.display = "none";
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const current = document.documentElement.classList.contains("dark") ? "dark" : "light";
+          applyTheme(current === "dark" ? "light" : "dark");
+        });
+      }
 
       // =======================================================================
       // UNIFIED ACTION DISPATCHER (SINGLE API ROUTE)
@@ -2141,50 +2384,79 @@
         ctx.scale(dpr, dpr);
         ctx.clearRect(0, 0, W, H);
 
+        const isDark = document.documentElement.classList.contains("dark");
+
         const values = rows
           .filter(r => r[key] !== null && r[key] !== undefined && r[key] !== "")
           .map(r => Number(r[key]))
           .filter(v => Number.isFinite(v));
+
         if (values.length < 2) {
-          ctx.fillStyle = "rgba(100, 116, 139, 0.6)";
-          ctx.font = "11px 'Plus Jakarta Sans', sans-serif";
+          ctx.fillStyle = isDark ? "rgba(148, 163, 184, 0.5)" : "rgba(100, 116, 139, 0.6)";
+          ctx.font = "600 12px 'Plus Jakarta Sans', sans-serif";
           ctx.textAlign = "center";
           ctx.fillText("Gathering historical data…", W / 2, H / 2);
           return;
         }
 
         const latest = values[values.length - 1];
-        if ($(statId)) $(statId).textContent = `${latest.toFixed(1)} ${unit}`;
-
         let min = Math.min(...values);
         let max = Math.max(...values);
+        const sum = values.reduce((a, b) => a + b, 0);
+        const avg = sum / values.length;
+
+        if ($(statId)) {
+          $(statId).innerHTML = `<strong>${latest.toFixed(1)} ${unit}</strong> <span style="opacity:0.65; font-size:10px; margin-left:4px;">(MIN: ${min.toFixed(1)} | MAX: ${max.toFixed(1)})</span>`;
+        }
+
         if (min === max) { min -= 1; max += 1; }
-        const pad = (max - min) * 0.12;
+        const pad = (max - min) * 0.15;
         min -= pad;
         max += pad;
         const range = max - min;
 
-        // Gridlines
-        const isDark = document.documentElement.classList.contains("dark");
-        ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(0, 0, 0, 0.06)";
-        ctx.lineWidth = 1;
-        for (let i = 1; i <= 3; i++) {
-          const y = (H / 4) * i;
-          ctx.beginPath();
-          ctx.moveTo(8, y);
-          ctx.lineTo(W - 8, y);
-          ctx.stroke();
-        }
+        // Margins for clean Y-Axis labels
+        const marginLeft = 38;
+        const marginRight = 12;
+        const marginTop = 12;
+        const marginBottom = 16;
+        const chartW = W - marginLeft - marginRight;
+        const chartH = H - marginTop - marginBottom;
 
-        const stepX = (W - 16) / (values.length - 1);
+        // Background subtle gridlines & Y-Axis values
+        ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.05)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 4]);
+
+        const steps = 4;
+        for (let i = 0; i <= steps; i++) {
+          const y = marginTop + (chartH / steps) * i;
+          ctx.beginPath();
+          ctx.moveTo(marginLeft, y);
+          ctx.lineTo(W - marginRight, y);
+          ctx.stroke();
+
+          // Y-axis value labels
+          const valAtY = max - (range / steps) * i;
+          ctx.fillStyle = isDark ? "#64748b" : "#94a3b8";
+          ctx.font = "700 8.5px 'JetBrains Mono', monospace";
+          ctx.textAlign = "right";
+          ctx.textBaseline = "middle";
+          ctx.fillText(valAtY.toFixed(1), marginLeft - 5, y);
+        }
+        ctx.setLineDash([]);
+
+        // Points mapping
+        const stepX = chartW / (values.length - 1);
         const points = values.map((v, i) => ({
-          x: 8 + i * stepX,
-          y: H - 12 - ((v - min) / range) * (H - 24)
+          x: marginLeft + i * stepX,
+          y: marginTop + (1 - (v - min) / range) * chartH
         }));
 
-        // Area Gradient Fill
-        const gradient = ctx.createLinearGradient(0, 0, 0, H);
-        gradient.addColorStop(0, strokeColor.replace("rgb", "rgba").replace(")", ", 0.28)"));
+        // Gradient Area Fill
+        const gradient = ctx.createLinearGradient(0, marginTop, 0, marginTop + chartH);
+        gradient.addColorStop(0, strokeColor.replace("rgb", "rgba").replace(")", ", 0.35)"));
+        gradient.addColorStop(0.6, strokeColor.replace("rgb", "rgba").replace(")", ", 0.10)"));
         gradient.addColorStop(1, strokeColor.replace("rgb", "rgba").replace(")", ", 0.0)"));
 
         ctx.beginPath();
@@ -2195,13 +2467,16 @@
           ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
         }
         ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
-        ctx.lineTo(points[points.length - 1].x, H);
-        ctx.lineTo(points[0].x, H);
+        ctx.lineTo(points[points.length - 1].x, marginTop + chartH);
+        ctx.lineTo(points[0].x, marginTop + chartH);
         ctx.closePath();
         ctx.fillStyle = gradient;
         ctx.fill();
 
-        // Stroke Line
+        // Stroke Pass 1: Neon Glow
+        ctx.save();
+        ctx.shadowColor = strokeColor;
+        ctx.shadowBlur = 12;
         ctx.beginPath();
         ctx.moveTo(points[0].x, points[0].y);
         for (let i = 0; i < points.length - 1; i++) {
@@ -2211,25 +2486,43 @@
         }
         ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
         ctx.strokeStyle = strokeColor;
-        ctx.lineWidth = 2.4;
+        ctx.lineWidth = 2.8;
+        ctx.stroke();
+        ctx.restore();
+
+        // Stroke Pass 2: Bright Centerline Core
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 0; i < points.length - 1; i++) {
+          const xc = (points[i].x + points[i + 1].x) / 2;
+          const yc = (points[i].y + points[i + 1].y) / 2;
+          ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        }
+        ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+        ctx.strokeStyle = isDark ? "#ffffff" : strokeColor;
+        ctx.lineWidth = 1.3;
         ctx.stroke();
 
-        // End Dot
+        // Latest Data Point Beacon Dot
         const last = points[points.length - 1];
+        // Pulsing outer ripple ring
+        ctx.beginPath();
+        ctx.arc(last.x, last.y, 6.5, 0, Math.PI * 2);
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        // Inner glowing core
         ctx.beginPath();
         ctx.arc(last.x, last.y, 3.5, 0, Math.PI * 2);
         ctx.fillStyle = "#ffffff";
         ctx.fill();
-        ctx.strokeStyle = strokeColor;
-        ctx.lineWidth = 2;
-        ctx.stroke();
       }
 
       function renderCharts() {
         if (!historyCache || !historyCache.length) return;
-        drawCanvasGraph("chartPower", historyCache, "power_mW", "rgb(8, 145, 178)", "powerStat", "mW");
-        drawCanvasGraph("chartYaw", historyCache, "jib_yaw_deg", "rgb(124, 58, 237)", "yawStat", "°");
-        drawCanvasGraph("chartDeflection", historyCache, "jib_deflection_deg", "rgb(225, 29, 72)", "deflectionStat", "°");
+        drawCanvasGraph("chartPower", historyCache, "power_mW", "rgb(56, 189, 248)", "powerStat", "mW");
+        drawCanvasGraph("chartYaw", historyCache, "jib_yaw_deg", "rgb(168, 85, 247)", "yawStat", "°");
+        drawCanvasGraph("chartDeflection", historyCache, "jib_deflection_deg", "rgb(251, 113, 133)", "deflectionStat", "°");
       }
 
       async function loadHistoryData() {
