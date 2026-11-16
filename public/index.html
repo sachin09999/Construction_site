@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Under Construction | Crane Digital Twin</title>
+  <title>Under Construction Site Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -1339,18 +1339,7 @@
       <div class="brand">
         <div class="brand-icon">🏗️</div>
         <div class="brand-title">
-          <span>Under Construction</span>
-          <span style="color:var(--text-dim); font-weight:400;">/</span>
-          <span>Crane Digital Twin</span>
-          <span class="brand-tag">v2.0 Live</span>
-        </div>
-      </div>
-
-      <div class="header-actions">
-        <!-- ESP32 Status Only (Uncluttered Executive Header) -->
-        <div class="status-pill status-pill-esp32">
-          <span class="pulse-dot" id="esp32Dot"></span>
-          <span id="esp32StatusText">ESP32 Online</span>
+          <span>Under Construction Site Dashboard</span>
         </div>
       </div>
     </header>
@@ -1380,14 +1369,6 @@
         <span class="tab-label">Telemetry Curves</span>
         <span class="tab-chip chip-streams">3 CHANNELS</span>
       </button>
-
-      <button class="tab-btn" role="tab" id="btn-tab-diagnostics" data-tab="tab-diagnostics" aria-selected="false" aria-controls="tab-diagnostics">
-        <span class="tab-icon">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </span>
-        <span class="tab-label">System Diagnostics</span>
-        <span class="tab-chip chip-ok" id="tabDiagStatus">ALL OK</span>
-      </button>
     </nav>
 
     <!-- VIEWPORT CONTENT AREA -->
@@ -1403,7 +1384,6 @@
           <div class="card compass-card">
             <div class="card-head" style="width:100%;">
               <div class="card-title">🧭 Jib Azimuth Heading</div>
-              <span class="badge" id="deflectionBadge">1.07° Tilt</span>
             </div>
 
             <div class="compass-stage">
@@ -1579,7 +1559,6 @@
               <div class="card metric-card card-blue">
                 <div class="metric-header">
                   <span class="metric-title">⚡ VOLTMETER</span>
-                  <span class="badge" id="valVoltageBadge">12.38 V</span>
                 </div>
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
@@ -1642,7 +1621,6 @@
               <div class="card metric-card card-green">
                 <div class="metric-header">
                   <span class="metric-title">🔋 AMMETER</span>
-                  <span class="badge" id="valCurrentBadge">0 mA</span>
                 </div>
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
@@ -1705,7 +1683,6 @@
               <div class="card metric-card card-purple">
                 <div class="metric-header">
                   <span class="metric-title">💡 WATTMETER</span>
-                  <span class="badge" id="valPowerBadge">0 mW</span>
                 </div>
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
@@ -1768,7 +1745,6 @@
               <div class="card metric-card card-pink">
                 <div class="metric-header">
                   <span class="metric-title">📐 INCLINOMETER</span>
-                  <span class="badge" id="valDeflectionBadge">1.07° Tilt</span>
                 </div>
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
@@ -2092,97 +2068,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- ===================================================================
-           TAB 4: SYSTEM DIAGNOSTICS & HARDWARE MATRIX
-           =================================================================== -->
-      <div class="tab-pane" id="tab-diagnostics">
-        <div class="diag-layout">
-
-          <!-- Hardware Sensor Health List -->
-          <div class="card card-green diag-list">
-            <div class="card-head">
-              <div class="card-title">🩺 Hardware Sensor Matrix</div>
-              <span class="badge">I2C BUS</span>
-            </div>
-
-            <div class="diag-row">
-              <div>
-                <strong style="font-size:12px;">MPU6500 IMU</strong>
-                <small style="display:block; color:var(--text-muted); font-size:10px;">Boom Pitch, Roll & Deflection</small>
-              </div>
-              <span class="status-badge ok" id="chipMpu">OK</span>
-            </div>
-
-            <div class="diag-row">
-              <div>
-                <strong style="font-size:12px;">QMC5883L Magnetometer</strong>
-                <small style="display:block; color:var(--text-muted); font-size:10px;">Slew Compass Azimuth (0–360°)</small>
-              </div>
-              <span class="status-badge ok" id="chipMag">OK</span>
-            </div>
-
-            <div class="diag-row">
-              <div>
-                <strong style="font-size:12px;">INA226 Power Monitor</strong>
-                <small style="display:block; color:var(--text-muted); font-size:10px;">Bus Voltage, Current Shunt & Power</small>
-              </div>
-              <span class="status-badge ok" id="chipIna">OK</span>
-            </div>
-
-            <div class="diag-row">
-              <div>
-                <strong style="font-size:12px;">ESP32 Controller</strong>
-                <small style="display:block; color:var(--text-muted); font-size:10px;">Physical LAN Network Link</small>
-              </div>
-              <span class="status-badge ok" id="chipEsp">ONLINE</span>
-            </div>
-          </div>
-
-          <!-- Digital Twin Architecture Services -->
-          <div class="card service-info-panel">
-            <div class="card-head">
-              <div class="card-title">🌐 Digital Twin Services Status</div>
-              <span class="badge">DOCKER ENGINE</span>
-            </div>
-
-            <div class="service-item-row">
-              <span>Mosquitto MQTT Broker:</span>
-              <strong>mqtt://mosquitto:1883 (QoS 1)</strong>
-            </div>
-
-            <div class="service-item-row">
-              <span>ThingsBoard Gateway:</span>
-              <strong>allcad-chennai.selfip.com:8081</strong>
-            </div>
-
-            <div class="service-item-row">
-              <span>Dual WebSocket Pipeline:</span>
-              <strong>ws://${window.location.host}/ws (Active)</strong>
-            </div>
-
-            <div class="service-item-row">
-              <span>SQLite Telemetry Database:</span>
-              <strong>WAL Mode (underconstruction_model.db)</strong>
-            </div>
-
-            <div class="service-item-row">
-              <span>Physical Crane LAN IP:</span>
-              <strong>http://10.10.12.63</strong>
-            </div>
-          </div>
-
-          <!-- Standalone Hardware Diagnostics Hub Link Card -->
-          <div class="card" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(30, 41, 59, 0.7) 100%); border: 1px solid rgba(56, 189, 248, 0.4); display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-radius: 8px;">
-            <div>
-              <div style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">🛠️ Dedicated Hardware & Network Diagnostics Page</div>
-              <div style="font-size: 12px; color: var(--text-muted);">Inspect live rolling sensor logs, ping ESP32, scan 10.10.12.x subnet, and test actuator dispatches with instant millisecond latency trace.</div>
-            </div>
-            <a href="/diag" target="_blank" style="background:#0284c7; color:#fff; border:1px solid #38bdf8; font-weight:700; text-decoration:none; padding:10px 18px; border-radius:6px; white-space:nowrap; display:inline-flex; align-items:center; gap:6px;">Open Diagnostics Hub (/diag) ↗</a>
-          </div>
-
         </div>
       </div>
 
