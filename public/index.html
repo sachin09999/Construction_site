@@ -1601,16 +1601,12 @@
       "use strict";
 
       const API = (() => {
-        const p = window.location.port;
-        if (p === "4000" || p === "4001") return window.location.origin;
         const host = window.location.hostname || "10.10.12.67";
         return `${window.location.protocol === "https:" ? "https:" : "http:"}//${host}:4000`;
       })();
 
       const WS_URL = (() => {
         const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-        const p = window.location.port;
-        if (p === "4000" || p === "4001") return `${proto}//${window.location.host}/ws`;
         const host = window.location.hostname || "10.10.12.67";
         return `${proto}//${host}:4000/ws`;
       })();
