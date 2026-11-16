@@ -460,20 +460,20 @@
       flex-shrink: 0;
     }
     .card-title {
-      font-size: 13px !important;
-      font-weight: 800 !important;
+      font-size: 14px !important;
+      font-weight: 900 !important;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text) !important;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
     }
     .badge {
-      font-size: 11px !important;
+      font-size: 13px !important;
       font-weight: 800 !important;
-      padding: 3px 9px !important;
-      border-radius: 6px;
+      padding: 4px 12px !important;
+      border-radius: 7px;
       background: rgba(255, 255, 255, 0.08);
       color: var(--text);
       border: 1px solid var(--line);
@@ -490,8 +490,8 @@
       width: 100%;
       height: 100%;
       display: grid;
-      grid-template-columns: 330px 1fr;
-      gap: 11px;
+      grid-template-columns: 360px 1fr;
+      gap: 12px;
     }
 
     /* Left Jib Compass Stage */
@@ -500,12 +500,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
+      padding: 16px 18px;
     }
     .compass-stage {
       position: relative;
-      width: 235px;
-      height: 235px;
+      width: 270px;
+      height: 270px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -521,49 +521,67 @@
       display: flex;
       align-items: baseline;
       justify-content: center;
-      gap: 5px;
+      gap: 6px;
     }
     .heading-degrees {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 42px !important;
+      font-size: 54px !important;
       font-weight: 900 !important;
       letter-spacing: -0.04em;
       line-height: 1;
       color: var(--text);
-      text-shadow: 0 0 20px rgba(56, 189, 248, 0.45);
+      text-shadow: 0 0 24px rgba(56, 189, 248, 0.5);
     }
     html.light .heading-degrees {
       color: #0f172a;
       text-shadow: none;
     }
     .motion-indicator-tag {
-      font-size: 11.5px !important;
-      font-weight: 800 !important;
+      font-size: 13px !important;
+      font-weight: 900 !important;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 5px 14px !important;
-      border-radius: 7px;
-      margin-top: 6px;
+      letter-spacing: 0.1em;
+      padding: 6px 20px !important;
+      border-radius: 8px;
+      margin-top: 8px;
       border: 1px solid currentColor;
+    }
+    .compass-runtime-strip {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+    .compass-runtime-strip strong {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text);
+      font-size: 13px;
     }
 
     /* Right Metrics Grid */
     .metrics-matrix-wrap {
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 12px;
       height: 100%;
+      min-height: 0;
     }
     .metrics-quad {
       flex: 1;
+      height: 100%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 1fr);
-      gap: 9px;
+      gap: 12px;
     }
     .metric-card {
-      border-radius: 14px;
-      padding: 10px 14px;
+      border-radius: 16px;
+      padding: 14px 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -612,13 +630,13 @@
       align-items: center;
     }
     .metric-title {
-      font-size: 12.5px !important;
-      font-weight: 800 !important;
+      font-size: 15px !important;
+      font-weight: 900 !important;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
     .metric-body {
       width: 100%;
@@ -626,12 +644,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 2px 0;
+      margin: 4px 0;
+      flex: 1;
     }
     .meter-gauge-wrap {
       width: 100%;
-      max-width: 250px;
-      height: 124px;
+      max-width: 380px;
+      height: 155px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -653,19 +672,19 @@
       justify-content: space-between;
       padding: 0 4px;
       border-top: 1px solid var(--line);
-      padding-top: 4px;
+      padding-top: 6px;
     }
     .metric-value {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 24px !important;
+      font-size: 38px !important;
       font-weight: 900 !important;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       display: flex;
       align-items: baseline;
-      gap: 4px;
+      gap: 6px;
       line-height: 1;
       color: var(--text);
-      text-shadow: 0 0 14px rgba(255, 255, 255, 0.2);
+      text-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
     }
     html.light .metric-value {
       color: #0f172a;
@@ -673,14 +692,27 @@
     }
     .metric-unit {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 14px !important;
-      font-weight: 800 !important;
-      opacity: 0.85;
+      font-size: 20px !important;
+      font-weight: 900 !important;
+      opacity: 0.95;
     }
     .metric-hint {
-      font-size: 11px !important;
+      font-size: 12px !important;
       color: var(--text-dim) !important;
-      font-weight: 700 !important;
+      font-weight: 800 !important;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Clean Status Pill ESP32 */
+    .status-pill-esp32 {
+      font-size: 13.5px !important;
+      font-weight: 800 !important;
+      padding: 5px 16px !important;
+      border-radius: 20px;
+      background: rgba(16, 185, 129, 0.15) !important;
+      border: 1px solid rgba(16, 185, 129, 0.45) !important;
+      color: var(--green) !important;
     }
 
     /* Bottom Info Strip */
@@ -1079,28 +1111,11 @@
       </div>
 
       <div class="header-actions">
-        <!-- ESP32 Status -->
-        <div class="status-pill">
+        <!-- ESP32 Status Only (Uncluttered Executive Header) -->
+        <div class="status-pill status-pill-esp32">
           <span class="pulse-dot" id="esp32Dot"></span>
-          <span id="esp32StatusText">Connecting…</span>
+          <span id="esp32StatusText">ESP32 Online</span>
         </div>
-
-        <!-- Mosquitto MQTT Status -->
-        <div class="status-pill">
-          <span style="color:var(--text-dim);">MQTT:</span>
-          <span style="color:var(--green); font-weight:800;">Broker Active</span>
-        </div>
-
-        <!-- ThingsBoard Forwarding -->
-        <div class="status-pill">
-          <span style="color:var(--text-dim);">ThingsBoard:</span>
-          <span style="color:var(--accent); font-weight:800;">Active</span>
-        </div>
-
-        <!-- Theme Switcher -->
-        <button class="btn-icon" id="themeToggle" title="Toggle Light/Dark Theme">☀️</button>
-        <!-- Instant Refresh -->
-        <button class="btn-icon" id="refreshBtn" title="Instant Refresh Data">🔄</button>
       </div>
     </header>
 
@@ -1305,14 +1320,22 @@
 
             <div class="heading-readout">
               <span class="heading-degrees" id="yawDegrees">20.9</span>
-              <span style="font-weight:900; font-size:24px; color:var(--accent);">°</span>
+              <span style="font-weight:900; font-size:28px; color:var(--accent);">°</span>
             </div>
             <div class="motion-indicator-tag" id="motionPill" style="background:rgba(239,68,68,0.15); color:var(--red);">
               STOPPED
             </div>
+            <!-- Session & Lifetime Runtime Counter -->
+            <div class="compass-runtime-strip">
+              <span>⏱️ <strong id="valSessionTime">00:00:00</strong></span>
+              <span>⌛ <strong id="valLifetimeHours">-- hrs</strong></span>
+              <span id="chipMpuPreview" style="display:none;">OK</span>
+              <span id="chipMagPreview" style="display:none;">OK</span>
+              <span id="chipInaPreview" style="display:none;">OK</span>
+            </div>
           </div>
 
-          <!-- Right Metrics Matrix & Runtime Strip -->
+          <!-- Right Metrics Matrix (100% Full Height For Huge Eye-Catching Meters) -->
           <div class="metrics-matrix-wrap">
             <div class="metrics-quad">
 
@@ -1325,61 +1348,49 @@
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
                     <svg class="analog-meter-svg" viewBox="0 0 200 120">
-                      <!-- Bevel & Dial Face Plate -->
-                      <path d="M 14 108 A 86 86 0 0 1 186 108 L 176 116 L 24 116 Z" fill="url(#meterFacePlateDark)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2" />
-                      <path d="M 20 106 A 80 80 0 0 1 180 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="2.5" />
-                      <!-- Scale Track Background Groove -->
-                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="9" stroke-linecap="round" />
+                      <path d="M 12 108 A 88 88 0 0 1 188 108 L 178 117 L 22 117 Z" fill="url(#meterFacePlateDark)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5" />
+                      <path d="M 18 106 A 82 82 0 0 1 182 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="3" />
+                      <path d="M 26 105 A 74 74 0 0 1 174 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="11" stroke-linecap="round" />
                       
-                      <!-- Calibrated Zones: Low Amber (0-10V), Safe Cyan (11-15V), Overvoltage Red (16-24V) -->
-                      <path d="M 28 105 A 72 72 0 0 1 64 42.6" fill="none" stroke="rgba(245, 158, 11, 0.55)" stroke-width="8" stroke-linecap="round" />
-                      <path d="M 90.6 33.6 A 72 72 0 0 1 127.6 38.5" fill="none" stroke="#00f0ff" stroke-width="9" filter="url(#neonVolt)" stroke-linecap="round" />
-                      <path d="M 136 42.6 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(239, 68, 68, 0.65)" stroke-width="8" stroke-linecap="round" />
+                      <!-- Calibrated Zones -->
+                      <path d="M 26 105 A 74 74 0 0 1 63 41" fill="none" stroke="rgba(245, 158, 11, 0.65)" stroke-width="10" stroke-linecap="round" />
+                      <path d="M 89 31.5 A 74 74 0 0 1 129 36.8" fill="none" stroke="#00f0ff" stroke-width="11" filter="url(#neonVolt)" stroke-linecap="round" />
+                      <path d="M 137 41 A 74 74 0 0 1 174 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="10" stroke-linecap="round" />
 
-                      <!-- Major Calibration Ticks -->
-                      <!-- 0V -->
-                      <line x1="28" y1="105" x2="36" y2="105" stroke="#38bdf8" stroke-width="2.5" />
-                      <!-- 6V -->
-                      <line x1="49.1" y1="54.1" x2="54.8" y2="59.8" stroke="#38bdf8" stroke-width="2" />
-                      <!-- 12V (Center Target) -->
-                      <line x1="100" y1="33" x2="100" y2="42" stroke="#00f0ff" stroke-width="3" filter="url(#neonVolt)" />
-                      <!-- 18V -->
-                      <line x1="150.9" y1="54.1" x2="145.2" y2="59.8" stroke="#38bdf8" stroke-width="2" />
-                      <!-- 24V -->
-                      <line x1="172" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="2.5" />
+                      <!-- Major Ticks -->
+                      <line x1="26" y1="105" x2="36" y2="105" stroke="#38bdf8" stroke-width="3.5" />
+                      <line x1="47.7" y1="52.7" x2="54.8" y2="59.8" stroke="#38bdf8" stroke-width="3" />
+                      <line x1="100" y1="31" x2="100" y2="42" stroke="#00f0ff" stroke-width="3.8" filter="url(#neonVolt)" />
+                      <line x1="152.3" y1="52.7" x2="145.2" y2="59.8" stroke="#38bdf8" stroke-width="3" />
+                      <line x1="174" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="3.5" />
 
                       <!-- Minor Ticks -->
-                      <line x1="33.5" y1="76.4" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="72.4" y1="38.5" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="127.6" y1="38.5" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="166.5" y1="76.4" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="32" y1="75.6" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="71.7" y1="36.7" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="128.3" y1="36.7" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="168" y1="75.6" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
 
-                      <!-- Graduation Numbers along Arc -->
-                      <text x="42" y="101" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">0</text>
-                      <text x="59" y="67" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">6</text>
-                      <text x="100" y="52" font-size="10" font-weight="900" fill="#00f0ff" text-anchor="middle">12V</text>
-                      <text x="141" y="67" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">18</text>
-                      <text x="158" y="101" font-size="9" font-weight="800" fill="#f87171" text-anchor="middle">24</text>
+                      <!-- Graduation Numbers along Arc (Big, Bold, Legible) -->
+                      <text x="40" y="99" font-size="13" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">0</text>
+                      <text x="58" y="66" font-size="13" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">6</text>
+                      <text x="100" y="52" font-size="15" font-weight="900" fill="#00f0ff" font-family="'JetBrains Mono', monospace" text-anchor="middle">12V</text>
+                      <text x="142" y="66" font-size="13" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">18</text>
+                      <text x="160" y="99" font-size="13" font-weight="900" fill="#f87171" font-family="'JetBrains Mono', monospace" text-anchor="middle">24</text>
 
                       <!-- Instrument Calibration Stamp -->
-                      <text x="100" y="73" text-anchor="middle" font-size="8.5" font-weight="900" fill="#38bdf8" letter-spacing="1.2">VOLTS DC</text>
-                      <text x="100" y="83" text-anchor="middle" font-size="6.5" font-weight="700" fill="#64748b" letter-spacing="0.8">INA226 BUS MONITOR</text>
+                      <text x="100" y="75" text-anchor="middle" font-size="11.5" font-weight="900" fill="#38bdf8" letter-spacing="1.5">VOLTS DC</text>
+                      <text x="100" y="87" text-anchor="middle" font-size="8.5" font-weight="800" fill="#94a3b8" letter-spacing="0.8">INA226 SHUNT BUS</text>
 
-                      <!-- Rotating Indicator Needle (Pivot at 100, 105) -->
+                      <!-- Rotating Indicator Needle -->
                       <g class="gauge-needle" id="needleVoltage" style="transform-origin: 100px 105px; transform: rotate(2.8deg);">
-                        <!-- Counterweight Tail -->
-                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
-                        <circle cx="100" cy="114" r="2" fill="#334155" />
-                        <!-- Tapered Blade -->
-                        <polygon points="98.5,105 101.5,105 100.8,32 99.2,32" fill="url(#needleBladeVolt)" filter="url(#neonVolt)" />
-                        <!-- Spine Highlight -->
-                        <line x1="100" y1="103" x2="100" y2="28" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
-                        <!-- Arrowhead Tip -->
-                        <polygon points="100,24 97.2,33 102.8,33" fill="#00f0ff" filter="url(#neonVolt)" />
-                        <!-- CNC Pivot Hub -->
-                        <circle cx="100" cy="105" r="7" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
-                        <circle cx="100" cy="105" r="4" fill="#0f172a" />
-                        <circle cx="100" cy="105" r="2" fill="#00f0ff" />
+                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="100" cy="114" r="2.5" fill="#334155" />
+                        <polygon points="98.2,105 101.8,105 101,30 99,30" fill="url(#needleBladeVolt)" filter="url(#neonVolt)" />
+                        <line x1="100" y1="103" x2="100" y2="26" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+                        <polygon points="100,20 95.5,33 104.5,33" fill="#00f0ff" filter="url(#neonVolt)" />
+                        <circle cx="100" cy="105" r="8" fill="#1e293b" stroke="#64748b" stroke-width="1.8" />
+                        <circle cx="100" cy="105" r="4.5" fill="#0f172a" />
+                        <circle cx="100" cy="105" r="2.5" fill="#00f0ff" />
                       </g>
                     </svg>
                   </div>
@@ -1389,7 +1400,7 @@
                     <span id="valVoltage">12.38</span>
                     <span class="metric-unit">V</span>
                   </div>
-                  <div class="metric-hint">INA226 Shunt Bus Monitor</div>
+                  <div class="metric-hint">INA226 BUS MONITOR</div>
                 </div>
               </div>
 
@@ -1402,49 +1413,49 @@
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
                     <svg class="analog-meter-svg" viewBox="0 0 200 120">
-                      <path d="M 14 108 A 86 86 0 0 1 186 108 L 176 116 L 24 116 Z" fill="url(#meterFacePlateDark)" stroke="rgba(52, 211, 153, 0.25)" stroke-width="1.2" />
-                      <path d="M 20 106 A 80 80 0 0 1 180 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="2.5" />
-                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="9" stroke-linecap="round" />
+                      <path d="M 12 108 A 88 88 0 0 1 188 108 L 178 117 L 22 117 Z" fill="url(#meterFacePlateDark)" stroke="rgba(52, 211, 153, 0.3)" stroke-width="1.5" />
+                      <path d="M 18 106 A 82 82 0 0 1 182 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="3" />
+                      <path d="M 26 105 A 74 74 0 0 1 174 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="11" stroke-linecap="round" />
                       
-                      <!-- Calibrated Zones: Normal 0-250mA (Green), High 250-375mA (Amber), Stall 375-500mA (Red) -->
-                      <path d="M 28 105 A 72 72 0 0 1 100 33" fill="none" stroke="#10b981" stroke-width="9" filter="url(#neonAmp)" stroke-linecap="round" />
-                      <path d="M 100 33 A 72 72 0 0 1 150.9 54.1" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="8" />
-                      <path d="M 150.9 54.1 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="8" stroke-linecap="round" />
+                      <!-- Calibrated Zones -->
+                      <path d="M 26 105 A 74 74 0 0 1 100 31" fill="none" stroke="#10b981" stroke-width="11" filter="url(#neonAmp)" stroke-linecap="round" />
+                      <path d="M 100 31 A 74 74 0 0 1 152.3 52.7" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="10" />
+                      <path d="M 152.3 52.7 A 74 74 0 0 1 174 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="10" stroke-linecap="round" />
 
                       <!-- Major Ticks -->
-                      <line x1="28" y1="105" x2="36" y2="105" stroke="#34d399" stroke-width="2.5" />
-                      <line x1="49.1" y1="54.1" x2="54.8" y2="59.8" stroke="#34d399" stroke-width="2" />
-                      <line x1="100" y1="33" x2="100" y2="42" stroke="#10b981" stroke-width="3" filter="url(#neonAmp)" />
-                      <line x1="150.9" y1="54.1" x2="145.2" y2="59.8" stroke="#f59e0b" stroke-width="2" />
-                      <line x1="172" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="2.5" />
+                      <line x1="26" y1="105" x2="36" y2="105" stroke="#34d399" stroke-width="3.5" />
+                      <line x1="47.7" y1="52.7" x2="54.8" y2="59.8" stroke="#34d399" stroke-width="3" />
+                      <line x1="100" y1="31" x2="100" y2="42" stroke="#10b981" stroke-width="3.8" filter="url(#neonAmp)" />
+                      <line x1="152.3" y1="52.7" x2="145.2" y2="59.8" stroke="#f59e0b" stroke-width="3" />
+                      <line x1="174" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="3.5" />
 
                       <!-- Minor Ticks -->
-                      <line x1="33.5" y1="76.4" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="72.4" y1="38.5" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="127.6" y1="38.5" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="166.5" y1="76.4" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="32" y1="75.6" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="71.7" y1="36.7" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="128.3" y1="36.7" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="168" y1="75.6" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
 
                       <!-- Graduation Numbers along Arc -->
-                      <text x="42" y="101" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">0</text>
-                      <text x="58" y="67" font-size="8.5" font-weight="800" fill="#94a3b8" text-anchor="middle">125</text>
-                      <text x="100" y="52" font-size="9.5" font-weight="900" fill="#34d399" text-anchor="middle">250</text>
-                      <text x="142" y="67" font-size="8.5" font-weight="800" fill="#f59e0b" text-anchor="middle">375</text>
-                      <text x="158" y="101" font-size="8.5" font-weight="800" fill="#f87171" text-anchor="middle">500</text>
+                      <text x="40" y="99" font-size="13" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">0</text>
+                      <text x="56" y="66" font-size="12" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">125</text>
+                      <text x="100" y="52" font-size="14.5" font-weight="900" fill="#34d399" font-family="'JetBrains Mono', monospace" text-anchor="middle">250</text>
+                      <text x="144" y="66" font-size="12" font-weight="900" fill="#fbbf24" font-family="'JetBrains Mono', monospace" text-anchor="middle">375</text>
+                      <text x="160" y="99" font-size="12" font-weight="900" fill="#f87171" font-family="'JetBrains Mono', monospace" text-anchor="middle">500</text>
 
                       <!-- Calibration Stamp -->
-                      <text x="100" y="73" text-anchor="middle" font-size="8.5" font-weight="900" fill="#34d399" letter-spacing="1.2">MILLIAMPERES</text>
-                      <text x="100" y="83" text-anchor="middle" font-size="6.5" font-weight="700" fill="#64748b" letter-spacing="0.8">ACTIVE MOTOR &amp; LOGIC</text>
+                      <text x="100" y="75" text-anchor="middle" font-size="11.5" font-weight="900" fill="#34d399" letter-spacing="1.5">MILLIAMPERES</text>
+                      <text x="100" y="87" text-anchor="middle" font-size="8.5" font-weight="800" fill="#94a3b8" letter-spacing="0.8">ACTIVE MOTOR &amp; LOGIC</text>
 
                       <!-- Rotating Needle -->
                       <g class="gauge-needle" id="needleCurrent" style="transform-origin: 100px 105px; transform: rotate(-90deg);">
-                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
-                        <circle cx="100" cy="114" r="2" fill="#334155" />
-                        <polygon points="98.5,105 101.5,105 100.8,32 99.2,32" fill="url(#needleBladeAmp)" filter="url(#neonAmp)" />
-                        <line x1="100" y1="103" x2="100" y2="28" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
-                        <polygon points="100,24 97.2,33 102.8,33" fill="#10b981" filter="url(#neonAmp)" />
-                        <circle cx="100" cy="105" r="7" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
-                        <circle cx="100" cy="105" r="4" fill="#0f172a" />
-                        <circle cx="100" cy="105" r="2" fill="#10b981" />
+                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="100" cy="114" r="2.5" fill="#334155" />
+                        <polygon points="98.2,105 101.8,105 101,30 99,30" fill="url(#needleBladeAmp)" filter="url(#neonAmp)" />
+                        <line x1="100" y1="103" x2="100" y2="26" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+                        <polygon points="100,20 95.5,33 104.5,33" fill="#10b981" filter="url(#neonAmp)" />
+                        <circle cx="100" cy="105" r="8" fill="#1e293b" stroke="#64748b" stroke-width="1.8" />
+                        <circle cx="100" cy="105" r="4.5" fill="#0f172a" />
+                        <circle cx="100" cy="105" r="2.5" fill="#10b981" />
                       </g>
                     </svg>
                   </div>
@@ -1454,7 +1465,7 @@
                     <span id="valCurrent">0</span>
                     <span class="metric-unit">mA</span>
                   </div>
-                  <div class="metric-hint">Active Motor &amp; Logic Current</div>
+                  <div class="metric-hint">MOTOR &amp; LOGIC CURRENT</div>
                 </div>
               </div>
 
@@ -1467,49 +1478,49 @@
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
                     <svg class="analog-meter-svg" viewBox="0 0 200 120">
-                      <path d="M 14 108 A 86 86 0 0 1 186 108 L 176 116 L 24 116 Z" fill="url(#meterFacePlateDark)" stroke="rgba(167, 139, 250, 0.25)" stroke-width="1.2" />
-                      <path d="M 20 106 A 80 80 0 0 1 180 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="2.5" />
-                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="9" stroke-linecap="round" />
+                      <path d="M 12 108 A 88 88 0 0 1 188 108 L 178 117 L 22 117 Z" fill="url(#meterFacePlateDark)" stroke="rgba(167, 139, 250, 0.3)" stroke-width="1.5" />
+                      <path d="M 18 106 A 82 82 0 0 1 182 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="3" />
+                      <path d="M 26 105 A 74 74 0 0 1 174 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="11" stroke-linecap="round" />
                       
-                      <!-- Calibrated Zones: 0-1000mW (Purple), 1000-1500mW (Magenta), 1500-2000mW (Red) -->
-                      <path d="M 28 105 A 72 72 0 0 1 100 33" fill="none" stroke="#c084fc" stroke-width="9" filter="url(#neonWatt)" stroke-linecap="round" />
-                      <path d="M 100 33 A 72 72 0 0 1 150.9 54.1" fill="none" stroke="rgba(217, 70, 239, 0.75)" stroke-width="8" />
-                      <path d="M 150.9 54.1 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="8" stroke-linecap="round" />
+                      <!-- Calibrated Zones -->
+                      <path d="M 26 105 A 74 74 0 0 1 100 31" fill="none" stroke="#c084fc" stroke-width="11" filter="url(#neonWatt)" stroke-linecap="round" />
+                      <path d="M 100 31 A 74 74 0 0 1 152.3 52.7" fill="none" stroke="rgba(217, 70, 239, 0.75)" stroke-width="10" />
+                      <path d="M 152.3 52.7 A 74 74 0 0 1 174 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="10" stroke-linecap="round" />
 
                       <!-- Major Ticks -->
-                      <line x1="28" y1="105" x2="36" y2="105" stroke="#c084fc" stroke-width="2.5" />
-                      <line x1="49.1" y1="54.1" x2="54.8" y2="59.8" stroke="#c084fc" stroke-width="2" />
-                      <line x1="100" y1="33" x2="100" y2="42" stroke="#c084fc" stroke-width="3" filter="url(#neonWatt)" />
-                      <line x1="150.9" y1="54.1" x2="145.2" y2="59.8" stroke="#d946ef" stroke-width="2" />
-                      <line x1="172" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="2.5" />
+                      <line x1="26" y1="105" x2="36" y2="105" stroke="#c084fc" stroke-width="3.5" />
+                      <line x1="47.7" y1="52.7" x2="54.8" y2="59.8" stroke="#c084fc" stroke-width="3" />
+                      <line x1="100" y1="31" x2="100" y2="42" stroke="#c084fc" stroke-width="3.8" filter="url(#neonWatt)" />
+                      <line x1="152.3" y1="52.7" x2="145.2" y2="59.8" stroke="#d946ef" stroke-width="3" />
+                      <line x1="174" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="3.5" />
 
                       <!-- Minor Ticks -->
-                      <line x1="33.5" y1="76.4" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="72.4" y1="38.5" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="127.6" y1="38.5" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="166.5" y1="76.4" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="32" y1="75.6" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="71.7" y1="36.7" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="128.3" y1="36.7" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="168" y1="75.6" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
 
                       <!-- Graduation Numbers along Arc -->
-                      <text x="42" y="101" font-size="9" font-weight="800" fill="#94a3b8" text-anchor="middle">0</text>
-                      <text x="58" y="67" font-size="8.5" font-weight="800" fill="#94a3b8" text-anchor="middle">500</text>
-                      <text x="100" y="52" font-size="9.5" font-weight="900" fill="#c084fc" text-anchor="middle">1000</text>
-                      <text x="142" y="67" font-size="8.5" font-weight="800" fill="#d946ef" text-anchor="middle">1500</text>
-                      <text x="158" y="101" font-size="8.5" font-weight="800" fill="#f87171" text-anchor="middle">2000</text>
+                      <text x="40" y="99" font-size="13" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">0</text>
+                      <text x="56" y="66" font-size="12" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">500</text>
+                      <text x="100" y="52" font-size="14.5" font-weight="900" fill="#c084fc" font-family="'JetBrains Mono', monospace" text-anchor="middle">1000</text>
+                      <text x="144" y="66" font-size="12" font-weight="900" fill="#f472b6" font-family="'JetBrains Mono', monospace" text-anchor="middle">1500</text>
+                      <text x="160" y="99" font-size="12" font-weight="900" fill="#f87171" font-family="'JetBrains Mono', monospace" text-anchor="middle">2000</text>
 
                       <!-- Calibration Stamp -->
-                      <text x="100" y="73" text-anchor="middle" font-size="8.5" font-weight="900" fill="#c084fc" letter-spacing="1.2">MILLIWATTS</text>
-                      <text x="100" y="83" text-anchor="middle" font-size="6.5" font-weight="700" fill="#64748b" letter-spacing="0.8">REAL-TIME POWER CONSUMPTION</text>
+                      <text x="100" y="75" text-anchor="middle" font-size="11.5" font-weight="900" fill="#c084fc" letter-spacing="1.5">MILLIWATTS</text>
+                      <text x="100" y="87" text-anchor="middle" font-size="8.5" font-weight="800" fill="#94a3b8" letter-spacing="0.8">REAL-TIME POWER DRAW</text>
 
                       <!-- Rotating Needle -->
                       <g class="gauge-needle" id="needlePower" style="transform-origin: 100px 105px; transform: rotate(-90deg);">
-                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
-                        <circle cx="100" cy="114" r="2" fill="#334155" />
-                        <polygon points="98.5,105 101.5,105 100.8,32 99.2,32" fill="url(#needleBladeWatt)" filter="url(#neonWatt)" />
-                        <line x1="100" y1="103" x2="100" y2="28" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
-                        <polygon points="100,24 97.2,33 102.8,33" fill="#c084fc" filter="url(#neonWatt)" />
-                        <circle cx="100" cy="105" r="7" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
-                        <circle cx="100" cy="105" r="4" fill="#0f172a" />
-                        <circle cx="100" cy="105" r="2" fill="#c084fc" />
+                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="100" cy="114" r="2.5" fill="#334155" />
+                        <polygon points="98.2,105 101.8,105 101,30 99,30" fill="url(#needleBladeWatt)" filter="url(#neonWatt)" />
+                        <line x1="100" y1="103" x2="100" y2="26" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+                        <polygon points="100,20 95.5,33 104.5,33" fill="#c084fc" filter="url(#neonWatt)" />
+                        <circle cx="100" cy="105" r="8" fill="#1e293b" stroke="#64748b" stroke-width="1.8" />
+                        <circle cx="100" cy="105" r="4.5" fill="#0f172a" />
+                        <circle cx="100" cy="105" r="2.5" fill="#c084fc" />
                       </g>
                     </svg>
                   </div>
@@ -1519,7 +1530,7 @@
                     <span id="valPower">0</span>
                     <span class="metric-unit">mW</span>
                   </div>
-                  <div class="metric-hint">Real-Time Power Consumption</div>
+                  <div class="metric-hint">ACTIVE POWER CONSUMPTION</div>
                 </div>
               </div>
 
@@ -1532,51 +1543,51 @@
                 <div class="metric-body">
                   <div class="meter-gauge-wrap">
                     <svg class="analog-meter-svg" viewBox="0 0 200 120">
-                      <path d="M 14 108 A 86 86 0 0 1 186 108 L 176 116 L 24 116 Z" fill="url(#meterFacePlateDark)" stroke="rgba(251, 113, 133, 0.25)" stroke-width="1.2" />
-                      <path d="M 20 106 A 80 80 0 0 1 180 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="2.5" />
-                      <path d="M 28 105 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="9" stroke-linecap="round" />
+                      <path d="M 12 108 A 88 88 0 0 1 188 108 L 178 117 L 22 117 Z" fill="url(#meterFacePlateDark)" stroke="rgba(251, 113, 133, 0.3)" stroke-width="1.5" />
+                      <path d="M 18 106 A 82 82 0 0 1 182 106" fill="none" stroke="url(#meterBezelRimGrad)" stroke-width="3" />
+                      <path d="M 26 105 A 74 74 0 0 1 174 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="11" stroke-linecap="round" />
                       
-                      <!-- Calibrated Zones: Alarm Left (<-2.5°), Caution Left (-2.5 to -1°), Level Safe (-1° to +1° Green), Caution Right (+1 to +2.5°), Alarm Right (>+2.5°) -->
-                      <path d="M 28 105 A 72 72 0 0 1 40.1 65" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="8" stroke-linecap="round" />
-                      <path d="M 40.1 65 A 72 72 0 0 1 72.4 38.5" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="8" />
-                      <path d="M 72.4 38.5 A 72 72 0 0 1 127.6 38.5" fill="none" stroke="#10b981" stroke-width="9" filter="url(#neonAmp)" stroke-linecap="round" />
-                      <path d="M 127.6 38.5 A 72 72 0 0 1 159.9 65" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="8" />
-                      <path d="M 159.9 65 A 72 72 0 0 1 172 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="8" stroke-linecap="round" />
+                      <!-- Calibrated Zones -->
+                      <path d="M 26 105 A 74 74 0 0 1 38.4 63.8" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="10" stroke-linecap="round" />
+                      <path d="M 38.4 63.8 A 74 74 0 0 1 71.7 36.7" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="10" />
+                      <path d="M 71.7 36.7 A 74 74 0 0 1 128.3 36.7" fill="none" stroke="#10b981" stroke-width="11" filter="url(#neonAmp)" stroke-linecap="round" />
+                      <path d="M 128.3 36.7 A 74 74 0 0 1 161.6 63.8" fill="none" stroke="rgba(245, 158, 11, 0.75)" stroke-width="10" />
+                      <path d="M 161.6 63.8 A 74 74 0 0 1 174 105" fill="none" stroke="rgba(239, 68, 68, 0.75)" stroke-width="10" stroke-linecap="round" />
 
                       <!-- Major Ticks -->
-                      <line x1="28" y1="105" x2="36" y2="105" stroke="#ef4444" stroke-width="2.5" />
-                      <line x1="49.1" y1="54.1" x2="54.8" y2="59.8" stroke="#f59e0b" stroke-width="2" />
-                      <line x1="100" y1="33" x2="100" y2="42" stroke="#10b981" stroke-width="3.2" filter="url(#neonAmp)" />
-                      <line x1="150.9" y1="54.1" x2="145.2" y2="59.8" stroke="#f59e0b" stroke-width="2" />
-                      <line x1="172" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="2.5" />
+                      <line x1="26" y1="105" x2="36" y2="105" stroke="#ef4444" stroke-width="3.5" />
+                      <line x1="47.7" y1="52.7" x2="54.8" y2="59.8" stroke="#f59e0b" stroke-width="3" />
+                      <line x1="100" y1="31" x2="100" y2="42" stroke="#10b981" stroke-width="3.8" filter="url(#neonAmp)" />
+                      <line x1="152.3" y1="52.7" x2="145.2" y2="59.8" stroke="#f59e0b" stroke-width="3" />
+                      <line x1="174" y1="105" x2="164" y2="105" stroke="#ef4444" stroke-width="3.5" />
 
                       <!-- Minor Ticks -->
-                      <line x1="33.5" y1="76.4" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="72.4" y1="38.5" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="127.6" y1="38.5" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
-                      <line x1="166.5" y1="76.4" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" />
+                      <line x1="32" y1="75.6" x2="38.1" y2="78.3" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="71.7" y1="36.7" x2="75.5" y2="43.1" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="128.3" y1="36.7" x2="124.5" y2="43.1" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
+                      <line x1="168" y1="75.6" x2="161.9" y2="78.3" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.8" />
 
                       <!-- Graduation Numbers along Arc -->
-                      <text x="42" y="101" font-size="9" font-weight="800" fill="#f87171" text-anchor="middle">-4°</text>
-                      <text x="58" y="67" font-size="8.5" font-weight="800" fill="#f59e0b" text-anchor="middle">-2°</text>
-                      <text x="100" y="52" font-size="9.5" font-weight="900" fill="#34d399" text-anchor="middle">0° LEVEL</text>
-                      <text x="142" y="67" font-size="8.5" font-weight="800" fill="#f59e0b" text-anchor="middle">+2°</text>
-                      <text x="158" y="101" font-size="8.5" font-weight="800" fill="#f87171" text-anchor="middle">+4°</text>
+                      <text x="40" y="99" font-size="13" font-weight="900" fill="#f87171" font-family="'JetBrains Mono', monospace" text-anchor="middle">-4°</text>
+                      <text x="58" y="66" font-size="13" font-weight="900" fill="#fbbf24" font-family="'JetBrains Mono', monospace" text-anchor="middle">-2°</text>
+                      <text x="100" y="52" font-size="14.5" font-weight="900" fill="#34d399" font-family="'JetBrains Mono', monospace" text-anchor="middle">0° LEVEL</text>
+                      <text x="142" y="66" font-size="13" font-weight="900" fill="#fbbf24" font-family="'JetBrains Mono', monospace" text-anchor="middle">+2°</text>
+                      <text x="160" y="99" font-size="13" font-weight="900" fill="#f87171" font-family="'JetBrains Mono', monospace" text-anchor="middle">+4°</text>
 
                       <!-- Calibration Stamp -->
-                      <text x="100" y="73" text-anchor="middle" font-size="8.5" font-weight="900" fill="#fb7185" letter-spacing="1.2">BOOM INCLINE</text>
-                      <text x="100" y="83" text-anchor="middle" font-size="6.5" font-weight="700" fill="#64748b" letter-spacing="0.8">MPU6500 DUAL-AXIS</text>
+                      <text x="100" y="75" text-anchor="middle" font-size="11.5" font-weight="900" fill="#fb7185" letter-spacing="1.5">BOOM INCLINE</text>
+                      <text x="100" y="87" text-anchor="middle" font-size="8.5" font-weight="800" fill="#94a3b8" letter-spacing="0.8">MPU6500 DUAL-AXIS</text>
 
                       <!-- Rotating Needle -->
                       <g class="gauge-needle" id="needleDeflection" style="transform-origin: 100px 105px; transform: rotate(24deg);">
-                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="2.5" stroke-linecap="round" />
-                        <circle cx="100" cy="114" r="2" fill="#334155" />
-                        <polygon points="98.5,105 101.5,105 100.8,32 99.2,32" fill="url(#needleBladeIncline)" filter="url(#neonIncline)" />
-                        <line x1="100" y1="103" x2="100" y2="28" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
-                        <polygon points="100,24 97.2,33 102.8,33" fill="#fb7185" filter="url(#neonIncline)" />
-                        <circle cx="100" cy="105" r="7" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
-                        <circle cx="100" cy="105" r="4" fill="#0f172a" />
-                        <circle cx="100" cy="105" r="2" fill="#fb7185" />
+                        <line x1="100" y1="105" x2="100" y2="114" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="100" cy="114" r="2.5" fill="#334155" />
+                        <polygon points="98.2,105 101.8,105 101,30 99,30" fill="url(#needleBladeIncline)" filter="url(#neonIncline)" />
+                        <line x1="100" y1="103" x2="100" y2="26" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+                        <polygon points="100,20 95.5,33 104.5,33" fill="#fb7185" filter="url(#neonIncline)" />
+                        <circle cx="100" cy="105" r="8" fill="#1e293b" stroke="#64748b" stroke-width="1.8" />
+                        <circle cx="100" cy="105" r="4.5" fill="#0f172a" />
+                        <circle cx="100" cy="105" r="2.5" fill="#fb7185" />
                       </g>
                     </svg>
                   </div>
@@ -1586,23 +1597,10 @@
                     <span id="valDeflection">1.07</span>
                     <span class="metric-unit">°</span>
                   </div>
-                  <div class="metric-hint">MPU6500 Structural Incline</div>
+                  <div class="metric-hint">STRUCTURAL INCLINE</div>
                 </div>
               </div>
 
-            </div>
-
-            <!-- Bottom System Info Strip -->
-            <div class="system-health-strip">
-              <div class="health-tags">
-                <span>⏱️ Session: <strong id="valSessionTime" style="font-family:'JetBrains Mono';">00:00:00</strong></span>
-                <span>⌛ Lifetime: <strong id="valLifetimeHours" style="font-family:'JetBrains Mono';">-- hrs</strong></span>
-              </div>
-              <div class="health-tags">
-                <span>MPU: <strong class="tag-ok" id="chipMpuPreview">OK</strong></span>
-                <span>MAG: <strong class="tag-ok" id="chipMagPreview">OK</strong></span>
-                <span>INA: <strong class="tag-ok" id="chipInaPreview">OK</strong></span>
-              </div>
             </div>
           </div>
 
