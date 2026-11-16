@@ -738,14 +738,20 @@
     .tag-fault { color: var(--red); font-weight: 800; }
 
     /* =========================================================================
-       TAB 2: CRANE & MAGNET CONTROL (SPACIOUS REMOTES)
+       TAB 2: MOTOR THROTTLE CONTROL
        ========================================================================= */
     .controls-layout {
       width: 100%;
       height: 100%;
-      display: grid;
-      grid-template-columns: 280px 1fr 270px;
-      gap: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .controls-layout .speed-card {
+      width: 100%;
+      max-width: 680px;
+      min-height: 480px;
     }
 
     .jog-column {
@@ -1292,10 +1298,10 @@
 
       <button class="tab-btn" role="tab" id="btn-tab-controls" data-tab="tab-controls" aria-selected="false" aria-controls="tab-controls">
         <span class="tab-icon">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
         </span>
-        <span class="tab-label">Crane & Magnet Control</span>
-        <span class="tab-chip chip-ready">ACTUATORS</span>
+        <span class="tab-label">Motor Throttle Control</span>
+        <span class="tab-chip chip-ready">PWM</span>
       </button>
 
       <button class="tab-btn" role="tab" id="btn-tab-graphs" data-tab="tab-graphs" aria-selected="false" aria-controls="tab-graphs">
@@ -1759,27 +1765,10 @@
       </div>
 
       <!-- ===================================================================
-           TAB 2: CRANE & MAGNET CONTROL
+           TAB 2: MOTOR THROTTLE CONTROL
            =================================================================== -->
       <div class="tab-pane" id="tab-controls">
         <div class="controls-layout">
-
-          <!-- 360° Circular Transparent Actuator Controller Dial -->
-          <div class="card card-blue" style="justify-content:space-between; align-items:center;">
-            <div class="card-head" style="width:100%;">
-              <div class="card-title">🎮 360° Crane Controller</div>
-              <span class="badge" id="motionStatusBadge">STOPPED</span>
-            </div>
-
-            <!-- Embedded Transparent Circular Controller -->
-            <div style="flex:1; width:100%; display:flex; align-items:center; justify-content:center; position:relative; min-height:220px;">
-              <iframe src="/widget/control" style="width:230px; height:230px; border:none; background:transparent;" allowtransparency="true"></iframe>
-            </div>
-
-            <div style="font-size:10px; color:var(--text-dim); text-align:center; padding: 2px 0;">
-              Publishes directly to Mosquitto MQTT &amp; WebSocket
-            </div>
-          </div>
 
           <!-- Speed Modulation PWM (Executive Amber Card) -->
           <div class="card card-amber speed-card">
@@ -1851,22 +1840,6 @@
                 <span>⚡ MAX</span>
                 <small>255 (100%)</small>
               </div>
-            </div>
-          </div>
-
-          <!-- Cargo Electromagnet (Pink Card) -->
-          <div class="card card-pink magnet-card">
-            <div class="card-head">
-              <div class="card-title" style="color:var(--card-pink-text)">🧲 Cargo Electromagnet</div>
-              <span class="badge" id="magnetTag" style="color:var(--card-pink-text)">RELAY OFF</span>
-            </div>
-
-            <div class="magnet-halo off" id="magnetCircle">🧲</div>
-            <div style="font-size:12px; font-weight:800; color:var(--card-pink-text)" id="magnetStatusText">Magnet Power: OFF</div>
-
-            <div class="magnet-toggle-group">
-              <button class="control-btn" style="flex:1; padding:10px; background:rgba(16,185,129,0.22); border-color:var(--green); color:var(--green);" id="btnMagOn">⚡ ON</button>
-              <button class="control-btn" style="flex:1; padding:10px; background:rgba(239,68,68,0.22); border-color:var(--red); color:var(--red);" id="btnMagOff">OFF</button>
             </div>
           </div>
 
