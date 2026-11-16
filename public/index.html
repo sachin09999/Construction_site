@@ -1600,16 +1600,8 @@
     (() => {
       "use strict";
 
-      const API = (() => {
-        const host = window.location.hostname || "10.10.12.67";
-        return `${window.location.protocol === "https:" ? "https:" : "http:"}//${host}:4000`;
-      })();
-
-      const WS_URL = (() => {
-        const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-        const host = window.location.hostname || "10.10.12.67";
-        return `${proto}//${host}:4000/ws`;
-      })();
+      const API = window.location.origin;
+      const WS_URL = `${window.location.protocol === "https:" ? "wss:" : "ws:"}//${window.location.host}/ws`;
 
       const $ = id => document.getElementById(id);
 
@@ -2008,29 +2000,18 @@
       // =======================================================================
       async function fetchSnapshot() {
         try {
-          // Direct fetch of /api/state (guaranteed primary endpoint for physical crane ESP32 telemetry)
           let stateJson = null;
-          try {
-            const stateRes = await fetch(`${API}/api/state`, { cache: "no-store" });
-            if (stateRes.ok) stateJson = await stateRes.json();
-          } catch (_) {
-            try {
-              const stateRes = await fetch('/api/state', { cache: "no-store" });
-              if (stateRes.ok) stateJson = await stateRes.json();
-            } catch (__) {}
-          }
-
-          // Also fetch /api/refresh for Cement Plant registry items
           let refreshJson = null;
+
           try {
-            const refreshRes = await fetch(`${API}/api/refresh`, { cache: "no-store" });
+            const stateRes = await fetch('/api/state', { cache: "no-store" });
+            if (stateRes.ok) stateJson = await stateRes.json();
+          } catch (_) {}
+
+          try {
+            const refreshRes = await fetch('/api/refresh', { cache: "no-store" });
             if (refreshRes.ok) refreshJson = await refreshRes.json();
-          } catch (_) {
-            try {
-              const refreshRes = await fetch('/api/refresh', { cache: "no-store" });
-              if (refreshRes.ok) refreshJson = await refreshRes.json();
-            } catch (__) {}
-          }
+          } catch (_) {}
 
           const s = (stateJson && stateJson.state) ? stateJson.state : (refreshJson && refreshJson.state ? refreshJson.state : {});
           const telemetry = s.telemetry || (refreshJson && refreshJson.state && refreshJson.state.telemetry) || {};
@@ -2253,29 +2234,14 @@
 
       async function loadHistoryData() {
         try {
-          let data = null;
-          try {
-            const res = await fetch(`${API}/api/history?range=${currentRange}&limit=250`);
-            if (res.ok) data = await res.json();
-          } catch (_) {
-            try {
-              const res = await fetch(`/api/history?range=${currentRange}&limit=250`);
-              if (res.ok) data = await res.json();
-            } catch (__) {}
+          const res = await fetch(`/api/history?range=${currentRange}&limit=250`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.data && data.data.length >= 2) {
+              historyCache = data.data;
+              renderCharts();
+            }
           }
-          if (data && data.data && data.data.length >= 2) {
-            historyCache = data.data;
-          } else {
-            // Fallback query without range restriction
-            try {
-              const fallbackRes = await fetch(`${API}/api/history?range=all&limit=250`);
-              if (fallbackRes.ok) {
-                const fb = await fallbackRes.json();
-                if (fb.data && fb.data.length >= 2) historyCache = fb.data;
-              }
-            } catch (___) {}
-          }
-          renderCharts();
         } catch (e) {}
       }
       loadHistoryData();

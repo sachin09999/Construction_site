@@ -12,7 +12,7 @@ const wsServer = require('./src/ws/wsServer');
 const thingsboardService = require('./src/services/thingsboardService');
 const mqttClient = require('./src/mqtt/mqttClient');
 
-const PORT = Number(process.env.PORT || 4000);
+const PORT = Number(process.env.PORT || 4001);
 const DEVICE_ID = process.env.DEVICE_ID || 'underconstruction-esp32';
 let ESP32_URL = (process.env.ESP32_URL || 'http://10.10.12.63').replace(/\/$/, '');
 const DEVICE_KEY = process.env.DEVICE_KEY || '';
@@ -377,7 +377,7 @@ app.post(['/api/device/telemetry', '/api/telemetry', '/telemetry'], requireDevic
 });
 
 // History ranges: 1h, 1d, 1w, 1m, 1y.
-app.get('/api/history', (req, res) => {
+app.get('/api/history', async (req, res) => {
   const ranges = { '1h': 3600, '24h': 86400, '1d': 86400, '7d': 604800, '1w': 604800, '30d': 2592000, '1m': 2592000, '1y': 31536000, 'all': 315360000 };
   const range = String(req.query.range || '1h');
   if (!ranges[range]) return res.status(400).json({ success: false, error: 'invalid range' });
@@ -395,6 +395,29 @@ app.get('/api/history', (req, res) => {
       jib_deflection_deg, current_session_time_sec, total_operation_time_sec,
       mpu_ok, mag_ok, ina226_ok FROM telemetry_history
       ORDER BY id DESC LIMIT ?`).all(limit).reverse();
+  }
+
+  // If local DB is still empty and Port 4000 is running side-by-side, proxy directly server-side
+  if ((!rows || rows.length < 2) && PORT !== 4000) {
+    const historySources = [
+      `http://127.0.0.1:4000/api/history?range=${range}&limit=${limit}`,
+      `http://host.docker.internal:4000/api/history?range=${range}&limit=${limit}`,
+      `http://10.10.12.67:4000/api/history?range=${range}&limit=${limit}`
+    ];
+    for (const hUrl of historySources) {
+      try {
+        const controller = new AbortController();
+        const to = setTimeout(() => controller.abort(), 1000);
+        const pResp = await fetch(hUrl, { signal: controller.signal });
+        clearTimeout(to);
+        if (pResp.ok) {
+          const pJson = await pResp.json();
+          if (pJson && pJson.data && pJson.data.length > 0) {
+            return res.json(pJson);
+          }
+        }
+      } catch (_) {}
+    }
   }
 
   res.json({ success: true, range, count: rows.length, data: rows });
@@ -802,6 +825,33 @@ setInterval(() => {
   broadcastLegacy('status', { online });
   wsServer.broadcastItem('esp32_status', { value: currentStatus, ts: Date.now() });
 }, 5000).unref();
+
+// Background Server-Side Sync from Port 4000 (enables seamless side-by-side operation with zero CORS)
+async function syncFromPort4000() {
+  if (PORT === 4000) return;
+  const sources = [
+    'http://127.0.0.1:4000/api/state',
+    'http://host.docker.internal:4000/api/state',
+    'http://10.10.12.67:4000/api/state'
+  ];
+  for (const src of sources) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 600);
+      const res = await fetch(src, { signal: controller.signal });
+      clearTimeout(timeout);
+      if (res.ok) {
+        const json = await res.json();
+        const data = json && json.state && (json.state.telemetry || json.state);
+        if (data && (data.voltage_V !== undefined || data.jib_yaw_deg !== undefined)) {
+          ingestTelemetry(data);
+          break;
+        }
+      }
+    } catch (_) {}
+  }
+}
+setInterval(syncFromPort4000, 500).unref();
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`[BACKEND] ${DEVICE_ID} listening on http://0.0.0.0:${PORT}`);
