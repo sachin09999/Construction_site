@@ -1470,7 +1470,7 @@
             </div>
 
             <div class="compass-stage">
-              <svg class="compass-svg" viewBox="0 0 240 240">
+              <svg class="compass-svg" viewBox="-26 -26 292 292">
                 <defs>
                   <radialGradient id="compassBgGradDark" cx="50%" cy="50%" r="50%">
                     <stop offset="0%" stop-color="#0e1726" />
@@ -1561,12 +1561,18 @@
                 <line x1="83.2" y1="20.4" x2="85.8" y2="27.8" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
                 <line x1="101.2" y1="15.6" x2="102.6" y2="23.4" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
 
-                <!-- Cardinal Direction Markers -->
-                <polygon points="120,30 115,38 125,38" fill="#ef4444" filter="url(#northGlow)" />
-                <text x="120" y="50" font-size="14" font-weight="900" text-anchor="middle" fill="#ef4444" letter-spacing="1">N</text>
-                <text x="202" y="125" font-size="13" font-weight="900" text-anchor="middle" fill="#94a3b8">E</text>
-                <text x="120" y="206" font-size="13" font-weight="900" text-anchor="middle" fill="#94a3b8">S</text>
-                <text x="38" y="125" font-size="13" font-weight="900" text-anchor="middle" fill="#94a3b8">W</text>
+                <!-- Large Cardinal Direction Markers (Outside the Meter) -->
+                <!-- North (Top, Bold Red Beacon) -->
+                <text x="120" y="-6" font-size="22" font-weight="900" text-anchor="middle" fill="#ef4444" font-family="'JetBrains Mono', monospace" filter="url(#northGlow)">N</text>
+                
+                <!-- East (Right, Bright Cyan) -->
+                <text x="250" y="120" font-size="22" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#38bdf8" font-family="'JetBrains Mono', monospace">E</text>
+                
+                <!-- South (Bottom, Bright Cyan) -->
+                <text x="120" y="258" font-size="22" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#38bdf8" font-family="'JetBrains Mono', monospace">S</text>
+                
+                <!-- West (Left, Bright Cyan) -->
+                <text x="-10" y="120" font-size="22" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#38bdf8" font-family="'JetBrains Mono', monospace">W</text>
 
                 <!-- Degree Calibration Annotations -->
                 <text x="162" y="48" font-size="7.5" font-weight="700" text-anchor="middle" fill="#64748b">030°</text>
