@@ -1924,40 +1924,45 @@
                 </defs>
 
                 <!-- Bezel & Background Dial Plate -->
-                <circle cx="150" cy="115" r="110" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
-                <circle cx="150" cy="115" r="104" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" stroke-dasharray="3 3" />
+                <circle cx="150" cy="112" r="108" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+                <circle cx="150" cy="112" r="102" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" stroke-dasharray="3 3" />
 
-                <!-- Base 240° Track Arc (R=90 from -120° to +120°) -->
-                <path d="M 72.1 160 A 90 90 0 1 1 227.9 160" fill="none" stroke="rgba(255, 255, 255, 0.12)" stroke-width="7" stroke-linecap="round" />
+                <!-- Base 230° Track Arc (R=92 from -115° to +115°) -->
+                <path d="M 66.6 150.9 A 92 92 0 1 1 233.4 150.9" fill="none" stroke="rgba(255, 255, 255, 0.12)" stroke-width="7" stroke-linecap="round" />
 
-                <!-- Active Colored Dynamic Glow Arc (Length = 377) -->
-                <path id="speedTachoArc" d="M 72.1 160 A 90 90 0 1 1 227.9 160" fill="none" stroke="url(#tachoSweepGrad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="111" filter="url(#neonTacho)" style="transition: stroke-dashoffset 0.25s ease;" />
+                <!-- Active Colored Dynamic Glow Arc (Length = 369) -->
+                <path id="speedTachoArc" d="M 66.6 150.9 A 92 92 0 1 1 233.4 150.9" fill="none" stroke="url(#tachoSweepGrad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="369" stroke-dashoffset="108" filter="url(#neonTacho)" />
 
                 <!-- Graduation Ticks (0, 51, 102, 153, 204, 255) -->
-                <line x1="80.7" y1="155.0" x2="72.1" y2="160.0" stroke="#ffffff" stroke-width="3" />
-                <line x1="76.1" y1="91.0" x2="64.4" y2="87.2" stroke="#e2e8f0" stroke-width="2.5" />
-                <line x1="117.1" y1="40.7" x2="113.4" y2="32.8" stroke="#38bdf8" stroke-width="2.5" />
-                <line x1="182.9" y1="40.7" x2="186.6" y2="32.8" stroke="#38bdf8" stroke-width="2.5" />
-                <line x1="223.9" y1="91.0" x2="235.6" y2="87.2" stroke="#00f0ff" stroke-width="2.5" />
-                <line x1="219.3" y1="155.0" x2="227.9" y2="160.0" stroke="#00f0ff" stroke-width="3" />
+                <line x1="74.8" y1="147.0" x2="66.6" y2="150.9" stroke="#ffffff" stroke-width="3" />
+                <line x1="73.8" y1="84.6" x2="62.4" y2="80.4" stroke="#e2e8f0" stroke-width="2.5" />
+                <line x1="117.9" y1="35.3" x2="114.1" y2="27.3" stroke="#38bdf8" stroke-width="2.5" />
+                <line x1="182.1" y1="35.3" x2="185.9" y2="27.3" stroke="#38bdf8" stroke-width="2.5" />
+                <line x1="226.2" y1="84.6" x2="237.6" y2="80.4" stroke="#00f0ff" stroke-width="2.5" />
+                <line x1="225.2" y1="147.0" x2="233.4" y2="150.9" stroke="#00f0ff" stroke-width="3" />
 
-                <!-- Outer Scale Numbers (Completely Outside the Arc - Zero Collision) -->
-                <text x="50" y="176" font-size="12" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">0</text>
-                <text x="44" y="94" font-size="12" font-weight="900" fill="#ffffff" font-family="'JetBrains Mono', monospace" text-anchor="middle">50</text>
-                <text x="102" y="30" font-size="12" font-weight="900" fill="#38bdf8" font-family="'JetBrains Mono', monospace" text-anchor="middle">100</text>
-                <text x="198" y="30" font-size="12" font-weight="900" fill="#38bdf8" font-family="'JetBrains Mono', monospace" text-anchor="middle">150</text>
-                <text x="256" y="94" font-size="12" font-weight="900" fill="#00f0ff" font-family="'JetBrains Mono', monospace" text-anchor="middle">200</text>
-                <text x="250" y="176" font-size="12" font-weight="900" fill="#ffffff" font-family="'JetBrains Mono', monospace" text-anchor="middle">255</text>
+                <!-- Outer Scale Numbers (Completely Outside Arc - Zero Collisions) -->
+                <text x="48" y="166" font-size="12" font-weight="900" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" text-anchor="middle">0</text>
+                <text x="42" y="85" font-size="12" font-weight="900" fill="#ffffff" font-family="'JetBrains Mono', monospace" text-anchor="middle">50</text>
+                <text x="105" y="18" font-size="12" font-weight="900" fill="#38bdf8" font-family="'JetBrains Mono', monospace" text-anchor="middle">100</text>
+                <text x="195" y="18" font-size="12" font-weight="900" fill="#38bdf8" font-family="'JetBrains Mono', monospace" text-anchor="middle">150</text>
+                <text x="258" y="85" font-size="12" font-weight="900" fill="#00f0ff" font-family="'JetBrains Mono', monospace" text-anchor="middle">200</text>
+                <text x="252" y="166" font-size="12" font-weight="900" fill="#ffffff" font-family="'JetBrains Mono', monospace" text-anchor="middle">255</text>
 
-                <!-- Rotating Hubless Pointer Needle (No Pin, Zero Overlap with 180) -->
-                <g class="gauge-needle" id="needleThrottle" style="transform-origin: 150px 115px; transform: rotate(49.4deg); transition: transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);">
-                  <polygon points="148.5,58 151.5,58 150.5,28 149.5,28" fill="#ffffff" />
-                  <polygon points="149,30 151,30 150,20" fill="#00f0ff" filter="url(#neonTacho)" />
+                <!-- Central Cluster Disc (Separates Text From Pointer Needle) -->
+                <circle cx="150" cy="112" r="56" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.16)" stroke-width="1.2" />
+
+                <!-- Rotating Precision Indicator Needle (Sweeps Track from r=58 to r=94) -->
+                <g class="gauge-needle" id="needleThrottle" style="transform-origin: 150px 112px; transform: rotate(47.4deg);">
+                  <polygon points="147.8,58 152.2,58 150.8,24 149.2,24" fill="#ffffff" />
+                  <polygon points="148.8,26 151.2,26 150,14" fill="#00f0ff" filter="url(#neonTacho)" />
                 </g>
 
-                <!-- Integrated Digital Speed Readout (Pure Unobstructed Center - Zero Overlap) -->
-                <text id="speedDisplay" x="150" y="125" font-size="56" font-weight="900" fill="#ffffff" font-family="'JetBrains Mono', monospace" text-anchor="middle" dominant-baseline="central" filter="url(#neonTacho)">180</text>
-                <text id="speedTier" x="150" y="160" font-size="12" font-weight="800" fill="#38bdf8" font-family="'JetBrains Mono', monospace" text-anchor="middle" letter-spacing="1.2">CRUISE SPEED • 71%</text>
+                <!-- Clean Digital Speed Readout (Standard Clean Solid '0', No Dot Artifact) -->
+                <text id="speedDisplay" x="150" y="112" font-size="58" font-weight="900" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif" text-anchor="middle" dominant-baseline="central" filter="url(#neonTacho)">180</text>
+
+                <!-- Sub-Tier Readout (Placed Safely 45px Below Arc - Zero Collision) -->
+                <text id="speedTier" x="150" y="194" font-size="12.5" font-weight="800" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif" text-anchor="middle" letter-spacing="1.2">CRUISE SPEED • 71%</text>
               </svg>
             </div>
 
@@ -2303,16 +2308,16 @@
         const pct = Math.round((v / 255) * 100);
         if ($("speedPct")) $("speedPct").textContent = `${pct}% PWM`;
 
-        // Update Arc Dashoffset (Arc length = 377)
+        // Update Arc Dashoffset (Arc length = 369)
         if ($("speedTachoArc")) {
-          const maxOffset = 377;
+          const maxOffset = 369;
           const offset = Math.max(0, maxOffset - (v / 255) * maxOffset);
           $("speedTachoArc").style.strokeDashoffset = offset;
         }
 
-        // Rotate Tachometer Needle (-120deg at 0 PWM to +120deg at 255 PWM)
+        // Rotate Tachometer Needle (-115deg at 0 PWM to +115deg at 255 PWM)
         if ($("needleThrottle")) {
-          const angle = -120 + (v / 255) * 240;
+          const angle = -115 + (v / 255) * 230;
           $("needleThrottle").style.transform = `rotate(${angle.toFixed(1)}deg)`;
         }
 
@@ -2332,6 +2337,8 @@
       }
 
       window.setPreset = function(spd) {
+        if ($("needleThrottle")) $("needleThrottle").style.transition = "transform 0.2s cubic-bezier(0.1, 0.9, 0.2, 1)";
+        if ($("speedTachoArc")) $("speedTachoArc").style.transition = "stroke-dashoffset 0.2s ease";
         updateSpeedUI(spd);
         sendAction("crane_speed", undefined, spd);
       };
@@ -2344,10 +2351,15 @@
       };
 
       if ($("speedSlider")) {
+        // High-frequency 60 FPS buttery smooth real-time tracking while dragging
         $("speedSlider").addEventListener("input", e => {
+          if ($("needleThrottle")) $("needleThrottle").style.transition = "none";
+          if ($("speedTachoArc")) $("speedTachoArc").style.transition = "none";
           updateSpeedUI(e.target.value);
         });
         $("speedSlider").addEventListener("change", e => {
+          if ($("needleThrottle")) $("needleThrottle").style.transition = "transform 0.2s cubic-bezier(0.1, 0.9, 0.2, 1)";
+          if ($("speedTachoArc")) $("speedTachoArc").style.transition = "stroke-dashoffset 0.2s ease";
           sendAction("crane_speed", undefined, Number(e.target.value));
         });
       }
