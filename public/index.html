@@ -1347,6 +1347,15 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      color: #ffffff !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
+    }
+    .chart-panel .badge {
+      background: rgba(2, 6, 23, 0.85) !important;
+      color: #ffffff !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+      text-shadow: 0 1px 2px #000 !important;
+      font-weight: 800 !important;
     }
     .chart-canvas-wrap {
       flex: 1;
@@ -2933,11 +2942,17 @@
         const times = validRows.map(r => new Date(r.timestamp || r.received_at));
 
         if (values.length < 2) {
-          ctx.fillStyle = isDark ? "rgba(148, 163, 184, 0.7)" : "rgba(100, 116, 139, 0.8)";
-          ctx.font = "700 13px 'Plus Jakarta Sans', sans-serif";
+          ctx.save();
+          ctx.shadowColor = "rgba(0, 0, 0, 0.95)";
+          ctx.shadowBlur = 4;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 1;
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "900 13px 'Plus Jakarta Sans', sans-serif";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           ctx.fillText(emptyMsg || "No historical telemetry recorded for this selection", W / 2, H / 2);
+          ctx.restore();
           if ($(statId)) {
             $(statId).innerHTML = `<strong>-- ${unit}</strong>`;
           }
@@ -2951,7 +2966,7 @@
         const avg = sum / values.length;
 
         if ($(statId)) {
-          $(statId).innerHTML = `<strong>${latest.toFixed(1)} ${unit}</strong> <span style="opacity:0.85; font-size:11px; font-weight:800; margin-left:6px;">(MIN: ${min.toFixed(1)} | MAX: ${max.toFixed(1)} | AVG: ${avg.toFixed(1)})</span>`;
+          $(statId).innerHTML = `<strong>${latest.toFixed(1)} ${unit}</strong> <span style="opacity:0.95; font-size:11px; font-weight:800; margin-left:6px; color:#ffffff;">(MIN: ${min.toFixed(1)} | MAX: ${max.toFixed(1)} | AVG: ${avg.toFixed(1)})</span>`;
         }
 
         if (min === max) { min -= 1; max += 1; }
@@ -2974,7 +2989,7 @@
           const y = marginTop + (chartH / ySteps) * i;
           
           // Horizontal gridline
-          ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(0, 0, 0, 0.06)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
           ctx.lineWidth = 1;
           ctx.setLineDash([3, 4]);
           ctx.beginPath();
@@ -2984,20 +2999,26 @@
 
           // Left Y-Axis Tick Mark
           ctx.setLineDash([]);
-          ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)";
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+          ctx.lineWidth = 1.5;
           ctx.beginPath();
-          ctx.moveTo(marginLeft - 4, y);
+          ctx.moveTo(marginLeft - 5, y);
           ctx.lineTo(marginLeft, y);
           ctx.stroke();
 
-          // Y-axis value labels
+          // Y-axis value labels (Bright white with dark contrast drop-shadow)
           const valAtY = max - (range / ySteps) * i;
-          ctx.fillStyle = isDark ? "#cbd5e1" : "#475569";
-          ctx.font = "800 11px 'JetBrains Mono', monospace";
+          ctx.save();
+          ctx.shadowColor = "rgba(0, 0, 0, 0.95)";
+          ctx.shadowBlur = 4;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 1;
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "900 12px 'JetBrains Mono', monospace";
           ctx.textAlign = "right";
           ctx.textBaseline = "middle";
-          ctx.fillText(valAtY.toFixed(1), marginLeft - 6, y);
+          ctx.fillText(valAtY.toFixed(1), marginLeft - 8, y);
+          ctx.restore();
         }
 
         // Coordinate Grid: Vertical Time Gridlines & Bottom X-Axis Time Labels & Ticks
@@ -3008,7 +3029,7 @@
           const x = marginLeft + frac * chartW;
 
           // Vertical gridline
-          ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.05)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.10)";
           ctx.lineWidth = 1;
           ctx.setLineDash([3, 4]);
           ctx.beginPath();
@@ -3018,28 +3039,34 @@
 
           // Bottom X-Axis Tick Mark
           ctx.setLineDash([]);
-          ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)";
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+          ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.moveTo(x, marginTop + chartH);
-          ctx.lineTo(x, marginTop + chartH + 4);
+          ctx.lineTo(x, marginTop + chartH + 5);
           ctx.stroke();
 
-          // Time Label below tick
+          // Time Label below tick (Bright white with dark contrast drop-shadow)
           const timeIdx = Math.min(times.length - 1, Math.round(frac * (times.length - 1)));
           const tObj = times[timeIdx];
           const label = formatTimeLabel(tObj, timeSpanMs);
 
-          ctx.fillStyle = isDark ? "#94a3b8" : "#64748b";
-          ctx.font = "700 10.5px 'JetBrains Mono', monospace";
+          ctx.save();
+          ctx.shadowColor = "rgba(0, 0, 0, 0.95)";
+          ctx.shadowBlur = 4;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 1;
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "900 11.5px 'JetBrains Mono', monospace";
           ctx.textAlign = (i === 0) ? "left" : ((i === xSteps) ? "right" : "center");
           ctx.textBaseline = "top";
-          ctx.fillText(label, x, marginTop + chartH + 6);
+          ctx.fillText(label, x, marginTop + chartH + 7);
+          ctx.restore();
         }
 
         // Solid Axis Spine (Frame)
-        ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.25)" : "rgba(0, 0, 0, 0.25)";
-        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
+        ctx.lineWidth = 1.5;
         ctx.setLineDash([]);
         // Left vertical axis
         ctx.beginPath();
