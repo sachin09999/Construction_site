@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Under Construction Site Dashboard — Projector HUD</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --proj-yellow: #ffe600;
+      --proj-amber: #ffae00;
+      --proj-orange: #ff6d00;
+      --proj-white: #ffffff;
+      --glass-bg: rgba(255, 200, 0, 0.08);
+      --glass-border: rgba(255, 214, 0, 0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
+      font-family: 'Chakra Petch', 'Inter', sans-serif;
+      background-color: #14181f;
+      color: var(--proj-white);
+    }
+
+    @media (max-width: 1023px) {
+      html, body {
+        overflow-y: auto !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+    }
+
+    /* Ultra-crisp projector legibility shadows over live video */
+    .proj-text-shadow {
+      text-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.95),
+        0 0 22px rgba(0, 0, 0, 0.85),
+        0 1px 2px rgba(0, 0, 0, 1);
+    }
+
+    .proj-glow-yellow {
+      text-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.95),
+        0 0 24px rgba(255, 230, 0, 0.55);
+    }
+
+    .proj-glow-orange {
+      text-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.95),
+        0 0 24px rgba(255, 109, 0, 0.65);
+    }
+
+    /* Transparent glass cards — zero heavy black backgrounds */
+    .hud-glass {
+      background: linear-gradient(
+        145deg,
+        rgba(255, 214, 0, 0.11) 0%,
+        rgba(255, 109, 0, 0.06) 100%
+      );
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 2px solid rgba(255, 214, 0, 0.72);
+      box-shadow:
+        0 0 20px rgba(255, 174, 0, 0.15),
+        inset 0 0 14px rgba(255, 230, 0, 0.07);
+      border-radius: 16px;
+    }
+
+    .hud-glass-orange {
+      background: linear-gradient(
+        145deg,
+        rgba(255, 109, 0, 0.12) 0%,
+        rgba(255, 214, 0, 0.06) 100%
+      );
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 2px solid rgba(255, 125, 0, 0.82);
+      box-shadow:
+        0 0 20px rgba(255, 109, 0, 0.18),
+        inset 0 0 14px rgba(255, 145, 0, 0.08);
+      border-radius: 16px;
+    }
+
+    /* Navigation Tabs */
+    .nav-tab {
+      background: rgba(255, 214, 0, 0.08);
+      backdrop-filter: blur(4px);
+      border: 2px solid rgba(255, 214, 0, 0.55);
+      color: #ffe600;
+      transition: all 0.2s ease;
+      border-radius: 12px;
+    }
+
+    .nav-tab:hover {
+      background: rgba(255, 214, 0, 0.22);
+      border-color: #ffe600;
+      transform: translateY(-1px);
+    }
+
+    .nav-tab.active {
+      background: linear-gradient(90deg, #ffe600 0%, #ff7b00 100%);
+      border-color: #ffffff;
+      color: #0d0d0d;
+      text-shadow: none;
+      box-shadow: 0 0 24px rgba(255, 214, 0, 0.65);
+    }
+
+    /* Projector Scale Typography - Max Sizing for Under-Meter Readouts */
+    .title-projector {
+      font-size: clamp(0.95rem, 1.35vw, 1.55rem);
+      letter-spacing: 0.03em;
+    }
+
+    .tab-projector {
+      font-size: clamp(0.8rem, 1vw, 1.05rem);
+      letter-spacing: 0.03em;
+    }
+
+    .label-projector {
+      font-size: clamp(1.4rem, 2.1vw, 2.5rem);
+      line-height: 1.1;
+      letter-spacing: 0.05em;
+      font-weight: 900;
+    }
+
+    /* Giant Under-Meter Labels (VOLTAGE, CURRENT, POWER, INCLINE, JIB ANGLE) */
+    .meter-label {
+      font-size: clamp(1.9rem, 2.9vw, 3.5rem);
+      line-height: 1;
+      letter-spacing: 0.09em;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .value-projector {
+      font-size: clamp(2.4rem, 3.8vw, 4.4rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      font-weight: 900;
+    }
+
+    .value-projector-lg {
+      font-size: clamp(3.2rem, 5.2vw, 5.8rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      font-weight: 900;
+    }
+
+    /* Custom Huge Range Slider for Projector */
+    /* Sleek Motor Throttle Slider (Matching Reference UI) */
+    input[type='range'].projector-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 14px;
+      background: linear-gradient(to right, #FFE600 0%, #FF8F00 9%, rgba(255, 255, 255, 0.28) 9%, rgba(255, 255, 255, 0.28) 100%);
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    input[type='range'].projector-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 4px solid #FF8F00;
+      box-shadow: 0 0 16px rgba(255, 143, 0, 0.95);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    input[type='range'].projector-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    input[type='range'].projector-slider::-moz-range-thumb {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 4px solid #FF8F00;
+      box-shadow: 0 0 16px rgba(255, 143, 0, 0.95);
+      cursor: pointer;
+    }
+
+    .svg-drop-shadow {
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.9));
+    }
+
+    /* Range Buttons - Always High Contrast White/Yellow */
+    .range-btn {
+      transition: all 0.2s ease;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+    }
+    .range-btn.active {
+      background: #FFE600 !important;
+      color: #000000 !important;
+      border: 2px solid #FFFFFF !important;
+      box-shadow: 0 0 16px rgba(255, 230, 0, 0.6);
+    }
+    .range-btn:not(.active) {
+      background: rgba(255, 255, 255, 0.14) !important;
+      color: #FFFFFF !important;
+      border: 2px solid rgba(255, 255, 255, 0.45) !important;
+    }
+    .range-btn:not(.active):hover {
+      background: rgba(255, 214, 0, 0.3) !important;
+      border-color: #FFE600 !important;
+      color: #FFE600 !important;
+    }
+
+    /* Date Picker Input - Crystal-Clear Legibility */
+    input[type='date'].projector-date-input {
+      color-scheme: dark;
+      color: #FFFFFF !important;
+      background: rgba(15, 23, 42, 0.75) !important;
+      border: 2px solid rgba(255, 214, 0, 0.75) !important;
+      border-radius: 14px;
+      padding: 6px 14px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      outline: none;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+    input[type='date'].projector-date-input::-webkit-calendar-picker-indicator {
+      filter: invert(1) brightness(1.5) drop-shadow(0 0 4px #FFE600);
+      cursor: pointer;
+    }
+
+    /* Maximize Chart Button */
+    .btn-chart-maximize {
+      background: rgba(255, 214, 0, 0.15);
+      border: 2px solid rgba(255, 214, 0, 0.75);
+      color: #FFE600;
+      padding: 6px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 12px rgba(255, 214, 0, 0.25);
+    }
+    .btn-chart-maximize:hover {
+      background: #FFE600;
+      color: #000000;
+      box-shadow: 0 0 20px rgba(255, 214, 0, 0.8);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="relative h-screen max-h-screen w-screen overflow-hidden flex flex-col justify-between">
+
+  <!-- LIVE CONSTRUCTION SITE CANVAS / VIDEO LAYER -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <!-- Animated Live 3D-Style Construction Site Simulation Canvas -->
+    <canvas id="siteCanvas" class="w-full h-full block"></canvas>
+    <!-- Optional User Uploaded Live Site Video -->
+    <video id="customVideo" class="hidden w-full h-full object-cover" autoplay loop muted playsinline></video>
+    <!-- Ultra-light contrast vignette only at edges so center video remains crystal clear -->
+    <div class="absolute inset-0" style="background: radial-gradient(circle at center, rgba(0,0,0,0.06) 45%, rgba(0,0,0,0.34) 100%);"></div>
+  </div>
+
+  <!-- MAIN TRANSPARENT PROJECTOR HUD WRAPPER (Strict 100vh Responsive Layout) -->
+  <div class="relative z-10 flex flex-col h-full w-full p-2 sm:p-2.5 lg:p-3 gap-2 overflow-hidden">
+
+    <!-- TOP HEADER & COMPACT NAVIGATION TABS -->
+    <header class="hud-glass px-3 sm:px-4 py-1.5 shrink-0 flex flex-wrap 2xl:flex-nowrap items-center justify-between gap-2">
+      <!-- Brand / Title -->
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <div class="p-1 sm:p-1.5 rounded-xl border border-[#FFE600] bg-[#FFE600]/15 svg-drop-shadow">
+          <!-- Glowing Tower Crane Icon -->
+          <svg class="w-6 h-6 sm:w-7 sm:h-7 text-[#FFE600]" viewBox="0 0 64 64" fill="none">
+            <path d="M18 58V10M26 58V10M14 58H30M18 22L26 16M18 34L26 28M18 46L26 40" stroke="#FFE600" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M8 14H58L50 8H14L8 14Z" stroke="#FF6D00" stroke-width="3.5" stroke-linejoin="round" fill="rgba(255,109,0,0.25)"/>
+            <path d="M52 14V34M48 34H56L52 41L48 34Z" stroke="#FFE600" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="8" y="14" width="7" height="7" rx="1.5" fill="#FF6D00"/>
+          </svg>
+        </div>
+        <h1 class="title-projector font-black uppercase text-[#FFE600] proj-glow-yellow tracking-wider">
+          UNDER CONSTRUCTION SITE DASHBOARD
+        </h1>
+      </div>
+
+      <!-- 3 Projector Navigation Tabs + Live Controls -->
+      <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+        <nav class="grid grid-cols-3 gap-1.5">
+          <button id="tab-btn-twin" onclick="switchTab('twin')" class="nav-tab active tab-projector font-black uppercase px-2.5 sm:px-3.5 py-1 flex items-center justify-center gap-1.5 cursor-pointer">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="3"/>
+              <path d="M16 7V16L22 20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <span>DIGITAL TWIN</span>
+          </button>
+
+          <button id="tab-btn-throttle" onclick="switchTab('throttle')" class="nav-tab tab-projector font-black uppercase px-2.5 sm:px-3.5 py-1 flex items-center justify-center gap-1.5 cursor-pointer">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 32 32" fill="none">
+              <path d="M18 4L8 18H16L14 28L24 14H16L18 4Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
+            </svg>
+            <span>THROTTLE</span>
+          </button>
+
+          <button id="tab-btn-history" onclick="switchTab('history')" class="nav-tab tab-projector font-black uppercase px-2.5 sm:px-3.5 py-1 flex items-center justify-center gap-1.5 cursor-pointer">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 32 32" fill="none">
+              <path d="M4 26H28M6 21L13 14L18 18L26 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>HISTORY</span>
+          </button>
+        </nav>
+
+        <button id="simToggleBtn" onclick="toggleSimulation()" class="px-3 sm:px-4 py-1.5 rounded-xl border-2 border-[#FFFFFF]/80 bg-[#FF6D00] hover:bg-[#FF8F00] text-white font-black text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_16px_rgba(255,109,0,0.55)] cursor-pointer transition shrink-0">
+          ▶ LIVE
+        </button>
+      </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 1: DIGITAL TWIN (STRICT NO-SCROLL RESPONSIVE HUD ARCHITECTURE)    -->
+    <!-- ===================================================================== -->
+    <main id="view-twin" class="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-2.5 items-stretch h-full overflow-hidden">
+
+      <!-- LEFT PANEL: 3D CRANE SIMULATION + RESPONSIVE COMPASS WITH NO-SCROLL AUTO-FIT -->
+      <section class="lg:col-span-4 hud-glass relative p-2 sm:p-2.5 flex flex-col items-center justify-between gap-1.5 h-full min-h-0 overflow-hidden">
+        <!-- LARGE INLINE 3D CRANE SIMULATION STAGE (LOCKED CAMERA — ROTATES ONLY WITH CRANE DIRECTION) -->
+        <div class="w-full h-[38%] min-h-[150px] rounded-2xl border-2 border-[#FFE600] bg-[#0B0E14]/85 shadow-[0_0_24px_rgba(255,230,0,0.4)] relative overflow-hidden shrink-0">
+          <canvas id="crane3dCanvas" class="w-full h-full block pointer-events-none"></canvas>
+          <div class="absolute top-2 left-2 px-2.5 py-1 rounded-lg border border-[#FF3D00] bg-[#FF3D00]/25 text-[#FFE600] text-xs sm:text-sm font-black tracking-wider proj-text-shadow pointer-events-none">
+            N • 000°
+          </div>
+          <div class="absolute top-2 right-2.5 px-2 py-0.5 rounded-md border border-[#FFE600]/60 bg-black/60 pointer-events-none flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse"></span>
+            <span class="text-[#FFE600] font-black text-[10px] sm:text-xs tracking-wider uppercase">3D SIM</span>
+          </div>
+        </div>
+
+        <!-- Clean, Ultra-Crisp Circular Compass Dial (Auto-scales to remaining height) -->
+        <div class="relative w-full flex-1 min-h-0 flex items-center justify-center p-0.5 overflow-hidden">
+          <svg id="compassSvg" viewBox="-20 -28 440 445" class="h-full max-h-full max-w-full aspect-square svg-drop-shadow overflow-visible">
+            <defs>
+              <linearGradient id="compassRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFE600"/>
+                <stop offset="100%" stop-color="#FF6D00"/>
+              </linearGradient>
+              <linearGradient id="northBadgeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#FF5500"/>
+                <stop offset="100%" stop-color="#D50000"/>
+              </linearGradient>
+              <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="5" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Outer & Inner Transparent Compass Rings (Expanded to 176px radius) -->
+            <circle cx="200" cy="200" r="176" fill="rgba(255, 214, 0, 0.07)" stroke="url(#compassRingGrad)" stroke-width="8.5"/>
+            <circle cx="200" cy="200" r="126" fill="none" stroke="rgba(255, 230, 0, 0.45)" stroke-width="2.5" stroke-dasharray="6 8"/>
+
+            <!-- Crisp Major & Minor Degree Ticks + Degree Text (030°, 060°, etc.) -->
+            <g id="compassTicks"></g>
+
+            <!-- STRONGLY HIGHLIGHTED NORTH ('N') GLOWING ORANGE-RED BADGE AT TOP -->
+            <g filter="url(#neonGlow)">
+              <polygon points="200,28 186,10 214,10" fill="#FF3D00" stroke="#FFFFFF" stroke-width="2.5"/>
+              <rect x="168" y="-22" width="64" height="42" rx="14" fill="url(#northBadgeGrad)" stroke="#FFE600" stroke-width="3.5"/>
+              <text x="200" y="9" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="32" font-weight="900">N</text>
+            </g>
+
+            <!-- Cardinal E, S, W Markers (Large & Bold Projector Font) -->
+            <text x="398" y="212" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.9))">E</text>
+            <text x="200" y="408" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.9))">S</text>
+            <text x="2" y="212" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.9))">W</text>
+
+            <!-- REALISTIC 3D-STYLE TOWER CRANE JIB MODEL ROTATING ACROSS COMPASS DIAL (MATCHING REFERENCE CRANE) -->
+            <g id="craneJibRotor" transform="rotate(212.7 200 200)">
+              <!-- Defs for Crane Jib & Truss Styling -->
+              <defs>
+                <linearGradient id="craneTrussGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#FFB300"/>
+                  <stop offset="45%" stop-color="#FF6D00"/>
+                  <stop offset="100%" stop-color="#D50000"/>
+                </linearGradient>
+                <linearGradient id="craneApexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFE600"/>
+                  <stop offset="100%" stop-color="#FF3D00"/>
+                </linearGradient>
+                <filter id="craneDropGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.85"/>
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFE600" flood-opacity="0.5"/>
+                </filter>
+              </defs>
+
+              <!-- JIB CRANE ARM ASSEMBLY (Rotates around center pivot 200, 200) -->
+              <g filter="url(#craneDropGlow)">
+
+                <!-- 1. COUNTER-JIB ARM (Extending Backward: y = 200 down to y = 330) -->
+                <!-- Counter-Jib Twin Steel Girders -->
+                <line x1="192" y1="200" x2="192" y2="310" stroke="#FF5500" stroke-width="4.5" stroke-linecap="round"/>
+                <line x1="208" y1="200" x2="208" y2="310" stroke="#FF5500" stroke-width="4.5" stroke-linecap="round"/>
+                <!-- Lattice cross-ties on counter-jib -->
+                <line x1="192" y1="220" x2="208" y2="230" stroke="#FFE600" stroke-width="2"/>
+                <line x1="208" y1="220" x2="192" y2="230" stroke="#FFE600" stroke-width="2"/>
+                <line x1="192" y1="245" x2="208" y2="255" stroke="#FFE600" stroke-width="2"/>
+                <line x1="208" y1="245" x2="192" y2="255" stroke="#FFE600" stroke-width="2"/>
+                <line x1="192" y1="270" x2="208" y2="280" stroke="#FFE600" stroke-width="2"/>
+                <line x1="208" y1="270" x2="192" y2="280" stroke="#FFE600" stroke-width="2"/>
+
+                <!-- Concrete Counterweight Ballast Slabs (Heavy grey/orange blocks) -->
+                <rect x="180" y="285" width="40" height="32" rx="4" fill="#E05600" stroke="#FFE600" stroke-width="3"/>
+                <line x1="180" y1="296" x2="220" y2="296" stroke="#FFFFFF" stroke-width="1.8"/>
+                <line x1="180" y1="306" x2="220" y2="306" stroke="#FFFFFF" stroke-width="1.8"/>
+                <rect x="187" y="318" width="26" height="12" rx="2" fill="#B33600" stroke="#FFB300" stroke-width="2"/>
+
+                <!-- Counter-Jib Guy Tie Cable (Apex to Counterweight) -->
+                <line x1="200" y1="200" x2="200" y2="320" stroke="#FFFFFF" stroke-width="2.5" stroke-dasharray="6 3"/>
+
+                <!-- 2. MAIN FORWARD WORKING JIB (Extending Forward: y = 200 up to y = 40) -->
+                <!-- Main Triangular Lattice Truss (Double outer chords tapering forward) -->
+                <polygon points="190,200 195,50 205,50 210,200" fill="rgba(255,109,0,0.18)" stroke="#FF6D00" stroke-width="2"/>
+                <line x1="191" y1="200" x2="196" y2="46" stroke="url(#craneTrussGrad)" stroke-width="5" stroke-linecap="round"/>
+                <line x1="209" y1="200" x2="204" y2="46" stroke="url(#craneTrussGrad)" stroke-width="5" stroke-linecap="round"/>
+                <line x1="200" y1="200" x2="200" y2="42" stroke="#FFE600" stroke-width="3" stroke-linecap="round"/>
+
+                <!-- Continuous Zig-Zag K-Truss Lattice Lacing -->
+                <polyline points="
+                  191,195 200,185 209,195
+                  192,175 200,165 208,175
+                  193,155 200,145 207,155
+                  193,135 200,125 207,135
+                  194,115 200,105 206,115
+                  194,95  200,85  206,95
+                  195,75  200,65  205,75
+                  195,55  200,46  205,55
+                " fill="none" stroke="#FFE600" stroke-width="2.5" stroke-linejoin="round"/>
+
+                <!-- Forward Jib Tip Sheave Head (Pointer Tip reaching outer degree dial) -->
+                <circle cx="200" cy="42" r="7" fill="#FFE600" stroke="#D50000" stroke-width="2.5"/>
+                <polygon points="200,24 191,44 209,44" fill="#FF1744" stroke="#FFFFFF" stroke-width="2.5"/>
+
+                <!-- High-Tension Jib Guy Cables (Running along the top of truss) -->
+                <line x1="200" y1="200" x2="197" y2="70" stroke="#FFFFFF" stroke-width="2" opacity="0.8"/>
+                <line x1="200" y1="200" x2="203" y2="70" stroke="#FFFFFF" stroke-width="2" opacity="0.8"/>
+
+                <!-- 3. HOIST TROLLEY & LOAD HOOK (Stationed on Jib Track at y = 90) -->
+                <!-- Trolley Frame Riding On Jib Rails -->
+                <rect x="188" y="85" width="24" height="12" rx="3" fill="#FFE600" stroke="#0F172A" stroke-width="2.2"/>
+                <circle cx="193" cy="91" r="2.5" fill="#0F172A"/>
+                <circle cx="207" cy="91" r="2.5" fill="#0F172A"/>
+                <!-- Red Hoist Cable Lines -->
+                <line x1="196" y1="97" x2="196" y2="128" stroke="#FF1744" stroke-width="2.5"/>
+                <line x1="204" y1="97" x2="204" y2="128" stroke="#FF1744" stroke-width="2.5"/>
+                <!-- Heavy Cargo Hook Block -->
+                <rect x="193" y="128" width="14" height="10" rx="2" fill="#D50000" stroke="#FFE600" stroke-width="1.8"/>
+                <path d="M200 138 V146 A5 5 0 0 1 193 148" fill="none" stroke="#FFE600" stroke-width="3" stroke-linecap="round"/>
+
+                <!-- 4. OPERATOR CABIN (Offset to side of slewing mast, matching Reference Image) -->
+                <g transform="translate(162, 178)">
+                  <!-- Cabin body with safety railings & gangway -->
+                  <rect x="0" y="0" width="22" height="26" rx="4" fill="#FF5500" stroke="#FFE600" stroke-width="2.5"/>
+                  <!-- Operator panoramic glass window (glowing blue) -->
+                  <rect x="3" y="4" width="16" height="13" rx="2" fill="#38BDF8" stroke="#FFFFFF" stroke-width="1.5"/>
+                  <line x1="11" y1="4" x2="11" y2="17" stroke="#0F172A" stroke-width="1"/>
+                  <!-- Platform railing -->
+                  <line x1="-3" y1="26" x2="25" y2="26" stroke="#FFE600" stroke-width="2.5"/>
+                  <line x1="-3" y1="20" x2="-3" y2="26" stroke="#FFE600" stroke-width="2"/>
+                  <!-- Cabin Spot/Working Light (Bright Yellow Beam) -->
+                  <circle cx="11" cy="22" r="2.5" fill="#FFE600"/>
+                </g>
+
+                <!-- 5. TOWER TOP APEX / CATHEAD (A-Frame Pyramid at Center 200, 200) -->
+                <circle cx="200" cy="200" r="30" fill="rgba(15, 23, 42, 0.95)" stroke="#FF6D00" stroke-width="4"/>
+                <circle cx="200" cy="200" r="21" fill="url(#craneApexGrad)" stroke="#FFFFFF" stroke-width="2"/>
+
+                <!-- Slewing Ring Ball Bearing Track -->
+                <circle cx="200" cy="200" r="14" fill="none" stroke="#0F172A" stroke-width="3.5" stroke-dasharray="4 3"/>
+
+                <!-- Apex Mast Peak Tower -->
+                <polygon points="200,180 190,200 210,200" fill="#FFE600" stroke="#D50000" stroke-width="2"/>
+                <circle cx="200" cy="200" r="6" fill="#D50000"/>
+
+                <!-- Crane Aircraft Warning Beacon (Flashing Red/White on Cathead Top) -->
+                <circle cx="200" cy="180" r="4.5" fill="#FF0000" stroke="#FFFFFF" stroke-width="1.5">
+                  <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/>
+                </circle>
+
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Compact Heading Readout -->
+        <div class="shrink-0 text-center flex flex-col items-center gap-0.5">
+          <div id="jibAngleValue" class="value-projector-lg font-black text-[#FFFFFF] proj-text-shadow leading-none">
+            212.7°
+          </div>
+          <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-0.5">
+            JIB ANGLE
+          </div>
+          <div id="jibStatusBadge" class="mt-1 px-5 py-0.5 rounded-xl border border-white bg-[#FF6D00] text-white text-xs sm:text-sm font-black uppercase tracking-widest shadow">
+            STOPPED
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT 2x2 GRID: 4 TRANSPARENT GAUGE CARDS (Strict 2x2 Grid with No Scroll) -->
+      <section class="lg:col-span-8 relative grid grid-cols-1 sm:grid-cols-2 grid-rows-2 gap-2 sm:gap-2.5 h-full min-h-0 overflow-hidden">
+
+        <!-- CENTER INTERSECTION BADGE: EXTRA-LARGE CRANE MOTOR ICON -->
+        <div class="hidden sm:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex-col items-center justify-center w-56 h-56 lg:w-64 lg:h-64 rounded-full border-[5px] border-[#FFE600] bg-[#12161E]/95 shadow-[0_0_44px_rgba(0,0,0,0.95),0_0_38px_rgba(255,230,0,0.6)] pointer-events-none">
+          <svg class="w-36 h-36 lg:w-44 lg:h-44 svg-drop-shadow" viewBox="0 0 80 80" fill="none">
+            <!-- Motor Terminal Box -->
+            <rect x="27" y="10" width="22" height="10" rx="2.5" fill="#FF6D00" stroke="#FFE600" stroke-width="2.2"/>
+            <path d="M39 11L35 15H39L37 19L42 14H38L39 11Z" fill="#FFE600"/>
+            <!-- Motor Stator Housing -->
+            <rect x="16" y="20" width="44" height="34" rx="5" fill="#1E2530" stroke="#FFE600" stroke-width="2.8"/>
+            <!-- Cooling Fins -->
+            <line x1="22" y1="26" x2="48" y2="26" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="22" y1="32" x2="48" y2="32" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="22" y1="38" x2="48" y2="38" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="22" y1="44" x2="48" y2="44" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="22" y1="50" x2="48" y2="50" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- End Bell & Drive Shaft -->
+            <rect x="60" y="26" width="7" height="22" rx="2" fill="#FF6D00" stroke="#FFE600" stroke-width="2"/>
+            <rect x="67" y="33" width="9" height="8" rx="1.5" fill="#FFFFFF" stroke="#FF6D00" stroke-width="1.8"/>
+            <!-- Spinning Rotor / Drive Gear Emblem -->
+            <g id="centerMotorRotor" transform="rotate(0 38 38)">
+              <circle cx="38" cy="38" r="10.5" fill="#12161E" stroke="#FFE600" stroke-width="2.2"/>
+              <line x1="38" y1="29" x2="38" y2="47" stroke="#FF6D00" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="29" y1="38" x2="47" y2="38" stroke="#FF6D00" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="38" cy="38" r="3.5" fill="#FFE600"/>
+            </g>
+            <!-- Mounting Feet -->
+            <path d="M20 54L16 62H28L26 54M56 54L60 62H48L50 54" fill="#FF6D00" stroke="#FFE600" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span class="-mt-2 px-4 py-1 rounded-full bg-[#FF6D00] border-2 border-[#FFE600]/90 text-white font-black text-sm lg:text-base tracking-wider uppercase shadow">
+            CRANE MOTOR
+          </span>
+        </div>
+
+        <!-- CARD 1: VOLTAGE -->
+        <div class="hud-glass relative p-2 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
+          <!-- TOP-RIGHT MASSIVE ICON BADGE -->
+          <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-3 sm:p-4 rounded-3xl border-2 sm:border-[3px] border-[#FFE600] bg-[#FFE600]/25 shadow-[0_0_30px_rgba(255,230,0,0.55)] svg-drop-shadow z-10 transition transform hover:scale-105" title="Bus Voltage Sensor (12V DC)">
+            <svg class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24" viewBox="0 0 64 64" fill="none">
+              <path d="M36 5L12 35H30L26 59L52 29H34L36 5Z" fill="#FFE600" stroke="#FF6D00" stroke-width="4" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
+            <!-- Mid-scale label just above the meter arch -->
+            <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
+              12V
+            </div>
+            <svg viewBox="0 -10 320 215" class="h-full max-h-[85%] max-w-[320px] aspect-[16/10] svg-drop-shadow overflow-visible">
+              <defs>
+                <linearGradient id="arcGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FFE600"/>
+                  <stop offset="60%" stop-color="#FFAE00"/>
+                  <stop offset="100%" stop-color="#FF6D00"/>
+                </linearGradient>
+              </defs>
+              <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
+              <path id="voltageArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad1)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="182"/>
+
+              <!-- LARGE CENTER ICON IN MID OF METER -->
+              <g transform="translate(122, 62)">
+                <circle cx="38" cy="38" r="36" fill="rgba(255, 214, 0, 0.16)" stroke="#FFE600" stroke-width="3"/>
+                <path d="M42 10L20 39H36L32 66L56 37H40L42 10Z" fill="#FFE600" stroke="#FF6D00" stroke-width="3.5" stroke-linejoin="round"/>
+              </g>
+
+              <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
+              <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">24</text>
+            </svg>
+          </div>
+
+          <div class="shrink-0 text-center flex flex-col items-center">
+            <div id="voltageValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">12.38 V</div>
+            <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-1">VOLTAGE</div>
+          </div>
+        </div>
+
+        <!-- CARD 2: CURRENT -->
+        <div class="hud-glass-orange relative p-2 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
+          <!-- TOP-RIGHT MASSIVE ICON BADGE -->
+          <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-3 sm:p-4 rounded-3xl border-2 sm:border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_30px_rgba(255,109,0,0.55)] svg-drop-shadow z-10 transition transform hover:scale-105" title="Current Sensor (INA219 Hall Effect)">
+            <svg class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24" viewBox="0 0 64 64" fill="none">
+              <path d="M6 32H17L24 12L32 52L40 18L47 32H58" stroke="#FFE600" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M51 24L60 32L51 40" stroke="#FF6D00" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
+            <!-- Mid-scale label just above the meter arch -->
+            <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
+              250
+            </div>
+            <svg viewBox="0 -10 320 215" class="h-full max-h-[85%] max-w-[320px] aspect-[16/10] svg-drop-shadow overflow-visible">
+              <defs>
+                <linearGradient id="arcGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FFE600"/>
+                  <stop offset="100%" stop-color="#FF6D00"/>
+                </linearGradient>
+              </defs>
+              <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
+              <path id="currentArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad2)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"/>
+
+              <!-- LARGE CENTER ICON IN MID OF METER -->
+              <g transform="translate(122, 62)">
+                <circle cx="38" cy="38" r="36" fill="rgba(255, 109, 0, 0.18)" stroke="#FF6D00" stroke-width="3"/>
+                <path d="M10 38H20L27 18L36 58L45 24L51 38H64" stroke="#FFE600" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M58 31L66 38L58 45" stroke="#FF6D00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+
+              <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
+              <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">500</text>
+            </svg>
+          </div>
+
+          <div class="shrink-0 text-center flex flex-col items-center">
+            <div id="currentValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mA</div>
+            <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange mt-1">CURRENT</div>
+          </div>
+        </div>
+
+        <!-- CARD 3: POWER -->
+        <div class="hud-glass-orange relative p-2 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
+          <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
+            <!-- Mid-scale label just above the meter arch -->
+            <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
+              1000
+            </div>
+            <svg viewBox="0 -10 320 215" class="h-full max-h-[85%] max-w-[320px] aspect-[16/10] svg-drop-shadow overflow-visible">
+              <defs>
+                <linearGradient id="arcGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FFE600"/>
+                  <stop offset="100%" stop-color="#FF6D00"/>
+                </linearGradient>
+              </defs>
+              <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
+              <path id="powerArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad3)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"/>
+
+              <!-- LARGE CENTER ICON IN MID OF METER -->
+              <g transform="translate(122, 62)">
+                <circle cx="38" cy="38" r="36" fill="rgba(255, 109, 0, 0.18)" stroke="#FF6D00" stroke-width="3"/>
+                <path d="M38 12C27.5 12 20 19.5 20 29.5C20 36 23.5 41.5 29 44.5V50H47V44.5C52.5 41.5 56 36 56 29.5C56 19.5 48.5 12 38 12Z" fill="rgba(255,230,0,0.32)" stroke="#FFE600" stroke-width="3.8"/>
+                <path d="M30 55H46M33 60H43" stroke="#FF6D00" stroke-width="4" stroke-linecap="round"/>
+                <path d="M39 20L32 31H39L37 41L44 30H37L39 20Z" fill="#FF6D00"/>
+              </g>
+
+              <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
+              <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">2000</text>
+            </svg>
+          </div>
+
+          <div class="shrink-0 text-center flex flex-col items-center">
+            <div id="powerValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mW</div>
+            <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange mt-1">POWER</div>
+          </div>
+        </div>
+
+        <!-- CARD 4: INCLINE -->
+        <div class="hud-glass relative p-2 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
+          <!-- TOP-RIGHT MASSIVE ICON BADGE -->
+          <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-3 sm:p-4 rounded-3xl border-2 sm:border-[3px] border-[#FFE600] bg-[#FFE600]/25 shadow-[0_0_30px_rgba(255,230,0,0.55)] svg-drop-shadow z-10 transition transform hover:scale-105" title="Dual-Axis Boom Inclinometer">
+            <svg class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24" viewBox="0 0 64 64" fill="none">
+              <path d="M10 54H56L10 12V54Z" fill="rgba(255,109,0,0.38)" stroke="#FFE600" stroke-width="4.5" stroke-linejoin="round"/>
+              <path d="M27 54A17 17 0 0 0 20 40" fill="none" stroke="#FF6D00" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
+            <!-- Mid-scale label just above the meter arch -->
+            <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
+              0°
+            </div>
+            <svg viewBox="0 -10 320 215" class="h-full max-h-[85%] max-w-[320px] aspect-[16/10] svg-drop-shadow overflow-visible">
+              <defs>
+                <linearGradient id="arcGrad4" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FF6D00"/>
+                  <stop offset="50%" stop-color="#FFE600"/>
+                  <stop offset="100%" stop-color="#FF6D00"/>
+                </linearGradient>
+              </defs>
+              <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
+              <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad4)" stroke-width="11" stroke-linecap="round" opacity="0.75"/>
+
+              <!-- LARGE CENTER ICON IN MID OF METER -->
+              <g transform="translate(122, 62)">
+                <circle cx="38" cy="38" r="36" fill="rgba(255, 214, 0, 0.16)" stroke="#FFE600" stroke-width="3"/>
+                <path d="M18 54H58L18 20V54Z" fill="rgba(255,109,0,0.38)" stroke="#FFE600" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M32 54A14 14 0 0 0 26 42" fill="none" stroke="#FF6D00" stroke-width="4.5" stroke-linecap="round"/>
+              </g>
+
+              <!-- Dynamic Tilt Marker Needle -->
+              <g id="inclineNeedleGroup" transform="rotate(6.5 160 140)">
+                <line x1="160" y1="64" x2="160" y2="10" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+                <circle cx="160" cy="18" r="11" fill="#FF6D00" stroke="#FFFFFF" stroke-width="3"/>
+              </g>
+              <text x="40" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">-4°</text>
+              <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">+4°</text>
+            </svg>
+          </div>
+
+          <div class="shrink-0 text-center flex flex-col items-center">
+            <div id="inclineValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">0.29°</div>
+            <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-1">INCLINE</div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 2: MOTOR CONTROL & SESSION (MATCHING USER REFERENCE UI - EXPANDED) -->
+    <!-- ===================================================================== -->
+    <main id="view-throttle" class="hidden flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-2 gap-2.5 sm:gap-3 items-stretch h-full overflow-hidden">
+
+      <!-- LEFT PANEL: MOTOR SPEED ARC & THROTTLE SLIDER (SUBSTANTIALLY LARGER) -->
+      <section class="hud-glass relative p-3 sm:p-5 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden border-2 sm:border-[3px] border-[#FFE600] rounded-3xl shadow-[0_0_28px_rgba(255,230,0,0.35)]">
+        <!-- TOP CENTER 128 MARKER (MUCH LARGER) -->
+        <div class="text-[#FFE600] font-black text-3xl sm:text-4xl lg:text-5xl proj-glow-yellow text-center tracking-wider shrink-0 mt-0.5">
+          128
+        </div>
+
+        <!-- EXPANDED SEMI-CIRCULAR SPEED ARC GAUGE (ZERO OVERLAP ARCHITECTURE) -->
+        <div class="relative w-full flex-1 min-h-0 flex items-center justify-center my-auto overflow-hidden">
+          <svg viewBox="0 0 420 225" class="h-full max-h-[95%] w-full max-w-[600px] aspect-[16/9] svg-drop-shadow overflow-visible">
+            <defs>
+              <linearGradient id="speedArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#FFB300"/>
+                <stop offset="60%" stop-color="#FFE600"/>
+                <stop offset="100%" stop-color="#FF8F00"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Background Track Arc (Grey) -->
+            <path d="M 60 150 A 150 150 0 0 1 360 150" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="28" stroke-linecap="round"/>
+            <!-- Active Speed Arc (Gold/Amber) -->
+            <path id="motorSpeedArc" d="M 60 150 A 150 150 0 0 1 360 150" fill="none" stroke="url(#speedArcGrad)" stroke-width="28" stroke-linecap="round" stroke-dasharray="471" stroke-dashoffset="426"/>
+
+            <!-- Center Crane Motor Medallion (Large + Labeled) -->
+            <g transform="translate(210, 118)">
+              <circle cx="0" cy="0" r="74" fill="rgba(18, 22, 30, 0.96)" stroke="#FFE600" stroke-width="4.5" filter="drop-shadow(0 0 22px rgba(255,230,0,0.55))"/>
+              <g transform="translate(-54, -58) scale(1.35)">
+                <!-- Motor Terminal Box -->
+                <rect x="27" y="10" width="22" height="10" rx="2.5" fill="#FF6D00" stroke="#FFE600" stroke-width="2.2"/>
+                <path d="M39 11L35 15H39L37 19L42 14H38L39 11Z" fill="#FFE600"/>
+                <!-- Motor Stator Housing -->
+                <rect x="16" y="20" width="44" height="34" rx="5" fill="#1E2530" stroke="#FFE600" stroke-width="2.8"/>
+                <!-- Cooling Fins -->
+                <line x1="22" y1="26" x2="48" y2="26" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="22" y1="32" x2="48" y2="32" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="22" y1="38" x2="48" y2="38" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="22" y1="44" x2="48" y2="44" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="22" y1="50" x2="48" y2="50" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+                <!-- End Bell & Drive Shaft -->
+                <rect x="60" y="26" width="7" height="22" rx="2" fill="#FF6D00" stroke="#FFE600" stroke-width="2"/>
+                <rect x="67" y="33" width="9" height="8" rx="1.5" fill="#FFFFFF" stroke="#FF6D00" stroke-width="1.8"/>
+                <!-- Spinning Rotor / Drive Gear Emblem -->
+                <g id="tab2MotorRotor" transform="rotate(0 38 38)">
+                  <circle cx="38" cy="38" r="10.5" fill="#12161E" stroke="#FFE600" stroke-width="2.2"/>
+                  <line x1="38" y1="29" x2="38" y2="47" stroke="#FF6D00" stroke-width="2.4" stroke-linecap="round"/>
+                  <line x1="29" y1="38" x2="47" y2="38" stroke="#FF6D00" stroke-width="2.4" stroke-linecap="round"/>
+                  <circle cx="38" cy="38" r="3.5" fill="#FFE600"/>
+                </g>
+                <!-- Mounting Feet -->
+                <path d="M20 54L16 62H28L26 54M56 54L60 62H48L50 54" fill="#FF6D00" stroke="#FFE600" stroke-width="2" stroke-linejoin="round"/>
+              </g>
+              <!-- CRANE MOTOR Label -->
+              <rect x="-52" y="34" width="104" height="22" rx="11" fill="#FF6D00" stroke="#FFE600" stroke-width="1.8"/>
+              <text x="0" y="49" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="13" font-weight="900" letter-spacing="1">CRANE MOTOR</text>
+            </g>
+
+            <!-- 0 and 255 Tick Numbers (Cleanly positioned with ZERO overlap below arc tips) -->
+            <text x="60" y="212" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900">0</text>
+            <text x="360" y="212" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900">255</text>
+          </svg>
+        </div>
+
+        <!-- READOUT: 24 / 255 & MOTOR SPEED (SUBSTANTIALLY LARGER) -->
+        <div class="shrink-0 text-center flex flex-col items-center mt-1">
+          <div id="motorPwmBig" class="font-black text-[#FFFFFF] proj-text-shadow leading-none text-6xl sm:text-7xl lg:text-8xl">
+            24 / 255
+          </div>
+          <div id="motorModeText" class="font-black uppercase text-[#FFE600] proj-glow-yellow tracking-widest text-3xl sm:text-4xl lg:text-5xl mt-2.5">
+            MOTOR SPEED • 9%
+          </div>
+        </div>
+
+        <!-- THROTTLE SLIDER & 5 TICKS -->
+        <div class="w-full shrink-0 flex flex-col gap-2 px-2 sm:px-6 mt-3">
+          <input id="throttleSlider" type="range" min="0" max="255" value="24" class="projector-slider w-full" oninput="handleThrottleInput(this.value)"/>
+          <div class="flex justify-between font-black text-[#FFE600] proj-text-shadow px-1 text-base sm:text-xl lg:text-2xl">
+            <span>0</span>
+            <span>64</span>
+            <span>128</span>
+            <span>180</span>
+            <span>255</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANEL: 2 EXPANDED HUD CARDS (SESSION TIME & SYSTEM UPTIME) -->
+      <section class="flex flex-col gap-3 sm:gap-4 h-full min-h-0 overflow-hidden">
+        <!-- CARD 1: SESSION TIME (HORIZONTAL LAYOUT WITH ICON ON RIGHT) -->
+        <div class="hud-glass relative p-3 sm:p-5 rounded-3xl border-2 sm:border-[3px] border-[#FF6D00] flex items-center justify-between flex-1 min-h-0 shadow-[0_0_28px_rgba(255,109,0,0.35)] px-6 sm:px-8 lg:px-10">
+          <!-- LEFT: LABEL + VALUE -->
+          <div class="flex flex-col text-left">
+            <div class="font-black uppercase text-[#FF8F00] proj-glow-orange tracking-widest text-3xl sm:text-4xl lg:text-5xl mb-2">
+              SESSION TIME
+            </div>
+            <div id="sessionClock" class="font-black text-[#FFFFFF] proj-text-shadow leading-none text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+              20:18:45
+            </div>
+          </div>
+
+          <!-- RIGHT: INTUITIVE INDUSTRIAL STOPWATCH ICON -->
+          <div class="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-3xl border-[3px] border-[#FF6D00] bg-[#FF6D00]/20 flex items-center justify-center text-[#FF6D00] shrink-0 shadow-[0_0_24px_rgba(255,109,0,0.55)]">
+            <svg class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16" viewBox="0 0 48 48" fill="none">
+              <!-- Stopwatch body & bezel -->
+              <circle cx="24" cy="27" r="16" stroke="currentColor" stroke-width="3.5"/>
+              <!-- Top knurled button & side pushers -->
+              <path d="M24 11V4M19 4H29M35 16L39 12M9 12L13 16" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <!-- Running sweep hands -->
+              <path d="M24 27L24 16M24 27L31 31" stroke="#FFE600" stroke-width="3.5" stroke-linecap="round"/>
+              <circle cx="24" cy="27" r="3.5" fill="#FFE600"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- CARD 2: UPTIME (HORIZONTAL LAYOUT WITH ICON ON RIGHT) -->
+        <div class="hud-glass relative p-3 sm:p-5 rounded-3xl border-2 sm:border-[3px] border-[#FFE600] flex items-center justify-between flex-1 min-h-0 shadow-[0_0_28px_rgba(255,230,0,0.35)] px-6 sm:px-8 lg:px-10">
+          <!-- LEFT: LABEL + VALUE -->
+          <div class="flex flex-col text-left">
+            <div class="font-black uppercase text-[#FFE600] proj-glow-yellow tracking-widest text-3xl sm:text-4xl lg:text-5xl mb-2">
+              SYSTEM UPTIME
+            </div>
+            <div id="uptimeClock" class="font-black text-[#FFFFFF] proj-text-shadow leading-none text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+              89.7 hrs
+            </div>
+          </div>
+
+          <!-- RIGHT: INTUITIVE 24/7 CONTINUOUS RUNTIME ICON -->
+          <div class="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-3xl border-[3px] border-[#FFE600] bg-[#FFE600]/20 flex items-center justify-center text-[#FFE600] shrink-0 shadow-[0_0_24px_rgba(255,230,0,0.55)]">
+            <svg class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16" viewBox="0 0 48 48" fill="none">
+              <!-- Industrial Server / 24/7 Chassis -->
+              <rect x="6" y="8" width="36" height="32" rx="6" stroke="currentColor" stroke-width="3.5" fill="rgba(255,230,0,0.12)"/>
+              <path d="M12 16H28M12 32H28" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 3"/>
+              <!-- Green Active Beacon -->
+              <circle cx="36" cy="16" r="3" fill="#22C55E"/>
+              <circle cx="36" cy="32" r="3" fill="#22C55E"/>
+              <!-- Live Uptime Heartbeat Pulse Line -->
+              <path d="M12 24H18L21 18L25 30L28 24H36" stroke="#FFE600" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 3: HISTORY CHARTS (HIGH-CONTRAST PROJECTOR CHARTS + MAXIMIZE)    -->
+    <!-- ===================================================================== -->
+    <main id="view-history" class="hidden flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-2.5 sm:gap-3 items-stretch h-full overflow-hidden">
+
+      <!-- CHART 1: POWER -->
+      <section class="hud-glass p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
+        <div class="flex items-center justify-between gap-2 shrink-0">
+          <div>
+            <h3 class="label-projector font-black uppercase text-[#FFE600] proj-glow-yellow">POWER LOAD</h3>
+            <div id="chartPowerVal" class="text-2xl sm:text-3xl font-black text-[#FFFFFF] proj-text-shadow">0.0 mW</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openMaximizeModal('power')" class="btn-chart-maximize !p-2" title="Maximize graph to full screen">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-4 gap-1.5 shrink-0">
+          <button onclick="setChartRange('1H')" class="range-btn active py-1 rounded-xl text-base sm:text-lg">1H</button>
+          <button onclick="setChartRange('24H')" class="range-btn py-1 rounded-xl text-base sm:text-lg">24H</button>
+          <button onclick="setChartRange('7D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">7D</button>
+          <button onclick="setChartRange('30D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">30D</button>
+        </div>
+
+        <!-- Dedicated High-Contrast Date Filter -->
+        <div class="flex items-center justify-between gap-2 px-1 shrink-0">
+          <label class="text-[#FFE600] font-black text-sm sm:text-base flex items-center gap-1.5">
+            <span>📅 DATE:</span>
+            <input type="date" id="datePower" class="projector-date-input" onchange="filterChartDate('power', this.value)"/>
+          </label>
+          <span class="text-xs font-bold text-white/70 uppercase">LIVE BUFFER</span>
+        </div>
+
+        <div class="flex-1 min-h-0 w-full relative overflow-hidden">
+          <!-- Large Background Watermark Icon: POWER -->
+          <div class="absolute inset-0 flex items-center justify-center pl-14 pb-6 pointer-events-none select-none opacity-[0.16]">
+            <svg class="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96" viewBox="0 0 48 48" fill="none">
+              <path d="M27 4L10 26H24L20 44L38 21H24L27 4Z" fill="#FFE600" stroke="#FF6D00" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <canvas id="chartPowerCanvas" class="w-full h-full block relative z-10"></canvas>
+        </div>
+      </section>
+
+      <!-- CHART 2: JIB YAW HEADING -->
+      <section class="hud-glass-orange p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
+        <div class="flex items-center justify-between gap-2 shrink-0">
+          <div>
+            <h3 class="label-projector font-black uppercase text-[#FF8F00] proj-glow-orange">JIB HEADING</h3>
+            <div id="chartJibVal" class="text-2xl sm:text-3xl font-black text-[#FFFFFF] proj-text-shadow">212.7°</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openMaximizeModal('jib')" class="btn-chart-maximize !p-2" title="Maximize graph to full screen">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-4 gap-1.5 shrink-0">
+          <button onclick="setChartRange('1H')" class="range-btn active py-1 rounded-xl text-base sm:text-lg">1H</button>
+          <button onclick="setChartRange('24H')" class="range-btn py-1 rounded-xl text-base sm:text-lg">24H</button>
+          <button onclick="setChartRange('7D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">7D</button>
+          <button onclick="setChartRange('30D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">30D</button>
+        </div>
+
+        <!-- Dedicated High-Contrast Date Filter -->
+        <div class="flex items-center justify-between gap-2 px-1 shrink-0">
+          <label class="text-[#FF8F00] font-black text-sm sm:text-base flex items-center gap-1.5">
+            <span>📅 DATE:</span>
+            <input type="date" id="dateJib" class="projector-date-input" onchange="filterChartDate('jib', this.value)"/>
+          </label>
+          <span class="text-xs font-bold text-white/70 uppercase">LIVE BUFFER</span>
+        </div>
+
+        <div class="flex-1 min-h-0 w-full relative overflow-hidden">
+          <!-- Large Background Watermark Icon: JIB / CRANE -->
+          <div class="absolute inset-0 flex items-center justify-center pl-14 pb-6 pointer-events-none select-none opacity-[0.16]">
+            <svg class="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96" viewBox="0 0 64 64" fill="none">
+              <path d="M18 58V12M26 58V12M13 58H31" stroke="#FFE600" stroke-width="4" stroke-linecap="round"/>
+              <path d="M7 15H58L49 8H14L7 15Z" fill="#FF6D00" stroke="#FFE600" stroke-width="3"/>
+              <path d="M51 15V34" stroke="#FFE600" stroke-width="4"/>
+              <path d="M47 34H55L51 41L47 34Z" fill="#FFE600"/>
+            </svg>
+          </div>
+          <canvas id="chartJibCanvas" class="w-full h-full block relative z-10"></canvas>
+        </div>
+      </section>
+
+      <!-- CHART 3: BOOM INCLINE -->
+      <section class="hud-glass p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
+        <div class="flex items-center justify-between gap-2 shrink-0">
+          <div>
+            <h3 class="label-projector font-black uppercase text-[#FFE600] proj-glow-yellow">BOOM INCLINE</h3>
+            <div id="chartInclineVal" class="text-2xl sm:text-3xl font-black text-[#FFFFFF] proj-text-shadow">0.29°</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openMaximizeModal('incline')" class="btn-chart-maximize !p-2" title="Maximize graph to full screen">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-4 gap-1.5 shrink-0">
+          <button onclick="setChartRange('1H')" class="range-btn active py-1 rounded-xl text-base sm:text-lg">1H</button>
+          <button onclick="setChartRange('24H')" class="range-btn py-1 rounded-xl text-base sm:text-lg">24H</button>
+          <button onclick="setChartRange('7D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">7D</button>
+          <button onclick="setChartRange('30D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">30D</button>
+        </div>
+
+        <!-- Dedicated High-Contrast Date Filter -->
+        <div class="flex items-center justify-between gap-2 px-1 shrink-0">
+          <label class="text-[#FFE600] font-black text-sm sm:text-base flex items-center gap-1.5">
+            <span>📅 DATE:</span>
+            <input type="date" id="dateIncline" class="projector-date-input" onchange="filterChartDate('incline', this.value)"/>
+          </label>
+          <span class="text-xs font-bold text-white/70 uppercase">LIVE BUFFER</span>
+        </div>
+
+        <div class="flex-1 min-h-0 w-full relative overflow-hidden">
+          <!-- Large Background Watermark Icon: BOOM INCLINE -->
+          <div class="absolute inset-0 flex items-center justify-center pl-14 pb-6 pointer-events-none select-none opacity-[0.16]">
+            <svg class="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96" viewBox="0 0 64 64" fill="none">
+              <path d="M10 54H56L10 12V54Z" fill="rgba(255,109,0,0.45)" stroke="#FFE600" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M27 54A17 17 0 0 0 20 40" fill="none" stroke="#FF6D00" stroke-width="4.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <canvas id="chartInclineCanvas" class="w-full h-full block relative z-10"></canvas>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- FULL-WIDTH MAXIMIZED CHART OVERLAY (MATCHING REFERENCE IMAGE 6)     -->
+    <!-- ===================================================================== -->
+    <div id="chartMaximizeModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md p-3 sm:p-6 flex flex-col justify-between">
+      <!-- Modal Header -->
+      <div class="hud-glass px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3 sm:gap-4">
+          <div id="modalIconWrap" class="p-2 sm:p-2.5 rounded-2xl border-2 border-[#FFE600] bg-[#FFE600]/20 svg-drop-shadow">
+            <svg id="modalIcon" class="w-8 h-8 text-[#FFE600]" viewBox="0 0 48 48" fill="none">
+              <path d="M27 6L11 27H24L21 42L37 21H24L27 6Z" fill="#FFE600" stroke="#FF6D00" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div>
+            <h2 id="modalChartTitle" class="font-black uppercase text-[#FFE600] proj-glow-yellow text-2xl sm:text-3xl lg:text-4xl tracking-wider">POWER LOAD</h2>
+            <div id="modalLiveReadout" class="text-xl sm:text-2xl font-black text-[#FFFFFF] proj-text-shadow">0.0 mW (LIVE)</div>
+          </div>
+        </div>
+
+        <!-- Controls & Close -->
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div class="grid grid-cols-4 gap-1.5 sm:gap-2">
+            <button onclick="setMaxModalRange('1H')" class="modal-range-btn range-btn active px-3 sm:px-4 py-1.5 rounded-xl text-base sm:text-lg">1H</button>
+            <button onclick="setMaxModalRange('24H')" class="modal-range-btn range-btn px-3 sm:px-4 py-1.5 rounded-xl text-base sm:text-lg">24H</button>
+            <button onclick="setMaxModalRange('7D')" class="modal-range-btn range-btn px-3 sm:px-4 py-1.5 rounded-xl text-base sm:text-lg">7D</button>
+            <button onclick="setMaxModalRange('30D')" class="modal-range-btn range-btn px-3 sm:px-4 py-1.5 rounded-xl text-base sm:text-lg">30D</button>
+          </div>
+          <label class="flex items-center gap-1.5 text-[#FFE600] font-black text-sm sm:text-base">
+            <span>📅</span>
+            <input type="date" id="modalDatePicker" class="projector-date-input" onchange="filterModalDate(this.value)"/>
+          </label>
+          <button type="button" onclick="closeMaximizeModal()" class="px-4 sm:px-6 py-2 rounded-2xl border-2 border-[#FF3D00] bg-[#FF3D00]/40 hover:bg-[#FF3D00] text-white text-lg sm:text-xl font-black tracking-wider transition shadow-lg cursor-pointer">
+            ✕ CLOSE FULL VIEW
+          </button>
+        </div>
+      </div>
+
+      <!-- Huge High-Resolution Canvas (Stretches Full Screen Width) -->
+      <div class="hud-glass my-3 flex-1 w-full p-2 sm:p-4 relative flex items-center justify-center overflow-hidden">
+        <canvas id="maximizedCanvas" class="w-full h-full block"></canvas>
+      </div>
+
+      <!-- Modal Bottom Information Bar -->
+      <div class="hud-glass px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-sm sm:text-base font-bold text-[#FFE600] gap-2">
+        <div>SAMPLING: <span class="text-white">REALTIME HIGH PRECISION</span></div>
+        <div>TIME SYNC: <span class="text-white" id="modalTimeSync">2026-11-19 UTC</span></div>
+        <div>STATUS: <span class="text-[#34D399]">LIVE TELEMETRY STREAM</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. GLOBAL TELEMETRY STATE INITIALIZATION
+    // =========================================================================
+    const telemetry = {
+      isSimulating: false,
+      jibAngle: 212.7,
+      voltage: 12.38,
+      current: 0,
+      power: 0,
+      incline: 0.29,
+      pwm: 24,
+      sessionSeconds: 20 * 3600 + 15 * 60 + 42,
+      historyPower: Array.from({ length: 24 }, () => 0),
+      historyJib: Array.from({ length: 24 }, () => 212.7),
+      historyIncline: Array.from({ length: 24 }, () => 0.29)
+    };
+
+    // =========================================================================
+    // 2. GENERATE COMPASS DEGREE TICKS (CENTERED AT 200, 200)
+    // =========================================================================
+    function buildCompassTicks() {
+      const container = document.getElementById('compassTicks');
+      if (!container) return;
+      let html = '';
+      const rOuter = 176;
+      for (let deg = 0; deg < 360; deg += 15) {
+        const isMajor = deg % 30 === 0;
+        const r1 = isMajor ? 152 : 162;
+        const r2 = rOuter;
+        const rad = (deg - 90) * (Math.PI / 180);
+        const x1 = 200 + r1 * Math.cos(rad);
+        const y1 = 200 + r1 * Math.sin(rad);
+        const x2 = 200 + r2 * Math.cos(rad);
+        const y2 = 200 + r2 * Math.sin(rad);
+        const strokeColor = deg === 0 ? '#FF3D00' : (isMajor ? '#FFE600' : 'rgba(255,255,255,0.7)');
+        const strokeWidth = deg === 0 ? 6.5 : (isMajor ? 4.5 : 2.5);
+        html += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-linecap="round"/>`;
+
+        // Render Clean Degree numbers for 30, 60, 120, 150, 210, 240, 300, 330 (matching reference Image 3)
+        if (isMajor && deg !== 0 && deg !== 90 && deg !== 180 && deg !== 270) {
+          const rText = 132;
+          const tx = 200 + rText * Math.cos(rad);
+          const ty = 200 + rText * Math.sin(rad) + 6;
+          const degStr = `${String(deg).padStart(3, '0')}°`;
+          html += `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="16" font-weight="800" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.95))">${degStr}</text>`;
+        }
+      }
+      container.innerHTML = html;
+    }
+
+    // =========================================================================
+    // 3. TAB NAVIGATION
+    // =========================================================================
+    function switchTab(tabName) {
+      const tabs = ['twin', 'throttle', 'history'];
+      tabs.forEach(t => {
+        document.getElementById(`view-${t}`).classList.toggle('hidden', t !== tabName);
+        document.getElementById(`tab-btn-${t}`).classList.toggle('active', t === tabName);
+      });
+      if (tabName === 'history') {
+        requestAnimationFrame(drawAllHistoryCharts);
+      }
+    }
+
+    // =========================================================================
+    // 4. UPDATE ALL HUD GAUGES & PROJECTOR READOUTS
+    // =========================================================================
+    function updateDashboardUI() {
+      // Compass Jib Rotation & Text (Centered at 200, 200)
+      const rotor = document.getElementById('craneJibRotor');
+      if (rotor) {
+        rotor.setAttribute('transform', `rotate(${telemetry.jibAngle.toFixed(1)} 200 200)`);
+      }
+
+      // Mini Crane Badge Jib Rotation (Pivots at 50, 34 matching live crane heading)
+      const miniJib = document.getElementById('miniCraneJibGroup');
+      if (miniJib) {
+        miniJib.setAttribute('transform', `rotate(${telemetry.jibAngle.toFixed(1)} 20 20)`);
+      }
+
+      document.getElementById('jibAngleValue').textContent = `${telemetry.jibAngle.toFixed(1)}°`;
+
+      const statusBadge = document.getElementById('jibStatusBadge');
+      if (telemetry.isSimulating || telemetry.pwm > 40) {
+        statusBadge.textContent = 'SLEWING LIVE';
+        statusBadge.style.background = '#FFE600';
+        statusBadge.style.color = '#0D0D0D';
+      } else {
+        statusBadge.textContent = 'STOPPED';
+        statusBadge.style.background = '#FF6D00';
+        statusBadge.style.color = '#FFFFFF';
+      }
+
+      // Arc Dashoffset helper (Arc total length = 377)
+      const setArc = (id, val, min, max) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const pct = Math.max(0, Math.min(1, (val - min) / (max - min)));
+        el.setAttribute('stroke-dashoffset', (377 * (1 - pct)).toFixed(1));
+      };
+
+      // Voltage (0..24V)
+      setArc('voltageArc', telemetry.voltage, 0, 24);
+      document.getElementById('voltageValue').textContent = `${telemetry.voltage.toFixed(2)} V`;
+      const tab2V = document.getElementById('tab2Voltage');
+      if (tab2V) tab2V.textContent = `${telemetry.voltage.toFixed(2)} V`;
+
+      // Current (0..500mA)
+      setArc('currentArc', telemetry.current, 0, 500);
+      document.getElementById('currentValue').textContent = `${Math.round(telemetry.current)} mA`;
+      const tab2C = document.getElementById('tab2Current');
+      if (tab2C) tab2C.textContent = `${Math.round(telemetry.current)} mA`;
+
+      // Power (0..2000mW)
+      setArc('powerArc', telemetry.power, 0, 2000);
+      document.getElementById('powerValue').textContent = `${Math.round(telemetry.power)} mW`;
+      const tab2P = document.getElementById('tab2Power');
+      if (tab2P) tab2P.textContent = `${Math.round(telemetry.power)} mW`;
+
+      // Incline (-4..+4 deg)
+      const needle = document.getElementById('inclineNeedleGroup');
+      if (needle) {
+        const degRot = Math.max(-75, Math.min(75, (telemetry.incline / 4) * 75));
+        needle.setAttribute('transform', `rotate(${degRot.toFixed(1)} 160 140)`);
+      }
+      document.getElementById('inclineValue').textContent = `${telemetry.incline.toFixed(2)}°`;
+
+      // Motor Speed Tab (Matching Reference UI: Arc, 24 / 255, CREEP SPEED • 9%)
+      const pct = Math.round((telemetry.pwm / 255) * 100);
+      const arc = document.getElementById('motorSpeedArc');
+      if (arc) {
+        // Circumference for R=150 over 180 deg = PI * 150 ≈ 471
+        arc.setAttribute('stroke-dashoffset', (471 * (1 - telemetry.pwm / 255)).toFixed(1));
+      }
+      const pwmElem = document.getElementById('motorPwmBig');
+      if (pwmElem) {
+        pwmElem.textContent = `${telemetry.pwm} / 255`;
+      }
+      const slider = document.getElementById('throttleSlider');
+      if (slider) {
+        slider.style.background = `linear-gradient(to right, #FFE600 0%, #FF8F00 ${pct}%, rgba(255, 255, 255, 0.28) ${pct}%, rgba(255, 255, 255, 0.28) 100%)`;
+      }
+      const modeElem = document.getElementById('motorModeText');
+      if (modeElem) {
+        modeElem.textContent = `MOTOR SPEED • ${pct}%`;
+      }
+
+      // History Tab Header Values
+      document.getElementById('chartPowerVal').textContent = `${telemetry.power.toFixed(1)} mW`;
+      document.getElementById('chartJibVal').textContent = `${telemetry.jibAngle.toFixed(1)}°`;
+      document.getElementById('chartInclineVal').textContent = `${telemetry.incline.toFixed(2)}°`;
+    }
+
+    // =========================================================================
+    // 5. THROTTLE SLIDER INTERACTION
+    // =========================================================================
+    function handleThrottleInput(val) {
+      telemetry.pwm = parseInt(val, 10);
+      // Couple motor throttle realistically with current and power
+      if (telemetry.pwm <= 24) {
+        telemetry.current = 0;
+        telemetry.power = 0;
+      } else {
+        telemetry.current = Math.round(((telemetry.pwm - 24) / 231) * 440);
+        telemetry.power = Math.round((telemetry.voltage * telemetry.current) / 3.1);
+      }
+      pushHistorySample();
+      updateDashboardUI();
+      if (!document.getElementById('view-history').classList.contains('hidden')) {
+        drawAllHistoryCharts();
+      }
+    }
+
+    // =========================================================================
+    // 6. LIVE TELEMETRY SIMULATION LOOP
+    // =========================================================================
+    function toggleSimulation() {
+      telemetry.isSimulating = !telemetry.isSimulating;
+      const btn = document.getElementById('simToggleBtn');
+      if (btn) {
+        if (telemetry.isSimulating) {
+          btn.textContent = '⏸ PAUSE LIVE';
+          btn.style.background = '#FFE600';
+          btn.style.color = '#000000';
+        } else {
+          btn.textContent = '▶ LIVE';
+          btn.style.background = '#FF6D00';
+          btn.style.color = '#FFFFFF';
+        }
+      }
+      updateDashboardUI();
+    }
+
+    function pushHistorySample() {
+      telemetry.historyPower.push(telemetry.power);
+      telemetry.historyPower.shift();
+      telemetry.historyJib.push(telemetry.jibAngle);
+      telemetry.historyJib.shift();
+      telemetry.historyIncline.push(telemetry.incline);
+      telemetry.historyIncline.shift();
+    }
+
+    setInterval(() => {
+      // Always tick live session clock
+      telemetry.sessionSeconds++;
+      const hrs = String(Math.floor(telemetry.sessionSeconds / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((telemetry.sessionSeconds % 3600) / 60)).padStart(2, '0');
+      const secs = String(telemetry.sessionSeconds % 60).padStart(2, '0');
+      document.getElementById('sessionClock').textContent = `${hrs}:${mins}:${secs}`;
+
+      if (telemetry.isSimulating) {
+        const t = Date.now() / 1000;
+        telemetry.jibAngle = (telemetry.jibAngle + 3.5) % 360;
+        telemetry.voltage = 12.35 + Math.sin(t * 1.3) * 0.24;
+        telemetry.incline = 0.35 + Math.sin(t * 0.9) * 1.45;
+        const simPwm = Math.round(95 + Math.sin(t * 0.6) * 75);
+        telemetry.pwm = simPwm;
+        document.getElementById('throttleSlider').value = simPwm;
+        telemetry.current = Math.round((simPwm / 255) * 410 + Math.cos(t * 2) * 15);
+        telemetry.power = Math.round(telemetry.voltage * telemetry.current * 0.36);
+
+        pushHistorySample();
+        updateDashboardUI();
+        if (!document.getElementById('view-history').classList.contains('hidden')) {
+          drawAllHistoryCharts();
+        }
+      }
+    }, 350);
+
+    // =========================================================================
+    // 7. HIGH-CONTRAST PROJECTOR HISTORY CHARTS & FULL-SCREEN MAXIMIZE
+    // =========================================================================
+    let currentRange = '1H';
+    let modalActiveType = null;
+
+    function setChartRange(range) {
+      currentRange = range;
+      document.querySelectorAll('.range-btn').forEach(btn => {
+        const isMatch = btn.textContent.trim().toUpperCase() === range.toUpperCase();
+        btn.classList.toggle('active', isMatch);
+      });
+      drawAllHistoryCharts();
+      if (modalActiveType) drawMaximizedChart();
+    }
+
+    function setMaxModalRange(range) {
+      setChartRange(range);
+    }
+
+    function filterChartDate(type, dateVal) {
+      console.log(`Filtered ${type} for date:`, dateVal);
+      // Simulate historical data snapshot for chosen date
+      drawAllHistoryCharts();
+      if (modalActiveType === type) drawMaximizedChart();
+    }
+
+    function filterModalDate(dateVal) {
+      if (modalActiveType) {
+        filterChartDate(modalActiveType, dateVal);
+      }
+    }
+
+    function openMaximizeModal(type) {
+      modalActiveType = type;
+      const modal = document.getElementById('chartMaximizeModal');
+      const titleEl = document.getElementById('modalChartTitle');
+      const iconWrap = document.getElementById('modalIconWrap');
+      const iconEl = document.getElementById('modalIcon');
+      const liveReadout = document.getElementById('modalLiveReadout');
+
+      if (type === 'power') {
+        titleEl.textContent = 'POWER LOAD';
+        titleEl.className = 'font-black uppercase text-[#FFE600] proj-glow-yellow text-2xl sm:text-3xl lg:text-4xl tracking-wider';
+        liveReadout.textContent = `${telemetry.power.toFixed(1)} mW (LIVE)`;
+        iconWrap.style.borderColor = '#FFE600';
+        iconEl.innerHTML = '<path d="M27 6L11 27H24L21 42L37 21H24L27 6Z" fill="#FFE600" stroke="#FF6D00" stroke-width="2.5"/>';
+      } else if (type === 'jib') {
+        titleEl.textContent = 'JIB HEADING';
+        titleEl.className = 'font-black uppercase text-[#FF8F00] proj-glow-orange text-2xl sm:text-3xl lg:text-4xl tracking-wider';
+        liveReadout.textContent = `${telemetry.jibAngle.toFixed(1)}° (LIVE)`;
+        iconWrap.style.borderColor = '#FF6D00';
+        iconEl.innerHTML = '<path d="M18 58V12M26 58V12M13 58H31" stroke="#FFE600" stroke-width="4" stroke-linecap="round"/><path d="M7 15H58L49 8H14L7 15Z" fill="#FF6D00" stroke="#FFE600" stroke-width="3"/><path d="M51 15V34" stroke="#FFE600" stroke-width="4"/>';
+      } else {
+        titleEl.textContent = 'BOOM INCLINE';
+        titleEl.className = 'font-black uppercase text-[#FFE600] proj-glow-yellow text-2xl sm:text-3xl lg:text-4xl tracking-wider';
+        liveReadout.textContent = `${telemetry.incline.toFixed(2)}° (LIVE)`;
+        iconWrap.style.borderColor = '#FFE600';
+        iconEl.innerHTML = '<path d="M10 38H38L10 12V38Z" stroke="#FFE600" stroke-width="4" fill="rgba(255,109,0,0.3)"/>';
+      }
+
+      // Sync modal date picker
+      const today = new Date().toISOString().split('T')[0];
+      const mDate = document.getElementById('modalDatePicker');
+      if (mDate && !mDate.value) mDate.value = today;
+
+      modal.classList.remove('hidden');
+      requestAnimationFrame(drawMaximizedChart);
+    }
+
+    function closeMaximizeModal() {
+      const modal = document.getElementById('chartMaximizeModal');
+      modal.classList.add('hidden');
+      modalActiveType = null;
+    }
+
+    function drawSingleChart(canvasId, data, lineColor, minVal, maxVal, yTitle, unit) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = Math.max(340, rect.width);
+      canvas.height = Math.max(220, rect.height);
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      const padL = 125, padR = 24, padT = 32, padB = 84;
+      const plotW = w - padL - padR;
+      const plotH = h - padT - padB;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Distinct Solid X and Y Axis Frame Lines (Matching diagram coordinate box)
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      // Y-axis line (vertical)
+      ctx.moveTo(padL, padT);
+      ctx.lineTo(padL, padT + plotH);
+      // X-axis line (horizontal)
+      ctx.lineTo(padL + plotW, padT + plotH);
+      ctx.stroke();
+
+      // Rotated Vertical Y-Axis Title (Compact, balanced gap: title at x = 20, numbers end at x = padL - 8 = 117, clean ~14-16px margin)
+      if (yTitle) {
+        ctx.save();
+        ctx.translate(20, padT + plotH / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillStyle = lineColor || '#FFE600';
+        ctx.font = '900 32px "Chakra Petch", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowColor = '#000000';
+        ctx.shadowBlur = 10;
+        ctx.fillText(yTitle, 0, 0);
+        ctx.restore();
+      }
+
+      // Grid lines & Ultra-Crisp Larger White Y-Axis Numbers (Zero overlap with title)
+      ctx.font = '900 22px "Chakra Petch", sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 6;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 1;
+
+      for (let i = 0; i <= 4; i++) {
+        const y = padT + (plotH * i) / 4;
+        const val = maxVal - ((maxVal - minVal) * i) / 4;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.24)';
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([4, 6]);
+        ctx.beginPath();
+        ctx.moveTo(padL, y);
+        ctx.lineTo(w - padR, y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Small tick on Y-axis
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padL - 6, y);
+        ctx.lineTo(padL, y);
+        ctx.stroke();
+
+        // Pure white axis numbers
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText(val.toFixed(1), padL - 8, y);
+      }
+
+      // High-Contrast Plot Line with Spikes (Matching Reference Image 5)
+      ctx.save();
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 5;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.shadowColor = lineColor;
+      ctx.shadowBlur = 18;
+
+      ctx.beginPath();
+      data.forEach((v, idx) => {
+        const x = padL + (plotW * idx) / (data.length - 1);
+        const norm = (v - minVal) / (maxVal - minVal || 1);
+        const y = padT + plotH - Math.max(0, Math.min(1, norm)) * plotH;
+        if (idx === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      // Glowing beacon endpoint
+      const lastX = padL + plotW;
+      const lastNorm = (data[data.length - 1] - minVal) / (maxVal - minVal || 1);
+      const lastY = padT + plotH - Math.max(0, Math.min(1, lastNorm)) * plotH;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 7.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // Bottom Timestamps with X-axis tick marks (Enlarged)
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 22px "Chakra Petch", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 6;
+      ctx.fillText('08:30:00', padL + 45, padT + plotH + 28);
+      ctx.fillText('09:00:00', padL + plotW / 2, padT + plotH + 28);
+      ctx.fillText('LIVE', padL + plotW - 25, padT + plotH + 28);
+
+      // Horizontal X-Axis Title (Matching single "years" label on X-axis, centered below timestamps - Extra Large)
+      ctx.save();
+      ctx.fillStyle = '#FFE600';
+      ctx.font = '900 34px "Chakra Petch", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 12;
+      ctx.fillText('TIME (HH:MM:SS)', padL + plotW / 2, h - 4);
+      ctx.restore();
+    }
+
+    function drawMaximizedChart() {
+      const canvas = document.getElementById('maximizedCanvas');
+      if (!canvas || !modalActiveType) return;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+
+      const padL = 190, padR = 40, padT = 35, padB = 98;
+      const plotW = w - padL - padR;
+      const plotH = h - padT - padB;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Distinct Solid X and Y Axis Frame Lines
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      // Y-axis line (vertical)
+      ctx.moveTo(padL, padT);
+      ctx.lineTo(padL, padT + plotH);
+      // X-axis line (horizontal)
+      ctx.lineTo(padL + plotW, padT + plotH);
+      ctx.stroke();
+
+      // Select data and scale based on active modal type
+      let data, lineColor, minVal, maxVal, unit, yName;
+      if (modalActiveType === 'power') {
+        data = telemetry.historyPower;
+        lineColor = '#FF2A6D'; // High-visibility laser pink/red like Image 6
+        minVal = 0;
+        maxVal = 2000;
+        unit = 'mW';
+        yName = 'POWER LOAD (mW)';
+      } else if (modalActiveType === 'jib') {
+        data = telemetry.historyJib;
+        lineColor = '#00F0FF'; // High-visibility laser cyan
+        minVal = 0;
+        maxVal = 360;
+        unit = '°';
+        yName = 'JIB HEADING ANGLE (°)';
+      } else {
+        data = telemetry.historyIncline;
+        lineColor = '#FF2A6D'; // Laser pink like Image 6
+        minVal = -4;
+        maxVal = 4;
+        unit = '°';
+        yName = 'BOOM INCLINE TILT (°)';
+      }
+
+      // Vertical Y-Axis Title (Positioned with a clean, comfortable 18-20px gap: title at x = 24, numbers start at x = 46 and right-align at padL - 10 = 180)
+      ctx.save();
+      ctx.translate(24, padT + plotH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillStyle = lineColor;
+      ctx.font = '900 36px "Chakra Petch", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 12;
+      ctx.fillText(yName, 0, 0);
+      ctx.restore();
+
+      // Sub-grid and major horizontal gridlines
+      const steps = 6;
+      ctx.font = '900 24px "Chakra Petch", sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 8;
+
+      for (let i = 0; i <= steps; i++) {
+        const y = padT + (plotH * i) / steps;
+        const val = maxVal - ((maxVal - minVal) * i) / steps;
+
+        ctx.strokeStyle = i === steps ? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.16)';
+        ctx.lineWidth = i === steps ? 2.5 : 1.5;
+        ctx.setLineDash(i === steps ? [] : [6, 8]);
+        ctx.beginPath();
+        ctx.moveTo(padL, y);
+        ctx.lineTo(w - padR, y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Tick on Y-axis
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(padL - 8, y);
+        ctx.lineTo(padL, y);
+        ctx.stroke();
+
+        // Y-Axis Labels on Left
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText(`${val.toFixed(1)} ${unit}`, padL - 10, y);
+      }
+
+      // X-Axis Detailed Timestamps along bottom (Enlarged)
+      const timeStamps = [
+        '11:43:59', '11:53:26', '12:02:48', '12:12:07', '12:21:21', '12:30:48', '12:40:01'
+      ];
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 24px "Chakra Petch", sans-serif';
+      ctx.textAlign = 'center';
+      timeStamps.forEach((ts, idx) => {
+        const tx = padL + (plotW * idx) / (timeStamps.length - 1);
+        // Vertical dashed guide line
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 6]);
+        ctx.beginPath();
+        ctx.moveTo(tx, padT);
+        ctx.lineTo(tx, padT + plotH);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillText(ts, tx, padT + plotH + 34);
+      });
+
+      // Bottom centered X-axis Title (Single clear title, extra large)
+      ctx.save();
+      ctx.fillStyle = '#FFE600';
+      ctx.font = '900 38px "Chakra Petch", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 12;
+      ctx.fillText('TIME (HH:MM:SS)', padL + plotW / 2, h - 8);
+      ctx.restore();
+
+      // Plot Main High-Resolution Line
+      ctx.save();
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 5.5;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.shadowColor = lineColor;
+      ctx.shadowBlur = 24;
+
+      ctx.beginPath();
+      // Generate smooth multi-sample interpolation matching spikes in Image 5 & 6
+      const samplesCount = Math.max(data.length, 36);
+      for (let s = 0; s < samplesCount; s++) {
+        const dataIdx = Math.floor((s / (samplesCount - 1)) * (data.length - 1));
+        const rawVal = data[dataIdx];
+        // add slight realistic spike variation if simulated
+        const spikeFactor = (s === 12 || s === 18 || s === 26 || s === 32) ? 0.75 : 0;
+        const v = rawVal + spikeFactor * (maxVal - minVal) * 0.5;
+        const x = padL + (plotW * s) / (samplesCount - 1);
+        const norm = (v - minVal) / (maxVal - minVal || 1);
+        const y = padT + plotH - Math.max(0, Math.min(1, norm)) * plotH;
+        if (s === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Glowing Pulse Beacon at End
+      const lastX = padL + plotW;
+      const lastV = data[data.length - 1];
+      const lastNorm = (lastV - minVal) / (maxVal - minVal || 1);
+      const lastY = padT + plotH - Math.max(0, Math.min(1, lastNorm)) * plotH;
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 9, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 16, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawAllHistoryCharts() {
+      drawSingleChart('chartPowerCanvas', telemetry.historyPower, '#FFE600', 0, 2000, 'POWER (mW)', 'mW');
+      drawSingleChart('chartJibCanvas', telemetry.historyJib, '#FF6D00', 160, 260, 'JIB ANGLE (°)', '°');
+      drawSingleChart('chartInclineCanvas', telemetry.historyIncline, '#FFE600', -2, 4, 'INCLINE (°)', '°');
+    }
+
+    // =========================================================================
+    // 8. LIVE ANIMATED CONSTRUCTION SITE BACKDROP (3D-STYLE CANVAS + VIDEO)
+    // =========================================================================
+    function startSiteBackdropAnimation() {
+      const canvas = document.getElementById('siteCanvas');
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      function render(time) {
+        const w = canvas.width;
+        const h = canvas.height;
+        const t = time * 0.001;
+
+        // Realistic Construction Yard Floor & Daylight/Industrial Backdrop
+        const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+        bgGrad.addColorStop(0, '#3a4654');
+        bgGrad.addColorStop(0.55, '#2b333d');
+        bgGrad.addColorStop(1, '#4c4338');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Perspective Concrete Yard Grid
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
+        ctx.lineWidth = 2;
+        const horizonY = h * 0.36;
+        for (let i = -8; i <= 8; i++) {
+          ctx.beginPath();
+          ctx.moveTo(w * 0.5 + i * 90, horizonY);
+          ctx.lineTo(w * 0.5 + i * 280, h);
+          ctx.stroke();
+        }
+        for (let row = 0; row < 8; row++) {
+          const y = horizonY + Math.pow(row / 7, 1.5) * (h - horizonY);
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+          ctx.stroke();
+        }
+
+        // Multi-Story Steel Frame Building Structure (Right Side like Reference Site)
+        const bx = w * 0.64;
+        const by = h * 0.28;
+        const bw = w * 0.30;
+        const bh = h * 0.58;
+        ctx.strokeStyle = 'rgba(195, 210, 225, 0.45)';
+        ctx.lineWidth = 3;
+        const cols = 7;
+        const floors = 9;
+        for (let c = 0; c <= cols; c++) {
+          const x = bx + (bw * c) / cols;
+          ctx.beginPath();
+          ctx.moveTo(x, by);
+          ctx.lineTo(x, by + bh);
+          ctx.stroke();
+        }
+        for (let f = 0; f <= floors; f++) {
+          const y = by + (bh * f) / floors;
+          ctx.beginPath();
+          ctx.moveTo(bx, y);
+          ctx.lineTo(bx + bw, y);
+          ctx.stroke();
+        }
+
+        // Yellow/Black Safety Walkway Strip on Yard
+        ctx.fillStyle = 'rgba(46, 125, 75, 0.55)';
+        ctx.beginPath();
+        ctx.moveTo(w * 0.25, h);
+        ctx.lineTo(w * 0.62, horizonY + 40);
+        ctx.lineTo(w * 0.68, horizonY + 40);
+        ctx.lineTo(w * 0.38, h);
+        ctx.closePath();
+        ctx.fill();
+
+        // Live Rotating Tower Crane Boom & Trolley in Site Feed
+        const mastX = w * 0.48;
+        const mastTopY = h * 0.16;
+        const mastBotY = h * 0.86;
+
+        // Crane Mast Lattice
+        ctx.strokeStyle = '#d49b27';
+        ctx.lineWidth = 5;
+        ctx.strokeRect(mastX - 14, mastTopY, 28, mastBotY - mastTopY);
+
+        // Rotating Jib Projection synced with telemetry.jibAngle
+        const rad = (telemetry.jibAngle * Math.PI) / 180;
+        const boomLen = Math.min(w * 0.34, 380) * Math.cos(rad * 0.5);
+        const boomEndX = mastX + boomLen;
+        const boomEndY = mastTopY + 18 + Math.sin(rad) * 28;
+
+        ctx.strokeStyle = '#ffae00';
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(mastX - boomLen * 0.35, mastTopY + 18);
+        ctx.lineTo(boomEndX, boomEndY);
+        ctx.stroke();
+
+        // Hanging Hoist Cable & Load Hook
+        const hookX = mastX + boomLen * 0.72;
+        const hookY = boomEndY + 130 + Math.sin(t * 1.5) * 18;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(hookX, boomEndY);
+        ctx.lineTo(hookX, hookY);
+        ctx.stroke();
+
+        // Flashing Amber Beacon on Crane Top
+        const pulse = 0.5 + 0.5 * Math.sin(t * 6);
+        ctx.fillStyle = `rgba(255, 190, 0, ${0.4 + pulse * 0.6})`;
+        ctx.beginPath();
+        ctx.arc(mastX, mastTopY - 10, 10 + pulse * 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        requestAnimationFrame(render);
+      }
+      requestAnimationFrame(render);
+    }
+
+    // =========================================================================
+    // 9. CUSTOM VIDEO UPLOAD OVERLAY TESTER
+    // =========================================================================
+    function loadCustomVideo(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const video = document.getElementById('customVideo');
+      const canvas = document.getElementById('siteCanvas');
+      const resetBtn = document.getElementById('resetVideoBtn');
+      video.src = URL.createObjectURL(file);
+      video.classList.remove('hidden');
+      canvas.classList.add('hidden');
+      resetBtn.classList.remove('hidden');
+      video.play();
+    }
+
+    function resetToSimulatedSite() {
+      const video = document.getElementById('customVideo');
+      const canvas = document.getElementById('siteCanvas');
+      const resetBtn = document.getElementById('resetVideoBtn');
+      video.pause();
+      video.classList.add('hidden');
+      canvas.classList.remove('hidden');
+      resetBtn.classList.add('hidden');
+    }
+
+    // =========================================================================
+    // 10. INITIALIZE ON LOAD
+    // =========================================================================
+    window.onload = function () {
+      buildCompassTicks();
+      updateDashboardUI();
+      startSiteBackdropAnimation();
+      startCrane3DSimulation();
+      window.addEventListener('resize', () => {
+        if (!document.getElementById('view-history').classList.contains('hidden')) {
+          drawAllHistoryCharts();
+        }
+        if (modalActiveType) {
+          drawMaximizedChart();
+        }
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalActiveType) {
+          closeMaximizeModal();
+        }
+      });
+    };
+  </script>
+
+  <script>
+    let crane3dSmoothAngle = 212.7;
+
+    function renderCrane3D(canvas, angleDeg, cam, timeSec) {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.round(rect.width * dpr);
+      const h = Math.round(rect.height * dpr);
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+
+      const ctx = canvas.getContext('2d');
+      ctx.save();
+      ctx.scale(dpr, dpr);
+      const cw = rect.width;
+      const ch = rect.height;
+      ctx.clearRect(0, 0, cw, ch);
+
+      // Subtle radial HUD backdrop glow
+      const bgGrad = ctx.createRadialGradient(cw * 0.5, ch * 0.55, 4, cw * 0.5, ch * 0.55, cw * 0.65);
+      bgGrad.addColorStop(0, 'rgba(255, 174, 0, 0.14)');
+      bgGrad.addColorStop(1, 'rgba(8, 11, 16, 0)');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, cw, ch);
+
+      const scale = Math.min(cw, ch) * cam.zoom;
+      const cx = cw * cam.panX;
+      const cy = ch * cam.panY;
+      const fov = 4.2;
+
+      const cosCY = Math.cos(cam.yaw), sinCY = Math.sin(cam.yaw);
+      const cosCP = Math.cos(cam.pitch), sinCP = Math.sin(cam.pitch);
+
+      // 3D -> 2D perspective projection (world: y up, x right, z depth)
+      function project(x, y, z) {
+        // Rotate around Y (camera orbit yaw)
+        const rx = x * cosCY - z * sinCY;
+        const rz = x * sinCY + z * cosCY;
+        // Rotate around X (camera pitch)
+        const py = y * cosCP - rz * sinCP;
+        const pz = y * sinCP + rz * cosCP;
+        const dist = fov + pz;
+        const f = fov / Math.max(0.5, dist);
+        return {
+          x: cx + rx * scale * f,
+          y: cy - py * scale * f,
+          z: pz,
+          f: f
+        };
+      }
+
+      // Crane yaw in radians (0 deg = North / +Z or -Z; match compass clockwise rotation)
+      const jibRad = (angleDeg * Math.PI) / 180;
+      const cosJ = Math.cos(jibRad), sinJ = Math.sin(jibRad);
+      function rotJib(x, y, z) {
+        // Rotate clockwise around Y when viewed from top:
+        // 0 deg -> (0, y, -r), 90 deg -> (+r, y, 0)
+        return [x * cosJ - z * sinJ, y, x * sinJ + z * cosJ];
+      }
+
+      // 1. Draw 3D Circular Slewing Ground Platform (y = 0)
+      const ringSegs = 48;
+      const outerR = 1.05;
+      const innerR = 0.62;
+
+      // Ground circular fill
+      ctx.beginPath();
+      for (let i = 0; i <= ringSegs; i++) {
+        const a = (i / ringSegs) * Math.PI * 2;
+        const p = project(Math.sin(a) * outerR, 0, -Math.cos(a) * outerR);
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255, 214, 0, 0.06)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 214, 0, 0.65)';
+      ctx.lineWidth = Math.max(1.2, cw * 0.012);
+      ctx.stroke();
+
+      // Inner slewing sweep circle
+      ctx.beginPath();
+      for (let i = 0; i <= ringSegs; i++) {
+        const a = (i / ringSegs) * Math.PI * 2;
+        const p = project(Math.sin(a) * innerR, 0, -Math.cos(a) * innerR);
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      ctx.closePath();
+      ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = 'rgba(255, 174, 0, 0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Cardinal ticks on 3D circle (N highlighted in red-orange)
+      for (let d = 0; d < 360; d += 30) {
+        const a = (d * Math.PI) / 180;
+        const r1 = d % 90 === 0 ? outerR * 0.86 : outerR * 0.93;
+        const p1 = project(Math.sin(a) * r1, 0, -Math.cos(a) * r1);
+        const p2 = project(Math.sin(a) * outerR, 0, -Math.cos(a) * outerR);
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.strokeStyle = d === 0 ? '#FF3D00' : 'rgba(255, 230, 0, 0.65)';
+        ctx.lineWidth = d === 0 ? Math.max(2, cw * 0.018) : 1;
+        ctx.stroke();
+      }
+
+      // Glowing 3D Sweep Sector & Ground Shadow under Jib
+      const sweepSpan = 0.45;
+      ctx.beginPath();
+      const centerP = project(0, 0, 0);
+      ctx.moveTo(centerP.x, centerP.y);
+      for (let i = 0; i <= 10; i++) {
+        const a = jibRad - sweepSpan * (1 - i / 10);
+        const p = project(Math.sin(a) * outerR, 0, -Math.cos(a) * outerR);
+        ctx.lineTo(p.x, p.y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255, 109, 0, 0.22)';
+      ctx.fill();
+
+      // Ground projection line from center to hook shadow
+      const hookR = 0.78;
+      const hookGround = project(...rotJib(0, 0, -hookR));
+      const tipGround = project(...rotJib(0, 0, -outerR));
+      ctx.beginPath();
+      ctx.moveTo(centerP.x, centerP.y);
+      ctx.lineTo(tipGround.x, tipGround.y);
+      ctx.strokeStyle = 'rgba(255, 230, 0, 0.55)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      // Pulsing target ring on 3D circle under hook
+      ctx.beginPath();
+      ctx.arc(hookGround.x, hookGround.y, Math.max(2.5, cw * 0.028), 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 61, 0, 0.45)';
+      ctx.fill();
+      ctx.strokeStyle = '#FFE600';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Collect 3D primitives (lines & filled quads) for depth sorting
+      const primitives = [];
+      function addLine(a, b, color, width, dash) {
+        const pa = project(a[0], a[1], a[2]);
+        const pb = project(b[0], b[1], b[2]);
+        primitives.push({
+          type: 'line',
+          z: (pa.z + pb.z) * 0.5,
+          pa, pb, color, width: width * ((pa.f + pb.f) * 0.5), dash
+        });
+      }
+      function addQuad(pts, fill, stroke) {
+        const p = pts.map(pt => project(pt[0], pt[1], pt[2]));
+        const avgZ = (p[0].z + p[1].z + p[2].z + p[3].z) * 0.25;
+        primitives.push({ type: 'quad', z: avgZ, p, fill, stroke });
+      }
+      function addBox(cx0, cy0, cz0, sx, sy, sz, colors, rotFn) {
+        const hx = sx * 0.5, hy = sy * 0.5, hz = sz * 0.5;
+        const v = [
+          [-hx, -hy, -hz], [hx, -hy, -hz], [hx, hy, -hz], [-hx, hy, -hz],
+          [-hx, -hy, hz], [hx, -hy, hz], [hx, hy, hz], [-hx, hy, hz]
+        ].map(([x, y, z]) => rotFn ? rotFn(cx0 + x, cy0 + y, cz0 + z) : [cx0 + x, cy0 + y, cz0 + z]);
+        const faces = [
+          [v[0], v[1], v[2], v[3], colors.front || colors.side],
+          [v[5], v[4], v[7], v[6], colors.back || colors.side],
+          [v[4], v[0], v[3], v[7], colors.left || colors.side],
+          [v[1], v[5], v[6], v[2], colors.right || colors.side],
+          [v[3], v[2], v[6], v[7], colors.top],
+          [v[4], v[5], v[1], v[0], colors.bottom || colors.side]
+        ];
+        faces.forEach(f => addQuad([f[0], f[1], f[2], f[3]], f[4], colors.stroke));
+      }
+
+      // 2. 3D Base Foundation Plinth
+      addBox(0, 0.04, 0, 0.28, 0.08, 0.28, {
+        top: '#FF8F00', side: '#B34700', stroke: '#FFE600'
+      });
+
+      // 3. 3D Lattice Tower Mast (y = 0.08 to 1.05)
+      const mw = 0.09;
+      const mastLevels = [0.08, 0.32, 0.56, 0.80, 1.05];
+      const corners = [[-mw, -mw], [mw, -mw], [mw, mw], [-mw, mw]];
+      for (let i = 0; i < 4; i++) {
+        const [x, z] = corners[i];
+        addLine([x, mastLevels[0], z], [x, mastLevels[4], z], '#FFE600', 2.0);
+      }
+      for (let l = 0; l < mastLevels.length; l++) {
+        const y = mastLevels[l];
+        for (let i = 0; i < 4; i++) {
+          const [x1, z1] = corners[i];
+          const [x2, z2] = corners[(i + 1) % 4];
+          addLine([x1, y, z1], [x2, y, z2], '#FFAE00', 1.3);
+          if (l < mastLevels.length - 1) {
+            const yn = mastLevels[l + 1];
+            addLine([x1, y, z1], [x2, yn, z2], '#FF6D00', 1.0);
+          }
+        }
+      }
+
+      // 4. 3D Slewing Turntable Ring
+      addBox(0, 1.08, 0, 0.24, 0.05, 0.24, {
+        top: '#FFE600', side: '#FF3D00', stroke: '#FFFFFF'
+      }, rotJib);
+
+      // 5. 3D Rotating Superstructure (A-frame Cathead, Jib, Counter-Jib, Cab, Hook)
+      const apex = rotJib(0, 1.46, 0);
+      const cwMast = [[-0.08, 1.11, -0.08], [0.08, 1.11, -0.08], [0.08, 1.11, 0.08], [-0.08, 1.11, 0.08]].map(p => rotJib(p[0], p[1], p[2]));
+      cwMast.forEach(p => addLine(p, apex, '#FFE600', 1.8));
+
+      // Forward Working Jib (3D triangular truss along -Z in local crane space)
+      const jibLen = 1.02;
+      const jibY = 1.13;
+      const jibTopY = 1.24;
+      const jL0 = rotJib(-0.07, jibY, 0), jR0 = rotJib(0.07, jibY, 0), jT0 = rotJib(0, jibTopY, 0);
+      const jL1 = rotJib(-0.03, jibY, -jibLen), jR1 = rotJib(0.03, jibY, -jibLen), jT1 = rotJib(0, jibTopY - 0.04, -jibLen);
+
+      addLine(jL0, jL1, '#FF6D00', 2.2);
+      addLine(jR0, jR1, '#FF6D00', 2.2);
+      addLine(jT0, jT1, '#FFE600', 2.0);
+      addLine(jL1, jR1, '#FF3D00', 2.0);
+      addLine(jL1, jT1, '#FFE600', 1.6);
+      addLine(jR1, jT1, '#FFE600', 1.6);
+
+      // Jib truss ribs
+      for (let s = 1; s <= 4; s++) {
+        const t = s / 5;
+        const w = 0.07 * (1 - t) + 0.03 * t;
+        const z = -jibLen * t;
+        const yt = jibTopY - 0.04 * t;
+        const pL = rotJib(-w, jibY, z), pR = rotJib(w, jibY, z), pT = rotJib(0, yt, z);
+        addLine(pL, pR, '#FFAE00', 1.1);
+        addLine(pL, pT, '#FFE600', 1.1);
+        addLine(pR, pT, '#FFE600', 1.1);
+      }
+
+      // Guy stay cables from apex to jib
+      addLine(apex, rotJib(0, jibTopY - 0.02, -jibLen * 0.55), '#FFFFFF', 1.0, [2, 2]);
+      addLine(apex, rotJib(0, jibTopY - 0.04, -jibLen * 0.92), '#FFFFFF', 1.0, [2, 2]);
+
+      // Counter-Jib (+Z in local crane space) & 3D Counterweight Block
+      const cLen = 0.46;
+      addLine(rotJib(-0.06, jibY, 0), rotJib(-0.06, jibY, cLen), '#FF6D00', 2.0);
+      addLine(rotJib(0.06, jibY, 0), rotJib(0.06, jibY, cLen), '#FF6D00', 2.0);
+      addLine(apex, rotJib(0, jibY + 0.04, cLen * 0.85), '#FFFFFF', 1.0, [2, 2]);
+
+      // 3D Counterweight Box
+      addBox(0, jibY + 0.02, cLen * 0.82, 0.18, 0.13, 0.16, {
+        top: '#FFE600', side: '#D84315', front: '#FF6D00', stroke: '#FFE600'
+      }, rotJib);
+
+      // 3D Operator Cab (side of mast head)
+      addBox(0.14, 1.09, -0.06, 0.11, 0.13, 0.12, {
+        top: '#FF8F00', side: '#FF3D00', front: '#38BDF8', stroke: '#FFFFFF'
+      }, rotJib);
+
+      // 3D Trolley, Hoist Cable & Load Hook
+      const trolleyTop = rotJib(0, jibY - 0.01, -hookR);
+      const hookPos = rotJib(0, 0.56, -hookR);
+      addBox(0, jibY - 0.01, -hookR, 0.08, 0.04, 0.08, {
+        top: '#FFE600', side: '#FF8F00', stroke: '#0F172A'
+      }, rotJib);
+      addLine(trolleyTop, hookPos, '#FFFFFF', 1.2);
+      addLine(hookPos, rotJib(0, 0, -hookR), 'rgba(255, 230, 0, 0.35)', 0.9, [2, 2]);
+      addBox(0, 0.52, -hookR, 0.08, 0.08, 0.08, {
+        top: '#FFE600', side: '#FF1744', stroke: '#FFE600'
+      }, rotJib);
+
+      // Sort back-to-front (largest z = furthest from camera in this projection)
+      primitives.sort((a, b) => b.z - a.z);
+
+      for (const item of primitives) {
+        if (item.type === 'line') {
+          ctx.beginPath();
+          ctx.moveTo(item.pa.x, item.pa.y);
+          ctx.lineTo(item.pb.x, item.pb.y);
+          if (item.dash) ctx.setLineDash(item.dash);
+          else ctx.setLineDash([]);
+          ctx.strokeStyle = item.color;
+          ctx.lineWidth = Math.max(0.8, item.width);
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        } else if (item.type === 'quad') {
+          ctx.beginPath();
+          ctx.moveTo(item.p[0].x, item.p[0].y);
+          ctx.lineTo(item.p[1].x, item.p[1].y);
+          ctx.lineTo(item.p[2].x, item.p[2].y);
+          ctx.lineTo(item.p[3].x, item.p[3].y);
+          ctx.closePath();
+          ctx.setLineDash([]);
+          ctx.fillStyle = item.fill;
+          ctx.fill();
+          if (item.stroke) {
+            ctx.strokeStyle = item.stroke;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.setLineDash([]);
+
+      // Flashing Red Aircraft Warning Beacon on Cathead Apex
+      const apexP = project(apex[0], apex[1], apex[2]);
+      const pulse = 0.55 + 0.45 * Math.sin(timeSec * 6);
+      ctx.beginPath();
+      ctx.arc(apexP.x, apexP.y, Math.max(2.2, cw * 0.022), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 23, 68, ${pulse})`;
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    const crane3dCam = Object.freeze({
+      yaw: -0.60,
+      pitch: 0.05,
+      panX: 0.50,
+      panY: 0.72,
+      zoom: 0.44
+    });
+
+    function startCrane3DSimulation() {
+      const craneCanvas = document.getElementById('crane3dCanvas');
+      const motorRotor = document.getElementById('centerMotorRotor');
+      const tab2Rotor = document.getElementById('tab2MotorRotor');
+      let motorSpinAngle = 0;
+
+      function tick(now) {
+        const t = now * 0.001;
+        let diff = ((telemetry.jibAngle - crane3dSmoothAngle + 540) % 360) - 180;
+        crane3dSmoothAngle = (crane3dSmoothAngle + diff * 0.18 + 360) % 360;
+
+        if (telemetry.isSimulating || telemetry.pwm > 40) {
+          const speed = Math.max(1.5, (telemetry.pwm / 255) * 8);
+          motorSpinAngle = (motorSpinAngle + speed) % 360;
+          if (motorRotor) motorRotor.setAttribute('transform', `rotate(${motorSpinAngle.toFixed(1)} 38 38)`);
+          if (tab2Rotor) tab2Rotor.setAttribute('transform', `rotate(${motorSpinAngle.toFixed(1)} 38 38)`);
+        }
+
+        renderCrane3D(craneCanvas, crane3dSmoothAngle, crane3dCam, t);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+  </script>
+
+</body>
+</html>
