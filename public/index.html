@@ -281,17 +281,7 @@
     }
   </style>
 </head>
-<body class="relative h-screen max-h-screen w-screen overflow-hidden flex flex-col justify-between">
-
-  <!-- LIVE CONSTRUCTION SITE CANVAS / VIDEO LAYER -->
-  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-    <!-- Animated Live 3D-Style Construction Site Simulation Canvas -->
-    <canvas id="siteCanvas" class="w-full h-full block"></canvas>
-    <!-- Optional User Uploaded Live Site Video -->
-    <video id="customVideo" class="hidden w-full h-full object-cover" autoplay loop muted playsinline></video>
-    <!-- Ultra-light contrast vignette only at edges so center video remains crystal clear -->
-    <div class="absolute inset-0" style="background: radial-gradient(circle at center, rgba(0,0,0,0.06) 45%, rgba(0,0,0,0.34) 100%);"></div>
-  </div>
+<body class="relative h-screen max-h-screen w-screen overflow-hidden flex flex-col justify-between bg-transparent">
 
   <!-- MAIN TRANSPARENT PROJECTOR HUD WRAPPER (Strict 100vh Responsive Layout) -->
   <div class="hud-scaled-shell relative z-10 flex flex-col h-full w-full p-2 sm:p-2.5 lg:p-3 gap-2 overflow-hidden">
