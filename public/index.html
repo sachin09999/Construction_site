@@ -1028,7 +1028,7 @@
     <!-- ===================================================================== -->
     <!-- FULL-WIDTH MAXIMIZED CHART OVERLAY (MATCHING REFERENCE IMAGE 6)     -->
     <!-- ===================================================================== -->
-    <div id="chartMaximizeModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md p-3 sm:p-6 flex flex-col justify-between">
+    <div id="chartMaximizeModal" class="fixed inset-0 z-50 hidden bg-black/20 backdrop-blur-[2px] p-3 sm:p-6 flex flex-col justify-between">
       <!-- Modal Header -->
       <div class="hud-glass px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3 sm:gap-4">
@@ -1063,7 +1063,8 @@
 
       <!-- Huge High-Resolution Canvas (Stretches Full Screen Width) -->
       <div class="hud-glass my-3 flex-1 w-full p-2 sm:p-4 relative flex items-center justify-center overflow-hidden">
-        <canvas id="maximizedCanvas" class="w-full h-full block"></canvas>
+        <div id="modalWatermark" class="absolute inset-0 flex items-center justify-center pl-24 pb-10 pointer-events-none select-none opacity-[0.16]"></div>
+        <canvas id="maximizedCanvas" class="w-full h-full block relative z-10"></canvas>
       </div>
 
       <!-- Modal Bottom Information Bar -->
@@ -1306,12 +1307,94 @@
     let currentRange = '1H';
     let modalActiveType = null;
 
+    function buildRangeSampleSeries(range) {
+      const n = 24;
+      const mult = range === '1H' ? 1 : (range === '24H' ? 1.4 : (range === '7D' ? 1.9 : 2.3));
+      const baseP = Math.max(120, telemetry.power || 320);
+      const baseJ = telemetry.jibAngle || 212.7;
+      const baseI = telemetry.incline || 0.29;
+      telemetry.historyPower = Array.from({ length: n }, (_, i) =>
+        Math.max(0, Math.round(baseP * (0.45 + 0.45 * Math.sin(i * 0.55 + mult))))
+      );
+      telemetry.historyJib = Array.from({ length: n }, (_, i) =>
+        ((baseJ + Math.sin(i * 0.4 + mult) * 45 * mult + 360) % 360)
+      );
+      telemetry.historyIncline = Array.from({ length: n }, (_, i) =>
+        Number((baseI + Math.sin(i * 0.65 + mult) * (0.8 * mult)).toFixed(2))
+      );
+    }
+
+    function getRangeAxisConfig(range, data, baseMin, baseMax) {
+      const now = new Date();
+      const pad2 = (n) => String(n).padStart(2, '0');
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      let xTicks = [];
+      let xTitle = 'TIME (HH:MM:SS)';
+
+      if (range === '24H') {
+        xTitle = 'HOURS (LAST 24 HOURS)';
+        for (let i = 6; i >= 0; i--) {
+          if (i === 0) xTicks.push('NOW');
+          else {
+            const d = new Date(now.getTime() - i * 4 * 3600 * 1000);
+            xTicks.push(`${pad2(d.getHours())}:00`);
+          }
+        }
+      } else if (range === '7D') {
+        xTitle = 'DAYS (LAST 7 DAYS / 1 WEEK)';
+        for (let i = 6; i >= 0; i--) {
+          if (i === 0) xTicks.push('Today');
+          else {
+            const d = new Date(now.getTime() - i * 24 * 3600 * 1000);
+            xTicks.push(`${days[d.getDay()]} ${d.getDate()}`);
+          }
+        }
+      } else if (range === '30D') {
+        xTitle = 'WEEKS / DATES (LAST 30 DAYS)';
+        for (let i = 6; i >= 0; i--) {
+          if (i === 0) xTicks.push('Today');
+          else {
+            const d = new Date(now.getTime() - i * 5 * 24 * 3600 * 1000);
+            xTicks.push(`${months[d.getMonth()]} ${pad2(d.getDate())}`);
+          }
+        }
+      } else {
+        xTitle = 'TIME (LAST 1 HOUR)';
+        for (let i = 6; i >= 0; i--) {
+          if (i === 0) xTicks.push('LIVE');
+          else {
+            const d = new Date(now.getTime() - i * 10 * 60 * 1000);
+            xTicks.push(`${pad2(d.getHours())}:${pad2(d.getMinutes())}`);
+          }
+        }
+      }
+
+      // Dynamic Y-axis scaling from active range data
+      const valid = (data || []).filter(v => typeof v === 'number' && !Number.isNaN(v));
+      let yMin = baseMin, yMax = baseMax;
+      if (valid.length > 0) {
+        const dMin = Math.min(...valid);
+        const dMax = Math.max(...valid);
+        const span = dMax - dMin;
+        if (span > 0.05) {
+          const pad = span * 0.2;
+          yMin = baseMin >= 0 ? Math.max(0, Math.floor((dMin - pad) * 10) / 10) : Math.floor((dMin - pad) * 10) / 10;
+          yMax = Math.ceil((dMax + pad) * 10) / 10;
+          if (yMax <= yMin) yMax = yMin + 1;
+        }
+      }
+
+      return { xTicks, xTitle, yMin, yMax };
+    }
+
     function setChartRange(range) {
       currentRange = range;
       document.querySelectorAll('.range-btn').forEach(btn => {
         const isMatch = btn.textContent.trim().toUpperCase() === range.toUpperCase();
         btn.classList.toggle('active', isMatch);
       });
+      buildRangeSampleSeries(range);
       fetchLiveHistory(range, null);
       drawAllHistoryCharts();
       if (modalActiveType) drawMaximizedChart();
@@ -1359,6 +1442,17 @@
         liveReadout.textContent = `${telemetry.incline.toFixed(2)}° (LIVE)`;
         iconWrap.style.borderColor = '#FFE600';
         iconEl.innerHTML = '<path d="M10 38H38L10 12V38Z" stroke="#FFE600" stroke-width="4" fill="rgba(255,109,0,0.3)"/>';
+      }
+
+      const wm = document.getElementById('modalWatermark');
+      if (wm) {
+        if (type === 'power') {
+          wm.innerHTML = '<svg class="w-80 h-80 sm:w-[26rem] sm:h-[26rem]" viewBox="0 0 48 48" fill="none"><path d="M27 4L10 26H24L20 44L38 21H24L27 4Z" fill="#FFE600" stroke="#FF6D00" stroke-width="2" stroke-linejoin="round"/></svg>';
+        } else if (type === 'jib') {
+          wm.innerHTML = '<svg class="w-80 h-80 sm:w-[26rem] sm:h-[26rem]" viewBox="0 0 64 64" fill="none"><path d="M18 58V12M26 58V12M13 58H31" stroke="#FFE600" stroke-width="4" stroke-linecap="round"/><path d="M7 15H58L49 8H14L7 15Z" fill="#FF6D00" stroke="#FFE600" stroke-width="3"/><path d="M51 15V34" stroke="#FFE600" stroke-width="4"/><path d="M47 34H55L51 41L47 34Z" fill="#FFE600"/></svg>';
+        } else {
+          wm.innerHTML = '<svg class="w-80 h-80 sm:w-[26rem] sm:h-[26rem]" viewBox="0 0 64 64" fill="none"><path d="M10 54H56L10 12V54Z" fill="rgba(255,109,0,0.45)" stroke="#FFE600" stroke-width="4" stroke-linejoin="round"/><path d="M27 54A17 17 0 0 0 20 40" fill="none" stroke="#FF6D00" stroke-width="4.5" stroke-linecap="round"/></svg>';
+        }
       }
 
       // Sync modal date picker
@@ -1416,6 +1510,10 @@
         ctx.fillText(yTitle, 0, 0);
         ctx.restore();
       }
+
+      const axisCfg = getRangeAxisConfig(currentRange, data, minVal, maxVal);
+      minVal = axisCfg.yMin;
+      maxVal = axisCfg.yMax;
 
       // Grid lines & Ultra-Crisp Larger White Y-Axis Numbers (Zero overlap with title)
       ctx.font = '900 22px "Chakra Petch", sans-serif';
@@ -1480,25 +1578,26 @@
       ctx.fill();
       ctx.restore();
 
-      // Bottom Timestamps with X-axis tick marks (Enlarged)
+      // Bottom Dynamic X-axis Ticks (1H / 24H / 7D / 30D)
       ctx.fillStyle = '#FFFFFF';
-      ctx.font = '900 22px "Chakra Petch", sans-serif';
+      ctx.font = '900 20px "Chakra Petch", sans-serif';
       ctx.textAlign = 'center';
       ctx.shadowColor = '#000000';
       ctx.shadowBlur = 6;
-      ctx.fillText('08:30:00', padL + 45, padT + plotH + 28);
-      ctx.fillText('09:00:00', padL + plotW / 2, padT + plotH + 28);
-      ctx.fillText('LIVE', padL + plotW - 25, padT + plotH + 28);
+      const xTicks3 = [axisCfg.xTicks[0], axisCfg.xTicks[3], axisCfg.xTicks[6]];
+      ctx.fillText(xTicks3[0], padL + 42, padT + plotH + 28);
+      ctx.fillText(xTicks3[1], padL + plotW / 2, padT + plotH + 28);
+      ctx.fillText(xTicks3[2], padL + plotW - 32, padT + plotH + 28);
 
-      // Horizontal X-Axis Title (Matching single "years" label on X-axis, centered below timestamps - Extra Large)
+      // Horizontal X-Axis Title
       ctx.save();
       ctx.fillStyle = '#FFE600';
-      ctx.font = '900 34px "Chakra Petch", sans-serif';
+      ctx.font = '900 26px "Chakra Petch", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
       ctx.shadowColor = '#000000';
       ctx.shadowBlur = 12;
-      ctx.fillText('TIME (HH:MM:SS)', padL + plotW / 2, h - 4);
+      ctx.fillText(axisCfg.xTitle, padL + plotW / 2, h - 4);
       ctx.restore();
     }
 
@@ -1512,7 +1611,7 @@
       const w = canvas.width;
       const h = canvas.height;
 
-      const padL = 190, padR = 40, padT = 35, padB = 98;
+      const padL = 190, padR = 55, padT = 35, padB = 98;
       const plotW = w - padL - padR;
       const plotH = h - padT - padB;
 
@@ -1554,12 +1653,16 @@
         yName = 'BOOM INCLINE TILT (°)';
       }
 
-      // Vertical Y-Axis Title (Positioned with a clean, comfortable 18-20px gap: title at x = 24, numbers start at x = 46 and right-align at padL - 10 = 180)
+      const axisCfg = getRangeAxisConfig(currentRange, data, minVal, maxVal);
+      minVal = axisCfg.yMin;
+      maxVal = axisCfg.yMax;
+
+      // Vertical Y-Axis Title
       ctx.save();
       ctx.translate(24, padT + plotH / 2);
       ctx.rotate(-Math.PI / 2);
       ctx.fillStyle = lineColor;
-      ctx.font = '900 36px "Chakra Petch", sans-serif';
+      ctx.font = '900 28px "Chakra Petch", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.shadowColor = '#000000';
@@ -1601,16 +1704,13 @@
         ctx.fillText(`${val.toFixed(1)} ${unit}`, padL - 10, y);
       }
 
-      // X-Axis Detailed Timestamps along bottom (Enlarged)
-      const timeStamps = [
-        '11:43:59', '11:53:26', '12:02:48', '12:12:07', '12:21:21', '12:30:48', '12:40:01'
-      ];
+      // X-Axis Dynamic Ticks (1H / 24H / 7D / 30D)
+      const timeStamps = axisCfg.xTicks;
       ctx.fillStyle = '#FFFFFF';
-      ctx.font = '900 24px "Chakra Petch", sans-serif';
+      ctx.font = '900 22px "Chakra Petch", sans-serif';
       ctx.textAlign = 'center';
       timeStamps.forEach((ts, idx) => {
         const tx = padL + (plotW * idx) / (timeStamps.length - 1);
-        // Vertical dashed guide line
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
         ctx.lineWidth = 1;
         ctx.setLineDash([4, 6]);
@@ -1623,15 +1723,15 @@
         ctx.fillText(ts, tx, padT + plotH + 34);
       });
 
-      // Bottom centered X-axis Title (Single clear title, extra large)
+      // Bottom centered X-axis Title
       ctx.save();
       ctx.fillStyle = '#FFE600';
-      ctx.font = '900 38px "Chakra Petch", sans-serif';
+      ctx.font = '900 32px "Chakra Petch", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
       ctx.shadowColor = '#000000';
       ctx.shadowBlur = 12;
-      ctx.fillText('TIME (HH:MM:SS)', padL + plotW / 2, h - 8);
+      ctx.fillText(axisCfg.xTitle, padL + plotW / 2, h - 8);
       ctx.restore();
 
       // Plot Main High-Resolution Line
