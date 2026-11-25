@@ -1473,6 +1473,10 @@
       const mDate = document.getElementById('modalDatePicker');
       if (mDate && !mDate.value) mDate.value = today;
 
+      const hdr = document.querySelector('header');
+      const hv = document.getElementById('view-history');
+      if (hdr) hdr.classList.add('hidden');
+      if (hv) hv.classList.add('hidden');
       modal.classList.remove('hidden');
       requestAnimationFrame(drawMaximizedChart);
     }
@@ -1480,7 +1484,12 @@
     function closeMaximizeModal() {
       const modal = document.getElementById('chartMaximizeModal');
       modal.classList.add('hidden');
+      const hdr = document.querySelector('header');
+      const hv = document.getElementById('view-history');
+      if (hdr) hdr.classList.remove('hidden');
+      if (hv) hv.classList.remove('hidden');
       modalActiveType = null;
+      requestAnimationFrame(drawAllHistoryCharts);
     }
 
     function drawSingleChart(canvasId, data, lineColor, minVal, maxVal, yTitle, unit) {
@@ -1675,7 +1684,7 @@
       ctx.translate(24, padT + plotH / 2);
       ctx.rotate(-Math.PI / 2);
       ctx.fillStyle = lineColor;
-      ctx.font = '900 28px "Chakra Petch", sans-serif';
+      ctx.font = '900 22px "Chakra Petch", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.shadowColor = '#000000';
