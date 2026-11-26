@@ -829,117 +829,121 @@
           </div>
         </section>
 
-        <!-- RIGHT PANEL (7 cols): 3 CLEAN CARDS WITH LARGE ICONS, METERS & READOUTS -->
-        <section class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 h-full min-h-0 overflow-hidden">
+        <!-- RIGHT PANEL (7 cols): 2 CARDS TOP + 1 CENTERED CARD BOTTOM -->
+        <section class="lg:col-span-7 grid grid-rows-2 gap-2.5 sm:gap-3 h-full min-h-0 overflow-hidden">
 
-          <!-- CARD 1: VOLTAGE -->
-          <div class="hud-glass relative p-3 sm:p-4 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
-            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 p-3 rounded-3xl border-[3px] border-[#FFE600] bg-[#FFE600]/25 shadow-[0_0_28px_rgba(255,230,0,0.55)] svg-drop-shadow z-10 pointer-events-none">
-              <svg class="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20" viewBox="0 0 64 64" fill="none">
-                <path d="M36 5L12 35H30L26 59L52 29H34L36 5Z" fill="#FFE600" stroke="#FF6D00" stroke-width="4" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden pt-8 sm:pt-10">
-              <div class="text-[#FFE600] font-black text-xl sm:text-2xl lg:text-3xl proj-glow-yellow text-center tracking-wider shrink-0 mb-1">
-                12V
+          <!-- TOP ROW: VOLTAGE & CURRENT -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 h-full min-h-0">
+
+            <!-- CARD 1: VOLTAGE -->
+            <div class="hud-glass relative p-2.5 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
+              <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-2.5 sm:p-3 rounded-2xl border-2 sm:border-[3px] border-[#FFE600] bg-[#FFE600]/25 shadow-[0_0_24px_rgba(255,230,0,0.5)] svg-drop-shadow z-10 pointer-events-none">
+                <svg class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14" viewBox="0 0 64 64" fill="none">
+                  <path d="M36 5L12 35H30L26 59L52 29H34L36 5Z" fill="#FFE600" stroke="#FF6D00" stroke-width="4" stroke-linejoin="round"/>
+                </svg>
               </div>
-              <svg viewBox="0 -10 320 215" class="w-[84%] h-auto max-h-[80%] svg-drop-shadow overflow-visible">
-                <defs>
-                  <linearGradient id="arcGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#FFE600"/>
-                    <stop offset="60%" stop-color="#FFAE00"/>
-                    <stop offset="100%" stop-color="#FF6D00"/>
-                  </linearGradient>
-                </defs>
-                <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="25" stroke-linecap="round"/>
-                <path id="voltageArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad1)" stroke-width="25" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="182"/>
-                <g transform="translate(122, 62)">
-                  <circle cx="38" cy="38" r="36" fill="rgba(255, 214, 0, 0.16)" stroke="#FFE600" stroke-width="3"/>
-                  <path d="M42 10L20 39H36L32 66L56 37H40L42 10Z" fill="#FFE600" stroke="#FF6D00" stroke-width="3.5" stroke-linejoin="round"/>
-                </g>
-                <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
-                <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">24</text>
-              </svg>
+              <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
+                <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
+                  12V
+                </div>
+                <svg viewBox="0 -10 320 215" class="h-full max-h-[82%] max-w-[300px] aspect-[16/10] svg-drop-shadow overflow-visible">
+                  <defs>
+                    <linearGradient id="arcGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#FFE600"/>
+                      <stop offset="60%" stop-color="#FFAE00"/>
+                      <stop offset="100%" stop-color="#FF6D00"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
+                  <path id="voltageArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad1)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="182"/>
+                  <g transform="translate(122, 62)">
+                    <circle cx="38" cy="38" r="36" fill="rgba(255, 214, 0, 0.16)" stroke="#FFE600" stroke-width="3"/>
+                    <path d="M42 10L20 39H36L32 66L56 37H40L42 10Z" fill="#FFE600" stroke="#FF6D00" stroke-width="3.5" stroke-linejoin="round"/>
+                  </g>
+                  <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
+                  <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">24</text>
+                </svg>
+              </div>
+              <div class="shrink-0 text-center flex flex-col items-center">
+                <div id="voltageValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">12.38 V</div>
+                <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-1">VOLTAGE</div>
+              </div>
             </div>
 
-            <div class="shrink-0 text-center flex flex-col items-center pb-2">
-              <div id="voltageValue" class="value-projector-lg font-black text-[#FFFFFF] proj-text-shadow leading-none">12.38 V</div>
-              <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-2">VOLTAGE</div>
+            <!-- CARD 2: CURRENT -->
+            <div class="hud-glass-orange relative p-2.5 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
+              <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-2.5 sm:p-3 rounded-2xl border-2 sm:border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_24px_rgba(255,109,0,0.5)] svg-drop-shadow z-10 pointer-events-none">
+                <svg class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14" viewBox="0 0 64 64" fill="none">
+                  <path d="M6 32H17L24 12L32 52L40 18L47 32H58" stroke="#FFE600" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M51 24L60 32L51 40" stroke="#FF6D00" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
+                <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
+                  250
+                </div>
+                <svg viewBox="0 -10 320 215" class="h-full max-h-[82%] max-w-[300px] aspect-[16/10] svg-drop-shadow overflow-visible">
+                  <defs>
+                    <linearGradient id="arcGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#FFE600"/>
+                      <stop offset="100%" stop-color="#FF6D00"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
+                  <path id="currentArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad2)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"/>
+                  <g transform="translate(122, 62)">
+                    <circle cx="38" cy="38" r="36" fill="rgba(255, 109, 0, 0.18)" stroke="#FF6D00" stroke-width="3"/>
+                    <path d="M10 38H20L27 18L36 58L45 24L51 38H64" stroke="#FFE600" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M58 31L66 38L58 45" stroke="#FF6D00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </g>
+                  <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
+                  <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">500</text>
+                </svg>
+              </div>
+              <div class="shrink-0 text-center flex flex-col items-center">
+                <div id="currentValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mA</div>
+                <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange mt-1">CURRENT</div>
+              </div>
             </div>
+
           </div>
 
-          <!-- CARD 2: CURRENT -->
-          <div class="hud-glass-orange relative p-3 sm:p-4 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
-            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 p-3 rounded-3xl border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_28px_rgba(255,109,0,0.55)] svg-drop-shadow z-10 pointer-events-none">
-              <svg class="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20" viewBox="0 0 64 64" fill="none">
-                <path d="M6 32H17L24 12L32 52L40 18L47 32H58" stroke="#FFE600" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M51 24L60 32L51 40" stroke="#FF6D00" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden pt-8 sm:pt-10">
-              <div class="text-[#FFE600] font-black text-xl sm:text-2xl lg:text-3xl proj-glow-yellow text-center tracking-wider shrink-0 mb-1">
-                250
+          <!-- BOTTOM ROW: CENTERED POWER CARD (SAME WIDTH AS TOP CARDS) -->
+          <div class="flex items-stretch justify-center h-full min-h-0">
+            <div class="w-full sm:w-[calc(50%-0.375rem)] hud-glass-orange relative p-2.5 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
+              <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-2.5 sm:p-3 rounded-2xl border-2 sm:border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_24px_rgba(255,109,0,0.5)] svg-drop-shadow z-10 pointer-events-none">
+                <svg class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14" viewBox="0 0 64 64" fill="none">
+                  <path d="M32 10C23 10 16 16.5 16 25C16 30.5 19 35 24 38V44H40V38C45 35 48 30.5 48 25C48 16.5 41 10 32 10Z" fill="rgba(255,230,0,0.3)" stroke="#FFE600" stroke-width="4"/>
+                  <path d="M25 50H39M28 55H36" stroke="#FF6D00" stroke-width="4" stroke-linecap="round"/>
+                </svg>
               </div>
-              <svg viewBox="0 -10 320 215" class="w-[84%] h-auto max-h-[80%] svg-drop-shadow overflow-visible">
-                <defs>
-                  <linearGradient id="arcGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#FFE600"/>
-                    <stop offset="100%" stop-color="#FF6D00"/>
-                  </linearGradient>
-                </defs>
-                <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="25" stroke-linecap="round"/>
-                <path id="currentArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad2)" stroke-width="25" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"/>
-                <g transform="translate(122, 62)">
-                  <circle cx="38" cy="38" r="36" fill="rgba(255, 109, 0, 0.18)" stroke="#FF6D00" stroke-width="3"/>
-                  <path d="M10 38H20L27 18L36 58L45 24L51 38H64" stroke="#FFE600" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M58 31L66 38L58 45" stroke="#FF6D00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </g>
-                <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
-                <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">500</text>
-              </svg>
-            </div>
-
-            <div class="shrink-0 text-center flex flex-col items-center pb-2">
-              <div id="currentValue" class="value-projector-lg font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mA</div>
-              <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange mt-2">CURRENT</div>
-            </div>
-          </div>
-
-          <!-- CARD 3: POWER -->
-          <div class="hud-glass-orange relative p-3 sm:p-4 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
-            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 p-3 rounded-3xl border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_28px_rgba(255,109,0,0.55)] svg-drop-shadow z-10 pointer-events-none">
-              <svg class="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20" viewBox="0 0 64 64" fill="none">
-                <path d="M32 10C23 10 16 16.5 16 25C16 30.5 19 35 24 38V44H40V38C45 35 48 30.5 48 25C48 16.5 41 10 32 10Z" fill="rgba(255,230,0,0.3)" stroke="#FFE600" stroke-width="4"/>
-                <path d="M25 50H39M28 55H36" stroke="#FF6D00" stroke-width="4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden pt-8 sm:pt-10">
-              <div class="text-[#FFE600] font-black text-xl sm:text-2xl lg:text-3xl proj-glow-yellow text-center tracking-wider shrink-0 mb-1">
-                1000
+              <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
+                <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
+                  1000
+                </div>
+                <svg viewBox="0 -10 320 215" class="h-full max-h-[82%] max-w-[300px] aspect-[16/10] svg-drop-shadow overflow-visible">
+                  <defs>
+                    <linearGradient id="arcGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#FFE600"/>
+                      <stop offset="100%" stop-color="#FF6D00"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
+                  <path id="powerArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad3)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"/>
+                  <g transform="translate(122, 62)">
+                    <circle cx="38" cy="38" r="36" fill="rgba(255, 109, 0, 0.18)" stroke="#FF6D00" stroke-width="3"/>
+                    <path d="M38 12C27.5 12 20 19.5 20 29.5C20 36 23.5 41.5 29 44.5V50H47V44.5C52.5 41.5 56 36 56 29.5C56 19.5 48.5 12 38 12Z" fill="rgba(255,230,0,0.32)" stroke="#FFE600" stroke-width="3.8"/>
+                    <path d="M30 55H46M33 60H43" stroke="#FF6D00" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M39 20L32 31H39L37 41L44 30H37L39 20Z" fill="#FF6D00"/>
+                  </g>
+                  <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
+                  <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">2000</text>
+                </svg>
               </div>
-              <svg viewBox="0 -10 320 215" class="w-[84%] h-auto max-h-[80%] svg-drop-shadow overflow-visible">
-                <defs>
-                  <linearGradient id="arcGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#FFE600"/>
-                    <stop offset="100%" stop-color="#FF6D00"/>
-                  </linearGradient>
-                </defs>
-                <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="25" stroke-linecap="round"/>
-                <path id="powerArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad3)" stroke-width="25" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"/>
-                <g transform="translate(122, 62)">
-                  <circle cx="38" cy="38" r="36" fill="rgba(255, 109, 0, 0.18)" stroke="#FF6D00" stroke-width="3"/>
-                  <path d="M38 12C27.5 12 20 19.5 20 29.5C20 36 23.5 41.5 29 44.5V50H47V44.5C52.5 41.5 56 36 56 29.5C56 19.5 48.5 12 38 12Z" fill="rgba(255,230,0,0.32)" stroke="#FFE600" stroke-width="3.8"/>
-                  <path d="M30 55H46M33 60H43" stroke="#FF6D00" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M39 20L32 31H39L37 41L44 30H37L39 20Z" fill="#FF6D00"/>
-                </g>
-                <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
-                <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">2000</text>
-              </svg>
-            </div>
-
-            <div class="shrink-0 text-center flex flex-col items-center pb-2">
-              <div id="powerValue" class="value-projector-lg font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mW</div>
-              <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange mt-2">POWER</div>
+              <div class="shrink-0 text-center flex flex-col items-center">
+                <div id="powerValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mW</div>
+                <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange mt-1">POWER</div>
+              </div>
             </div>
           </div>
 
@@ -1433,16 +1437,11 @@
       }
       document.getElementById('inclineValue').textContent = `${telemetry.incline.toFixed(2)}°`;
 
-      // Sync Jib & Boom Blow-up Schematic
+      // Sync Jib & Boom Blow-up Readout Pills (diagram stays static)
       const blowupJibText = document.getElementById('blowupJibAngleText');
       if (blowupJibText) blowupJibText.textContent = `${telemetry.jibAngle.toFixed(1)}°`;
       const blowupIncText = document.getElementById('blowupInclineText');
       if (blowupIncText) blowupIncText.textContent = `${telemetry.incline.toFixed(2)}°`;
-      const blowupTiltGroup = document.getElementById('jibBlowupTiltGroup');
-      if (blowupTiltGroup) {
-        const visualTilt = Math.max(-10, Math.min(10, telemetry.incline * 1.5));
-        blowupTiltGroup.setAttribute('transform', `rotate(${visualTilt.toFixed(2)} 450 118)`);
-      }
 
       // Motor Speed Tab (Matching Reference UI: Arc, 24 / 255, CREEP SPEED • 9%)
       const pct = Math.round((telemetry.pwm / 255) * 100);
