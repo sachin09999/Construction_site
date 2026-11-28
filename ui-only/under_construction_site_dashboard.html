@@ -1071,10 +1071,10 @@
       </section>
 
       <!-- CHART 2: JIB YAW HEADING -->
-      <section id="hist-panel-jib" class="hidden flex-1 hud-glass-orange p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
+      <section id="hist-panel-jib" class="hidden flex-1 hud-glass p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
         <div class="flex items-center justify-between gap-2 shrink-0">
           <div class="flex flex-wrap items-baseline gap-4 sm:gap-6">
-            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-[#FF8F00] proj-glow-orange tracking-wider">JIB HEADING</h3>
+            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-[#FFE600] proj-glow-yellow tracking-wider">JIB HEADING</h3>
             <div id="chartJibVal" class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#FFFFFF] proj-text-shadow">212.7°</div>
           </div>
           <div class="flex items-center gap-2">
@@ -1096,7 +1096,7 @@
             <button onclick="setChartRange('7D')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">7D</button>
             <button onclick="setChartRange('30D')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">30D</button>
           </div>
-          <label class="text-[#FF8F00] font-black text-2xl sm:text-3xl lg:text-4xl flex items-center gap-2.5 shrink-0">
+          <label class="text-[#FFE600] font-black text-2xl sm:text-3xl lg:text-4xl flex items-center gap-2.5 shrink-0">
             <span>DATE:</span>
             <input type="date" id="dateJib" class="projector-date-input" onchange="filterChartDate('jib', this.value)"/>
           </label>
@@ -1300,9 +1300,9 @@
               <path d="M27 6L11 27H24L21 42L37 21H24L27 6Z" fill="#FFE600" stroke="#FF6D00" stroke-width="2.5"/>
             </svg>
           </div>
-          <div>
-            <h2 id="modalChartTitle" class="font-black uppercase text-[#FFE600] proj-glow-yellow text-2xl sm:text-3xl lg:text-4xl tracking-wider">POWER LOAD</h2>
-            <div id="modalLiveReadout" class="text-xl sm:text-2xl font-black text-[#FFFFFF] proj-text-shadow">0.0 mW (LIVE)</div>
+          <div class="flex flex-wrap items-baseline gap-4 sm:gap-6">
+            <h2 id="modalChartTitle" class="font-black uppercase text-[#FFE600] proj-glow-yellow text-3xl sm:text-4xl lg:text-5xl tracking-wider">POWER LOAD</h2>
+            <div id="modalLiveReadout" class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#FFFFFF] proj-text-shadow">0.0 mW</div>
           </div>
         </div>
 
@@ -1754,19 +1754,19 @@
       if (type === 'power') {
         titleEl.textContent = 'POWER LOAD';
         titleEl.className = 'font-black uppercase text-[#FFE600] proj-glow-yellow text-2xl sm:text-3xl lg:text-4xl tracking-wider';
-        liveReadout.textContent = `${telemetry.power.toFixed(1)} mW (LIVE)`;
+        liveReadout.textContent = `${telemetry.power.toFixed(1)} mW`;
         iconWrap.style.borderColor = '#FFE600';
         iconEl.innerHTML = '<path d="M27 6L11 27H24L21 42L37 21H24L27 6Z" fill="#FFE600" stroke="#FF6D00" stroke-width="2.5"/>';
       } else if (type === 'jib') {
         titleEl.textContent = 'JIB HEADING';
         titleEl.className = 'font-black uppercase text-[#FF8F00] proj-glow-orange text-2xl sm:text-3xl lg:text-4xl tracking-wider';
-        liveReadout.textContent = `${telemetry.jibAngle.toFixed(1)}° (LIVE)`;
+        liveReadout.textContent = `${telemetry.jibAngle.toFixed(1)}°`;
         iconWrap.style.borderColor = '#FF6D00';
         iconEl.innerHTML = '<path d="M18 58V12M26 58V12M13 58H31" stroke="#FFE600" stroke-width="4" stroke-linecap="round"/><path d="M7 15H58L49 8H14L7 15Z" fill="#FF6D00" stroke="#FFE600" stroke-width="3"/><path d="M51 15V34" stroke="#FFE600" stroke-width="4"/>';
       } else {
         titleEl.textContent = 'BOOM INCLINE';
         titleEl.className = 'font-black uppercase text-[#FFE600] proj-glow-yellow text-2xl sm:text-3xl lg:text-4xl tracking-wider';
-        liveReadout.textContent = `${telemetry.incline.toFixed(2)}° (LIVE)`;
+        liveReadout.textContent = `${telemetry.incline.toFixed(2)}°`;
         iconWrap.style.borderColor = '#FFE600';
         iconEl.innerHTML = '<path d="M10 38H38L10 12V38Z" stroke="#FFE600" stroke-width="4" fill="rgba(255,109,0,0.3)"/>';
       }
@@ -1975,7 +1975,7 @@
         yName = 'POWER LOAD (mW)';
       } else if (modalActiveType === 'jib') {
         data = telemetry.historyJib;
-        lineColor = '#FF6D00';
+        lineColor = '#FFE600';
         minVal = 0;
         maxVal = 360;
         unit = '°';
@@ -2110,7 +2110,7 @@
 
     function drawAllHistoryCharts() {
       drawSingleChart('chartPowerCanvas', telemetry.historyPower, '#FFE600', 0, 2000, 'POWER (mW)', 'mW');
-      drawSingleChart('chartJibCanvas', telemetry.historyJib, '#FF6D00', 160, 260, 'JIB ANGLE (°)', '°');
+      drawSingleChart('chartJibCanvas', telemetry.historyJib, '#FFE600', 160, 260, 'JIB ANGLE (°)', '°');
       drawSingleChart('chartInclineCanvas', telemetry.historyIncline, '#FFE600', -2, 4, 'INCLINE (°)', '°');
     }
 
