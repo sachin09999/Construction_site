@@ -522,9 +522,6 @@
             <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-0.5">
               JIB ANGLE
             </div>
-            <div id="jibStatusBadge" class="mt-1 px-6 py-1 rounded-xl border-2 border-white bg-[#FF6D00] text-white text-xl sm:text-2xl font-black uppercase tracking-widest shadow">
-              STOPPED
-            </div>
           </div>
         </section>
 
@@ -898,8 +895,8 @@
                 </div>
                 <div class="flex justify-between text-xl sm:text-2xl font-black text-[#FFE600]">
                   <span>0</span>
-                  <span>1000</span>
-                  <span class="text-[#FF6D00]">2000 mW</span>
+                  <span>15</span>
+                  <span class="text-[#FF6D00]">30 mW</span>
                 </div>
               </div>
             </div>
@@ -1237,7 +1234,6 @@
             <div class="shrink-0 text-center flex flex-col items-center gap-0.5 pt-1">
               <div id="jibHistAngleValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">212.7°</div>
               <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-0.5">JIB ANGLE</div>
-              <div id="jibHistStatusBadge" class="mt-1 px-6 py-1 rounded-xl border-2 border-white bg-[#FF6D00] text-white text-xl sm:text-2xl font-black uppercase tracking-widest shadow">STOPPED</div>
             </div>
           </div>
         </div>
@@ -1349,7 +1345,6 @@
       voltage: 12.38,
       current: 0,
       power: 0,
-      magnetOn: false,
       incline: 0.29,
       pwm: 24,
       sessionSeconds: 20 * 3600 + 15 * 60 + 42,
@@ -1442,6 +1437,12 @@
     // =========================================================================
     // 4. UPDATE ALL HUD GAUGES & PROJECTOR READOUTS
     // =========================================================================
+    function normalizePowerValue(rawVal) {
+      const num = Number(rawVal);
+      if (!Number.isFinite(num) || num < 0) return 0;
+      return num > 30 ? 11 : num;
+    }
+
     function updateDashboardUI() {
       // Compass Jib Rotation & Text (Centered at 200, 200)
       const rotor = document.getElementById('craneJibRotor');
@@ -1497,9 +1498,9 @@
       if (tab2C) tab2C.textContent = `${Math.round(telemetry.current)} mA`;
 
       // Power (0..2000mW)
-      setArc('powerArc', telemetry.power, 0, 2000);
+      setArc('powerArc', telemetry.power, 0, 30);
       const pBar = document.getElementById('powerDigitalBar');
-      if (pBar) pBar.style.width = `${Math.max(0, Math.min(100, (telemetry.power / 2000) * 100)).toFixed(1)}%`;
+      if (pBar) pBar.style.width = `${Math.max(0, Math.min(100, (telemetry.power / 30) * 100)).toFixed(1)}%`;
       document.getElementById('powerValue').textContent = `${Math.round(telemetry.power)} mW`;
       const tab2P = document.getElementById('tab2Power');
       if (tab2P) tab2P.textContent = `${Math.round(telemetry.power)} mW`;
@@ -1616,12 +1617,10 @@
         const t = Date.now() / 1000;
         telemetry.jibAngle = (telemetry.jibAngle + 3.5) % 360;
         telemetry.voltage = 12.35 + Math.sin(t * 1.3) * 0.24;
-        if (telemetry.magnetOn) {
-          telemetry.incline = 0.29 + Math.sin(t * 0.45) * 0.14;
-        }
+        telemetry.incline = 0.29 + Math.sin(t * 0.45) * 0.14;
         const simPwm = telemetry.pwm || 24;
         telemetry.current = Math.round((simPwm / 30) * 410 + Math.cos(t * 2) * 15);
-        telemetry.power = Math.round(telemetry.voltage * telemetry.current * 0.36);
+        telemetry.power = normalizePowerValue(Math.round(telemetry.voltage * telemetry.current * 0.36));
 
         pushHistorySample();
         updateDashboardUI();
@@ -1640,11 +1639,11 @@
     function buildRangeSampleSeries(range) {
       const n = 24;
       const mult = range === '1H' ? 1 : (range === '24H' ? 1.4 : (range === '7D' ? 1.9 : 2.3));
-      const baseP = Math.max(120, telemetry.power || 320);
+      const baseP = Math.min(28, Math.max(8, telemetry.power || 11));
       const baseJ = telemetry.jibAngle || 212.7;
       const baseI = telemetry.incline || 0.29;
       telemetry.historyPower = Array.from({ length: n }, (_, i) =>
-        Math.max(0, Math.round(baseP * (0.45 + 0.45 * Math.sin(i * 0.55 + mult))))
+        normalizePowerValue(Math.round(baseP * (0.45 + 0.45 * Math.sin(i * 0.55 + mult))))
       );
       telemetry.historyJib = Array.from({ length: n }, (_, i) =>
         ((baseJ + Math.sin(i * 0.4 + mult) * 45 * mult + 360) % 360)
@@ -1703,7 +1702,7 @@
       // Dynamic Y-axis scaling from active range data
       const valid = (data || []).filter(v => typeof v === 'number' && !Number.isNaN(v));
       let yMin = baseMin, yMax = baseMax;
-      if (valid.length > 0) {
+      if (valid.length > 0 && !(baseMin === 0 && baseMax === 360)) {
         const dMin = Math.min(...valid);
         const dMax = Math.max(...valid);
         const span = dMax - dMin;
@@ -1973,7 +1972,7 @@
         data = telemetry.historyPower;
         lineColor = '#FFE600';
         minVal = 0;
-        maxVal = 2000;
+        maxVal = 30;
         unit = 'mW';
         yName = 'POWER LOAD (mW)';
       } else if (modalActiveType === 'jib') {
@@ -2010,7 +2009,7 @@
       ctx.restore();
 
       // Sub-grid and major horizontal gridlines
-      const steps = 6;
+      const steps = (modalActiveType === 'jib') ? 4 : 6;
       ctx.font = '900 24px "Chakra Petch", sans-serif';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
@@ -2112,8 +2111,8 @@
     }
 
     function drawAllHistoryCharts() {
-      drawSingleChart('chartPowerCanvas', telemetry.historyPower, '#FFE600', 0, 2000, 'POWER (mW)', 'mW');
-      drawSingleChart('chartJibCanvas', telemetry.historyJib, '#FFE600', 160, 260, 'JIB ANGLE (°)', '°');
+      drawSingleChart('chartPowerCanvas', telemetry.historyPower, '#FFE600', 0, 30, 'POWER (mW)', 'mW');
+      drawSingleChart('chartJibCanvas', telemetry.historyJib, '#FFE600', 0, 360, 'JIB ANGLE (°)', '°');
       drawSingleChart('chartInclineCanvas', telemetry.historyIncline, '#FFE600', -2, 4, 'INCLINE (°)', '°');
     }
 
