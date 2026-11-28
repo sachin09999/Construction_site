@@ -152,7 +152,7 @@ try {
   store.setDeviceStatus(DEVICE_ID, 'online');
   store.setDeviceStatus('esp32', 'online');
   store.setValue('esp32_status', 'online', '');
-  store.setValue('crane_speed', 180, 'PWM');
+  store.setValue('crane_speed', 24, 'PWM');
 } catch (e) {
   console.warn('[DB] Could not pre-load last record:', e.message);
 }

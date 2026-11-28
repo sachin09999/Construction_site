@@ -63,40 +63,40 @@
         0 0 24px rgba(255, 109, 0, 0.65);
     }
 
-    /* Transparent glass cards — zero heavy black backgrounds */
+    /* Glass cards — 20% reduced transparency for crisp projector contrast */
     .hud-glass {
       background: linear-gradient(
         145deg,
-        rgba(255, 214, 0, 0.11) 0%,
-        rgba(255, 109, 0, 0.06) 100%
+        rgba(20, 22, 28, 0.30) 0%,
+        rgba(45, 32, 8, 0.25) 100%
       );
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 2px solid rgba(255, 214, 0, 0.72);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 2px solid rgba(255, 214, 0, 0.78);
       box-shadow:
-        0 0 20px rgba(255, 174, 0, 0.15),
-        inset 0 0 14px rgba(255, 230, 0, 0.07);
+        0 0 20px rgba(255, 174, 0, 0.18),
+        inset 0 0 14px rgba(255, 230, 0, 0.09);
       border-radius: 16px;
     }
 
     .hud-glass-orange {
       background: linear-gradient(
         145deg,
-        rgba(255, 109, 0, 0.12) 0%,
-        rgba(255, 214, 0, 0.06) 100%
+        rgba(34, 20, 10, 0.32) 0%,
+        rgba(20, 22, 28, 0.25) 100%
       );
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 2px solid rgba(255, 125, 0, 0.82);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 2px solid rgba(255, 125, 0, 0.85);
       box-shadow:
-        0 0 20px rgba(255, 109, 0, 0.18),
-        inset 0 0 14px rgba(255, 145, 0, 0.08);
+        0 0 20px rgba(255, 109, 0, 0.20),
+        inset 0 0 14px rgba(255, 145, 0, 0.10);
       border-radius: 16px;
     }
 
     /* Navigation Tabs */
     .nav-tab {
-      background: rgba(255, 214, 0, 0.08);
+      background: rgba(20, 22, 28, 0.28);
       backdrop-filter: blur(4px);
       border: 2px solid rgba(255, 214, 0, 0.55);
       color: #ffe600;
@@ -118,19 +118,19 @@
       box-shadow: 0 0 24px rgba(255, 214, 0, 0.65);
     }
 
-    /* Projector Scale Typography (Reduced 20% for crisp breathing room) */
+    /* Projector Scale Typography - Bold & Large for Projector Readability */
     .title-projector {
-      font-size: clamp(0.76rem, 1.08vw, 1.24rem);
+      font-size: clamp(1.1rem, 1.5vw, 1.8rem);
       letter-spacing: 0.03em;
     }
 
     .tab-projector {
-      font-size: clamp(0.64rem, 0.8vw, 0.84rem);
-      letter-spacing: 0.03em;
+      font-size: clamp(1.05rem, 1.35vw, 1.6rem);
+      letter-spacing: 0.04em;
     }
 
     .label-projector {
-      font-size: clamp(1.12rem, 1.68vw, 2.0rem);
+      font-size: clamp(1.45rem, 2.2vw, 2.6rem);
       line-height: 1.1;
       letter-spacing: 0.05em;
       font-weight: 900;
@@ -138,7 +138,7 @@
 
     /* Giant Under-Meter Labels (VOLTAGE, CURRENT, POWER, INCLINE, JIB ANGLE) */
     .meter-label {
-      font-size: clamp(1.52rem, 2.32vw, 2.8rem);
+      font-size: clamp(1.75rem, 2.6vw, 3.2rem);
       line-height: 1;
       letter-spacing: 0.09em;
       font-weight: 900;
@@ -146,14 +146,14 @@
     }
 
     .value-projector {
-      font-size: clamp(1.92rem, 3.04vw, 3.52rem);
+      font-size: clamp(2.86rem, 4.42vw, 5.2rem);
       line-height: 0.95;
       letter-spacing: 0.02em;
       font-weight: 900;
     }
 
     .value-projector-lg {
-      font-size: clamp(2.56rem, 4.16vw, 4.64rem);
+      font-size: clamp(3.64rem, 5.85vw, 6.76rem);
       line-height: 0.95;
       letter-spacing: 0.02em;
       font-weight: 900;
@@ -200,6 +200,22 @@
       cursor: pointer;
     }
 
+    /* Industrial Segmented Digital LED Bar */
+    .digital-led-track {
+      position: relative;
+      background: rgba(8, 12, 18, 0.72);
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.85);
+    }
+    .digital-led-ticks {
+      background-image: repeating-linear-gradient(
+        to right,
+        transparent 0,
+        transparent calc(5% - 2px),
+        rgba(10, 14, 20, 0.92) calc(5% - 2px),
+        rgba(10, 14, 20, 0.92) 5%
+      );
+    }
+
     .svg-drop-shadow {
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.9));
     }
@@ -235,10 +251,10 @@
       background: rgba(15, 23, 42, 0.75) !important;
       border: 2px solid rgba(255, 214, 0, 0.75) !important;
       border-radius: 14px;
-      padding: 6px 14px;
+      padding: 10px 20px;
       font-family: 'Chakra Petch', sans-serif;
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 2rem;
       outline: none;
       box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
     }
@@ -302,9 +318,9 @@
             <rect x="8" y="14" width="7" height="7" rx="1.5" fill="#FF6D00"/>
           </svg>
         </div>
-        <nav class="flex items-center gap-1.5" aria-label="Digital Twin Sub-Views">
-          <button id="subtab-btn-jib" onclick="switchTwinSubTab('jib')" class="nav-tab active tab-projector font-black uppercase px-2.5 sm:px-3.5 py-1 flex items-center justify-center gap-1.5 cursor-pointer">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 32 32" fill="none">
+        <nav class="flex items-center gap-3 sm:gap-4" aria-label="Digital Twin Sub-Views">
+          <button id="subtab-btn-jib" onclick="switchTwinSubTab('jib')" class="nav-tab active tab-projector font-black uppercase px-4 sm:px-5 py-2 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2.6"/>
               <polygon points="16,6 19,16 16,14 13,16" fill="currentColor"/>
               <path d="M16 16L22 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
@@ -312,8 +328,8 @@
             <span>JIB &amp; INCLINE</span>
           </button>
 
-          <button id="subtab-btn-power" onclick="switchTwinSubTab('power')" class="nav-tab tab-projector font-black uppercase px-2.5 sm:px-3.5 py-1 flex items-center justify-center gap-1.5 cursor-pointer">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 32 32" fill="none">
+          <button id="subtab-btn-power" onclick="switchTwinSubTab('power')" class="nav-tab tab-projector font-black uppercase px-4 sm:px-5 py-2 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 32 32" fill="none">
               <rect x="7" y="10" width="16" height="13" rx="2.5" stroke="currentColor" stroke-width="2.5"/>
               <path d="M23 13H26V20H23" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
               <path d="M15 12L12 17H16L14 21L18 16H14L15 12Z" fill="currentColor"/>
@@ -323,29 +339,44 @@
         </nav>
       </div>
 
-      <!-- 3 Projector Navigation Tabs + Live Controls -->
+            <!-- 5 Main Projector Navigation Tabs -->
       <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-        <nav class="grid grid-cols-3 gap-1.5">
-          <button id="tab-btn-twin" onclick="switchTab('twin')" class="nav-tab active tab-projector font-black uppercase px-2.5 sm:px-3.5 py-1 flex items-center justify-center gap-1.5 cursor-pointer">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 32 32" fill="none">
+        <nav class="flex flex-wrap items-center gap-3 sm:gap-4">
+          <button id="tab-btn-twin" onclick="switchTab('twin')" class="nav-tab active tab-projector font-black uppercase px-3 sm:px-4 py-2 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="3"/>
               <path d="M16 7V16L22 20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
             </svg>
             <span>DIGITAL TWIN</span>
           </button>
 
-          <button id="tab-btn-throttle" onclick="switchTab('throttle')" class="nav-tab tab-projector font-black uppercase px-2.5 sm:px-3.5 py-1 flex items-center justify-center gap-1.5 cursor-pointer">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 32 32" fill="none">
+          <button id="tab-btn-throttle" onclick="switchTab('throttle')" class="nav-tab tab-projector font-black uppercase px-3 sm:px-4 py-2 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 32 32" fill="none">
               <path d="M18 4L8 18H16L14 28L24 14H16L18 4Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
             </svg>
             <span>THROTTLE</span>
           </button>
 
-          <button id="tab-btn-history" onclick="switchTab('history')" class="nav-tab tab-projector font-black uppercase px-2.5 sm:px-3.5 py-1 flex items-center justify-center gap-1.5 cursor-pointer">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 32 32" fill="none">
+          <button id="hist-tab-btn-power" onclick="switchHistorySubTab('power')" class="nav-tab tab-projector font-black uppercase px-3 sm:px-4 py-2 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 32 32" fill="none">
               <path d="M4 26H28M6 21L13 14L18 18L26 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>HISTORY</span>
+            <span>POWER LOAD</span>
+          </button>
+
+          <button id="hist-tab-btn-jib" onclick="switchHistorySubTab('jib')" class="nav-tab tab-projector font-black uppercase px-3 sm:px-4 py-2 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="11" stroke="currentColor" stroke-width="2.8"/>
+              <polygon points="16,7 19,16 16,14 13,16" fill="currentColor"/>
+            </svg>
+            <span>JIB HEADING</span>
+          </button>
+
+          <button id="hist-tab-btn-incline" onclick="switchHistorySubTab('incline')" class="nav-tab tab-projector font-black uppercase px-3 sm:px-4 py-2 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 32 32" fill="none">
+              <path d="M5 26H27L5 8V26Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
+            </svg>
+            <span>BOOM INCLINE</span>
           </button>
         </nav>
       </div>
@@ -364,13 +395,6 @@
           <!-- LARGE INLINE 3D CRANE SIMULATION STAGE -->
           <div class="w-full h-[38%] min-h-[150px] rounded-2xl border-2 border-[#FFE600] bg-[#0B0E14]/85 shadow-[0_0_24px_rgba(255,230,0,0.4)] relative overflow-hidden shrink-0">
             <canvas id="crane3dCanvas" class="w-full h-full block pointer-events-none"></canvas>
-            <div class="absolute top-2 left-2 px-2.5 py-1 rounded-lg border border-[#FF3D00] bg-[#FF3D00]/25 text-[#FFE600] text-xs sm:text-sm font-black tracking-wider proj-text-shadow pointer-events-none">
-              N • 000°
-            </div>
-            <div class="absolute top-2 right-2.5 px-2 py-0.5 rounded-md border border-[#FFE600]/60 bg-black/60 pointer-events-none flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse"></span>
-              <span class="text-[#FFE600] font-black text-[10px] sm:text-xs tracking-wider uppercase">3D SIM</span>
-            </div>
           </div>
 
           <!-- Clean, Ultra-Crisp Circular Compass Dial -->
@@ -499,7 +523,7 @@
             <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-0.5">
               JIB ANGLE
             </div>
-            <div id="jibStatusBadge" class="mt-1 px-5 py-0.5 rounded-xl border border-white bg-[#FF6D00] text-white text-xs sm:text-sm font-black uppercase tracking-widest shadow">
+            <div id="jibStatusBadge" class="mt-1 px-6 py-1 rounded-xl border-2 border-white bg-[#FF6D00] text-white text-base sm:text-lg font-black uppercase tracking-widest shadow">
               STOPPED
             </div>
           </div>
@@ -510,16 +534,9 @@
 
           <!-- TOP CARD: BLOWN-UP JIB & BOOM SCHEMATIC CALLOUT -->
           <div class="hud-glass relative p-3 sm:p-4 flex flex-col justify-between h-[46%] min-h-[200px] overflow-hidden">
-            <div class="flex items-center justify-between gap-2 shrink-0">
-              <div class="flex items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-lg bg-[#FFE600] text-[#0D0D0D] font-black text-xs sm:text-sm tracking-wider uppercase">JIB &amp; BOOM BLOW-UP</span>
-                <span class="text-white/80 font-bold text-xs sm:text-sm tracking-wide uppercase">SLEW DIRECTION &amp; BOOM TILT REFERENCE</span>
+            <div class="flex items-center justify-start shrink-0">
+                <span class="px-4 py-1 rounded-xl bg-[#FFE600] text-[#0D0D0D] font-black text-base sm:text-lg lg:text-xl tracking-wider uppercase">JIB &amp; BOOM BLOW-UP</span>
               </div>
-              <div class="hidden sm:flex items-center gap-2 text-xs font-black tracking-wider">
-                <span class="px-2 py-0.5 rounded border border-[#FFE600]/60 bg-[#FFE600]/15 text-[#FFE600]">JIB: <span id="blowupJibAngleText">212.7°</span></span>
-                <span class="px-2 py-0.5 rounded border border-[#FF8F00]/70 bg-[#FF6D00]/20 text-[#FFAE00]">TILT: <span id="blowupInclineText">0.29°</span></span>
-              </div>
-            </div>
 
             <!-- Interactive Crane -> Magnified Jib Blow-up SVG -->
             <div class="relative w-full flex-1 min-h-0 flex items-center justify-center overflow-hidden mt-1">
@@ -553,7 +570,7 @@
                   <rect x="140" y="122" width="10" height="8" rx="1.5" fill="#FFE600"/>
                   <!-- Highlight Target Ring around Jib/Mast Head -->
                   <ellipse cx="98" cy="64" rx="84" ry="30" fill="rgba(255,230,0,0.08)" stroke="#FFE600" stroke-width="3" stroke-dasharray="7 5"/>
-                  <text x="70" y="242" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="13" font-weight="900">TOWER CRANE</text>
+                  <text x="70" y="242" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="17" font-weight="900">TOWER CRANE</text>
                 </g>
 
                 <!-- 2. MAGNIFIER CALLOUT CONE -->
@@ -574,11 +591,10 @@
                 <!-- Slewing Rotation Arc Indicator (0° - 360°) -->
                 <path d="M402 152 A56 18 0 1 0 498 152" fill="none" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
                 <polygon points="498,152 487,146 492,158" fill="#38BDF8"/>
-                <text x="450" y="234" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="12" font-weight="900">SLEW ROTATION (JIB ANGLE 0°–360°)</text>
+                <text x="450" y="234" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="16" font-weight="900">SLEW ROTATION (0°–360°)</text>
 
                 <!-- Level Horizon Reference Line -->
                 <line x1="330" y1="118" x2="788" y2="118" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-dasharray="7 5"/>
-                <text x="326" y="96" text-anchor="start" fill="rgba(255,255,255,0.65)" font-family="'Chakra Petch', sans-serif" font-size="11" font-weight="800">0° HORIZON</text>
 
                 <!-- LIVE-TILTING BLOWN-UP JIB ASSEMBLY -->
                 <g id="jibBlowupTiltGroup" transform="rotate(0 450 118)">
@@ -593,7 +609,6 @@
                   <!-- Counter-Jib & Ballast -->
                   <rect x="338" y="106" width="96" height="18" rx="3" fill="rgba(255,109,0,0.25)" stroke="#FF8F00" stroke-width="2.8"/>
                   <rect x="334" y="124" width="38" height="24" rx="4" fill="#E05600" stroke="#FFE600" stroke-width="2.5"/>
-                  <text x="353" y="162" text-anchor="middle" fill="#FFAE00" font-family="'Chakra Petch', sans-serif" font-size="11" font-weight="900">BALLAST</text>
 
                   <!-- Forward Jib Truss -->
                   <polygon points="468,102 764,104 764,124 468,128" fill="rgba(255,214,0,0.15)" stroke="url(#blowupBeamGrad)" stroke-width="3.2" stroke-linejoin="round"/>
@@ -612,61 +627,44 @@
 
                   <!-- Jib Tip Label -->
                   <circle cx="764" cy="114" r="6" fill="#FF1744" stroke="#FFE600" stroke-width="2"/>
-                  <text x="635" y="42" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="14" font-weight="900">MAIN WORKING JIB (BOOM)</text>
+                  <text x="635" y="42" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="18" font-weight="900">MAIN WORKING JIB</text>
                 </g>
 
                 <!-- Incline Tilt Callout Arc at Jib Tip -->
                 <path d="M776 92 A46 46 0 0 1 776 142" fill="none" stroke="#FF6D00" stroke-width="3" stroke-linecap="round"/>
                 <polygon points="776,92 770,101 782,100" fill="#FF6D00"/>
                 <polygon points="776,142 770,133 782,134" fill="#FF6D00"/>
-                <text x="735" y="172" text-anchor="middle" fill="#FFAE00" font-family="'Chakra Petch', sans-serif" font-size="12" font-weight="900">BOOM INCLINE (±4°)</text>
+                <text x="735" y="172" text-anchor="middle" fill="#FFAE00" font-family="'Chakra Petch', sans-serif" font-size="16" font-weight="900">BOOM INCLINE (±4°)</text>
               </svg>
             </div>
           </div>
 
-          <!-- BOTTOM CARD: INCLINE GAUGE -->
-          <div class="hud-glass relative p-2 sm:p-3 flex flex-col items-center justify-between flex-1 min-h-0 overflow-hidden">
-            <!-- TOP-RIGHT MASSIVE ICON BADGE -->
-            <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-3 sm:p-4 rounded-3xl border-2 sm:border-[3px] border-[#FFE600] bg-[#FFE600]/25 shadow-[0_0_30px_rgba(255,230,0,0.55)] svg-drop-shadow z-10 transition transform hover:scale-105" title="Dual-Axis Boom Inclinometer">
-              <svg class="w-14 h-14 sm:w-18 sm:h-18 lg:w-20 lg:h-20" viewBox="0 0 64 64" fill="none">
-                <path d="M10 54H56L10 12V54Z" fill="rgba(255,109,0,0.38)" stroke="#FFE600" stroke-width="4.5" stroke-linejoin="round"/>
-                <path d="M27 54A17 17 0 0 0 20 40" fill="none" stroke="#FF6D00" stroke-width="5" stroke-linecap="round"/>
-              </svg>
-            </div>
-
-            <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
-              <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
-                0°
+          <!-- BOTTOM CARD: DIGITAL INCLINE READOUT -->
+          <div class="hud-glass relative p-4 sm:p-6 flex flex-col justify-between flex-1 min-h-0 overflow-hidden">
+            <div class="w-full flex items-center justify-between shrink-0">
+              <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow">INCLINE</div>
+              <div class="p-3 sm:p-3.5 rounded-3xl border-[3px] border-[#FFE600] bg-[#FFE600]/25 shadow-[0_0_28px_rgba(255,230,0,0.55)] svg-drop-shadow">
+                <svg class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16" viewBox="0 0 64 64" fill="none">
+                  <path d="M10 54H56L10 12V54Z" fill="rgba(255,109,0,0.38)" stroke="#FFE600" stroke-width="4.5" stroke-linejoin="round"/>
+                  <path d="M27 54A17 17 0 0 0 20 40" fill="none" stroke="#FF6D00" stroke-width="5" stroke-linecap="round"/>
+                </svg>
               </div>
-              <svg viewBox="0 -10 320 215" class="h-full max-h-[85%] max-w-[340px] aspect-[16/10] svg-drop-shadow overflow-visible">
-                <defs>
-                  <linearGradient id="arcGrad4" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#FF6D00"/>
-                    <stop offset="50%" stop-color="#FFE600"/>
-                    <stop offset="100%" stop-color="#FF6D00"/>
-                  </linearGradient>
-                </defs>
-                <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
-                <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad4)" stroke-width="11" stroke-linecap="round" opacity="0.75"/>
-
-                <g transform="translate(122, 62)">
-                  <circle cx="38" cy="38" r="36" fill="rgba(255, 214, 0, 0.16)" stroke="#FFE600" stroke-width="3"/>
-                  <path d="M18 54H58L18 20V54Z" fill="rgba(255,109,0,0.38)" stroke="#FFE600" stroke-width="4" stroke-linejoin="round"/>
-                  <path d="M32 54A14 14 0 0 0 26 42" fill="none" stroke="#FF6D00" stroke-width="4.5" stroke-linecap="round"/>
-                </g>
-
-                <g id="inclineNeedleGroup" transform="rotate(6.5 160 140)">
-                  <line x1="160" y1="64" x2="160" y2="10" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
-                  <circle cx="160" cy="18" r="11" fill="#FF6D00" stroke="#FFFFFF" stroke-width="3"/>
-                </g>
-                <text x="40" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">-4°</text>
-                <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">+4°</text>
-              </svg>
             </div>
 
-            <div class="shrink-0 text-center flex flex-col items-center">
-              <div id="inclineValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">0.29°</div>
-              <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-1">INCLINE</div>
+            <div class="flex-1 w-full flex items-center justify-center my-2 rounded-2xl bg-black/35 border border-[#FFE600]/30 shadow-[inset_0_0_24px_rgba(255,230,0,0.08)] px-4">
+              <div id="inclineValue" class="value-projector-lg font-black text-[#FFFFFF] proj-text-shadow leading-none">0.29°</div>
+            </div>
+
+            <div class="w-full shrink-0 flex flex-col gap-2">
+              <div class="digital-led-track relative w-full h-8 sm:h-9 rounded-xl border-2 border-[#FFE600]/60 overflow-hidden">
+                <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-white/60 -translate-x-1/2 z-10"></div>
+                <div id="inclineDigitalMarker" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-[#FFE600] border-2 border-[#FF6D00] shadow-[0_0_14px_#FFE600] transition-all duration-200" style="left: 53.6%;"></div>
+              </div>
+              <div class="flex justify-between text-lg sm:text-xl font-black text-[#FF8F00]">
+                <span>-4°</span>
+                <span class="text-[#FFE600]">0°</span>
+                <span>+4°</span>
+              </div>
             </div>
           </div>
         </section>
@@ -678,18 +676,9 @@
         <!-- LEFT PANEL (5 cols): ONE UNIFIED CRANE & MOTOR BLOW-UP DIAGRAM -->
         <section class="lg:col-span-5 hud-glass relative p-3 sm:p-4 flex flex-col justify-between h-full min-h-0 overflow-hidden">
           <!-- Top Diagram Header -->
-          <div class="flex items-center justify-between gap-2 shrink-0">
-            <div class="flex items-center gap-2">
-              <span class="px-3 py-1 rounded-lg bg-[#FFE600] text-[#0D0D0D] font-black text-xs sm:text-sm tracking-wider uppercase shadow">
-                CRANE DRIVE MOTOR
-              </span>
-              <span class="text-white/85 font-bold text-xs sm:text-sm tracking-wider uppercase">
-                UNIFIED BLOW-UP DIAGRAM
-              </span>
-            </div>
-            <span class="px-2.5 py-0.5 rounded-md border border-[#39FF14]/60 bg-black/50 text-[#39FF14] font-black text-[11px] tracking-wider uppercase flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse"></span>
-              LIVE
+          <div class="flex items-center justify-start shrink-0">
+            <span class="px-4 py-1 rounded-xl bg-[#FFE600] text-[#0D0D0D] font-black text-base sm:text-lg lg:text-xl tracking-wider uppercase shadow">
+              CRANE DRIVE MOTOR
             </span>
           </div>
 
@@ -728,7 +717,7 @@
                 <!-- Concrete Base & Anchor -->
                 <rect x="78" y="534" width="124" height="18" rx="4" fill="#FF6D00" stroke="#FFE600" stroke-width="2.8"/>
                 <rect x="98" y="518" width="84" height="16" rx="3" fill="#1E2530" stroke="#FFE600" stroke-width="2.2"/>
-                <text x="140" y="570" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-family="'Chakra Petch', sans-serif" font-size="13" font-weight="900">TOWER CRANE STRUCTURE</text>
+                <text x="140" y="570" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-family="'Chakra Petch', sans-serif" font-size="17" font-weight="900">TOWER CRANE</text>
 
                 <!-- Vertical Lattice Mast -->
                 <rect x="122" y="138" width="36" height="380" fill="rgba(255,214,0,0.08)" stroke="url(#craneMastGrad)" stroke-width="3.2"/>
@@ -821,126 +810,98 @@
 
                 <!-- Bottom Pill Badge -->
                 <rect x="-98" y="128" width="196" height="32" rx="16" fill="#FF6D00" stroke="#FFE600" stroke-width="2.5"/>
-                <text x="0" y="149" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="15" font-weight="900" letter-spacing="1">CRANE SLEW MOTOR</text>
+                <text x="0" y="149" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="17" font-weight="900" letter-spacing="1">CRANE SLEW MOTOR</text>
               </g>
             </svg>
           </div>
         </section>
 
-        <!-- RIGHT PANEL (7 cols): 2 CARDS TOP + 1 CENTERED CARD BOTTOM -->
+        <!-- RIGHT PANEL (7 cols): 3 DIGITAL CARDS (2 TOP + 1 CENTERED BOTTOM) -->
         <section class="lg:col-span-7 grid grid-rows-2 gap-2.5 sm:gap-3 h-full min-h-0 overflow-hidden">
 
           <!-- TOP ROW: VOLTAGE & CURRENT -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 h-full min-h-0">
 
-            <!-- CARD 1: VOLTAGE -->
-            <div class="hud-glass relative p-2.5 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
-              <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-2.5 sm:p-3 rounded-2xl border-2 sm:border-[3px] border-[#FFE600] bg-[#FFE600]/25 shadow-[0_0_24px_rgba(255,230,0,0.5)] svg-drop-shadow z-10 pointer-events-none">
-                <svg class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14" viewBox="0 0 64 64" fill="none">
-                  <path d="M36 5L12 35H30L26 59L52 29H34L36 5Z" fill="#FFE600" stroke="#FF6D00" stroke-width="4" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
-                <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
-                  12V
+            <!-- CARD 1: DIGITAL VOLTAGE -->
+            <div class="hud-glass relative p-4 sm:p-5 flex flex-col justify-between h-full min-h-0 overflow-hidden">
+              <div class="w-full flex items-center justify-between shrink-0">
+                <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow">VOLTAGE</div>
+                <div class="p-3 rounded-2xl border-[3px] border-[#FFE600] bg-[#FFE600]/25 shadow-[0_0_24px_rgba(255,230,0,0.5)] svg-drop-shadow">
+                  <svg class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20" viewBox="0 0 64 64" fill="none">
+                    <path d="M36 5L12 35H30L26 59L52 29H34L36 5Z" fill="#FFE600" stroke="#FF6D00" stroke-width="4" stroke-linejoin="round"/>
+                  </svg>
                 </div>
-                <svg viewBox="0 -10 320 215" class="h-full max-h-[82%] max-w-[300px] aspect-[16/10] svg-drop-shadow overflow-visible">
-                  <defs>
-                    <linearGradient id="arcGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#FFE600"/>
-                      <stop offset="60%" stop-color="#FFAE00"/>
-                      <stop offset="100%" stop-color="#FF6D00"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
-                  <path id="voltageArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad1)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="182"/>
-                  <g transform="translate(122, 62)">
-                    <circle cx="38" cy="38" r="36" fill="rgba(255, 214, 0, 0.16)" stroke="#FFE600" stroke-width="3"/>
-                    <path d="M42 10L20 39H36L32 66L56 37H40L42 10Z" fill="#FFE600" stroke="#FF6D00" stroke-width="3.5" stroke-linejoin="round"/>
-                  </g>
-                  <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
-                  <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">24</text>
-                </svg>
               </div>
-              <div class="shrink-0 text-center flex flex-col items-center">
-                <div id="voltageValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">12.38 V</div>
-                <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-1">VOLTAGE</div>
+              <div class="flex-1 w-full flex items-center justify-center my-2 rounded-2xl bg-black/35 border border-[#FFE600]/30 shadow-[inset_0_0_24px_rgba(255,230,0,0.08)] px-4">
+                <div id="voltageValue" class="value-projector-lg font-black text-[#FFFFFF] proj-text-shadow leading-none">12.38 V</div>
+              </div>
+              <div class="w-full shrink-0 flex flex-col gap-1.5">
+                <div class="digital-led-track w-full h-8 sm:h-9 rounded-xl border-2 border-[#FFE600]/60 overflow-hidden">
+                  <div id="voltageDigitalBar" class="h-full rounded-full bg-gradient-to-r from-[#FFE600] to-[#FF6D00] transition-all duration-200" style="width: 51.6%;"></div>
+                  <div class="digital-led-ticks absolute inset-0 pointer-events-none"></div>
+                </div>
+                <div class="flex justify-between text-lg sm:text-xl font-black text-[#FFE600]">
+                  <span>0 V</span>
+                  <span>12 V</span>
+                  <span class="text-[#FF6D00]">24 V</span>
+                </div>
               </div>
             </div>
 
-            <!-- CARD 2: CURRENT -->
-            <div class="hud-glass-orange relative p-2.5 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
-              <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-2.5 sm:p-3 rounded-2xl border-2 sm:border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_24px_rgba(255,109,0,0.5)] svg-drop-shadow z-10 pointer-events-none">
-                <svg class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14" viewBox="0 0 64 64" fill="none">
-                  <path d="M6 32H17L24 12L32 52L40 18L47 32H58" stroke="#FFE600" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M51 24L60 32L51 40" stroke="#FF6D00" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
-                <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
-                  250
+            <!-- CARD 2: DIGITAL CURRENT -->
+            <div class="hud-glass-orange relative p-4 sm:p-5 flex flex-col justify-between h-full min-h-0 overflow-hidden">
+              <div class="w-full flex items-center justify-between shrink-0">
+                <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange">CURRENT</div>
+                <div class="p-3 rounded-2xl border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_24px_rgba(255,109,0,0.5)] svg-drop-shadow">
+                  <svg class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20" viewBox="0 0 64 64" fill="none">
+                    <path d="M6 32H17L24 12L32 52L40 18L47 32H58" stroke="#FFE600" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M51 24L60 32L51 40" stroke="#FF6D00" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </div>
-                <svg viewBox="0 -10 320 215" class="h-full max-h-[82%] max-w-[300px] aspect-[16/10] svg-drop-shadow overflow-visible">
-                  <defs>
-                    <linearGradient id="arcGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#FFE600"/>
-                      <stop offset="100%" stop-color="#FF6D00"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
-                  <path id="currentArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad2)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"/>
-                  <g transform="translate(122, 62)">
-                    <circle cx="38" cy="38" r="36" fill="rgba(255, 109, 0, 0.18)" stroke="#FF6D00" stroke-width="3"/>
-                    <path d="M10 38H20L27 18L36 58L45 24L51 38H64" stroke="#FFE600" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M58 31L66 38L58 45" stroke="#FF6D00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </g>
-                  <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
-                  <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">500</text>
-                </svg>
               </div>
-              <div class="shrink-0 text-center flex flex-col items-center">
-                <div id="currentValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mA</div>
-                <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange mt-1">CURRENT</div>
+              <div class="flex-1 w-full flex items-center justify-center my-2 rounded-2xl bg-black/35 border border-[#FF6D00]/35 shadow-[inset_0_0_24px_rgba(255,109,0,0.08)] px-4">
+                <div id="currentValue" class="value-projector-lg font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mA</div>
+              </div>
+              <div class="w-full shrink-0 flex flex-col gap-1.5">
+                <div class="digital-led-track w-full h-8 sm:h-9 rounded-xl border-2 border-[#FF6D00]/60 overflow-hidden">
+                  <div id="currentDigitalBar" class="h-full rounded-full bg-gradient-to-r from-[#FFE600] to-[#FF6D00] transition-all duration-200" style="width: 0%;"></div>
+                  <div class="digital-led-ticks absolute inset-0 pointer-events-none"></div>
+                </div>
+                <div class="flex justify-between text-lg sm:text-xl font-black text-[#FFE600]">
+                  <span>0</span>
+                  <span>250</span>
+                  <span class="text-[#FF6D00]">500 mA</span>
+                </div>
               </div>
             </div>
 
           </div>
 
-          <!-- BOTTOM ROW: CENTERED POWER CARD (SAME WIDTH AS TOP CARDS) -->
+          <!-- BOTTOM ROW: CENTERED DIGITAL POWER CARD -->
           <div class="flex items-stretch justify-center h-full min-h-0">
-            <div class="w-full sm:w-[calc(50%-0.375rem)] hud-glass-orange relative p-2.5 sm:p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
-              <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 p-2.5 sm:p-3 rounded-2xl border-2 sm:border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_24px_rgba(255,109,0,0.5)] svg-drop-shadow z-10 pointer-events-none">
-                <svg class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14" viewBox="0 0 64 64" fill="none">
-                  <path d="M32 10C23 10 16 16.5 16 25C16 30.5 19 35 24 38V44H40V38C45 35 48 30.5 48 25C48 16.5 41 10 32 10Z" fill="rgba(255,230,0,0.3)" stroke="#FFE600" stroke-width="4"/>
-                  <path d="M25 50H39M28 55H36" stroke="#FF6D00" stroke-width="4" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="relative w-full flex-1 min-h-0 flex flex-col items-center justify-center my-auto overflow-hidden">
-                <div class="text-[#FFE600] font-black text-xl sm:text-2xl proj-glow-yellow text-center tracking-wider shrink-0 mb-0.5">
-                  1000
+            <div class="w-full sm:w-[calc(50%-0.375rem)] hud-glass-orange relative p-4 sm:p-5 flex flex-col justify-between h-full min-h-0 overflow-hidden">
+              <div class="w-full flex items-center justify-between shrink-0">
+                <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange">POWER</div>
+                <div class="p-3 rounded-2xl border-[3px] border-[#FF6D00] bg-[#FF6D00]/30 shadow-[0_0_24px_rgba(255,109,0,0.5)] svg-drop-shadow">
+                  <svg class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20" viewBox="0 0 64 64" fill="none">
+                    <path d="M32 10C23 10 16 16.5 16 25C16 30.5 19 35 24 38V44H40V38C45 35 48 30.5 48 25C48 16.5 41 10 32 10Z" fill="rgba(255,230,0,0.3)" stroke="#FFE600" stroke-width="4"/>
+                    <path d="M25 50H39M28 55H36" stroke="#FF6D00" stroke-width="4" stroke-linecap="round"/>
+                  </svg>
                 </div>
-                <svg viewBox="0 -10 320 215" class="h-full max-h-[82%] max-w-[300px] aspect-[16/10] svg-drop-shadow overflow-visible">
-                  <defs>
-                    <linearGradient id="arcGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#FFE600"/>
-                      <stop offset="100%" stop-color="#FF6D00"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="24" stroke-linecap="round"/>
-                  <path id="powerArc" d="M 40 140 A 120 120 0 0 1 280 140" fill="none" stroke="url(#arcGrad3)" stroke-width="24" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"/>
-                  <g transform="translate(122, 62)">
-                    <circle cx="38" cy="38" r="36" fill="rgba(255, 109, 0, 0.18)" stroke="#FF6D00" stroke-width="3"/>
-                    <path d="M38 12C27.5 12 20 19.5 20 29.5C20 36 23.5 41.5 29 44.5V50H47V44.5C52.5 41.5 56 36 56 29.5C56 19.5 48.5 12 38 12Z" fill="rgba(255,230,0,0.32)" stroke="#FFE600" stroke-width="3.8"/>
-                    <path d="M30 55H46M33 60H43" stroke="#FF6D00" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M39 20L32 31H39L37 41L44 30H37L39 20Z" fill="#FF6D00"/>
-                  </g>
-                  <text x="40" y="195" text-anchor="middle" fill="#FFE600" font-size="26" font-weight="900">0</text>
-                  <text x="280" y="195" text-anchor="middle" fill="#FF6D00" font-size="26" font-weight="900">2000</text>
-                </svg>
               </div>
-              <div class="shrink-0 text-center flex flex-col items-center">
-                <div id="powerValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mW</div>
-                <div class="meter-label font-black uppercase text-[#FF8F00] proj-glow-orange mt-1">POWER</div>
+              <div class="flex-1 w-full flex items-center justify-center my-2 rounded-2xl bg-black/35 border border-[#FF6D00]/35 shadow-[inset_0_0_24px_rgba(255,109,0,0.08)] px-4">
+                <div id="powerValue" class="value-projector-lg font-black text-[#FFFFFF] proj-text-shadow leading-none">0 mW</div>
+              </div>
+              <div class="w-full shrink-0 flex flex-col gap-1.5">
+                <div class="digital-led-track w-full h-8 sm:h-9 rounded-xl border-2 border-[#FF6D00]/60 overflow-hidden">
+                  <div id="powerDigitalBar" class="h-full rounded-full bg-gradient-to-r from-[#FFE600] to-[#FF6D00] transition-all duration-200" style="width: 0%;"></div>
+                  <div class="digital-led-ticks absolute inset-0 pointer-events-none"></div>
+                </div>
+                <div class="flex justify-between text-lg sm:text-xl font-black text-[#FFE600]">
+                  <span>0</span>
+                  <span>1000</span>
+                  <span class="text-[#FF6D00]">2000 mW</span>
+                </div>
               </div>
             </div>
           </div>
@@ -954,87 +915,53 @@
     <!-- ===================================================================== -->
     <main id="view-throttle" class="hidden flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-2 gap-2.5 sm:gap-3 items-stretch h-full overflow-hidden">
 
-      <!-- LEFT PANEL: MOTOR SPEED ARC & THROTTLE SLIDER (SUBSTANTIALLY LARGER) -->
-      <section class="hud-glass relative p-3 sm:p-5 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden border-2 sm:border-[3px] border-[#FFE600] rounded-3xl shadow-[0_0_28px_rgba(255,230,0,0.35)]">
-        <!-- TOP CENTER 128 MARKER (MUCH LARGER) -->
-        <div class="text-[#FFE600] font-black text-3xl sm:text-4xl lg:text-5xl proj-glow-yellow text-center tracking-wider shrink-0 mt-0.5">
-          128
-        </div>
-
-        <!-- EXPANDED SEMI-CIRCULAR SPEED ARC GAUGE (ZERO OVERLAP ARCHITECTURE) -->
-        <div class="relative w-full flex-1 min-h-0 flex items-center justify-center my-auto overflow-hidden">
-          <svg viewBox="0 0 420 225" class="h-full max-h-[95%] w-full max-w-[600px] aspect-[16/9] svg-drop-shadow overflow-visible">
-            <defs>
-              <linearGradient id="speedArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#FFB300"/>
-                <stop offset="60%" stop-color="#FFE600"/>
-                <stop offset="100%" stop-color="#FF8F00"/>
-              </linearGradient>
-            </defs>
-
-            <!-- Background Track Arc (Grey) -->
-            <path d="M 60 150 A 150 150 0 0 1 360 150" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="28" stroke-linecap="round"/>
-            <!-- Active Speed Arc (Gold/Amber) -->
-            <path id="motorSpeedArc" d="M 60 150 A 150 150 0 0 1 360 150" fill="none" stroke="url(#speedArcGrad)" stroke-width="28" stroke-linecap="round" stroke-dasharray="471" stroke-dashoffset="426"/>
-
-            <!-- Center Crane Motor Medallion (Large + Labeled) -->
-            <g transform="translate(210, 118)">
-              <circle cx="0" cy="0" r="74" fill="rgba(18, 22, 30, 0.96)" stroke="#FFE600" stroke-width="4.5" filter="drop-shadow(0 0 22px rgba(255,230,0,0.55))"/>
-              <g transform="translate(-54, -58) scale(1.35)">
-                <!-- Motor Terminal Box -->
-                <rect x="27" y="10" width="22" height="10" rx="2.5" fill="#FF6D00" stroke="#FFE600" stroke-width="2.2"/>
-                <path d="M39 11L35 15H39L37 19L42 14H38L39 11Z" fill="#FFE600"/>
-                <!-- Motor Stator Housing -->
-                <rect x="16" y="20" width="44" height="34" rx="5" fill="#1E2530" stroke="#FFE600" stroke-width="2.8"/>
-                <!-- Cooling Fins -->
-                <line x1="22" y1="26" x2="48" y2="26" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
-                <line x1="22" y1="32" x2="48" y2="32" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
-                <line x1="22" y1="38" x2="48" y2="38" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
-                <line x1="22" y1="44" x2="48" y2="44" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
-                <line x1="22" y1="50" x2="48" y2="50" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
-                <!-- End Bell & Drive Shaft -->
-                <rect x="60" y="26" width="7" height="22" rx="2" fill="#FF6D00" stroke="#FFE600" stroke-width="2"/>
-                <rect x="67" y="33" width="9" height="8" rx="1.5" fill="#FFFFFF" stroke="#FF6D00" stroke-width="1.8"/>
-                <!-- Spinning Rotor / Drive Gear Emblem -->
-                <g id="tab2MotorRotor" transform="rotate(0 38 38)">
-                  <circle cx="38" cy="38" r="10.5" fill="#12161E" stroke="#FFE600" stroke-width="2.2"/>
-                  <line x1="38" y1="29" x2="38" y2="47" stroke="#FF6D00" stroke-width="2.4" stroke-linecap="round"/>
-                  <line x1="29" y1="38" x2="47" y2="38" stroke="#FF6D00" stroke-width="2.4" stroke-linecap="round"/>
-                  <circle cx="38" cy="38" r="3.5" fill="#FFE600"/>
-                </g>
-                <!-- Mounting Feet -->
-                <path d="M20 54L16 62H28L26 54M56 54L60 62H48L50 54" fill="#FF6D00" stroke="#FFE600" stroke-width="2" stroke-linejoin="round"/>
+      <!-- LEFT PANEL: DIGITAL MOTOR SPEED & THROTTLE SLIDER -->
+      <section class="hud-glass relative p-4 sm:p-6 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden border-2 sm:border-[3px] border-[#FFE600] rounded-3xl shadow-[0_0_28px_rgba(255,230,0,0.35)]">
+        <div class="w-full flex items-center justify-between shrink-0">
+          <span class="px-4 py-1.5 rounded-xl bg-[#FF6D00] border-2 border-[#FFE600] text-white font-black text-lg sm:text-xl tracking-wider uppercase shadow">CRANE MOTOR</span>
+          <div class="p-3 rounded-2xl border-2 border-[#FFE600] bg-[#12161E]/90 shadow-[0_0_22px_rgba(255,230,0,0.45)]">
+            <svg class="w-16 h-16 sm:w-20 sm:h-20" viewBox="0 0 80 80" fill="none">
+              <rect x="27" y="10" width="22" height="10" rx="2.5" fill="#FF6D00" stroke="#FFE600" stroke-width="2.2"/>
+              <path d="M39 11L35 15H39L37 19L42 14H38L39 11Z" fill="#FFE600"/>
+              <rect x="16" y="20" width="44" height="34" rx="5" fill="#1E2530" stroke="#FFE600" stroke-width="2.8"/>
+              <line x1="22" y1="26" x2="48" y2="26" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="22" y1="32" x2="48" y2="32" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="22" y1="38" x2="48" y2="38" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="22" y1="44" x2="48" y2="44" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="22" y1="50" x2="48" y2="50" stroke="#FFAE00" stroke-width="2.2" stroke-linecap="round"/>
+              <rect x="60" y="26" width="7" height="22" rx="2" fill="#FF6D00" stroke="#FFE600" stroke-width="2"/>
+              <rect x="67" y="33" width="9" height="8" rx="1.5" fill="#FFFFFF" stroke="#FF6D00" stroke-width="1.8"/>
+              <g id="tab2MotorRotor" transform="rotate(0 38 38)">
+                <circle cx="38" cy="38" r="10.5" fill="#12161E" stroke="#FFE600" stroke-width="2.2"/>
+                <line x1="38" y1="29" x2="38" y2="47" stroke="#FF6D00" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="29" y1="38" x2="47" y2="38" stroke="#FF6D00" stroke-width="2.4" stroke-linecap="round"/>
+                <circle cx="38" cy="38" r="3.5" fill="#FFE600"/>
               </g>
-              <!-- CRANE MOTOR Label -->
-              <rect x="-52" y="34" width="104" height="22" rx="11" fill="#FF6D00" stroke="#FFE600" stroke-width="1.8"/>
-              <text x="0" y="49" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="13" font-weight="900" letter-spacing="1">CRANE MOTOR</text>
-            </g>
-
-            <!-- 0 and 255 Tick Numbers (Cleanly positioned with ZERO overlap below arc tips) -->
-            <text x="60" y="212" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900">0</text>
-            <text x="360" y="212" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900">255</text>
-          </svg>
+              <path d="M20 54L16 62H28L26 54M56 54L60 62H48L50 54" fill="#FF6D00" stroke="#FFE600" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
         </div>
 
-        <!-- READOUT: 24 / 255 & MOTOR SPEED (SUBSTANTIALLY LARGER) -->
-        <div class="shrink-0 text-center flex flex-col items-center mt-1">
+        <div class="flex-1 flex flex-col items-center justify-center my-auto text-center w-full">
           <div id="motorPwmBig" class="font-black text-[#FFFFFF] proj-text-shadow leading-none text-6xl sm:text-7xl lg:text-8xl">
-            24 / 255
+            24 / 30
           </div>
-          <div id="motorModeText" class="font-black uppercase text-[#FFE600] proj-glow-yellow tracking-widest text-3xl sm:text-4xl lg:text-5xl mt-2.5">
-            MOTOR SPEED • 9%
+          <div id="motorModeText" class="font-black uppercase text-[#FFE600] proj-glow-yellow tracking-widest text-3xl sm:text-4xl lg:text-5xl mt-4">
+            MOTOR SPEED • 80%
+          </div>
+          <div class="w-full max-w-xl h-5 rounded-full bg-white/15 border border-[#FFE600]/50 overflow-hidden mt-6">
+            <div id="motorDigitalBar" class="h-full rounded-full bg-gradient-to-r from-[#FFE600] to-[#FF6D00] transition-all duration-150" style="width: 80%;"></div>
           </div>
         </div>
 
-        <!-- THROTTLE SLIDER & 5 TICKS -->
-        <div class="w-full shrink-0 flex flex-col gap-2 px-2 sm:px-6 mt-3">
-          <input id="throttleSlider" type="range" min="0" max="255" value="24" class="projector-slider w-full" oninput="handleThrottleInput(this.value)"/>
-          <div class="flex justify-between font-black text-[#FFE600] proj-text-shadow px-1 text-base sm:text-xl lg:text-2xl">
+        <div class="w-full shrink-0 flex flex-col gap-2 px-2 sm:px-6 mt-2">
+          <input id="throttleSlider" type="range" min="0" max="30" value="24" class="projector-slider w-full" oninput="handleThrottleInput(this.value)"/>
+          <div class="flex justify-between font-black text-[#FFE600] proj-text-shadow px-1 text-lg sm:text-xl lg:text-2xl">
             <span>0</span>
-            <span>64</span>
-            <span>128</span>
-            <span>180</span>
-            <span>255</span>
+            <span>8</span>
+            <span>15</span>
+            <span>24</span>
+            <span>30</span>
           </div>
         </div>
       </section>
@@ -1099,14 +1026,14 @@
     <!-- ===================================================================== -->
     <!-- TAB 3: HISTORY CHARTS (HIGH-CONTRAST PROJECTOR CHARTS + MAXIMIZE)    -->
     <!-- ===================================================================== -->
-    <main id="view-history" class="hidden flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-2.5 sm:gap-3 items-stretch h-full overflow-hidden">
+    <main id="view-history" class="hidden flex-1 min-h-0 flex flex-col gap-2.5 sm:gap-3 h-full overflow-hidden">
 
       <!-- CHART 1: POWER -->
-      <section class="hud-glass p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
+      <section id="hist-panel-power" class="flex-1 hud-glass p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
         <div class="flex items-center justify-between gap-2 shrink-0">
-          <div>
-            <h3 class="label-projector font-black uppercase text-[#FFE600] proj-glow-yellow">POWER LOAD</h3>
-            <div id="chartPowerVal" class="text-2xl sm:text-3xl font-black text-[#FFFFFF] proj-text-shadow">0.0 mW</div>
+          <div class="flex flex-wrap items-baseline gap-4 sm:gap-6">
+            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-[#FFE600] proj-glow-yellow tracking-wider">POWER LOAD</h3>
+            <div id="chartPowerVal" class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#FFFFFF] proj-text-shadow">0.0 mW</div>
           </div>
           <div class="flex items-center gap-2">
             <button type="button" onclick="openMaximizeModal('power')" class="btn-chart-maximize !p-2" title="Maximize graph to full screen">
@@ -1120,20 +1047,17 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-4 gap-1.5 shrink-0">
-          <button onclick="setChartRange('1H')" class="range-btn active py-1 rounded-xl text-base sm:text-lg">1H</button>
-          <button onclick="setChartRange('24H')" class="range-btn py-1 rounded-xl text-base sm:text-lg">24H</button>
-          <button onclick="setChartRange('7D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">7D</button>
-          <button onclick="setChartRange('30D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">30D</button>
-        </div>
-
-        <!-- Dedicated High-Contrast Date Filter -->
-        <div class="flex items-center justify-between gap-2 px-1 shrink-0">
-          <label class="text-[#FFE600] font-black text-sm sm:text-base flex items-center gap-1.5">
+        <div class="flex flex-wrap items-center justify-between gap-3 shrink-0">
+          <div class="grid grid-cols-4 gap-2 flex-1 min-w-[320px]">
+            <button onclick="setChartRange('1H')" class="range-btn active py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">1H</button>
+            <button onclick="setChartRange('24H')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">24H</button>
+            <button onclick="setChartRange('7D')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">7D</button>
+            <button onclick="setChartRange('30D')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">30D</button>
+          </div>
+          <label class="text-[#FFE600] font-black text-2xl sm:text-3xl lg:text-4xl flex items-center gap-2.5 shrink-0">
             <span>📅 DATE:</span>
             <input type="date" id="datePower" class="projector-date-input" onchange="filterChartDate('power', this.value)"/>
           </label>
-          <span class="text-xs font-bold text-white/70 uppercase">LIVE BUFFER</span>
         </div>
 
         <div class="flex-1 min-h-0 w-full relative overflow-hidden">
@@ -1148,11 +1072,11 @@
       </section>
 
       <!-- CHART 2: JIB YAW HEADING -->
-      <section class="hud-glass-orange p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
+      <section id="hist-panel-jib" class="hidden flex-1 hud-glass-orange p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
         <div class="flex items-center justify-between gap-2 shrink-0">
-          <div>
-            <h3 class="label-projector font-black uppercase text-[#FF8F00] proj-glow-orange">JIB HEADING</h3>
-            <div id="chartJibVal" class="text-2xl sm:text-3xl font-black text-[#FFFFFF] proj-text-shadow">212.7°</div>
+          <div class="flex flex-wrap items-baseline gap-4 sm:gap-6">
+            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-[#FF8F00] proj-glow-orange tracking-wider">JIB HEADING</h3>
+            <div id="chartJibVal" class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#FFFFFF] proj-text-shadow">212.7°</div>
           </div>
           <div class="flex items-center gap-2">
             <button type="button" onclick="openMaximizeModal('jib')" class="btn-chart-maximize !p-2" title="Maximize graph to full screen">
@@ -1166,42 +1090,166 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-4 gap-1.5 shrink-0">
-          <button onclick="setChartRange('1H')" class="range-btn active py-1 rounded-xl text-base sm:text-lg">1H</button>
-          <button onclick="setChartRange('24H')" class="range-btn py-1 rounded-xl text-base sm:text-lg">24H</button>
-          <button onclick="setChartRange('7D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">7D</button>
-          <button onclick="setChartRange('30D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">30D</button>
-        </div>
-
-        <!-- Dedicated High-Contrast Date Filter -->
-        <div class="flex items-center justify-between gap-2 px-1 shrink-0">
-          <label class="text-[#FF8F00] font-black text-sm sm:text-base flex items-center gap-1.5">
+        <div class="flex flex-wrap items-center justify-between gap-3 shrink-0">
+          <div class="grid grid-cols-4 gap-2 flex-1 min-w-[320px]">
+            <button onclick="setChartRange('1H')" class="range-btn active py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">1H</button>
+            <button onclick="setChartRange('24H')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">24H</button>
+            <button onclick="setChartRange('7D')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">7D</button>
+            <button onclick="setChartRange('30D')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">30D</button>
+          </div>
+          <label class="text-[#FF8F00] font-black text-2xl sm:text-3xl lg:text-4xl flex items-center gap-2.5 shrink-0">
             <span>📅 DATE:</span>
             <input type="date" id="dateJib" class="projector-date-input" onchange="filterChartDate('jib', this.value)"/>
           </label>
-          <span class="text-xs font-bold text-white/70 uppercase">LIVE BUFFER</span>
         </div>
 
-        <div class="flex-1 min-h-0 w-full relative overflow-hidden">
-          <!-- Large Background Watermark Icon: JIB / CRANE -->
-          <div class="absolute inset-0 flex items-center justify-center pl-14 pb-6 pointer-events-none select-none opacity-[0.16]">
-            <svg class="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96" viewBox="0 0 64 64" fill="none">
-              <path d="M18 58V12M26 58V12M13 58H31" stroke="#FFE600" stroke-width="4" stroke-linecap="round"/>
-              <path d="M7 15H58L49 8H14L7 15Z" fill="#FF6D00" stroke="#FFE600" stroke-width="3"/>
-              <path d="M51 15V34" stroke="#FFE600" stroke-width="4"/>
-              <path d="M47 34H55L51 41L47 34Z" fill="#FFE600"/>
-            </svg>
+        <div class="flex-1 min-h-0 w-full grid grid-cols-1 lg:grid-cols-12 gap-3 overflow-hidden">
+          <!-- Left 8 cols: Jib Heading Graph -->
+          <div class="lg:col-span-8 h-full min-h-0 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center pl-14 pb-6 pointer-events-none select-none opacity-[0.16]">
+              <svg class="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96" viewBox="0 0 64 64" fill="none">
+                <path d="M18 58V12M26 58V12M13 58H31" stroke="#FFE600" stroke-width="4" stroke-linecap="round"/>
+                <path d="M7 15H58L49 8H14L7 15Z" fill="#FF6D00" stroke="#FFE600" stroke-width="3"/>
+                <path d="M51 15V34" stroke="#FFE600" stroke-width="4"/>
+                <path d="M47 34H55L51 41L47 34Z" fill="#FFE600"/>
+              </svg>
+            </div>
+            <canvas id="chartJibCanvas" class="w-full h-full block relative z-10"></canvas>
           </div>
-          <canvas id="chartJibCanvas" class="w-full h-full block relative z-10"></canvas>
+
+          <!-- Right 4 cols: Live Compass Side-by-Side -->
+          <div class="lg:col-span-4 hud-glass p-3 flex flex-col items-center justify-between h-full min-h-0 overflow-hidden">
+            <div class="relative w-full flex-1 min-h-0 flex items-center justify-center p-1 overflow-hidden">
+              <svg id="jibHistCompassSvg" viewBox="-20 -28 440 445" class="h-full max-h-full max-w-full aspect-square svg-drop-shadow overflow-visible">
+              <defs>
+                <linearGradient id="jibHistCompassRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFE600"/>
+                  <stop offset="100%" stop-color="#FF6D00"/>
+                </linearGradient>
+                <linearGradient id="jibHistNorthBadgeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#FF5500"/>
+                  <stop offset="100%" stop-color="#D50000"/>
+                </linearGradient>
+                <filter id="jibHistNeonGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="5" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <circle cx="200" cy="200" r="176" fill="rgba(255, 214, 0, 0.07)" stroke="url(#jibHistCompassRingGrad)" stroke-width="8.5"/>
+              <circle cx="200" cy="200" r="126" fill="none" stroke="rgba(255, 230, 0, 0.45)" stroke-width="2.5" stroke-dasharray="6 8"/>
+
+              <g id="jibHistCompassTicks"></g>
+
+              <g filter="url(#jibHistNeonGlow)">
+                <polygon points="200,28 186,10 214,10" fill="#FF3D00" stroke="#FFFFFF" stroke-width="2.5"/>
+                <rect x="168" y="-22" width="64" height="42" rx="14" fill="url(#jibHistNorthBadgeGrad)" stroke="#FFE600" stroke-width="3.5"/>
+                <text x="200" y="9" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="32" font-weight="900">N</text>
+              </g>
+
+              <text x="398" y="212" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.9))">E</text>
+              <text x="200" y="408" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.9))">S</text>
+              <text x="2" y="212" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="34" font-weight="900" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.9))">W</text>
+
+              <g id="jibHistCraneJibRotor" transform="rotate(212.7 200 200)">
+                <defs>
+                  <linearGradient id="jibHistCraneTrussGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#FFB300"/>
+                    <stop offset="45%" stop-color="#FF6D00"/>
+                    <stop offset="100%" stop-color="#D50000"/>
+                  </linearGradient>
+                  <linearGradient id="jibHistCraneApexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFE600"/>
+                    <stop offset="100%" stop-color="#FF3D00"/>
+                  </linearGradient>
+                  <filter id="jibHistCraneDropGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.85"/>
+                    <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFE600" flood-opacity="0.5"/>
+                  </filter>
+                </defs>
+
+                <g>
+                  <line x1="192" y1="200" x2="192" y2="310" stroke="#FF5500" stroke-width="4.5" stroke-linecap="round"/>
+                  <line x1="208" y1="200" x2="208" y2="310" stroke="#FF5500" stroke-width="4.5" stroke-linecap="round"/>
+                  <line x1="192" y1="220" x2="208" y2="230" stroke="#FFE600" stroke-width="2"/>
+                  <line x1="208" y1="220" x2="192" y2="230" stroke="#FFE600" stroke-width="2"/>
+                  <line x1="192" y1="245" x2="208" y2="255" stroke="#FFE600" stroke-width="2"/>
+                  <line x1="208" y1="245" x2="192" y2="255" stroke="#FFE600" stroke-width="2"/>
+                  <line x1="192" y1="270" x2="208" y2="280" stroke="#FFE600" stroke-width="2"/>
+                  <line x1="208" y1="270" x2="192" y2="280" stroke="#FFE600" stroke-width="2"/>
+
+                  <rect x="180" y="285" width="40" height="32" rx="4" fill="#E05600" stroke="#FFE600" stroke-width="3"/>
+                  <line x1="180" y1="296" x2="220" y2="296" stroke="#FFFFFF" stroke-width="1.8"/>
+                  <line x1="180" y1="306" x2="220" y2="306" stroke="#FFFFFF" stroke-width="1.8"/>
+                  <rect x="187" y="318" width="26" height="12" rx="2" fill="#B33600" stroke="#FFB300" stroke-width="2"/>
+                  <line x1="200" y1="200" x2="200" y2="320" stroke="#FFFFFF" stroke-width="2.5" stroke-dasharray="6 3"/>
+
+                  <polygon points="190,200 195,50 205,50 210,200" fill="rgba(255,109,0,0.18)" stroke="#FF6D00" stroke-width="2"/>
+                  <line x1="191" y1="200" x2="196" y2="46" stroke="url(#jibHistCraneTrussGrad)" stroke-width="5" stroke-linecap="round"/>
+                  <line x1="209" y1="200" x2="204" y2="46" stroke="url(#jibHistCraneTrussGrad)" stroke-width="5" stroke-linecap="round"/>
+                  <line x1="200" y1="200" x2="200" y2="42" stroke="#FFE600" stroke-width="3" stroke-linecap="round"/>
+
+                  <polyline points="
+                    191,195 200,185 209,195
+                    192,175 200,165 208,175
+                    193,155 200,145 207,155
+                    193,135 200,125 207,135
+                    194,115 200,105 206,115
+                    194,95  200,85  206,95
+                    195,75  200,65  205,75
+                    195,55  200,46  205,55
+                  " fill="none" stroke="#FFE600" stroke-width="2.5" stroke-linejoin="round"/>
+
+                  <circle cx="200" cy="42" r="7" fill="#FFE600" stroke="#D50000" stroke-width="2.5"/>
+                  <polygon points="200,24 191,44 209,44" fill="#FF1744" stroke="#FFFFFF" stroke-width="2.5"/>
+                  <line x1="200" y1="200" x2="197" y2="70" stroke="#FFFFFF" stroke-width="2" opacity="0.8"/>
+                  <line x1="200" y1="200" x2="203" y2="70" stroke="#FFFFFF" stroke-width="2" opacity="0.8"/>
+
+                  <rect x="188" y="85" width="24" height="12" rx="3" fill="#FFE600" stroke="#0F172A" stroke-width="2.2"/>
+                  <circle cx="193" cy="91" r="2.5" fill="#0F172A"/>
+                  <circle cx="207" cy="91" r="2.5" fill="#0F172A"/>
+                  <line x1="196" y1="97" x2="196" y2="128" stroke="#FF1744" stroke-width="2.5"/>
+                  <line x1="204" y1="97" x2="204" y2="128" stroke="#FF1744" stroke-width="2.5"/>
+                  <rect x="193" y="128" width="14" height="10" rx="2" fill="#D50000" stroke="#FFE600" stroke-width="1.8"/>
+                  <path d="M200 138 V146 A5 5 0 0 1 193 148" fill="none" stroke="#FFE600" stroke-width="3" stroke-linecap="round"/>
+
+                  <g transform="translate(162, 178)">
+                    <rect x="0" y="0" width="22" height="26" rx="4" fill="#FF5500" stroke="#FFE600" stroke-width="2.5"/>
+                    <rect x="3" y="4" width="16" height="13" rx="2" fill="#38BDF8" stroke="#FFFFFF" stroke-width="1.5"/>
+                    <line x1="11" y1="4" x2="11" y2="17" stroke="#0F172A" stroke-width="1"/>
+                    <line x1="-3" y1="26" x2="25" y2="26" stroke="#FFE600" stroke-width="2.5"/>
+                    <line x1="-3" y1="20" x2="-3" y2="26" stroke="#FFE600" stroke-width="2"/>
+                    <circle cx="11" cy="22" r="2.5" fill="#FFE600"/>
+                  </g>
+
+                  <circle cx="200" cy="200" r="30" fill="rgba(15, 23, 42, 0.95)" stroke="#FF6D00" stroke-width="4"/>
+                  <circle cx="200" cy="200" r="21" fill="url(#jibHistCraneApexGrad)" stroke="#FFFFFF" stroke-width="2"/>
+                  <circle cx="200" cy="200" r="14" fill="none" stroke="#0F172A" stroke-width="3.5" stroke-dasharray="4 3"/>
+                  <polygon points="200,180 190,200 210,200" fill="#FFE600" stroke="#D50000" stroke-width="2"/>
+                  <circle cx="200" cy="200" r="6" fill="#D50000"/>
+                  <circle cx="200" cy="180" r="4" fill="#FF1744" stroke="#FFFFFF" stroke-width="1.5"/>
+                </g>
+              </g>
+            </svg>
+            </div>
+            <div class="shrink-0 text-center flex flex-col items-center gap-0.5 pt-1">
+              <div id="jibHistAngleValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">212.7°</div>
+              <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-0.5">JIB ANGLE</div>
+              <div id="jibHistStatusBadge" class="mt-1 px-6 py-1 rounded-xl border-2 border-white bg-[#FF6D00] text-white text-base sm:text-lg font-black uppercase tracking-widest shadow">STOPPED</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- CHART 3: BOOM INCLINE -->
-      <section class="hud-glass p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
+      <section id="hist-panel-incline" class="hidden flex-1 hud-glass p-3 sm:p-4 flex flex-col justify-between gap-2 h-full min-h-0 overflow-hidden">
         <div class="flex items-center justify-between gap-2 shrink-0">
-          <div>
-            <h3 class="label-projector font-black uppercase text-[#FFE600] proj-glow-yellow">BOOM INCLINE</h3>
-            <div id="chartInclineVal" class="text-2xl sm:text-3xl font-black text-[#FFFFFF] proj-text-shadow">0.29°</div>
+          <div class="flex flex-wrap items-baseline gap-4 sm:gap-6">
+            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-[#FFE600] proj-glow-yellow tracking-wider">BOOM INCLINE</h3>
+            <div id="chartInclineVal" class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#FFFFFF] proj-text-shadow">0.29°</div>
           </div>
           <div class="flex items-center gap-2">
             <button type="button" onclick="openMaximizeModal('incline')" class="btn-chart-maximize !p-2" title="Maximize graph to full screen">
@@ -1215,20 +1263,17 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-4 gap-1.5 shrink-0">
-          <button onclick="setChartRange('1H')" class="range-btn active py-1 rounded-xl text-base sm:text-lg">1H</button>
-          <button onclick="setChartRange('24H')" class="range-btn py-1 rounded-xl text-base sm:text-lg">24H</button>
-          <button onclick="setChartRange('7D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">7D</button>
-          <button onclick="setChartRange('30D')" class="range-btn py-1 rounded-xl text-base sm:text-lg">30D</button>
-        </div>
-
-        <!-- Dedicated High-Contrast Date Filter -->
-        <div class="flex items-center justify-between gap-2 px-1 shrink-0">
-          <label class="text-[#FFE600] font-black text-sm sm:text-base flex items-center gap-1.5">
+        <div class="flex flex-wrap items-center justify-between gap-3 shrink-0">
+          <div class="grid grid-cols-4 gap-2 flex-1 min-w-[320px]">
+            <button onclick="setChartRange('1H')" class="range-btn active py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">1H</button>
+            <button onclick="setChartRange('24H')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">24H</button>
+            <button onclick="setChartRange('7D')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">7D</button>
+            <button onclick="setChartRange('30D')" class="range-btn py-2.5 px-5 rounded-xl text-2xl sm:text-3xl lg:text-4xl">30D</button>
+          </div>
+          <label class="text-[#FFE600] font-black text-2xl sm:text-3xl lg:text-4xl flex items-center gap-2.5 shrink-0">
             <span>📅 DATE:</span>
             <input type="date" id="dateIncline" class="projector-date-input" onchange="filterChartDate('incline', this.value)"/>
           </label>
-          <span class="text-xs font-bold text-white/70 uppercase">LIVE BUFFER</span>
         </div>
 
         <div class="flex-1 min-h-0 w-full relative overflow-hidden">
@@ -1247,7 +1292,7 @@
     <!-- ===================================================================== -->
     <!-- FULL-WIDTH MAXIMIZED CHART OVERLAY (MATCHING REFERENCE IMAGE 6)     -->
     <!-- ===================================================================== -->
-    <div id="chartMaximizeModal" class="fixed inset-0 z-50 hidden bg-black/20 backdrop-blur-[2px] p-3 sm:p-6 flex flex-col justify-between">
+    <div id="chartMaximizeModal" class="fixed inset-0 z-50 hidden bg-transparent p-3 sm:p-6 flex flex-col justify-between">
       <!-- Modal Header -->
       <div class="hud-glass px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3 sm:gap-4">
@@ -1265,12 +1310,12 @@
         <!-- Controls & Close -->
         <div class="flex flex-wrap items-center gap-2 sm:gap-3">
           <div class="grid grid-cols-4 gap-1.5 sm:gap-2">
-            <button onclick="setMaxModalRange('1H')" class="modal-range-btn range-btn active px-3 sm:px-4 py-1.5 rounded-xl text-base sm:text-lg">1H</button>
-            <button onclick="setMaxModalRange('24H')" class="modal-range-btn range-btn px-3 sm:px-4 py-1.5 rounded-xl text-base sm:text-lg">24H</button>
-            <button onclick="setMaxModalRange('7D')" class="modal-range-btn range-btn px-3 sm:px-4 py-1.5 rounded-xl text-base sm:text-lg">7D</button>
-            <button onclick="setMaxModalRange('30D')" class="modal-range-btn range-btn px-3 sm:px-4 py-1.5 rounded-xl text-base sm:text-lg">30D</button>
+            <button onclick="setMaxModalRange('1H')" class="modal-range-btn range-btn active px-4 sm:px-5 py-2 rounded-xl text-2xl sm:text-3xl">1H</button>
+            <button onclick="setMaxModalRange('24H')" class="modal-range-btn range-btn px-4 sm:px-5 py-2 rounded-xl text-2xl sm:text-3xl">24H</button>
+            <button onclick="setMaxModalRange('7D')" class="modal-range-btn range-btn px-4 sm:px-5 py-2 rounded-xl text-2xl sm:text-3xl">7D</button>
+            <button onclick="setMaxModalRange('30D')" class="modal-range-btn range-btn px-4 sm:px-5 py-2 rounded-xl text-2xl sm:text-3xl">30D</button>
           </div>
-          <label class="flex items-center gap-1.5 text-[#FFE600] font-black text-sm sm:text-base">
+          <label class="flex items-center gap-2 text-[#FFE600] font-black text-2xl sm:text-3xl">
             <span>📅</span>
             <input type="date" id="modalDatePicker" class="projector-date-input" onchange="filterModalDate(this.value)"/>
           </label>
@@ -1287,7 +1332,7 @@
       </div>
 
       <!-- Modal Bottom Information Bar -->
-      <div class="hud-glass px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-sm sm:text-base font-bold text-[#FFE600] gap-2">
+      <div class="hud-glass px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-base sm:text-lg lg:text-xl font-black text-[#FFE600] gap-2">
         <div>SAMPLING: <span class="text-white">REALTIME HIGH PRECISION</span></div>
         <div>TIME SYNC: <span class="text-white" id="modalTimeSync">2026-11-19 UTC</span></div>
         <div>STATUS: <span class="text-[#34D399]">LIVE TELEMETRY STREAM</span></div>
@@ -1344,6 +1389,8 @@
         }
       }
       container.innerHTML = html;
+      const histTicks = document.getElementById('jibHistCompassTicks');
+      if (histTicks) histTicks.innerHTML = html;
     }
 
     // =========================================================================
@@ -1352,11 +1399,19 @@
     function switchTab(tabName) {
       const tabs = ['twin', 'throttle', 'history'];
       tabs.forEach(t => {
-        document.getElementById(`view-${t}`).classList.toggle('hidden', t !== tabName);
-        document.getElementById(`tab-btn-${t}`).classList.toggle('active', t === tabName);
+        const viewEl = document.getElementById(`view-${t}`);
+        const btnEl = document.getElementById(`tab-btn-${t}`);
+        if (viewEl) viewEl.classList.toggle('hidden', t !== tabName);
+        if (btnEl) btnEl.classList.toggle('active', t === tabName);
       });
+      if (tabName !== 'history') {
+        ['power', 'jib', 'incline'].forEach(p => {
+          const hBtn = document.getElementById(`hist-tab-btn-${p}`);
+          if (hBtn) hBtn.classList.remove('active');
+        });
+      }
       if (tabName === 'history') {
-        fetchLiveHistory(currentRange, null);
+        if (typeof fetchLiveHistory === 'function') fetchLiveHistory(currentRange, null);
         requestAnimationFrame(drawAllHistoryCharts);
       }
     }
@@ -1372,6 +1427,18 @@
       });
     }
 
+    function switchHistorySubTab(chartType) {
+      switchTab('history');
+      const panels = ['power', 'jib', 'incline'];
+      panels.forEach(p => {
+        const panelEl = document.getElementById(`hist-panel-${p}`);
+        const btnEl = document.getElementById(`hist-tab-btn-${p}`);
+        if (panelEl) panelEl.classList.toggle('hidden', p !== chartType);
+        if (btnEl) btnEl.classList.toggle('active', p === chartType);
+      });
+      requestAnimationFrame(drawAllHistoryCharts);
+    }
+
     // =========================================================================
     // 4. UPDATE ALL HUD GAUGES & PROJECTOR READOUTS
     // =========================================================================
@@ -1381,6 +1448,10 @@
       if (rotor) {
         rotor.setAttribute('transform', `rotate(${telemetry.jibAngle.toFixed(1)} 200 200)`);
       }
+      const histRotor = document.getElementById('jibHistCraneJibRotor');
+      if (histRotor) {
+        histRotor.setAttribute('transform', `rotate(${telemetry.jibAngle.toFixed(1)} 200 200)`);
+      }
 
       // Mini Crane Badge Jib Rotation (Pivots at 50, 34 matching live crane heading)
       const miniJib = document.getElementById('miniCraneJibGroup');
@@ -1389,17 +1460,17 @@
       }
 
       document.getElementById('jibAngleValue').textContent = `${telemetry.jibAngle.toFixed(1)}°`;
+      const histAngleVal = document.getElementById('jibHistAngleValue');
+      if (histAngleVal) histAngleVal.textContent = `${telemetry.jibAngle.toFixed(1)}°`;
 
-      const statusBadge = document.getElementById('jibStatusBadge');
-      if (telemetry.isSimulating || telemetry.pwm > 40) {
-        statusBadge.textContent = 'SLEWING LIVE';
-        statusBadge.style.background = '#FFE600';
-        statusBadge.style.color = '#0D0D0D';
-      } else {
-        statusBadge.textContent = 'STOPPED';
-        statusBadge.style.background = '#FF6D00';
-        statusBadge.style.color = '#FFFFFF';
-      }
+      const isLiveSlew = telemetry.isSimulating || telemetry.pwm > 40;
+      ['jibStatusBadge', 'jibHistStatusBadge'].forEach(id => {
+        const b = document.getElementById(id);
+        if (!b) return;
+        b.textContent = isLiveSlew ? 'SLEWING LIVE' : 'STOPPED';
+        b.style.background = isLiveSlew ? '#FFE600' : '#FF6D00';
+        b.style.color = isLiveSlew ? '#0D0D0D' : '#FFFFFF';
+      });
 
       // Arc Dashoffset helper (Arc total length = 377)
       const setArc = (id, val, min, max) => {
@@ -1411,18 +1482,24 @@
 
       // Voltage (0..24V)
       setArc('voltageArc', telemetry.voltage, 0, 24);
+      const vBar = document.getElementById('voltageDigitalBar');
+      if (vBar) vBar.style.width = `${Math.max(0, Math.min(100, (telemetry.voltage / 24) * 100)).toFixed(1)}%`;
       document.getElementById('voltageValue').textContent = `${telemetry.voltage.toFixed(2)} V`;
       const tab2V = document.getElementById('tab2Voltage');
       if (tab2V) tab2V.textContent = `${telemetry.voltage.toFixed(2)} V`;
 
       // Current (0..500mA)
       setArc('currentArc', telemetry.current, 0, 500);
+      const cBar = document.getElementById('currentDigitalBar');
+      if (cBar) cBar.style.width = `${Math.max(0, Math.min(100, (telemetry.current / 500) * 100)).toFixed(1)}%`;
       document.getElementById('currentValue').textContent = `${Math.round(telemetry.current)} mA`;
       const tab2C = document.getElementById('tab2Current');
       if (tab2C) tab2C.textContent = `${Math.round(telemetry.current)} mA`;
 
       // Power (0..2000mW)
       setArc('powerArc', telemetry.power, 0, 2000);
+      const pBar = document.getElementById('powerDigitalBar');
+      if (pBar) pBar.style.width = `${Math.max(0, Math.min(100, (telemetry.power / 2000) * 100)).toFixed(1)}%`;
       document.getElementById('powerValue').textContent = `${Math.round(telemetry.power)} mW`;
       const tab2P = document.getElementById('tab2Power');
       if (tab2P) tab2P.textContent = `${Math.round(telemetry.power)} mW`;
@@ -1434,6 +1511,8 @@
         needle.setAttribute('transform', `rotate(${degRot.toFixed(1)} 160 140)`);
       }
       document.getElementById('inclineValue').textContent = `${telemetry.incline.toFixed(2)}°`;
+      const incMarker = document.getElementById('inclineDigitalMarker');
+      if (incMarker) incMarker.style.left = `${Math.max(4, Math.min(96, ((telemetry.incline + 4) / 8) * 100)).toFixed(1)}%`;
 
       // Sync Jib & Boom Blow-up Readout Pills (diagram stays static)
       const blowupJibText = document.getElementById('blowupJibAngleText');
@@ -1441,16 +1520,16 @@
       const blowupIncText = document.getElementById('blowupInclineText');
       if (blowupIncText) blowupIncText.textContent = `${telemetry.incline.toFixed(2)}°`;
 
-      // Motor Speed Tab (Matching Reference UI: Arc, 24 / 255, CREEP SPEED • 9%)
-      const pct = Math.round((telemetry.pwm / 255) * 100);
+      // Motor Speed Tab (Matching Reference UI: Arc, 24 / 30, CREEP SPEED • 9%)
+      const pct = Math.round((telemetry.pwm / 30) * 100);
       const arc = document.getElementById('motorSpeedArc');
       if (arc) {
         // Circumference for R=150 over 180 deg = PI * 150 ≈ 471
-        arc.setAttribute('stroke-dashoffset', (471 * (1 - telemetry.pwm / 255)).toFixed(1));
+        arc.setAttribute('stroke-dashoffset', (471 * (1 - telemetry.pwm / 30)).toFixed(1));
       }
       const pwmElem = document.getElementById('motorPwmBig');
       if (pwmElem) {
-        pwmElem.textContent = `${telemetry.pwm} / 255`;
+        pwmElem.textContent = `${telemetry.pwm} / 30`;
       }
       const slider = document.getElementById('throttleSlider');
       if (slider) {
@@ -1459,6 +1538,8 @@
       const modeElem = document.getElementById('motorModeText');
       if (modeElem) {
         modeElem.textContent = `MOTOR SPEED • ${pct}%`;
+      const mBar = document.getElementById('motorDigitalBar');
+      if (mBar) mBar.style.width = `${pct}%`;
       }
 
       // History Tab Header Values
@@ -1472,7 +1553,7 @@
     // =========================================================================
     let _throttleSendTimer = null;
     function handleThrottleInput(val) {
-      const pwm = Math.max(0, Math.min(255, parseInt(val, 10) || 0));
+      const pwm = Math.max(0, Math.min(30, parseInt(val, 10) || 0));
       telemetry.pwm = pwm;
       updateDashboardUI();
       clearTimeout(_throttleSendTimer);
@@ -1523,10 +1604,8 @@
         telemetry.jibAngle = (telemetry.jibAngle + 3.5) % 360;
         telemetry.voltage = 12.35 + Math.sin(t * 1.3) * 0.24;
         telemetry.incline = 0.29 + Math.sin(t * 0.45) * 0.14;
-        const simPwm = Math.round(95 + Math.sin(t * 0.6) * 75);
-        telemetry.pwm = simPwm;
-        document.getElementById('throttleSlider').value = simPwm;
-        telemetry.current = Math.round((simPwm / 255) * 410 + Math.cos(t * 2) * 15);
+        const simPwm = telemetry.pwm || 24;
+        telemetry.current = Math.round((simPwm / 30) * 410 + Math.cos(t * 2) * 15);
         telemetry.power = Math.round(telemetry.voltage * telemetry.current * 0.36);
 
         pushHistorySample();
@@ -1877,21 +1956,21 @@
       let data, lineColor, minVal, maxVal, unit, yName;
       if (modalActiveType === 'power') {
         data = telemetry.historyPower;
-        lineColor = '#FF2A6D'; // High-visibility laser pink/red like Image 6
+        lineColor = '#FFE600';
         minVal = 0;
         maxVal = 2000;
         unit = 'mW';
         yName = 'POWER LOAD (mW)';
       } else if (modalActiveType === 'jib') {
         data = telemetry.historyJib;
-        lineColor = '#00F0FF'; // High-visibility laser cyan
+        lineColor = '#FF6D00';
         minVal = 0;
         maxVal = 360;
         unit = '°';
         yName = 'JIB HEADING ANGLE (°)';
       } else {
         data = telemetry.historyIncline;
-        lineColor = '#FF2A6D'; // Laser pink like Image 6
+        lineColor = '#FFE600';
         minVal = -4;
         maxVal = 4;
         unit = '°';
@@ -1927,7 +2006,7 @@
         const y = padT + (plotH * i) / steps;
         const val = maxVal - ((maxVal - minVal) * i) / steps;
 
-        ctx.strokeStyle = i === steps ? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.16)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.24)';
         ctx.lineWidth = i === steps ? 2.5 : 1.5;
         ctx.setLineDash(i === steps ? [] : [6, 8]);
         ctx.beginPath();
@@ -1986,23 +2065,16 @@
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
       ctx.shadowColor = lineColor;
-      ctx.shadowBlur = 24;
+      ctx.shadowBlur = 18;
 
       ctx.beginPath();
-      // Generate smooth multi-sample interpolation matching spikes in Image 5 & 6
-      const samplesCount = Math.max(data.length, 36);
-      for (let s = 0; s < samplesCount; s++) {
-        const dataIdx = Math.floor((s / (samplesCount - 1)) * (data.length - 1));
-        const rawVal = data[dataIdx];
-        // add slight realistic spike variation if simulated
-        const spikeFactor = (s === 12 || s === 18 || s === 26 || s === 32) ? 0.75 : 0;
-        const v = rawVal + spikeFactor * (maxVal - minVal) * 0.5;
-        const x = padL + (plotW * s) / (samplesCount - 1);
+      data.forEach((v, idx) => {
+        const x = padL + (plotW * idx) / (data.length - 1);
         const norm = (v - minVal) / (maxVal - minVal || 1);
         const y = padT + plotH - Math.max(0, Math.min(1, norm)) * plotH;
-        if (s === 0) ctx.moveTo(x, y);
+        if (idx === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
-      }
+      });
       ctx.stroke();
 
       // Glowing Pulse Beacon at End
@@ -2554,7 +2626,7 @@
         crane3dSmoothAngle = (crane3dSmoothAngle + diff * 0.18 + 360) % 360;
 
         if (telemetry.isSimulating || telemetry.pwm > 40) {
-          const speed = Math.max(1.5, (telemetry.pwm / 255) * 8);
+          const speed = Math.max(1.5, (telemetry.pwm / 30) * 8);
           motorSpinAngle = (motorSpinAngle + speed) % 360;
           if (motorRotor) motorRotor.setAttribute('transform', `rotate(${motorSpinAngle.toFixed(1)} 38 38)`);
           if (tab2Rotor) tab2Rotor.setAttribute('transform', `rotate(${motorSpinAngle.toFixed(1)} 38 38)`);
@@ -2627,13 +2699,7 @@
       const defl = isVal(tData.jib_deflection_deg) ? tData.jib_deflection_deg : (isVal(cementItems.jib_deflection_deg?.value) ? cementItems.jib_deflection_deg.value : null);
       if (isVal(defl)) { telemetry.incline = normalizeInclineDeflection(defl, telemetry.incline); changed = true; }
 
-      const spd = isVal(tData.crane_speed) ? tData.crane_speed : (isVal(cementItems.crane_speed?.value) ? cementItems.crane_speed.value : null);
-      if (isVal(spd)) {
-        telemetry.pwm = Math.max(0, Math.min(255, Math.round(Number(spd))));
-        const sl = document.getElementById('throttleSlider');
-        if (sl && document.activeElement !== sl) sl.value = telemetry.pwm;
-        changed = true;
-      }
+      // Keep throttle strictly at 24 (or user-selected slider value); do not fluctuate from incoming rotation/movement telemetry
 
       const sess = isVal(tData.current_session_time_sec) ? tData.current_session_time_sec : (isVal(cementItems.current_session_time_sec?.value) ? cementItems.current_session_time_sec.value : null);
       if (isVal(sess)) {
