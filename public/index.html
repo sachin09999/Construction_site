@@ -120,17 +120,17 @@
 
     /* Projector Scale Typography - Bold & Large for Projector Readability */
     .title-projector {
-      font-size: clamp(1.1rem, 1.5vw, 1.8rem);
+      font-size: clamp(1.32rem, 1.8vw, 2.16rem);
       letter-spacing: 0.03em;
     }
 
     .tab-projector {
-      font-size: clamp(1.05rem, 1.35vw, 1.6rem);
+      font-size: clamp(1.26rem, 1.62vw, 1.92rem);
       letter-spacing: 0.04em;
     }
 
     .label-projector {
-      font-size: clamp(1.45rem, 2.2vw, 2.6rem);
+      font-size: clamp(1.74rem, 2.64vw, 3.12rem);
       line-height: 1.1;
       letter-spacing: 0.05em;
       font-weight: 900;
@@ -138,7 +138,7 @@
 
     /* Giant Under-Meter Labels (VOLTAGE, CURRENT, POWER, INCLINE, JIB ANGLE) */
     .meter-label {
-      font-size: clamp(1.75rem, 2.6vw, 3.2rem);
+      font-size: clamp(2.1rem, 3.12vw, 3.84rem);
       line-height: 1;
       letter-spacing: 0.09em;
       font-weight: 900;
@@ -146,14 +146,14 @@
     }
 
     .value-projector {
-      font-size: clamp(2.86rem, 4.42vw, 5.2rem);
+      font-size: clamp(3.43rem, 5.3vw, 6.24rem);
       line-height: 0.95;
       letter-spacing: 0.02em;
       font-weight: 900;
     }
 
     .value-projector-lg {
-      font-size: clamp(3.64rem, 5.85vw, 6.76rem);
+      font-size: clamp(4.37rem, 7.02vw, 8.11rem);
       line-height: 0.95;
       letter-spacing: 0.02em;
       font-weight: 900;
@@ -523,7 +523,7 @@
             <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-0.5">
               JIB ANGLE
             </div>
-            <div id="jibStatusBadge" class="mt-1 px-6 py-1 rounded-xl border-2 border-white bg-[#FF6D00] text-white text-base sm:text-lg font-black uppercase tracking-widest shadow">
+            <div id="jibStatusBadge" class="mt-1 px-6 py-1 rounded-xl border-2 border-white bg-[#FF6D00] text-white text-xl sm:text-2xl font-black uppercase tracking-widest shadow">
               STOPPED
             </div>
           </div>
@@ -535,7 +535,7 @@
           <!-- TOP CARD: BLOWN-UP JIB & BOOM SCHEMATIC CALLOUT -->
           <div class="hud-glass relative p-3 sm:p-4 flex flex-col justify-between h-[46%] min-h-[200px] overflow-hidden">
             <div class="flex items-center justify-start shrink-0">
-                <span class="px-4 py-1 rounded-xl bg-[#FFE600] text-[#0D0D0D] font-black text-base sm:text-lg lg:text-xl tracking-wider uppercase">JIB &amp; BOOM BLOW-UP</span>
+                <span class="px-4 py-1 rounded-xl bg-[#FFE600] text-[#0D0D0D] font-black text-xl sm:text-2xl lg:text-3xl tracking-wider uppercase">JIB &amp; BOOM BLOW-UP</span>
               </div>
 
             <!-- Interactive Crane -> Magnified Jib Blow-up SVG -->
@@ -570,7 +570,7 @@
                   <rect x="140" y="122" width="10" height="8" rx="1.5" fill="#FFE600"/>
                   <!-- Highlight Target Ring around Jib/Mast Head -->
                   <ellipse cx="98" cy="64" rx="84" ry="30" fill="rgba(255,230,0,0.08)" stroke="#FFE600" stroke-width="3" stroke-dasharray="7 5"/>
-                  <text x="70" y="242" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="17" font-weight="900">TOWER CRANE</text>
+                  <text x="70" y="242" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="20" font-weight="900">TOWER CRANE</text>
                 </g>
 
                 <!-- 2. MAGNIFIER CALLOUT CONE -->
@@ -591,7 +591,7 @@
                 <!-- Slewing Rotation Arc Indicator (0° - 360°) -->
                 <path d="M402 152 A56 18 0 1 0 498 152" fill="none" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
                 <polygon points="498,152 487,146 492,158" fill="#38BDF8"/>
-                <text x="450" y="234" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="16" font-weight="900">SLEW ROTATION (0°–360°)</text>
+                <text x="450" y="234" text-anchor="middle" fill="#38BDF8" font-family="'Chakra Petch', sans-serif" font-size="19" font-weight="900">SLEW ROTATION (0°–360°)</text>
 
                 <!-- Level Horizon Reference Line -->
                 <line x1="330" y1="118" x2="788" y2="118" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-dasharray="7 5"/>
@@ -627,14 +627,14 @@
 
                   <!-- Jib Tip Label -->
                   <circle cx="764" cy="114" r="6" fill="#FF1744" stroke="#FFE600" stroke-width="2"/>
-                  <text x="635" y="42" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="18" font-weight="900">MAIN WORKING JIB</text>
+                  <text x="635" y="42" text-anchor="middle" fill="#FFE600" font-family="'Chakra Petch', sans-serif" font-size="22" font-weight="900">MAIN WORKING JIB</text>
                 </g>
 
                 <!-- Incline Tilt Callout Arc at Jib Tip -->
                 <path d="M776 92 A46 46 0 0 1 776 142" fill="none" stroke="#FF6D00" stroke-width="3" stroke-linecap="round"/>
                 <polygon points="776,92 770,101 782,100" fill="#FF6D00"/>
                 <polygon points="776,142 770,133 782,134" fill="#FF6D00"/>
-                <text x="735" y="172" text-anchor="middle" fill="#FFAE00" font-family="'Chakra Petch', sans-serif" font-size="16" font-weight="900">BOOM INCLINE (±4°)</text>
+                <text x="735" y="172" text-anchor="middle" fill="#FFAE00" font-family="'Chakra Petch', sans-serif" font-size="19" font-weight="900">BOOM INCLINE (±4°)</text>
               </svg>
             </div>
           </div>
@@ -660,7 +660,7 @@
                 <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-white/60 -translate-x-1/2 z-10"></div>
                 <div id="inclineDigitalMarker" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-[#FFE600] border-2 border-[#FF6D00] shadow-[0_0_14px_#FFE600] transition-all duration-200" style="left: 53.6%;"></div>
               </div>
-              <div class="flex justify-between text-lg sm:text-xl font-black text-[#FF8F00]">
+              <div class="flex justify-between text-xl sm:text-2xl font-black text-[#FF8F00]">
                 <span>-4°</span>
                 <span class="text-[#FFE600]">0°</span>
                 <span>+4°</span>
@@ -677,7 +677,7 @@
         <section class="lg:col-span-5 hud-glass relative p-3 sm:p-4 flex flex-col justify-between h-full min-h-0 overflow-hidden">
           <!-- Top Diagram Header -->
           <div class="flex items-center justify-start shrink-0">
-            <span class="px-4 py-1 rounded-xl bg-[#FFE600] text-[#0D0D0D] font-black text-base sm:text-lg lg:text-xl tracking-wider uppercase shadow">
+            <span class="px-4 py-1 rounded-xl bg-[#FFE600] text-[#0D0D0D] font-black text-xl sm:text-2xl lg:text-3xl tracking-wider uppercase shadow">
               CRANE DRIVE MOTOR
             </span>
           </div>
@@ -717,7 +717,7 @@
                 <!-- Concrete Base & Anchor -->
                 <rect x="78" y="534" width="124" height="18" rx="4" fill="#FF6D00" stroke="#FFE600" stroke-width="2.8"/>
                 <rect x="98" y="518" width="84" height="16" rx="3" fill="#1E2530" stroke="#FFE600" stroke-width="2.2"/>
-                <text x="140" y="570" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-family="'Chakra Petch', sans-serif" font-size="17" font-weight="900">TOWER CRANE</text>
+                <text x="140" y="570" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-family="'Chakra Petch', sans-serif" font-size="20" font-weight="900">TOWER CRANE</text>
 
                 <!-- Vertical Lattice Mast -->
                 <rect x="122" y="138" width="36" height="380" fill="rgba(255,214,0,0.08)" stroke="url(#craneMastGrad)" stroke-width="3.2"/>
@@ -810,7 +810,7 @@
 
                 <!-- Bottom Pill Badge -->
                 <rect x="-98" y="128" width="196" height="32" rx="16" fill="#FF6D00" stroke="#FFE600" stroke-width="2.5"/>
-                <text x="0" y="149" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="17" font-weight="900" letter-spacing="1">CRANE SLEW MOTOR</text>
+                <text x="0" y="149" text-anchor="middle" fill="#FFFFFF" font-family="'Chakra Petch', sans-serif" font-size="20" font-weight="900" letter-spacing="1">CRANE SLEW MOTOR</text>
               </g>
             </svg>
           </div>
@@ -840,7 +840,7 @@
                   <div id="voltageDigitalBar" class="h-full rounded-full bg-gradient-to-r from-[#FFE600] to-[#FF6D00] transition-all duration-200" style="width: 51.6%;"></div>
                   <div class="digital-led-ticks absolute inset-0 pointer-events-none"></div>
                 </div>
-                <div class="flex justify-between text-lg sm:text-xl font-black text-[#FFE600]">
+                <div class="flex justify-between text-xl sm:text-2xl font-black text-[#FFE600]">
                   <span>0 V</span>
                   <span>12 V</span>
                   <span class="text-[#FF6D00]">24 V</span>
@@ -867,7 +867,7 @@
                   <div id="currentDigitalBar" class="h-full rounded-full bg-gradient-to-r from-[#FFE600] to-[#FF6D00] transition-all duration-200" style="width: 0%;"></div>
                   <div class="digital-led-ticks absolute inset-0 pointer-events-none"></div>
                 </div>
-                <div class="flex justify-between text-lg sm:text-xl font-black text-[#FFE600]">
+                <div class="flex justify-between text-xl sm:text-2xl font-black text-[#FFE600]">
                   <span>0</span>
                   <span>250</span>
                   <span class="text-[#FF6D00]">500 mA</span>
@@ -897,7 +897,7 @@
                   <div id="powerDigitalBar" class="h-full rounded-full bg-gradient-to-r from-[#FFE600] to-[#FF6D00] transition-all duration-200" style="width: 0%;"></div>
                   <div class="digital-led-ticks absolute inset-0 pointer-events-none"></div>
                 </div>
-                <div class="flex justify-between text-lg sm:text-xl font-black text-[#FFE600]">
+                <div class="flex justify-between text-xl sm:text-2xl font-black text-[#FFE600]">
                   <span>0</span>
                   <span>1000</span>
                   <span class="text-[#FF6D00]">2000 mW</span>
@@ -1238,7 +1238,7 @@
             <div class="shrink-0 text-center flex flex-col items-center gap-0.5 pt-1">
               <div id="jibHistAngleValue" class="value-projector font-black text-[#FFFFFF] proj-text-shadow leading-none">212.7°</div>
               <div class="meter-label font-black uppercase text-[#FFE600] proj-glow-yellow mt-0.5">JIB ANGLE</div>
-              <div id="jibHistStatusBadge" class="mt-1 px-6 py-1 rounded-xl border-2 border-white bg-[#FF6D00] text-white text-base sm:text-lg font-black uppercase tracking-widest shadow">STOPPED</div>
+              <div id="jibHistStatusBadge" class="mt-1 px-6 py-1 rounded-xl border-2 border-white bg-[#FF6D00] text-white text-xl sm:text-2xl font-black uppercase tracking-widest shadow">STOPPED</div>
             </div>
           </div>
         </div>
