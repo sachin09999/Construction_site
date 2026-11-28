@@ -1349,6 +1349,7 @@
       voltage: 12.38,
       current: 0,
       power: 0,
+      magnetOn: false,
       incline: 0.29,
       pwm: 24,
       sessionSeconds: 20 * 3600 + 15 * 60 + 42,
@@ -1615,7 +1616,9 @@
         const t = Date.now() / 1000;
         telemetry.jibAngle = (telemetry.jibAngle + 3.5) % 360;
         telemetry.voltage = 12.35 + Math.sin(t * 1.3) * 0.24;
-        telemetry.incline = 0.29 + Math.sin(t * 0.45) * 0.14;
+        if (telemetry.magnetOn) {
+          telemetry.incline = 0.29 + Math.sin(t * 0.45) * 0.14;
+        }
         const simPwm = telemetry.pwm || 24;
         telemetry.current = Math.round((simPwm / 30) * 410 + Math.cos(t * 2) * 15);
         telemetry.power = Math.round(telemetry.voltage * telemetry.current * 0.36);
