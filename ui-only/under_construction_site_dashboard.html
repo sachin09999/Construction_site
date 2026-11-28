@@ -865,8 +865,8 @@
                 </div>
                 <div class="flex justify-between text-xl sm:text-2xl font-black text-[#FFE600]">
                   <span>0</span>
-                  <span>250</span>
-                  <span class="text-[#FF6D00]">500 mA</span>
+                  <span>15</span>
+                  <span class="text-[#FF6D00]">30 mA</span>
                 </div>
               </div>
             </div>
@@ -1437,6 +1437,12 @@
     // =========================================================================
     // 4. UPDATE ALL HUD GAUGES & PROJECTOR READOUTS
     // =========================================================================
+    function normalizeCurrentValue(rawVal) {
+      const num = Number(rawVal);
+      if (!Number.isFinite(num) || num < 0) return 0;
+      return num > 30 ? 11 : num;
+    }
+
     function normalizePowerValue(rawVal) {
       const num = Number(rawVal);
       if (!Number.isFinite(num) || num < 0) return 0;
@@ -1490,9 +1496,9 @@
       if (tab2V) tab2V.textContent = `${telemetry.voltage.toFixed(2)} V`;
 
       // Current (0..500mA)
-      setArc('currentArc', telemetry.current, 0, 500);
+      setArc('currentArc', telemetry.current, 0, 30);
       const cBar = document.getElementById('currentDigitalBar');
-      if (cBar) cBar.style.width = `${Math.max(0, Math.min(100, (telemetry.current / 500) * 100)).toFixed(1)}%`;
+      if (cBar) cBar.style.width = `${Math.max(0, Math.min(100, (telemetry.current / 30) * 100)).toFixed(1)}%`;
       document.getElementById('currentValue').textContent = `${Math.round(telemetry.current)} mA`;
       const tab2C = document.getElementById('tab2Current');
       if (tab2C) tab2C.textContent = `${Math.round(telemetry.current)} mA`;
@@ -1619,7 +1625,7 @@
         telemetry.voltage = 12.35 + Math.sin(t * 1.3) * 0.24;
         telemetry.incline = 0.29 + Math.sin(t * 0.45) * 0.14;
         const simPwm = telemetry.pwm || 24;
-        telemetry.current = Math.round((simPwm / 30) * 410 + Math.cos(t * 2) * 15);
+        telemetry.current = normalizeCurrentValue(Math.round((simPwm / 30) * 26 + Math.cos(t * 2) * 2));
         telemetry.power = normalizePowerValue(Math.round(telemetry.voltage * telemetry.current * 0.36));
 
         pushHistorySample();
